@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import com.zettelnet.earley.input.InputPosition;
 import com.zettelnet.earley.param.Parameter;
 import com.zettelnet.earley.param.ParameterExpression;
 
@@ -13,13 +14,15 @@ public class SimpleState<T, P extends Parameter> implements State<T, P> {
 
 	private final Production<T, P> production;
 	private final int currentPosition;
-	private final int originPosition;
+	private final InputPosition<T> originPosition;
 
 	private final P parameter;
 
 	private final Collection<StateCause<T, P>> cause = new ArrayList<>(2);
 
-	public SimpleState(final Chart<T, P> chart, final Production<T, P> production, final int currentPosition, final int originPosition, final P parameter) {
+	public SimpleState(final Chart<T, P> chart, final Production<T, P> production, final int currentPosition, final InputPosition<T> originPosition, final P parameter) {
+		assert originPosition != null : "Origin Position cannot be null";
+
 		this.chart = chart;
 		this.production = production;
 		this.currentPosition = currentPosition;
@@ -39,7 +42,7 @@ public class SimpleState<T, P extends Parameter> implements State<T, P> {
 		return currentPosition;
 	}
 
-	public int getOriginPosition() {
+	public InputPosition<T> getOriginPosition() {
 		return originPosition;
 	}
 
@@ -108,9 +111,9 @@ public class SimpleState<T, P extends Parameter> implements State<T, P> {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + currentPosition;
-		result = prime * result + originPosition;
-		result = prime * result + ((chart == null) ? 0 : chart.hashCode());
-		result = prime * result + ((production == null) ? 0 : production.hashCode());
+		result = prime * result + originPosition.hashCode();
+		result = prime * result + chart.hashCode();
+		result = prime * result + production.hashCode();
 		return result;
 	}
 

@@ -3,6 +3,7 @@ package com.zettelnet.earley;
 import java.util.Collection;
 import java.util.Collections;
 
+import com.zettelnet.earley.input.InputPosition;
 import com.zettelnet.earley.param.Parameter;
 import com.zettelnet.earley.param.ParameterExpression;
 
@@ -37,8 +38,8 @@ public class SeedState<T, P extends Parameter> implements State<T, P> {
 	}
 
 	@Override
-	public int getOriginPosition() {
-		return 0;
+	public InputPosition<T> getOriginPosition() {
+		return chart.getInputPosition();
 	}
 
 	@Override

@@ -1,5 +1,8 @@
 package com.zettelnet.earley.test;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.util.Arrays;
 
 import com.zettelnet.earley.EarleyParseResult;
@@ -11,6 +14,7 @@ import com.zettelnet.earley.Production;
 import com.zettelnet.earley.SimpleNonTerminal;
 import com.zettelnet.earley.SimpleTerminal;
 import com.zettelnet.earley.Terminal;
+import com.zettelnet.earley.input.LinearInputPositionInitializer;
 import com.zettelnet.earley.param.DefaultParameter;
 import com.zettelnet.earley.param.DefaultParameterManager;
 
@@ -79,17 +83,15 @@ public class EarleyTest {
 		grammar.addProduction(new Production<>(grammar, term, negation, term));
 		grammar.addProduction(new Production<>(grammar, term, bracketOpen, term, bracketClose));
 		grammar.addProduction(new Production<>(grammar, term, function, term));
-		EarleyParser<String, DefaultParameter> parser = new EarleyParser<>(grammar);
+		EarleyParser<String, DefaultParameter> parser = new EarleyParser<>(grammar, new LinearInputPositionInitializer<>());
 		EarleyParseResult<String, DefaultParameter> result = parser.parse(Arrays.asList("sqrt 23 + ( 7 / 2 * - 23 * cos pi / 2 ) / 3 ! - sin 1 / 2 = 23".split(" ")));
 
 		System.out.println(result.isComplete());
 		System.out.println(result.getTreeForest());
-		// result.printChartSets(System.out);
-		// try {
-		// result.printChartSetsHtml(new PrintStream(new
-		// File("E:\\temp.html")));
-		// } catch (IOException e) {
-		// e.printStackTrace();
-		// }
+		try {
+			result.printChartSetsHtml(new PrintStream(new File("E:\\temp.html")));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

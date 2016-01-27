@@ -205,7 +205,7 @@ public final class LatinParseResult<T> implements ParseResult<T> {
 			System.out.println("Start");
 			System.out.println(" >>> " + seedTree);
 
-			while (!queueList.isEmpty()) {
+			while (!queueList.isClean()) {
 				TreeQueue<T> treeQueue = queueList.poll();
 				ParseTree<T> tree = treeQueue.getTree();
 				Queue<TreeState> queue = treeQueue.getQueue();

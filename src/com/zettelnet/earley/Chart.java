@@ -7,24 +7,25 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 
+import com.zettelnet.earley.input.InputPosition;
 import com.zettelnet.earley.param.Parameter;
 
 public class Chart<T, P extends Parameter> implements Iterable<State<T, P>> {
 
-	private final int inputPosition;
+	private final InputPosition<T> inputPosition;
 	private final Queue<State<T, P>> toCompute;
 	// value and key are always equal
 	// Map is used instead of Set provide method for getting an element that
 	// equals another
 	private final Map<State<T, P>, State<T, P>> states;
 
-	public Chart(final int inputPosition) {
+	public Chart(final InputPosition<T> inputPosition) {
 		this.inputPosition = inputPosition;
 		this.toCompute = new LinkedList<>();
 		this.states = new LinkedHashMap<>();
 	}
 
-	public int getInputPosition() {
+	public InputPosition<T> getInputPosition() {
 		return inputPosition;
 	}
 

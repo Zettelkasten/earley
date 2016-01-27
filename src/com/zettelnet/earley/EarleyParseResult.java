@@ -4,11 +4,18 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
+import java.util.SortedMap;
+import java.util.SortedSet;
+import java.util.TreeMap;
 
+import com.zettelnet.earley.input.InputPosition;
+import com.zettelnet.earley.input.InputPositionInitializer;
 import com.zettelnet.earley.param.Parameter;
 import com.zettelnet.earley.param.ParameterExpression;
 
@@ -16,18 +23,19 @@ public final class EarleyParseResult<T, P extends Parameter> implements ParseRes
 
 	private final Grammar<T, P> grammar;
 	private final List<T> tokens;
+	private final InputPositionInitializer<T> inputPositionInitializer;
 
 	private boolean complete;
 
-	private List<Chart<T, P>> charts;
-	private int chartPosition;
+	private SortedMap<InputPosition<T>, Chart<T, P>> charts;
 	private Chart<T, P> currentChart;
 
 	private final Set<State<T, P>> completeStates = new HashSet<>();
 
-	protected EarleyParseResult(final EarleyParser<T, P> parser, final List<T> tokens) {
+	protected EarleyParseResult(final EarleyParser<T, P> parser, final List<T> tokens, final InputPositionInitializer<T> inputPositionInitializer) {
 		this.grammar = parser.getGrammar();
 		this.tokens = tokens;
+		this.inputPositionInitializer = inputPositionInitializer;
 
 		setup();
 		seed();
@@ -37,24 +45,24 @@ public final class EarleyParseResult<T, P extends Parameter> implements ParseRes
 	private void setup() {
 		complete = false;
 
-		// setup state sets
-		int stateSetCount = tokens.size() + 1;
-		charts = new ArrayList<>(stateSetCount);
-		for (int inputPosition = 0; inputPosition < stateSetCount; inputPosition++) {
-			charts.add(new Chart<T, P>(inputPosition));
+		// TODO setup state sets
+		SortedSet<InputPosition<T>> inputPositions = inputPositionInitializer.getInputPositions(tokens);
+		this.charts = new TreeMap<>(inputPositions.comparator());
+		for (InputPosition<T> inputPosition : inputPositions) {
+			charts.put(inputPosition, new Chart<>(inputPosition));
 		}
 	}
 
 	private void seed() {
-		currentChart = charts.get(0);
+		currentChart = charts.get(charts.firstKey());
 
 		predict(new SeedState<T, P>(currentChart, grammar.getStartSymbol(), grammar.getStartSymbolParameter().makeParameter(), grammar.getStartSymbolParameterExpression()), grammar.getStartSymbol());
 	}
 
 	private void parse() {
-		for (chartPosition = 0; chartPosition < charts.size() && !complete; chartPosition++) {
-
-			currentChart = charts.get(chartPosition);
+		for (Iterator<Map.Entry<InputPosition<T>, Chart<T, P>>> i = charts.entrySet().iterator(); i.hasNext() && !complete;) {
+			Map.Entry<InputPosition<T>, Chart<T, P>> entry = i.next();
+			currentChart = entry.getValue();
 
 			State<T, P> state;
 			while ((state = currentChart.poll()) != null && !complete) {
@@ -79,6 +87,7 @@ public final class EarleyParseResult<T, P extends Parameter> implements ParseRes
 	}
 
 	private void predict(State<T, P> state, NonTerminal<T> nonTerminal) {
+		InputPosition<T> chartPosition = currentChart.getInputPosition();
 		StateCause<T, P> cause = new StateCause.Predict<>(state);
 
 		Set<Production<T, P>> productions = grammar.getProductions(nonTerminal);
@@ -98,11 +107,11 @@ public final class EarleyParseResult<T, P extends Parameter> implements ParseRes
 	}
 
 	private void scan(State<T, P> state, Terminal<T> terminal) {
-		// are there any tokens left?
-		if (chartPosition < tokens.size()) {
-			T toResolve = tokens.get(chartPosition);
+		InputPosition<T> chartPosition = currentChart.getInputPosition();
+		
+		for (T toResolve : chartPosition.getAvailableTokens()) {
+			Chart<T, P> nextChart = charts.get(chartPosition.nextPosition(toResolve));
 
-			Chart<T, P> nextChart = nextChart(toResolve);
 			if (nextChart != null && terminal.isCompatibleWith(toResolve)) {
 
 				StateCause<T, P> origin = new StateCause.Scan<>(state);
@@ -118,13 +127,11 @@ public final class EarleyParseResult<T, P extends Parameter> implements ParseRes
 		}
 	}
 
-	private Chart<T, P> nextChart(T resolved) {
-		return chartPosition + 1 < charts.size() ? charts.get(chartPosition + 1) : null;
-	}
-
 	private void complete(State<T, P> state) {
+		InputPosition<T> chartPosition = currentChart.getInputPosition();
+		
 		NonTerminal<T> key = state.getProduction().key();
-		if (chartPosition == tokens.size() && key.equals(grammar.getStartSymbol()) && state.getOriginPosition() == 0) {
+		if (chartPosition.isComplete() && key.equals(grammar.getStartSymbol()) && state.getOriginPosition().isClean()) {
 			// done
 			completeStates.add(state);
 			// complete = true;
@@ -165,7 +172,7 @@ public final class EarleyParseResult<T, P extends Parameter> implements ParseRes
 	}
 
 	@Override
-	public List<Chart<T, P>> getCharts() {
+	public Map<InputPosition<T>, Chart<T, P>> getCharts() {
 		return charts;
 	}
 

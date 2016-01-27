@@ -4,4 +4,9 @@ package com.zettelnet.earley.param;
 public class DefaultParameter implements Parameter {
 
 	protected static final DefaultParameter INSTANCE = new DefaultParameter();
+	
+	@Override
+	public String toString() {
+		return "&empty;";
+	}
 }

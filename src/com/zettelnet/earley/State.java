@@ -2,6 +2,7 @@ package com.zettelnet.earley;
 
 import java.util.Collection;
 
+import com.zettelnet.earley.input.InputPosition;
 import com.zettelnet.earley.param.Parameter;
 import com.zettelnet.earley.param.ParameterExpression;
 
@@ -13,7 +14,7 @@ public interface State<T, P extends Parameter> {
 	
 	int getCurrentPosition();
 	
-	int getOriginPosition();
+	InputPosition<T> getOriginPosition();
 	
 	Collection<StateCause<T, P>> getCause();
 	

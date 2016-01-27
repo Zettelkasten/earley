@@ -4,21 +4,23 @@ import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedMap;
 
+import com.zettelnet.earley.input.InputPosition;
 import com.zettelnet.earley.param.Parameter;
 import com.zettelnet.earley.param.ParameterExpression;
 
 public class ChartSetPrinter<T, P extends Parameter> {
 
-	private final List<Chart<T, P>> charts;
+	private final SortedMap<InputPosition<T>, Chart<T, P>> charts;
 
 	private final Map<Chart<T, P>, Map<State<T, P>, Integer>> stateIds;
 
-	public ChartSetPrinter(final List<Chart<T, P>> charts) {
+	public ChartSetPrinter(final SortedMap<InputPosition<T>, Chart<T, P>> charts) {
 		this.charts = charts;
 
 		stateIds = new HashMap<>();
-		for (Chart<T, P> chart : charts) {
+		for (Chart<T, P> chart : charts.values()) {
 			Map<State<T, P>, Integer> ids = new HashMap<>();
 			int id = 0;
 			for (State<T, P> state : chart) {
@@ -48,7 +50,7 @@ public class ChartSetPrinter<T, P extends Parameter> {
 
 		{
 			int rowCount = 0;
-			for (Chart<T, P> chart : charts) {
+			for (Chart<T, P> chart : charts.values()) {
 				if (rowCount == 0) {
 					out.print("<div class='row'>");
 				}
@@ -117,7 +119,7 @@ public class ChartSetPrinter<T, P extends Parameter> {
 			printStateOrigin(out, cause, state);
 		}
 
-		if (state.getCurrentPosition() == state.getProduction().size() && state.getOriginPosition() == 0 && state.getChart() == charts.get(charts.size() - 1)) {
+		if (state.getCurrentPosition() == state.getProduction().size() && state.getOriginPosition().isClean() && state.getChart().getInputPosition() == charts.lastKey()) {
 			out.print(" DONE!");
 		}
 
