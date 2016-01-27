@@ -1,0 +1,125 @@
+package com.zettelnet.earley.test.latin;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import com.zettelnet.earley.param.Parameter;
+import com.zettelnet.latin.Form;
+import com.zettelnet.latin.FormProperty;
+
+public final class FormParameter implements Parameter {
+
+	private static final Map<Class<? extends FormProperty>, FormProperty> DEFAULT_DATA;
+	static {
+		DEFAULT_DATA = new HashMap<>(Form.ALL_PROPERTIES.size());
+		for (Class<? extends FormProperty> propertyType : Form.ALL_PROPERTIES) {
+			DEFAULT_DATA.put(propertyType, null);
+		}
+	}
+
+	private static Map<Class<? extends FormProperty>, FormProperty> makeDataMap(Map<Class<? extends FormProperty>, FormProperty> sourceData, Map<Class<? extends FormProperty>, FormProperty> newData) {
+		Map<Class<? extends FormProperty>, FormProperty> data = new HashMap<>(sourceData);
+		for (Class<? extends FormProperty> propertyType : sourceData.keySet()) {
+			FormProperty newProperty = newData.get(propertyType);
+			if (newProperty != null) {
+				data.put(propertyType, newProperty);
+			}
+		}
+		return data;
+	}
+
+	private static Map<Class<? extends FormProperty>, FormProperty> makeDataMap(Map<Class<? extends FormProperty>, FormProperty> sourceData, Form form) {
+		Map<Class<? extends FormProperty>, FormProperty> data = new HashMap<>(sourceData);
+		for (Class<? extends FormProperty> propertyType : sourceData.keySet()) {
+			if (form.hasProperty(propertyType)) {
+				data.put(propertyType, form.getProperty(propertyType));
+			}
+		}
+		return data;
+	}
+
+	// may not be modified
+	private final Map<Class<? extends FormProperty>, FormProperty> data;
+
+	public FormParameter() {
+		this(DEFAULT_DATA);
+	}
+
+	public FormParameter(Form form) {
+		this(makeDataMap(DEFAULT_DATA, form));
+	}
+
+	private FormParameter(Map<Class<? extends FormProperty>, FormProperty> data) {
+		this.data = data;
+	}
+
+	public boolean isCompatibleWith(FormParameter other) {
+		boolean compatible = true;
+
+		for (Map.Entry<Class<? extends FormProperty>, FormProperty> entry : data.entrySet()) {
+			Class<? extends FormProperty> propertyType = entry.getKey();
+			FormProperty parentValue = entry.getValue();
+			FormProperty childValue = other.data.get(propertyType);
+
+			if (parentValue == null || childValue == null) {
+				return true;
+			} else {
+				return parentValue.equals(childValue);
+			}
+		}
+
+		return compatible;
+	}
+
+	public FormParameter deriveWith(FormParameter with) {
+		return new FormParameter(makeDataMap(this.data, with.data));
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder str = new StringBuilder();
+
+		for (FormProperty property : data.values()) {
+			if (property != null) {
+				str.append(' ');
+				str.append(property.shortName());
+			}
+		}
+
+		if (str.length() == 0) {
+			return "?";
+		} else {
+			return str.substring(1);
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((data == null) ? 0 : data.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		FormParameter other = (FormParameter) obj;
+		if (data == null) {
+			if (other.data != null) {
+				return false;
+			}
+		} else if (!data.equals(other.data)) {
+			return false;
+		}
+		return true;
+	}
+}
