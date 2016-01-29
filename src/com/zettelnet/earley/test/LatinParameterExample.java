@@ -18,6 +18,7 @@ import com.zettelnet.earley.ParseResult;
 import com.zettelnet.earley.SimpleNonTerminal;
 import com.zettelnet.earley.SimpleTerminal;
 import com.zettelnet.earley.Terminal;
+import com.zettelnet.earley.input.DynamicInputPositionInitializer;
 import com.zettelnet.earley.param.AnyParameterExpression;
 import com.zettelnet.earley.param.CopyParameterExpression;
 import com.zettelnet.earley.param.ParameterExpression;
@@ -180,7 +181,7 @@ public class LatinParameterExample {
 				attribute,
 				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, new FormParameter(Form.nounForm(Casus.Genitive, null, null)))));
 
-		GrammarParser<Token, FormParameter> parser = new EarleyParser<>(grammar);
+		GrammarParser<Token, FormParameter> parser = new EarleyParser<>(grammar, new DynamicInputPositionInitializer<>());
 
 		// lemmas
 

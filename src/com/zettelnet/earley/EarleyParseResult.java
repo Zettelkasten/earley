@@ -45,7 +45,6 @@ public final class EarleyParseResult<T, P extends Parameter> implements ParseRes
 	private void setup() {
 		complete = false;
 
-		// TODO setup state sets
 		SortedSet<InputPosition<T>> inputPositions = inputPositionInitializer.getInputPositions(tokens);
 		this.charts = new TreeMap<>(inputPositions.comparator());
 		for (InputPosition<T> inputPosition : inputPositions) {
