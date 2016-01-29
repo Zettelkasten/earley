@@ -1,7 +1,7 @@
 package com.zettelnet.earley;
 
 import java.util.Collection;
-import java.util.Map;
+import java.util.SortedMap;
 
 import com.zettelnet.earley.input.InputPosition;
 import com.zettelnet.earley.param.Parameter;
@@ -10,7 +10,7 @@ public interface ParseResult<T, P extends Parameter> {
 
 	boolean isComplete();
 
-	Map<InputPosition<T>, Chart<T, P>> getCharts();
+	SortedMap<InputPosition<T>, Chart<T, P>> getCharts();
 
 	Collection<ParseTree<T>> getTreeForest();
 }

@@ -172,7 +172,7 @@ public final class EarleyParseResult<T, P extends Parameter> implements ParseRes
 	}
 
 	@Override
-	public Map<InputPosition<T>, Chart<T, P>> getCharts() {
+	public SortedMap<InputPosition<T>, Chart<T, P>> getCharts() {
 		return charts;
 	}
 

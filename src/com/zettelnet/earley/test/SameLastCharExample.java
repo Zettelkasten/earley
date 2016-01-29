@@ -14,6 +14,7 @@ import com.zettelnet.earley.ParseResult;
 import com.zettelnet.earley.SimpleNonTerminal;
 import com.zettelnet.earley.SimpleTerminal;
 import com.zettelnet.earley.Terminal;
+import com.zettelnet.earley.input.DynamicInputPositionInitializer;
 import com.zettelnet.earley.param.CopyParameterExpression;
 import com.zettelnet.earley.param.Parameter;
 import com.zettelnet.earley.param.ParameterExpression;
@@ -132,12 +133,12 @@ public class SameLastCharExample {
 		// ParameterExpression<String, LastCharParameter> any = new
 		// AnyParameterExpression<>();
 
-		grammar.addProduction(sentence, new SimpleParameterFactory<>(new LastCharParameter('u')),
+		grammar.addProduction(sentence, new SimpleParameterFactory<>(new LastCharParameter()),
 				new ParameterizedSymbol<>(sentence, copy),
 				new ParameterizedSymbol<>(word, copy));
 		grammar.addProduction(sentence);
 
-		EarleyParser<String, LastCharParameter> parser = new EarleyParser<>(grammar);
+		EarleyParser<String, LastCharParameter> parser = new EarleyParser<>(grammar, new DynamicInputPositionInitializer<>());
 
 		List<String> tokens = Arrays.asList("Yo Ho" /*
 													 * Ko Mo Lo Sho Kawho Mio
