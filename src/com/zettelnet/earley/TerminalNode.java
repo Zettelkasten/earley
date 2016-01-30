@@ -1,5 +1,7 @@
 package com.zettelnet.earley;
 
+import com.zettelnet.earley.symbol.Terminal;
+
 public class TerminalNode<T> extends TreeNode<T> {
 
 	private final Terminal<T> symbol;

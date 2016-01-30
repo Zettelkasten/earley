@@ -3,7 +3,7 @@ package com.zettelnet.earley.param;
 import java.util.Arrays;
 import java.util.Collection;
 
-import com.zettelnet.earley.Terminal;
+import com.zettelnet.earley.symbol.Terminal;
 
 public class SpecificParameterExpression<T, P extends Parameter> implements ParameterExpression<T, P> {
 

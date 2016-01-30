@@ -1,4 +1,4 @@
-package com.zettelnet.earley;
+package com.zettelnet.earley.symbol;
 
 public abstract class SimpleTerminal<T> implements Terminal<T> {
 

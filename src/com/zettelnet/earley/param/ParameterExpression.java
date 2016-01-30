@@ -2,7 +2,7 @@ package com.zettelnet.earley.param;
 
 import java.util.Collection;
 
-import com.zettelnet.earley.Terminal;
+import com.zettelnet.earley.symbol.Terminal;
 
 public interface ParameterExpression<T, P extends Parameter> {
 

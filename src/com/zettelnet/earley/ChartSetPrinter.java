@@ -10,6 +10,7 @@ import java.util.SortedMap;
 import com.zettelnet.earley.input.InputPosition;
 import com.zettelnet.earley.param.Parameter;
 import com.zettelnet.earley.param.ParameterExpression;
+import com.zettelnet.earley.symbol.Symbol;
 
 public class ChartSetPrinter<T, P extends Parameter> {
 

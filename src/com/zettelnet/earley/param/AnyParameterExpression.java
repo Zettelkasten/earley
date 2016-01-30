@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import com.zettelnet.earley.Grammar;
-import com.zettelnet.earley.Terminal;
+import com.zettelnet.earley.symbol.Terminal;
 
 /*
  * Does not care about anything.

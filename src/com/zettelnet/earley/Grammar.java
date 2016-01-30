@@ -11,6 +11,9 @@ import com.zettelnet.earley.param.Parameter;
 import com.zettelnet.earley.param.ParameterExpression;
 import com.zettelnet.earley.param.ParameterFactory;
 import com.zettelnet.earley.param.ParameterManager;
+import com.zettelnet.earley.symbol.NonTerminal;
+import com.zettelnet.earley.symbol.Symbol;
+import com.zettelnet.earley.symbol.Terminal;
 
 public class Grammar<T, P extends Parameter> {
 

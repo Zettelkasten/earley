@@ -3,6 +3,9 @@ package com.zettelnet.earley;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.zettelnet.earley.symbol.NonTerminal;
+import com.zettelnet.earley.symbol.Symbol;
+
 public class TreeNode<T> {
 
 	private final Symbol<T> value;

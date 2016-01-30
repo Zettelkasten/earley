@@ -9,6 +9,8 @@ import com.zettelnet.earley.param.Parameter;
 import com.zettelnet.earley.param.ParameterExpression;
 import com.zettelnet.earley.param.ParameterFactory;
 import com.zettelnet.earley.param.ParameterManager;
+import com.zettelnet.earley.symbol.NonTerminal;
+import com.zettelnet.earley.symbol.Symbol;
 
 public class Production<T, P extends Parameter> {
 

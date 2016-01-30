@@ -2,6 +2,7 @@ package com.zettelnet.earley;
 
 import com.zettelnet.earley.param.Parameter;
 import com.zettelnet.earley.param.ParameterExpression;
+import com.zettelnet.earley.symbol.Symbol;
 
 /**
  * Tuple from {@link Symbol} and {@link ParameterExpression}s representing right

@@ -8,15 +8,15 @@ import java.util.Arrays;
 import com.zettelnet.earley.EarleyParseResult;
 import com.zettelnet.earley.EarleyParser;
 import com.zettelnet.earley.Grammar;
-import com.zettelnet.earley.NonTerminal;
-import com.zettelnet.earley.PredicateTerminal;
 import com.zettelnet.earley.Production;
-import com.zettelnet.earley.SimpleNonTerminal;
-import com.zettelnet.earley.SimpleTerminal;
-import com.zettelnet.earley.Terminal;
 import com.zettelnet.earley.input.LinearInputPositionInitializer;
 import com.zettelnet.earley.param.DefaultParameter;
 import com.zettelnet.earley.param.DefaultParameterManager;
+import com.zettelnet.earley.symbol.NonTerminal;
+import com.zettelnet.earley.symbol.PredicateTerminal;
+import com.zettelnet.earley.symbol.SimpleNonTerminal;
+import com.zettelnet.earley.symbol.SimpleTerminal;
+import com.zettelnet.earley.symbol.Terminal;
 
 public class EarleyTest {
 

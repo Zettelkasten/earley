@@ -1,4 +1,4 @@
-package com.zettelnet.earley;
+package com.zettelnet.earley.symbol;
 
 public class SimpleNonTerminal<T> implements NonTerminal<T> {
 

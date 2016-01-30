@@ -1,4 +1,4 @@
-package com.zettelnet.earley;
+package com.zettelnet.earley.symbol;
 
 import java.util.function.Predicate;
 

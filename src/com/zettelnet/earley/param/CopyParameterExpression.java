@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 import com.zettelnet.earley.Grammar;
-import com.zettelnet.earley.Terminal;
+import com.zettelnet.earley.symbol.Terminal;
 
 public class CopyParameterExpression<T, P extends Parameter> implements ParameterExpression<T, P> {
 
