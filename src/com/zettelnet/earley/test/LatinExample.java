@@ -15,11 +15,11 @@ import com.zettelnet.earley.GrammarParser;
 import com.zettelnet.earley.NonTerminal;
 import com.zettelnet.earley.ParameterizedSymbol;
 import com.zettelnet.earley.ParseResult;
+import com.zettelnet.earley.ParseTree;
 import com.zettelnet.earley.SimpleNonTerminal;
 import com.zettelnet.earley.SimpleTerminal;
 import com.zettelnet.earley.Terminal;
 import com.zettelnet.earley.input.DynamicInputPositionInitializer;
-import com.zettelnet.earley.param.AnyParameterExpression;
 import com.zettelnet.earley.param.CopyParameterExpression;
 import com.zettelnet.earley.param.ParameterExpression;
 import com.zettelnet.earley.param.ParameterManager;
@@ -40,7 +40,7 @@ import com.zettelnet.latin.form.Voice;
 import com.zettelnet.latin.form.provider.FormProvider;
 import com.zettelnet.latin.lemma.Lemma;
 
-public class LatinParameterExample {
+public class LatinExample {
 
 	public static class LexemeTerminal extends SimpleTerminal<Token> {
 
@@ -69,15 +69,8 @@ public class LatinParameterExample {
 	public static void main(String[] args) throws FileNotFoundException {
 
 		NonTerminal<Token> sentence = new SimpleNonTerminal<>("S");
-
 		NonTerminal<Token> nounPhrase = new SimpleNonTerminal<>("NP");
-		NonTerminal<Token> nounForm = new SimpleNonTerminal<>("NF");
-		NonTerminal<Token> attribute = new SimpleNonTerminal<>("Attr");
-
 		NonTerminal<Token> verbPhrase = new SimpleNonTerminal<>("VP");
-		NonTerminal<Token> verbForm = new SimpleNonTerminal<>("VF");
-		NonTerminal<Token> arguments = new SimpleNonTerminal<>("Args");
-		NonTerminal<Token> adverbalPhrase = new SimpleNonTerminal<>("AP");
 
 		Terminal<Token> verb = new LexemeTerminal(Lemma.Type.Verb);
 		Terminal<Token> noun = new LexemeTerminal(Lemma.Type.Noun);
@@ -104,83 +97,20 @@ public class LatinParameterExample {
 
 			return parameters;
 		});
-		ParameterExpression<Token, FormParameter> any = new AnyParameterExpression<>(parameterManager);
 
-		// S(pi : !NullVal !Imp) -> NP(pi) VP(pi) -> TODO
 		grammar.addProduction(sentence,
 				new ParameterizedSymbol<>(nounPhrase, copy),
 				new ParameterizedSymbol<>(verbPhrase, copy));
-		// S(pi) -> VP(pi)
-		grammar.addProduction(sentence,
-				new ParameterizedSymbol<>(verbPhrase, copy));
 
-		// // VP(pi) -> VF(pi) Args(pi) AP
-		grammar.addProduction(
-				verbPhrase,
-				new ParameterizedSymbol<>(verbForm, copy),
-				new ParameterizedSymbol<>(arguments, copy),
-				new ParameterizedSymbol<>(adverbalPhrase, any));
-		// // VF(pi) -> v(pi) -> TODO
-		grammar.addProduction(
-				verbForm,
-				new ParameterizedSymbol<>(verb, copy));
-		// Args -> epsilon -> TODO
-		grammar.addProduction(
-				arguments);
-		// Args(pi : Kopula) -> NP(pi) -> TODO
-		grammar.addProduction(
-				arguments,
-				new ParameterizedSymbol<>(nounPhrase, copy));
-		// Args(pi : GenVal) -> NP(Gen) -> TODO
-		grammar.addProduction(
-				arguments,
-				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, new FormParameter(Form.nounForm(Casus.Genitive, null, null)))));
-		// Args(pi : DatVal) -> NP(Dat) -> TODO
-		grammar.addProduction(
-				arguments,
-				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, new FormParameter(Form.nounForm(Casus.Dative, null, null)))));
-		// Args(pi : AkkVal) -> NP(Akk) -> TODO
-		grammar.addProduction(
-				arguments,
-				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, new FormParameter(Form.nounForm(Casus.Accusative, null, null)))));
-		// Args(pi : AkkDatVal) -> NP(Akk) NP(Dat) -> TODO
-		grammar.addProduction(
-				arguments,
-				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, new FormParameter(Form.nounForm(Casus.Accusative, null, null)))),
-				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, new FormParameter(Form.nounForm(Casus.Dative, null, null)))));
-		// AP -> epsilon
-		grammar.addProduction(
-				adverbalPhrase);
-		// AP -> AP AP
-		grammar.addProduction(
-				adverbalPhrase,
-				new ParameterizedSymbol<>(adverbalPhrase, any),
-				new ParameterizedSymbol<>(adverbalPhrase, any));
-
-		// NP(pi) -> NF(pi) Attr(pi)
-		grammar.addProduction(
-				nounPhrase,
-				new ParameterizedSymbol<>(nounForm, copy),
-				new ParameterizedSymbol<>(attribute, copy));
-		// NF(pi) -> n(pi)
-		grammar.addProduction(
-				nounForm,
+		grammar.addProduction(nounPhrase,
 				new ParameterizedSymbol<>(noun, copy));
-		// Attr(pi) -> epsilon
-		grammar.addProduction(
-				attribute);
-		// Attr(pi) -> Attr(pi) Attr(pi)
-		grammar.addProduction(
-				attribute,
-				new ParameterizedSymbol<>(attribute, copy),
-				new ParameterizedSymbol<>(attribute, copy));
-		// Attr(pi) -> NF(pi)
-		grammar.addProduction(
-				attribute,
-				new ParameterizedSymbol<>(nounForm, copy));
-		// Attr(pi) -> NP(Gen)
-		grammar.addProduction(
-				attribute,
+
+		grammar.addProduction(nounPhrase,
+				new ParameterizedSymbol<>(noun, copy),
+				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, new FormParameter(Form.nounForm(Casus.Genitive, null, null)))));
+
+		grammar.addProduction(verbPhrase,
+				new ParameterizedSymbol<>(verb, copy),
 				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, new FormParameter(Form.nounForm(Casus.Genitive, null, null)))));
 
 		GrammarParser<Token, FormParameter> parser = new EarleyParser<>(grammar, new DynamicInputPositionInitializer<>());
@@ -194,14 +124,27 @@ public class LatinParameterExample {
 		// tokens
 
 		List<Token> tokens = new ArrayList<>();
-		tokens.add(new Token("serva", new Determination(serva, Form.nounForm(Casus.Nominative, Numerus.Singular, Genus.Feminine))));
-		tokens.add(new Token("servi", new Determination(servus, Form.nounForm(Casus.Genitive, Numerus.Singular, Genus.Masculine))));
-		tokens.add(new Token("cantat", new Determination(canto, Form.verbForm(Person.Third, Numerus.Singular, Tense.Present, Mood.Indicative, Voice.Active))));
+		tokens.add(new Token("iumentum",
+				new Determination(serva, Form.nounForm(Casus.Nominative, Numerus.Singular, Genus.Neuter)),
+				new Determination(serva, Form.nounForm(Casus.Accusative, Numerus.Singular, Genus.Neuter)),
+				new Determination(serva, Form.nounForm(Casus.Vocative, Numerus.Singular, Genus.Neuter))));
+		tokens.add(new Token("servae",
+				new Determination(servus, Form.nounForm(Casus.Genitive, Numerus.Singular, Genus.Feminine)),
+				new Determination(servus, Form.nounForm(Casus.Dative, Numerus.Singular, Genus.Feminine)),
+				new Determination(servus, Form.nounForm(Casus.Accusative, Numerus.Plural, Genus.Feminine)),
+				new Determination(servus, Form.nounForm(Casus.Vocative, Numerus.Plural, Genus.Feminine))));
+		tokens.add(new Token("plaustrum",
+				new Determination(serva, Form.nounForm(Casus.Nominative, Numerus.Singular, Genus.Neuter)),
+				new Determination(serva, Form.nounForm(Casus.Accusative, Numerus.Singular, Genus.Neuter))));
+		tokens.add(new Token("trahit",
+				new Determination(canto, Form.verbForm(Person.Third, Numerus.Singular, Tense.Present, Mood.Indicative, Voice.Active))));
 
 		ParseResult<Token, FormParameter> result = parser.parse(tokens);
 
 		new ChartSetPrinter<Token, FormParameter>(result.getCharts(), tokens).print(new PrintStream("E:\\temp.html"));
-		System.out.println(result.getTreeForest());
+		for (ParseTree<Token> tree : result.getTreeForest()) {
+			System.out.println(tree);
+		}
 	}
 
 	public static class DummyLemma implements Lemma {

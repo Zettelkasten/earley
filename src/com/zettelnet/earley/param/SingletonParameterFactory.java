@@ -1,10 +1,10 @@
 package com.zettelnet.earley.param;
 
-public class SimpleParameterFactory<P extends Parameter> implements ParameterFactory<P> {
+public class SingletonParameterFactory<P extends Parameter> implements ParameterFactory<P> {
 
 	private final P value;
 
-	public SimpleParameterFactory(final P value) {
+	public SingletonParameterFactory(final P value) {
 		this.value = value;
 	}
 

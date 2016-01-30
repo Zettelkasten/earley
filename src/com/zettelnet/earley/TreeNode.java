@@ -24,12 +24,16 @@ public class TreeNode<T> {
 		this.children.add(0, node);
 	}
 
+	public List<TreeNode<T>> getChildren() {
+		return children;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder str = new StringBuilder();
 		str.append("[");
 		str.append(value);
-		
+
 		for (TreeNode<T> child : children) {
 			str.append(" ");
 			str.append(child);

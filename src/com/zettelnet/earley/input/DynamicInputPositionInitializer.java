@@ -11,7 +11,7 @@ public class DynamicInputPositionInitializer<T> implements InputPositionInitiali
 	public SortedSet<InputPosition<T>> getInputPositions(List<T> tokens) {
 		SortedSet<InputPosition<T>> positions = new TreeSet<>();
 		BitSet set = new BitSet();
-		while (set.cardinality() <= tokens.size()) {
+		while (set.length() <= tokens.size()) {
 			DynamicInputPosition<T> inputPosition = new DynamicInputPosition<>(tokens, (BitSet) set.clone());
 			positions.add(inputPosition);
 			addOne(set);

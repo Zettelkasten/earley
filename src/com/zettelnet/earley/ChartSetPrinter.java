@@ -2,6 +2,7 @@ package com.zettelnet.earley;
 
 import java.io.PrintStream;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
@@ -13,11 +14,13 @@ import com.zettelnet.earley.param.ParameterExpression;
 public class ChartSetPrinter<T, P extends Parameter> {
 
 	private final SortedMap<InputPosition<T>, Chart<T, P>> charts;
+	private final List<T> tokens;
 
 	private final Map<Chart<T, P>, Map<State<T, P>, Integer>> stateIds;
 
-	public ChartSetPrinter(final SortedMap<InputPosition<T>, Chart<T, P>> charts) {
+	public ChartSetPrinter(final SortedMap<InputPosition<T>, Chart<T, P>> charts, final List<T> tokens) {
 		this.charts = charts;
+		this.tokens = tokens;
 
 		stateIds = new HashMap<>();
 		for (Chart<T, P> chart : charts.values()) {
@@ -72,7 +75,10 @@ public class ChartSetPrinter<T, P extends Parameter> {
 
 	public void printChart(PrintStream out, Chart<T, P> chart) {
 		out.printf("<div class='chart col-md-4' id='chart-%s'>", chart.getInputPosition());
-		out.printf("<h2 class='chart-title'>S(%s)</h2>", chart.getInputPosition());
+		out.print("<h2 class='chart-title'>");
+		out.printf("S(%s) - ", chart.getInputPosition());
+		printInputPosition(out, chart.getInputPosition());
+		out.print("</h2>");
 
 		out.print("<ol class='chart-states'>");
 		for (State<T, P> state : chart) {
@@ -81,6 +87,28 @@ public class ChartSetPrinter<T, P extends Parameter> {
 		out.print("</ol>");
 
 		out.print("</div>");
+	}
+
+	public void printInputPosition(PrintStream out, InputPosition<T> position) {
+		out.print("<span class='chart-tokens'>");
+		for (Iterator<T> i = tokens.iterator(); i.hasNext();) {
+			T token = i.next();
+
+			boolean available = position.isTokenAvailable(token);
+
+			if (!available) {
+				out.print("<strike>");
+			}
+			out.print(token);
+			if (!available) {
+				out.print("</strike>");
+			}
+
+			if (i.hasNext()) {
+				out.print(" ");
+			}
+		}
+		out.print("</span>");
 	}
 
 	public void printState(PrintStream out, State<T, P> state) {

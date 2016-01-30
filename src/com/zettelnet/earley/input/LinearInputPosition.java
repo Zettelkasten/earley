@@ -33,6 +33,11 @@ public class LinearInputPosition<T> implements InputPosition<T>, Comparable<Line
 	public boolean isComplete() {
 		return index == tokens.size();
 	}
+	
+	@Override
+	public boolean isTokenAvailable(T token) {
+		return index == tokens.indexOf(token);
+	}
 
 	@Override
 	public Iterable<T> getAvailableTokens() {

@@ -19,7 +19,7 @@ import com.zettelnet.earley.param.CopyParameterExpression;
 import com.zettelnet.earley.param.Parameter;
 import com.zettelnet.earley.param.ParameterExpression;
 import com.zettelnet.earley.param.ParameterManager;
-import com.zettelnet.earley.param.SimpleParameterFactory;
+import com.zettelnet.earley.param.SingletonParameterFactory;
 
 public class SameLastCharExample {
 
@@ -133,7 +133,7 @@ public class SameLastCharExample {
 		// ParameterExpression<String, LastCharParameter> any = new
 		// AnyParameterExpression<>();
 
-		grammar.addProduction(sentence, new SimpleParameterFactory<>(new LastCharParameter()),
+		grammar.addProduction(sentence, new SingletonParameterFactory<>(new LastCharParameter()),
 				new ParameterizedSymbol<>(sentence, copy),
 				new ParameterizedSymbol<>(word, copy));
 		grammar.addProduction(sentence);
@@ -146,7 +146,7 @@ public class SameLastCharExample {
 													 */.split(" "));
 		ParseResult<String, LastCharParameter> result = parser.parse(tokens);
 
-		new ChartSetPrinter<String, LastCharParameter>(result.getCharts()).print(new PrintStream("E:\\temp.html"));
+		new ChartSetPrinter<String, LastCharParameter>(result.getCharts(), tokens).print(new PrintStream("E:\\temp.html"));
 		System.out.println(result.getTreeForest());
 	}
 }

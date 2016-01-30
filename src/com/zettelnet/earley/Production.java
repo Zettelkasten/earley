@@ -2,7 +2,6 @@ package com.zettelnet.earley;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import com.zettelnet.earley.param.AnyParameterExpression;
@@ -34,10 +33,6 @@ public class Production<T, P extends Parameter> {
 			list.add(parameterizedSymbol.getSymbol());
 		}
 		return list;
-	}
-
-	public Production(final Grammar<T, P> grammar, final NonTerminal<T> left) {
-		this(left, grammar.getParameterManager(), Collections.emptyList());
 	}
 
 	@SafeVarargs

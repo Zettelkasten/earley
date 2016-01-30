@@ -54,21 +54,17 @@ public final class FormParameter implements Parameter {
 	}
 
 	public boolean isCompatibleWith(FormParameter other) {
-		boolean compatible = true;
-
 		for (Map.Entry<Class<? extends FormProperty>, FormProperty> entry : data.entrySet()) {
 			Class<? extends FormProperty> propertyType = entry.getKey();
 			FormProperty parentValue = entry.getValue();
 			FormProperty childValue = other.data.get(propertyType);
 
-			if (parentValue == null || childValue == null) {
-				return true;
-			} else {
-				return parentValue.equals(childValue);
+			if (parentValue != null && childValue != null && !parentValue.equals(childValue)) {
+				return false;
 			}
 		}
 
-		return compatible;
+		return true;
 	}
 
 	public FormParameter deriveWith(FormParameter with) {

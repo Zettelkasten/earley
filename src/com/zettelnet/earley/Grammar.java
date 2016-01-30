@@ -19,8 +19,8 @@ public class Grammar<T, P extends Parameter> {
 
 	private final Set<Production<T, P>> productions;
 
-	private final NonTerminal<T> startSymbol;
-	private final ParameterFactory<P> startSymbolParameter;
+	private NonTerminal<T> startSymbol;
+	private ParameterFactory<P> startSymbolParameter;
 
 	private final ParameterManager<P> parameterManager;
 
@@ -57,14 +57,29 @@ public class Grammar<T, P extends Parameter> {
 		}
 	}
 
-	@SafeVarargs
-	public final void addProduction(NonTerminal<T> left, ParameterizedSymbol<T, P>... right) {
-		addProduction(left, parameterManager, right);
+	public final Production<T, P> addProduction(NonTerminal<T> left) {
+		Production<T, P> production = new Production<>(this, left);
+		addProduction(production);
+		return production;
 	}
 
 	@SafeVarargs
-	public final void addProduction(NonTerminal<T> left, ParameterFactory<P> keyParameter, ParameterizedSymbol<T, P>... right) {
-		addProduction(new Production<T, P>(left, keyParameter, right));
+	public final Production<T, P> addProduction(NonTerminal<T> left, Symbol<T>... right) {
+		Production<T, P> production = new Production<>(this, left, right);
+		addProduction(production);
+		return production;
+	}
+
+	@SafeVarargs
+	public final Production<T, P> addProduction(NonTerminal<T> left, ParameterizedSymbol<T, P>... right) {
+		return addProduction(left, parameterManager, right);
+	}
+
+	@SafeVarargs
+	public final Production<T, P> addProduction(NonTerminal<T> left, ParameterFactory<P> keyParameter, ParameterizedSymbol<T, P>... right) {
+		Production<T, P> production = new Production<>(left, keyParameter, right);
+		addProduction(production);
+		return production;
 	}
 
 	public Set<NonTerminal<T>> getNonTerminals() {
@@ -92,8 +107,16 @@ public class Grammar<T, P extends Parameter> {
 		return startSymbol;
 	}
 
+	public void setStartSymbol(NonTerminal<T> startSymbol) {
+		this.startSymbol = startSymbol;
+	}
+
 	public ParameterFactory<P> getStartSymbolParameter() {
 		return startSymbolParameter;
+	}
+
+	public void setStartSymbolParameter(ParameterFactory<P> startSymbolParameter) {
+		this.startSymbolParameter = startSymbolParameter;
 	}
 
 	public ParameterManager<P> getParameterManager() {

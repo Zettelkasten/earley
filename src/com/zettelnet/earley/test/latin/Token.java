@@ -24,4 +24,9 @@ public class Token {
 	public Collection<Determination> getDeterminations() {
 		return determinations;
 	}
+	
+	@Override
+	public String toString() {
+		return content;
+	}
 }

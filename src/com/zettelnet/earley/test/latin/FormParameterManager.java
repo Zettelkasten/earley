@@ -21,6 +21,9 @@ public class FormParameterManager implements ParameterManager<FormParameter> {
 
 	@Override
 	public boolean isCompatible(FormParameter parent, FormParameter child) {
+		if (parent.isCompatibleWith(child)) {
+			System.out.println("parent " + parent + " is compatible with child " + child);
+		}
 		return parent.isCompatibleWith(child);
 	}
 }

@@ -11,6 +11,8 @@ public interface InputPosition<T> {
 	boolean isClean();
 
 	boolean isComplete();
+	
+	boolean isTokenAvailable(T token);
 
 	Iterable<T> getAvailableTokens();
 

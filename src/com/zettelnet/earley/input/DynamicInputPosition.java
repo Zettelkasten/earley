@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 public class DynamicInputPosition<T> implements InputPosition<T>, Comparable<DynamicInputPosition<T>> {
@@ -46,6 +45,11 @@ public class DynamicInputPosition<T> implements InputPosition<T>, Comparable<Dyn
 	public boolean isComplete() {
 		return usedTokens.cardinality() == tokens.size();
 	}
+	
+	@Override
+	public boolean isTokenAvailable(T token) {
+		return !usedTokens.get(tokens.indexOf(token));
+	}
 
 	@Override
 	public Collection<T> getAvailableTokens() {
@@ -71,23 +75,9 @@ public class DynamicInputPosition<T> implements InputPosition<T>, Comparable<Dyn
 
 	@Override
 	public String toString() {
-		Collection<T> availableTokens = getAvailableTokens();
-		
-		StringBuilder str = new StringBuilder();
-		
-		for (Iterator<T> i = tokens.iterator(); i.hasNext(); ) {
-			T token = i.next();
-			
-			if (!availableTokens.contains(token)) {
-				str.append("<strike>");
-			}
-			str.append(token);
-			if (!availableTokens.contains(token)) {
-				str.append("</strike>");
-			}
-			if (i.hasNext()) {
-				str.append(" ");
-			}
+		StringBuilder str = new StringBuilder(tokens.size());
+		for (int i = 0; i < tokens.size(); i++) {
+			str.append(usedTokens.get(i) ? '1' : '0');
 		}
 		return str.toString();
 	}

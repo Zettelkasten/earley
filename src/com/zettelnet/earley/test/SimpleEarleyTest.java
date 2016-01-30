@@ -1,24 +1,25 @@
 package com.zettelnet.earley.test;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
-import com.zettelnet.earley.EarleyParseResult;
+import com.zettelnet.earley.ChartSetPrinter;
 import com.zettelnet.earley.EarleyParser;
 import com.zettelnet.earley.Grammar;
 import com.zettelnet.earley.NonTerminal;
+import com.zettelnet.earley.ParseResult;
+import com.zettelnet.earley.ParseTree;
 import com.zettelnet.earley.PredicateTerminal;
-import com.zettelnet.earley.Production;
 import com.zettelnet.earley.SimpleNonTerminal;
 import com.zettelnet.earley.Terminal;
+import com.zettelnet.earley.param.DefaultParameter;
+import com.zettelnet.earley.param.DefaultParameterManager;
 
 public class SimpleEarleyTest {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException {
 		Terminal<String> number = new PredicateTerminal<>("num", (token) -> {
 			try {
 				double d = Double.parseDouble(token);
@@ -31,24 +32,24 @@ public class SimpleEarleyTest {
 			return token.equals("+") || token.equals("-") || token.equals("*") || token.equals("/") || token.equals("^");
 		});
 
-		NonTerminal term = new SimpleNonTerminal("T");
-		NonTerminal sum = new SimpleNonTerminal("S");
+		NonTerminal<String> term = new SimpleNonTerminal<>("T");
+		NonTerminal<String> sum = new SimpleNonTerminal<>("S");
 
-		Set<Production> productions = new HashSet<>();
-		productions.add(new Production(term, sum));
-		productions.add(new Production(sum, term, operator, term));
-		productions.add(new Production(term, number));
+		Grammar<String, DefaultParameter> grammar = new Grammar<>(term, new DefaultParameterManager());
 
-		EarleyParser<String> parser = new EarleyParser<>(new Grammar(productions, term));
-		EarleyParseResult<String> result = parser.parse(Arrays.asList("1 + 2 + 3".split(" ")));
+		grammar.addProduction(term, sum);
+		grammar.addProduction(sum, term, operator, term);
+		grammar.addProduction(term, number);
 
-		System.out.println(result.isComplete());
-		result.printChartSets(System.out);
-		try {
-			result.printChartSetsHtml(new PrintStream(new File("E:\\temp.html")));
-			System.out.println(result.getTreeForest());
-		} catch (IOException e) {
-			e.printStackTrace();
+		EarleyParser<String, DefaultParameter> parser = new EarleyParser<>(grammar);
+
+		List<String> tokens = Arrays.asList("1 + 2 + 3".split(" "));
+
+		ParseResult<String, DefaultParameter> result = parser.parse(tokens);
+
+		new ChartSetPrinter<String, DefaultParameter>(result.getCharts(), tokens).print(new PrintStream("E:\\temp.html"));
+		for (ParseTree<String> tree : result.getTreeForest()) {
+			System.out.println(tree);
 		}
 	}
 }
