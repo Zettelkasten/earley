@@ -113,7 +113,7 @@ public final class EarleyParseResult<T, P extends Parameter> implements ParseRes
 
 			if (nextChart != null && terminal.isCompatibleWith(toResolve)) {
 
-				StateCause<T, P> origin = new StateCause.Scan<>(state);
+				StateCause<T, P> origin = new StateCause.Scan<>(state, toResolve);
 
 				ParameterExpression<T, P> parameterExpression = state.nextParameterExpression();
 				P parameter = state.getParameter();

@@ -24,13 +24,19 @@ public interface StateCause<T, P extends Parameter> {
 	public class Scan<T, P extends Parameter> implements StateCause<T, P> {
 
 		private final State<T, P> fromState;
+		private final T withToken;
 
-		public Scan(final State<T, P> fromState) {
+		public Scan(final State<T, P> fromState, final T withToken) {
 			this.fromState = fromState;
+			this.withToken = withToken;
 		}
 
 		public State<T, P> getFromState() {
 			return fromState;
+		}
+		
+		public T getWithToken() {
+			return withToken;
 		}
 	}
 
