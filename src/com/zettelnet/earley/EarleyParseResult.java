@@ -219,7 +219,7 @@ public final class EarleyParseResult<T, P extends Parameter> implements ParseRes
 							// reverse-scanning
 							StateCause.Scan<T, P> scanCause = (StateCause.Scan<T, P>) cause;
 							branch.addChild(new TerminalNode<>((Terminal<T>) last));
-							queue.add(new TreeState<>(scanCause.getFromState(), branch));
+							queue.add(new TreeState<>(scanCause.getPreState(), branch));
 
 //							System.out.println(" - s' is result of scanning");
 //							System.out.println(" - s0 = " + scanCause.getFromState() + " on " + scanCause.getFromState().getChart() + " -> queued");
@@ -229,9 +229,9 @@ public final class EarleyParseResult<T, P extends Parameter> implements ParseRes
 							// from state
 							TreeNode<T> newBranch = new TreeNode<>((NonTerminal<T>) last);
 							branch.addChild(newBranch);
-							queue.add(new TreeState<>(completeCause.getFromState(), newBranch));
+							queue.add(new TreeState<>(completeCause.getChildState(), newBranch));
 							// with state
-							queue.add(new TreeState<>(completeCause.getWithState(), branch));
+							queue.add(new TreeState<>(completeCause.getPreState(), branch));
 
 //							System.out.println(" - s' is result of completion");
 //							System.out.println(" - s0 = " + completeCause.getFromState() + " on " + completeCause.getFromState().getChart() + " -> queued first");

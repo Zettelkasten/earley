@@ -183,18 +183,18 @@ public class ChartSetPrinter<T, P extends Parameter> {
 				out.print("seed");
 			} else {
 				out.print("predict ");
-				printStateReference(out, predict.getFromState(), observer);
+				printStateReference(out, predict.getParentState(), observer);
 			}
 		} else if (origin instanceof StateCause.Scan) {
 			StateCause.Scan<T, P> scan = (StateCause.Scan<T, P>) origin;
 			out.print("scan ");
-			printStateReference(out, scan.getFromState(), observer);
+			printStateReference(out, scan.getPreState(), observer);
 		} else if (origin instanceof StateCause.Complete) {
 			StateCause.Complete<T, P> complete = (StateCause.Complete<T, P>) origin;
 			out.print("complete ");
-			printStateReference(out, complete.getFromState(), observer);
+			printStateReference(out, complete.getChildState(), observer);
 			out.print(" and ");
-			printStateReference(out, complete.getWithState(), observer);
+			printStateReference(out, complete.getPreState(), observer);
 		} else {
 			out.print("unknown");
 		}
