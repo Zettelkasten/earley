@@ -155,7 +155,7 @@ public class ChartSetPrinter<T, P extends Parameter> {
 	}
 
 	public void printParameter(PrintStream out, P parameter) {
-		out.printf("(&alpha; : %s)", parameter);
+		out.printf("(&pi; : %s)", parameter);
 	}
 
 	public void printParameterExpression(PrintStream out, ParameterExpression<T, P> parameter) {
