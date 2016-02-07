@@ -16,24 +16,12 @@ import com.zettelnet.earley.param.Parameter;
 import com.zettelnet.earley.param.ParameterExpression;
 import com.zettelnet.earley.param.ParameterManager;
 import com.zettelnet.earley.param.SingletonParameterFactory;
+import com.zettelnet.earley.symbol.AnyTokenTerminal;
 import com.zettelnet.earley.symbol.NonTerminal;
 import com.zettelnet.earley.symbol.SimpleNonTerminal;
-import com.zettelnet.earley.symbol.SimpleTerminal;
 import com.zettelnet.earley.symbol.Terminal;
 
 public class SameLastCharExample {
-
-	public static class AnyTokenTerminal<T> extends SimpleTerminal<T> {
-
-		public AnyTokenTerminal(final String name) {
-			super(name);
-		}
-
-		@Override
-		public boolean isCompatibleWith(T token) {
-			return true;
-		}
-	}
 
 	public static class LastCharParameter implements Parameter {
 

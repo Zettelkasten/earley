@@ -15,22 +15,9 @@ import com.zettelnet.earley.param.DefaultParameterManager;
 import com.zettelnet.earley.symbol.NonTerminal;
 import com.zettelnet.earley.symbol.PredicateTerminal;
 import com.zettelnet.earley.symbol.SimpleNonTerminal;
-import com.zettelnet.earley.symbol.SimpleTerminal;
 import com.zettelnet.earley.symbol.Terminal;
 
 public class EarleyTest {
-
-	public static class AnyTokenTerminal<T> extends SimpleTerminal<T> {
-
-		public AnyTokenTerminal(final String name) {
-			super(name);
-		}
-
-		@Override
-		public boolean isCompatibleWith(T token) {
-			return true;
-		}
-	}
 
 	public static void main(String[] args) {
 
