@@ -47,6 +47,6 @@ public class CopyParameterExpression<T, P extends Parameter> implements Paramete
 
 	@Override
 	public String toString() {
-		return "&alpha;";
+		return "&pi;";
 	}
 }
