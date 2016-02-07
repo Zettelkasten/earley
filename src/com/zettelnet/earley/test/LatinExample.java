@@ -3,7 +3,6 @@ package com.zettelnet.earley.test;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -21,6 +20,7 @@ import com.zettelnet.earley.param.ParameterExpression;
 import com.zettelnet.earley.param.ParameterManager;
 import com.zettelnet.earley.param.SingletonParameterFactory;
 import com.zettelnet.earley.param.SpecificParameterExpression;
+import com.zettelnet.earley.param.TokenParameterizer;
 import com.zettelnet.earley.symbol.NonTerminal;
 import com.zettelnet.earley.symbol.SimpleNonTerminal;
 import com.zettelnet.earley.symbol.SimpleTerminal;
@@ -28,6 +28,7 @@ import com.zettelnet.earley.symbol.Terminal;
 import com.zettelnet.earley.test.latin.Determination;
 import com.zettelnet.earley.test.latin.FormParameter;
 import com.zettelnet.earley.test.latin.FormParameterManager;
+import com.zettelnet.earley.test.latin.FormParameterizer;
 import com.zettelnet.earley.test.latin.Token;
 import com.zettelnet.latin.Form;
 import com.zettelnet.latin.form.Casus;
@@ -76,27 +77,12 @@ public class LatinExample {
 		Terminal<Token> noun = new LexemeTerminal(Lemma.Type.Noun);
 
 		ParameterManager<FormParameter> parameterManager = new FormParameterManager();
+		TokenParameterizer<Token, FormParameter> parameterizer = new FormParameterizer();
+		
 		Grammar<Token, FormParameter> grammar = new Grammar<>(sentence, parameterManager);
 		grammar.setStartSymbolParameter(new SingletonParameterFactory<>(new FormParameter(Form.nounForm(Casus.Nominative, null, null))));
-
-		ParameterExpression<Token, FormParameter> copy = new CopyParameterExpression<>(grammar, (Token token, Terminal<Token> terminal) -> {
-			Collection<FormParameter> parameters = new ArrayList<>();
-
-			for (Determination determination : token.getDeterminations()) {
-				if (terminal instanceof LexemeTerminal) {
-					LexemeTerminal lexemeTerminal = (LexemeTerminal) terminal;
-					if (!lexemeTerminal.isCompatibleWith(determination)) {
-						continue;
-					}
-				}
-
-				Form form = determination.getForm();
-				FormParameter parameter = new FormParameter(Form.withValues(form.getCasus(), form.getNumerus(), form.getGenus(), form.getPerson(), form.getMood(), form.getTense(), form.getVoice(), form.getComparison()));
-				parameters.add(parameter);
-			}
-
-			return parameters;
-		});
+		
+		ParameterExpression<Token, FormParameter> copy = new CopyParameterExpression<>(grammar, parameterizer);
 
 		grammar.addProduction(sentence,
 				new ParameterizedSymbol<>(nounPhrase, copy),
@@ -107,11 +93,11 @@ public class LatinExample {
 
 		grammar.addProduction(nounPhrase,
 				new ParameterizedSymbol<>(noun, copy),
-				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, new FormParameter(Form.nounForm(Casus.Genitive, null, null)))));
+				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Form.nounForm(Casus.Genitive, null, null)))));
 
 		grammar.addProduction(verbPhrase,
 				new ParameterizedSymbol<>(verb, copy),
-				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, new FormParameter(Form.nounForm(Casus.Genitive, null, null)))));
+				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Form.nounForm(Casus.Genitive, null, null)))));
 
 		GrammarParser<Token, FormParameter> parser = new EarleyParser<>(grammar, new DynamicInputPositionInitializer<>());
 

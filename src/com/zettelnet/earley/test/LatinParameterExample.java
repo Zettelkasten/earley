@@ -3,7 +3,6 @@ package com.zettelnet.earley.test;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -21,6 +20,7 @@ import com.zettelnet.earley.param.ParameterExpression;
 import com.zettelnet.earley.param.ParameterManager;
 import com.zettelnet.earley.param.SingletonParameterFactory;
 import com.zettelnet.earley.param.SpecificParameterExpression;
+import com.zettelnet.earley.param.TokenParameterizer;
 import com.zettelnet.earley.symbol.NonTerminal;
 import com.zettelnet.earley.symbol.SimpleNonTerminal;
 import com.zettelnet.earley.symbol.SimpleTerminal;
@@ -28,6 +28,7 @@ import com.zettelnet.earley.symbol.Terminal;
 import com.zettelnet.earley.test.latin.Determination;
 import com.zettelnet.earley.test.latin.FormParameter;
 import com.zettelnet.earley.test.latin.FormParameterManager;
+import com.zettelnet.earley.test.latin.FormParameterizer;
 import com.zettelnet.earley.test.latin.Token;
 import com.zettelnet.latin.Form;
 import com.zettelnet.latin.form.Casus;
@@ -83,27 +84,12 @@ public class LatinParameterExample {
 		Terminal<Token> noun = new LexemeTerminal(Lemma.Type.Noun);
 
 		ParameterManager<FormParameter> parameterManager = new FormParameterManager();
+		TokenParameterizer<Token, FormParameter> parameterizer = new FormParameterizer();
+
 		Grammar<Token, FormParameter> grammar = new Grammar<>(sentence, parameterManager);
 		grammar.setStartSymbolParameter(new SingletonParameterFactory<>(new FormParameter(Form.nounForm(Casus.Nominative, null, null))));
 
-		ParameterExpression<Token, FormParameter> copy = new CopyParameterExpression<>(grammar, (Token token, Terminal<Token> terminal) -> {
-			Collection<FormParameter> parameters = new ArrayList<>();
-
-			for (Determination determination : token.getDeterminations()) {
-				if (terminal instanceof LexemeTerminal) {
-					LexemeTerminal lexemeTerminal = (LexemeTerminal) terminal;
-					if (!lexemeTerminal.isCompatibleWith(determination)) {
-						continue;
-					}
-				}
-
-				Form form = determination.getForm();
-				FormParameter parameter = new FormParameter(Form.withValues(form.getCasus(), form.getNumerus(), form.getGenus(), form.getPerson(), form.getMood(), form.getTense(), form.getVoice(), form.getComparison()));
-				parameters.add(parameter);
-			}
-
-			return parameters;
-		});
+		ParameterExpression<Token, FormParameter> copy = new CopyParameterExpression<>(grammar, parameterizer);
 		ParameterExpression<Token, FormParameter> any = new AnyParameterExpression<>(parameterManager);
 
 		// S(pi : !NullVal !Imp) -> NP(pi) VP(pi) -> TODO
@@ -134,20 +120,20 @@ public class LatinParameterExample {
 		// Args(pi : GenVal) -> NP(Gen) -> TODO
 		grammar.addProduction(
 				arguments,
-				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, new FormParameter(Form.nounForm(Casus.Genitive, null, null)))));
+				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Form.nounForm(Casus.Genitive, null, null)))));
 		// Args(pi : DatVal) -> NP(Dat) -> TODO
 		grammar.addProduction(
 				arguments,
-				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, new FormParameter(Form.nounForm(Casus.Dative, null, null)))));
+				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Form.nounForm(Casus.Dative, null, null)))));
 		// Args(pi : AkkVal) -> NP(Akk) -> TODO
 		grammar.addProduction(
 				arguments,
-				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, new FormParameter(Form.nounForm(Casus.Accusative, null, null)))));
+				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Form.nounForm(Casus.Accusative, null, null)))));
 		// Args(pi : AkkDatVal) -> NP(Akk) NP(Dat) -> TODO
 		grammar.addProduction(
 				arguments,
-				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, new FormParameter(Form.nounForm(Casus.Accusative, null, null)))),
-				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, new FormParameter(Form.nounForm(Casus.Dative, null, null)))));
+				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Form.nounForm(Casus.Accusative, null, null)))),
+				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Form.nounForm(Casus.Dative, null, null)))));
 		// AP -> epsilon
 		grammar.addProduction(
 				adverbalPhrase);
@@ -181,7 +167,7 @@ public class LatinParameterExample {
 		// Attr(pi) -> NP(Gen)
 		grammar.addProduction(
 				attribute,
-				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, new FormParameter(Form.nounForm(Casus.Genitive, null, null)))));
+				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Form.nounForm(Casus.Genitive, null, null)))));
 
 		GrammarParser<Token, FormParameter> parser = new EarleyParser<>(grammar, new DynamicInputPositionInitializer<>());
 
