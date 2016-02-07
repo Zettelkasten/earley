@@ -82,7 +82,7 @@ public class ChartSetPrinter<T, P extends Parameter> {
 	}
 
 	public void printChart(PrintStream out, Chart<T, P> chart) {
-		out.printf("<div class='chart col-md-4' id='chart-%s'>", chart.getInputPosition());
+		out.printf("<div class='chart' id='chart-%s'>", chart.getInputPosition());
 		out.print("<h2 class='chart-title'>");
 		out.printf("S(%s) - ", chart.getInputPosition());
 		printInputPosition(out, chart.getInputPosition());

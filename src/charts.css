@@ -1,6 +1,9 @@
 .highlight {
 	background-color: red;
 }
+.state {
+	white-space: nowrap;
+}
 .state-origin {
 	color: gray;
 }
