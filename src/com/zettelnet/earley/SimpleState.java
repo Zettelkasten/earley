@@ -79,21 +79,24 @@ public class SimpleState<T, P extends Parameter> implements State<T, P> {
 	public String toString() {
 		StringBuilder str = new StringBuilder();
 		str.append(production.key());
-		str.append("<");
+		str.append("(pi : ");
 		str.append(parameter);
-		str.append(">");
+		str.append(")");
 		str.append(" ->");
 
 		List<Symbol<T>> productionValues = production.values();
-		if (currentPosition == 0) {
-			str.append(" .");
-		}
 		if (productionValues.size() == 0) {
 			str.append(" [empty]");
 		} else {
+			if (currentPosition == 0) {
+				str.append(" .");
+			}
 			for (int i = 0; i < productionValues.size(); i++) {
 				str.append(" ");
-				str.append(productionValues.get(i));
+				str.append(production.get(i));
+				str.append("(");
+				str.append(production.getParameterExpression(i));
+				str.append(")");
 
 				if (currentPosition == i + 1) {
 					str.append(" .");
