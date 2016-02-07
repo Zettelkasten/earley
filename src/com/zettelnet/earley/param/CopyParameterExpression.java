@@ -24,6 +24,15 @@ public class CopyParameterExpression<T, P extends Parameter> implements Paramete
 	}
 
 	@Override
+	public Collection<P> predict(P parameter, P childParameter) {
+		if (manager.isCompatible(parameter, childParameter)) {
+			P result = manager.copyParameter(parameter, childParameter);
+			return Arrays.asList(result);
+		}
+		return Arrays.asList(manager.copyParameter(childParameter));
+	}
+
+	@Override
 	public Collection<P> scan(P parameter, T token, Terminal<T> terminal) {
 		Collection<P> results = new ArrayList<>();
 		for (P tokenParameter : parameterizer.getTokenParameters(token, terminal)) {

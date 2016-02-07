@@ -10,14 +10,23 @@ public class SpecificParameterExpression<T, P extends Parameter> implements Para
 
 	private final ParameterManager<P> manager;
 	private final TokenParameterizer<T, P> parameterizer;
-	
+
 	private final P parameter;
 
 	public SpecificParameterExpression(final ParameterManager<P> manager, final TokenParameterizer<T, P> parameterizer, final P parameter) {
 		this.manager = manager;
 		this.parameterizer = parameterizer;
-		
+
 		this.parameter = parameter;
+	}
+	
+	@Override
+	public Collection<P> predict(P parentParameter, P childParameter) {
+		if (manager.isCompatible(parameter, childParameter)) {
+			P result = manager.copyParameter(parameter, childParameter);
+			return Arrays.asList(result);
+		}
+		return Arrays.asList(manager.copyParameter(childParameter));
 	}
 
 	@Override

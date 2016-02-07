@@ -20,6 +20,11 @@ public class AnyParameterExpression<T, P extends Parameter> implements Parameter
 	public AnyParameterExpression(final ParameterManager<P> manager) {
 		this.manager = manager;
 	}
+	
+	@Override
+	public Collection<P> predict(P parameter, P childParameter) {
+		return Arrays.asList(manager.copyParameter(childParameter));
+	}
 
 	@Override
 	public Collection<P> scan(P parameter, T token, Terminal<T> terminal) {

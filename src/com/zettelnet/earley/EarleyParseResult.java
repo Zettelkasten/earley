@@ -98,7 +98,7 @@ public final class EarleyParseResult<T, P extends Parameter> implements ParseRes
 			// parameter
 			ParameterExpression<T, P> parameterExpression = state.nextParameterExpression();
 			P sourceParameter = state.getParameter();
-			Collection<P> newParameters = parameterExpression.complete(production.keyParameter(), sourceParameter);
+			Collection<P> newParameters = parameterExpression.predict(sourceParameter, production.keyParameter());
 
 			for (P newParameter : newParameters) {
 				State<T, P> newState = new SimpleState<>(currentChart, production, 0, chartPosition, newParameter);
@@ -110,7 +110,7 @@ public final class EarleyParseResult<T, P extends Parameter> implements ParseRes
 
 	private void scan(State<T, P> state, Terminal<T> terminal) {
 		InputPosition<T> chartPosition = currentChart.getInputPosition();
-		
+
 		for (T toResolve : chartPosition.getAvailableTokens()) {
 			Chart<T, P> nextChart = charts.get(chartPosition.nextPosition(toResolve));
 
@@ -131,7 +131,7 @@ public final class EarleyParseResult<T, P extends Parameter> implements ParseRes
 
 	private void complete(State<T, P> state) {
 		InputPosition<T> chartPosition = currentChart.getInputPosition();
-		
+
 		NonTerminal<T> key = state.getProduction().key();
 		if (chartPosition.isComplete() && key.equals(grammar.getStartSymbol()) && state.getOriginPosition().isClean()) {
 			// done
@@ -180,8 +180,8 @@ public final class EarleyParseResult<T, P extends Parameter> implements ParseRes
 
 	@Override
 	public Collection<ParseTree<T>> getTreeForest() {
-//		System.out.println("Retreiving parse forest");
-		
+		// System.out.println("Retreiving parse forest");
+
 		Collection<ParseTree<T>> trees = new HashSet<>();
 		for (State<T, P> completeState : completeStates) {
 			Queue<TreeQueue<T, P>> queueList = new LinkedList<>();
@@ -192,8 +192,8 @@ public final class EarleyParseResult<T, P extends Parameter> implements ParseRes
 			seedQueue.add(new TreeState<>(completeState, seedTree));
 			queueList.add(new TreeQueue<>(seedTree, seedQueue));
 
-//			System.out.println("Start");
-//			System.out.println(" >>> " + seedTree);
+			// System.out.println("Start");
+			// System.out.println(" >>> " + seedTree);
 
 			while (!queueList.isEmpty()) {
 				TreeQueue<T, P> treeQueue = queueList.poll();
@@ -207,7 +207,8 @@ public final class EarleyParseResult<T, P extends Parameter> implements ParseRes
 
 					int pos = state.getCurrentPosition();
 					if (pos > 0) {
-//						System.out.println("processing s' = " + state + " on " + state.getChart());
+						// System.out.println("processing s' = " + state + " on
+						// " + state.getChart());
 						Symbol<T> last = state.getProduction().get(pos - 1);
 						Collection<StateCause<T, P>> causes = state.getCause();
 						// for (Iterator<StateCause> i = causes.iterator();
@@ -224,8 +225,12 @@ public final class EarleyParseResult<T, P extends Parameter> implements ParseRes
 							branch.addChild(new TerminalNode<>((Terminal<T>) last));
 							queue.add(new TreeState<>(scanCause.getPreState(), branch));
 
-//							System.out.println(" - s' is result of scanning");
-//							System.out.println(" - s0 = " + scanCause.getFromState() + " on " + scanCause.getFromState().getChart() + " -> queued");
+							// System.out.println(" - s' is result of
+							// scanning");
+							// System.out.println(" - s0 = " +
+							// scanCause.getFromState() + " on " +
+							// scanCause.getFromState().getChart() + " ->
+							// queued");
 						} else if (cause instanceof StateCause.Complete) {
 							// reverse-completion
 							StateCause.Complete<T, P> completeCause = (StateCause.Complete<T, P>) cause;
@@ -236,16 +241,24 @@ public final class EarleyParseResult<T, P extends Parameter> implements ParseRes
 							// with state
 							queue.add(new TreeState<>(completeCause.getPreState(), branch));
 
-//							System.out.println(" - s' is result of completion");
-//							System.out.println(" - s0 = " + completeCause.getFromState() + " on " + completeCause.getFromState().getChart() + " -> queued first");
-//							System.out.println(" - s = " + completeCause.getWithState() + " on " + completeCause.getWithState().getChart() + " -> queued after");
+							// System.out.println(" - s' is result of
+							// completion");
+							// System.out.println(" - s0 = " +
+							// completeCause.getFromState() + " on " +
+							// completeCause.getFromState().getChart() + " ->
+							// queued first");
+							// System.out.println(" - s = " +
+							// completeCause.getWithState() + " on " +
+							// completeCause.getWithState().getChart() + " ->
+							// queued after");
 						} else {
 							// do nothing
 
-//							System.out.println(" - s' is result of prediction");
+							// System.out.println(" - s' is result of
+							// prediction");
 						}
 
-//						System.out.println(" >>> " + tree);
+						// System.out.println(" >>> " + tree);
 						// }
 					}
 				}
