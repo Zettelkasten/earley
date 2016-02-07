@@ -20,7 +20,7 @@ public class ChartSetPrinter<T, P extends Parameter> {
 	private final Map<Chart<T, P>, Map<State<T, P>, Integer>> stateIds;
 
 	private boolean tableMode;
-	
+
 	public ChartSetPrinter(final SortedMap<InputPosition<T>, Chart<T, P>> charts, final List<T> tokens) {
 		this(charts, tokens, true);
 	}
@@ -59,20 +59,9 @@ public class ChartSetPrinter<T, P extends Parameter> {
 		out.print("<body>");
 		out.print("<div class='container'>");
 
-		{
-			int rowCount = 0;
-			for (Chart<T, P> chart : charts.values()) {
-				if (rowCount == 0) {
-					out.print("<div class='row'>");
-				}
+		for (Chart<T, P> chart : charts.values()) {
+			if (chart.iterator().hasNext()) {
 				printChart(out, chart);
-				rowCount = (rowCount + 1) % 3;
-				if (rowCount == 0) {
-					out.print("</div>");
-				}
-			}
-			if (rowCount != 0) {
-				out.print("</div>");
 			}
 		}
 
@@ -101,7 +90,6 @@ public class ChartSetPrinter<T, P extends Parameter> {
 		} else {
 			out.print("</ol>");
 		}
-		
 
 		out.print("</div>");
 	}
@@ -131,32 +119,32 @@ public class ChartSetPrinter<T, P extends Parameter> {
 	public void printState(PrintStream out, State<T, P> state) {
 		if (tableMode) {
 			out.printf("<tr class='state' id='state-%s-%s'>", state.getChart().getInputPosition(), getStateId(state));
+			out.printf("<td class='state-id'>(%s)</td>", getStateId(state) + 1);
 		} else {
 			out.printf("<li class='state' id='state-%s-%s'>", state.getChart().getInputPosition(), getStateId(state));
 		}
 
 		Production<T, P> production = state.getProduction();
 		if (tableMode) {
-			out.print("<td align='right'>");
+			out.print("<td class='production-key'>");
 		}
 		printSymbol(out, production.key());
 		printParameter(out, state.getParameter());
 		if (tableMode) {
 			out.print("</td>");
 		}
-		
+
 		if (tableMode) {
-			out.print("<td>&#8594;</td>");
+			out.print("<td class='production-arrow'>&#8594;</td>");
 		} else {
 			out.print(" &#8594;");
 		}
-		
+
 		List<Symbol<T>> values = production.values();
 
-		
 		if (values.size() > 0) {
 			if (tableMode) {
-				out.print("<td>");
+				out.print("<td class='production-values'>");
 			}
 
 			int bullet = state.getCurrentPosition();
@@ -174,7 +162,7 @@ public class ChartSetPrinter<T, P extends Parameter> {
 
 		} else {
 			if (tableMode) {
-				out.print("<td>&epsilon;");
+				out.print("<td class='production-values'>&epsilon;");
 			} else {
 				out.print(" &epsilon;");
 			}
@@ -184,16 +172,16 @@ public class ChartSetPrinter<T, P extends Parameter> {
 		if (tableMode) {
 			out.print("</td>");
 		}
-		
+
 		if (tableMode) {
 			out.print("<td>");
 		} else {
 			out.print(" ");
-			
+
 		}
-		for (Iterator<StateCause<T, P>> i = state.getCause().iterator(); i.hasNext(); ) {
+		for (Iterator<StateCause<T, P>> i = state.getCause().iterator(); i.hasNext();) {
 			StateCause<T, P> cause = i.next();
-			
+
 			printStateOrigin(out, cause, state);
 			if (i.hasNext()) {
 				out.print(" ");
@@ -203,7 +191,7 @@ public class ChartSetPrinter<T, P extends Parameter> {
 		if (state.getCurrentPosition() == state.getProduction().size() && state.getOriginPosition().isClean() && state.getChart().getInputPosition() == charts.lastKey()) {
 			out.print(" DONE!");
 		}
-		
+
 		if (tableMode) {
 			out.print("</td>");
 		}

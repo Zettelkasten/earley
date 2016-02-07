@@ -1,12 +1,40 @@
 .highlight {
-	background-color: red;
+	background-color: b4aab5;
+}
+.container {
+	padding-bottom: 60px;
+}
+.chart-states {
+	margin-left: auto;
+	margin-right: auto;
+}
+.chart-states td {
+	padding: 2px 4px;
+}
+.chart-title {
+	background-color: #b4aab5;
+	border-top: 1px solid black;
+	padding: 5px;
+}
+.chart-tokens {
+	font-size: 90%;
+	color: #545257;
 }
 .state {
 	white-space: nowrap;
 }
+.state-id {
+	text-align: right;
+}
+.production-key {
+	text-align: right;
+}
+.production-arrow {
+	text-align: center;
+}
+.production-values {
+	text-align: left;
+}
 .state-origin {
 	color: gray;
-}
-.chart-tokens {
-	font-size: 50%;
 }
