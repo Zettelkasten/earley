@@ -37,6 +37,10 @@ public interface BinarySyntaxTreeVariant<T, P extends Parameter> {
 	BinarySyntaxTree<T, P> getPreNode();
 
 	Symbol<T> getSymbol();
+	
+	default boolean isTerminal() {
+		return getChildNode() == null;
+	}
 
 	Production<T, P> getChildProduction();
 
