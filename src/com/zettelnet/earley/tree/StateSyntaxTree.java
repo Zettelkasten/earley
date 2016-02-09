@@ -42,8 +42,17 @@ public class StateSyntaxTree<T, P extends Parameter> implements BinarySyntaxTree
 		return variants;
 	}
 
+
 	@Override
 	public String toString() {
-		return "Node" + getVariants();
+		StringBuilder str = new StringBuilder();
+		str.append("[n");
+		Collection<BinarySyntaxTreeVariant<T, P>> variants = getVariants();
+		for (BinarySyntaxTreeVariant<T, P> variant : variants) {
+			str.append(" ");
+			str.append(variant);
+		}
+		str.append("]");
+		return str.toString();
 	}
 }

@@ -4,6 +4,7 @@ import com.zettelnet.earley.Production;
 import com.zettelnet.earley.State;
 import com.zettelnet.earley.StateCause;
 import com.zettelnet.earley.param.Parameter;
+import com.zettelnet.earley.symbol.Symbol;
 import com.zettelnet.earley.symbol.Terminal;
 
 public class TerminalVariant<T, P extends Parameter> implements BinarySyntaxTreeVariant<T, P> {
@@ -35,9 +36,27 @@ public class TerminalVariant<T, P extends Parameter> implements BinarySyntaxTree
 	public BinarySyntaxTree<T, P> getChildNode() {
 		return null;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "TerminalVariant";
+		StringBuilder str = new StringBuilder();
+		str.append("[var ");
+		BinarySyntaxTree<T, P> preNode = getPreNode();
+		if (preNode != null) {
+			str.append(preNode);
+			str.append(" ");
+		}
+		Symbol<T> symbol = getSymbol();
+		if (symbol != null) {
+			str.append(symbol);
+			str.append(" ");
+		}
+		BinarySyntaxTree<T, P> childNode = getChildNode();
+		if (childNode != null) {
+			str.append(childNode);
+			str.append(" ");
+		}
+		str.append("]");
+		return str.toString();
 	}
 }

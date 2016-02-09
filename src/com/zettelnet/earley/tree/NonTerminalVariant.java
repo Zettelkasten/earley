@@ -5,6 +5,7 @@ import com.zettelnet.earley.State;
 import com.zettelnet.earley.StateCause;
 import com.zettelnet.earley.param.Parameter;
 import com.zettelnet.earley.symbol.NonTerminal;
+import com.zettelnet.earley.symbol.Symbol;
 
 public class NonTerminalVariant<T, P extends Parameter> implements BinarySyntaxTreeVariant<T, P> {
 
@@ -35,9 +36,27 @@ public class NonTerminalVariant<T, P extends Parameter> implements BinarySyntaxT
 	public BinarySyntaxTree<T, P> getChildNode() {
 		return new StateSyntaxTree<>(cause.getChildState());
 	}
-	
+
 	@Override
 	public String toString() {
-		return "NonTerminalVariant";
+		StringBuilder str = new StringBuilder();
+		str.append("[var ");
+		BinarySyntaxTree<T, P> preNode = getPreNode();
+		if (preNode != null) {
+			str.append(preNode);
+			str.append(" ");
+		}
+		Symbol<T> symbol = getSymbol();
+		if (symbol != null) {
+			str.append(symbol);
+			str.append(" ");
+		}
+		BinarySyntaxTree<T, P> childNode = getChildNode();
+		if (childNode != null) {
+			str.append(childNode);
+			str.append(" ");
+		}
+		str.append("]");
+		return str.toString();
 	}
 }

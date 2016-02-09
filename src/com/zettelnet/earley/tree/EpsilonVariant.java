@@ -28,6 +28,24 @@ public class EpsilonVariant<T, P extends Parameter> implements BinarySyntaxTreeV
 
 	@Override
 	public String toString() {
-		return "EpsilonVariant";
+		StringBuilder str = new StringBuilder();
+		str.append("[var ");
+		BinarySyntaxTree<T, P> preNode = getPreNode();
+		if (preNode != null) {
+			str.append(preNode);
+			str.append(" ");
+		}
+		Symbol<T> symbol = getSymbol();
+		if (symbol != null) {
+			str.append(symbol);
+			str.append(" ");
+		}
+		BinarySyntaxTree<T, P> childNode = getChildNode();
+		if (childNode != null) {
+			str.append(childNode);
+			str.append(" ");
+		}
+		str.append("]");
+		return str.toString();
 	}
 }
