@@ -2,6 +2,7 @@ package com.zettelnet.earley.tree.binary;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import com.zettelnet.earley.State;
 import com.zettelnet.earley.param.Parameter;
@@ -20,8 +21,8 @@ public class InitialStateBinarySyntaxTree<T, P extends Parameter> implements Bin
 	}
 
 	@Override
-	public Collection<BinarySyntaxTreeVariant<T, P>> getVariants() {
-		Collection<BinarySyntaxTreeVariant<T, P>> variants = new ArrayList<>();
+	public List<BinarySyntaxTreeVariant<T, P>> getVariants() {
+		List<BinarySyntaxTreeVariant<T, P>> variants = new ArrayList<>();
 		for (State<T, P> state : completeStates) {
 			variants.add(new InitialVariant<>(rootSymbol, state));
 		}

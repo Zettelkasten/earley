@@ -1,7 +1,7 @@
 package com.zettelnet.earley;
 
-import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 import com.zettelnet.earley.input.InputPosition;
 import com.zettelnet.earley.param.Parameter;
@@ -45,8 +45,8 @@ public class SeedState<T, P extends Parameter> implements State<T, P> {
 	}
 
 	@Override
-	public Collection<StateCause<T, P>> getCause() {
-		return Collections.emptySet();
+	public List<StateCause<T, P>> getCause() {
+		return Collections.emptyList();
 	}
 
 	@Override

@@ -19,7 +19,7 @@ public class StateSyntaxTree<T, P extends Parameter> implements BinarySyntaxTree
 	}
 
 	@Override
-	public Collection<BinarySyntaxTreeVariant<T, P>> getVariants() {
+	public List<BinarySyntaxTreeVariant<T, P>> getVariants() {
 		Collection<StateCause<T, P>> causes = state.getCause();
 		List<BinarySyntaxTreeVariant<T, P>> variants = new ArrayList<>(causes.size());
 

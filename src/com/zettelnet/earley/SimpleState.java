@@ -1,7 +1,6 @@
 package com.zettelnet.earley;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import com.zettelnet.earley.input.InputPosition;
@@ -19,7 +18,7 @@ public class SimpleState<T, P extends Parameter> implements State<T, P> {
 
 	private final P parameter;
 
-	private final Collection<StateCause<T, P>> cause = new ArrayList<>(2);
+	private final List<StateCause<T, P>> cause = new ArrayList<>(2);
 
 	public SimpleState(final Chart<T, P> chart, final Production<T, P> production, final int currentPosition, final InputPosition<T> originPosition, final P parameter) {
 		assert originPosition != null : "Origin Position cannot be null";
@@ -47,7 +46,7 @@ public class SimpleState<T, P extends Parameter> implements State<T, P> {
 		return originPosition;
 	}
 
-	public Collection<StateCause<T, P>> getCause() {
+	public List<StateCause<T, P>> getCause() {
 		return cause;
 	}
 
