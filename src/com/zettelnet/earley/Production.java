@@ -80,4 +80,28 @@ public class Production<T, P extends Parameter> {
 	public ParameterExpression<T, P> getParameterExpression(int position) {
 		return values.get(position).getParameterExpression();
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder str = new StringBuilder();
+		str.append(key);
+		str.append("(pi : ");
+		str.append(keyParameter.makeParameter());
+		str.append(")");
+		str.append(" ->");
+
+		if (values.size() == 0) {
+			str.append(" [empty]");
+		} else {
+			for (int i = 0; i < values.size(); i++) {
+				str.append(" ");
+				str.append(get(i));
+				str.append("(");
+				str.append(getParameterExpression(i));
+				str.append(")");
+			}
+		}
+
+		return str.toString();
+	}
 }
