@@ -1,6 +1,8 @@
 package com.zettelnet.earley.tree;
 
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import com.zettelnet.earley.Production;
@@ -61,9 +63,18 @@ public class UnbinaryInitialSyntaxTree<T, P extends Parameter> implements Syntax
 	}
 
 	@Override
-	public SyntaxTreeVariant<T, P> getVariant(int[] variantDirections) {
-		// TODO Auto-generated method stub
-		return null;
+	public SyntaxTreeVariant<T, P> getVariant(Iterator<Integer> variantDirections) throws NoSuchSyntaxTreeException {
+		int variantId = 0;
+		if (variantDirections.hasNext()) {
+			variantId = variantDirections.next();
+		}
+		List<BinarySyntaxTreeVariant<T, P>> variants = node.getVariants();
+		if (variantId > variants.size()) {
+			throw new NoSuchSyntaxTreeException();
+		}
+		
+		BinarySyntaxTreeVariant<T, P> binaryVariant = variants.get(variantId);
+		return new UnbinaryNonTerminalSyntaxTree<>((NonTerminal<T>) binaryVariant.getSymbol(), binaryVariant.getChildNode()).getVariant(variantDirections);
 	}
 
 	@Override

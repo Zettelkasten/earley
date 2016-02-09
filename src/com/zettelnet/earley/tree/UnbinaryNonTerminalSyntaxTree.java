@@ -3,6 +3,7 @@ package com.zettelnet.earley.tree;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -56,9 +57,42 @@ public class UnbinaryNonTerminalSyntaxTree<T, P extends Parameter> implements Sy
 	}
 
 	@Override
-	public SyntaxTreeVariant<T, P> getVariant(int[] variantDirections) {
-		// TODO Auto-generated method stub
-		return null;
+	public SyntaxTreeVariant<T, P> getVariant(Iterator<Integer> variantDirections) throws NoSuchSyntaxTreeException {
+		final List<SyntaxTree<T, P>> children = new ArrayList<>();
+
+		BinarySyntaxTree<T, P> binaryNode = node;
+		do {
+			int variantId = 0;
+			if (variantDirections.hasNext()) {
+				variantId = variantDirections.next();
+			}
+			List<BinarySyntaxTreeVariant<T, P>> variants = binaryNode.getVariants();
+			if (variantId > variants.size()) {
+				throw new NoSuchSyntaxTreeException();
+			}
+			BinarySyntaxTreeVariant<T, P> binaryVariant = binaryNode.getVariants().get(variantId);
+
+			Symbol<T> symbol = binaryVariant.getSymbol();
+			BinarySyntaxTree<T, P> childNode = binaryVariant.getChildNode();
+
+			if (symbol != null) {
+				SyntaxTree<T, P> child;
+				if (childNode != null) {
+					// non-terminal
+					child = new UnbinaryNonTerminalSyntaxTree<>((NonTerminal<T>) symbol, childNode);
+				} else {
+					// terminal
+					child = new UnbinaryTerminalSyntaxTree<>((Terminal<T>) symbol);
+				}
+				children.add(0, child);
+			}
+
+			binaryNode = binaryVariant.getPreNode();
+		} while (binaryNode != null);
+
+		Production<T, P> production = node.getVariants().iterator().next().getChildProduction();
+
+		return new SimpleSyntaxTreeVariant<>(production, children);
 	}
 
 	public SyntaxTreeVariant<T, P> getFirstVariant() {

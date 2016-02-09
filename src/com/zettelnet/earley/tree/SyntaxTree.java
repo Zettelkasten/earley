@@ -1,6 +1,7 @@
 package com.zettelnet.earley.tree;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import com.zettelnet.earley.Production;
@@ -43,5 +44,5 @@ public interface SyntaxTree<T, P extends Parameter> {
 
 	Iterable<SyntaxTreeVariant<T, P>> getVariants(Production<T, P> production);
 
-	SyntaxTreeVariant<T, P> getVariant(int[] variantDirections);
+	SyntaxTreeVariant<T, P> getVariant(Iterator<Integer> variantDirections) throws NoSuchSyntaxTreeException;
 }

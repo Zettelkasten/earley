@@ -1,6 +1,7 @@
 package com.zettelnet.earley.tree;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.Set;
 
 import com.zettelnet.earley.Production;
@@ -41,7 +42,7 @@ public class UnbinaryTerminalSyntaxTree<T, P extends Parameter> implements Synta
 	}
 
 	@Override
-	public SyntaxTreeVariant<T, P> getVariant(int[] variantDirections) {
+	public SyntaxTreeVariant<T, P> getVariant(Iterator<Integer> variantDirections) throws NoSuchSyntaxTreeException {
 		throw new NoSuchSyntaxTreeException();
 	}
 	
