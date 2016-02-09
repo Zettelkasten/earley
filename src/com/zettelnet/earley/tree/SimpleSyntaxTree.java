@@ -5,9 +5,9 @@ import java.util.Collection;
 import java.util.List;
 
 import com.zettelnet.earley.Production;
-import com.zettelnet.earley.Symbol;
-import com.zettelnet.earley.Terminal;
 import com.zettelnet.earley.param.Parameter;
+import com.zettelnet.earley.symbol.Symbol;
+import com.zettelnet.earley.symbol.Terminal;
 
 public class SimpleSyntaxTree<T, P extends Parameter> implements SyntaxTree<T, P> {
 

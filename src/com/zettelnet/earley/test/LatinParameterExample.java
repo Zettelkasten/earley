@@ -3,6 +3,7 @@ package com.zettelnet.earley.test;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -106,7 +107,7 @@ public class LatinParameterExample {
 				new ParameterizedSymbol<>(verbForm, copy),
 				new ParameterizedSymbol<>(arguments, copy),
 				new ParameterizedSymbol<>(adverbalPhrase, any));
-		// // VF(pi) -> v(pi) -> TODO
+		// VF(pi) -> v(pi) -> TODO
 		grammar.addProduction(
 				verbForm,
 				new ParameterizedSymbol<>(verb, copy));
@@ -168,6 +169,14 @@ public class LatinParameterExample {
 		grammar.addProduction(
 				attribute,
 				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Form.nounForm(Casus.Genitive, null, null, null)))));
+		// NP(pi : Nom / Akk) -> S(pi : Inf Präs/Perf/Fut Akk)
+		for (Casus casus : Arrays.asList(Casus.Nominative, Casus.Accusative)) {
+			for (Tense tense : Arrays.asList(Tense.Present, Tense.Perfect, Tense.Future)) {
+				grammar.addProduction(nounPhrase,
+						new SingletonParameterFactory<>(new FormParameter(Form.nounForm(casus, null, null))),
+						new ParameterizedSymbol<>(sentence, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Form.withValues(Casus.Accusative, null, null, null, null, tense, null, null)))));
+			}
+		}
 
 		GrammarParser<Token, FormParameter> parser = new EarleyParser<>(grammar, new DynamicInputPositionInitializer<>());
 

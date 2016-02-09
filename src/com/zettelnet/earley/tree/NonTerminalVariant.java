@@ -1,10 +1,10 @@
 package com.zettelnet.earley.tree;
 
-import com.zettelnet.earley.NonTerminal;
 import com.zettelnet.earley.Production;
 import com.zettelnet.earley.State;
 import com.zettelnet.earley.StateCause;
 import com.zettelnet.earley.param.Parameter;
+import com.zettelnet.earley.symbol.NonTerminal;
 
 public class NonTerminalVariant<T, P extends Parameter> implements BinarySyntaxTreeVariant<T, P> {
 

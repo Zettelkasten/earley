@@ -3,8 +3,8 @@ package com.zettelnet.earley.tree;
 import com.zettelnet.earley.Grammar;
 import com.zettelnet.earley.Production;
 import com.zettelnet.earley.State;
-import com.zettelnet.earley.Symbol;
 import com.zettelnet.earley.param.Parameter;
+import com.zettelnet.earley.symbol.Symbol;
 
 public class InitialVariant<T, P extends Parameter> implements BinarySyntaxTreeVariant<T, P> {
 

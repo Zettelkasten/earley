@@ -1,10 +1,10 @@
 package com.zettelnet.earley.tree;
 
-import com.zettelnet.earley.NonTerminal;
 import com.zettelnet.earley.Production;
-import com.zettelnet.earley.Symbol;
-import com.zettelnet.earley.Terminal;
 import com.zettelnet.earley.param.Parameter;
+import com.zettelnet.earley.symbol.NonTerminal;
+import com.zettelnet.earley.symbol.Symbol;
+import com.zettelnet.earley.symbol.Terminal;
 
 /**
  * Represents a node of a <strong>binary syntax tree</strong>.

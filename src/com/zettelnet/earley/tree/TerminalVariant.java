@@ -3,8 +3,8 @@ package com.zettelnet.earley.tree;
 import com.zettelnet.earley.Production;
 import com.zettelnet.earley.State;
 import com.zettelnet.earley.StateCause;
-import com.zettelnet.earley.Terminal;
 import com.zettelnet.earley.param.Parameter;
+import com.zettelnet.earley.symbol.Terminal;
 
 public class TerminalVariant<T, P extends Parameter> implements BinarySyntaxTreeVariant<T, P> {
 

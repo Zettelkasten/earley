@@ -2,8 +2,8 @@ package com.zettelnet.earley.tree;
 
 import java.util.Collection;
 
-import com.zettelnet.earley.Symbol;
 import com.zettelnet.earley.param.Parameter;
+import com.zettelnet.earley.symbol.Symbol;
 
 public interface SyntaxTree<T, P extends Parameter> {
 
