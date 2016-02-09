@@ -13,4 +13,6 @@ public interface ParseResult<T, P extends Parameter> {
 	SortedMap<InputPosition<T>, Chart<T, P>> getCharts();
 
 	Collection<ParseTree<T>> getTreeForest();
+
+	Collection<State<T, P>> getCompleteStates();
 }

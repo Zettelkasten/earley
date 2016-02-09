@@ -177,6 +177,10 @@ public final class EarleyParseResult<T, P extends Parameter> implements ParseRes
 	public SortedMap<InputPosition<T>, Chart<T, P>> getCharts() {
 		return charts;
 	}
+	
+	public Set<State<T, P>> getCompleteStates() {
+		return completeStates;
+	}
 
 	@Override
 	public Collection<ParseTree<T>> getTreeForest() {

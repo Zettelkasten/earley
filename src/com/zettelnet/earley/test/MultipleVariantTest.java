@@ -16,6 +16,8 @@ import com.zettelnet.earley.symbol.NonTerminal;
 import com.zettelnet.earley.symbol.PredicateTerminal;
 import com.zettelnet.earley.symbol.SimpleNonTerminal;
 import com.zettelnet.earley.symbol.Terminal;
+import com.zettelnet.earley.tree.BinarySyntaxTree;
+import com.zettelnet.earley.tree.InitialStateBinarySyntaxTree;
 
 public class MultipleVariantTest {
 
@@ -66,11 +68,12 @@ public class MultipleVariantTest {
 		ParseResult<String, DefaultParameter> result = parser.parse(tokens);
 
 		try {
-			new ChartSetPrinter<String, DefaultParameter>(result.getCharts(), tokens)
-					.print(new PrintStream("temp.html"));
+			new ChartSetPrinter<String, DefaultParameter>(result.getCharts(), tokens).print(new PrintStream("temp.html"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		result.getTreeForest();
+		
+		BinarySyntaxTree<String, DefaultParameter> tree = new InitialStateBinarySyntaxTree<>(grammar, result.getCompleteStates());
+		System.out.println(tree);
 	}
 }
