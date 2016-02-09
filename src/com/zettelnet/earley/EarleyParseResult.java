@@ -1,14 +1,11 @@
 package com.zettelnet.earley;
 
 import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.SortedSet;
@@ -21,6 +18,8 @@ import com.zettelnet.earley.param.ParameterExpression;
 import com.zettelnet.earley.symbol.NonTerminal;
 import com.zettelnet.earley.symbol.Symbol;
 import com.zettelnet.earley.symbol.Terminal;
+import com.zettelnet.earley.tree.SyntaxTree;
+import com.zettelnet.earley.tree.binary.InitialStateBinarySyntaxTree;
 
 public final class EarleyParseResult<T, P extends Parameter> implements ParseResult<T, P> {
 
@@ -177,99 +176,13 @@ public final class EarleyParseResult<T, P extends Parameter> implements ParseRes
 	public SortedMap<InputPosition<T>, Chart<T, P>> getCharts() {
 		return charts;
 	}
-	
+
 	public Set<State<T, P>> getCompleteStates() {
 		return completeStates;
 	}
 
 	@Override
-	public Collection<ParseTree<T>> getTreeForest() {
-		// System.out.println("Retreiving parse forest");
-
-		Collection<ParseTree<T>> trees = new HashSet<>();
-		for (State<T, P> completeState : completeStates) {
-			Queue<TreeQueue<T, P>> queueList = new LinkedList<>();
-
-			// seed
-			ParseTree<T> seedTree = new ParseTree<T>(grammar.getStartSymbol());
-			Queue<TreeState<T, P>> seedQueue = new LinkedList<>();
-			seedQueue.add(new TreeState<>(completeState, seedTree));
-			queueList.add(new TreeQueue<>(seedTree, seedQueue));
-
-			// System.out.println("Start");
-			// System.out.println(" >>> " + seedTree);
-
-			while (!queueList.isEmpty()) {
-				TreeQueue<T, P> treeQueue = queueList.poll();
-				ParseTree<T> tree = treeQueue.getTree();
-				Queue<TreeState<T, P>> queue = treeQueue.getQueue();
-
-				while (!queue.isEmpty()) {
-					TreeState<T, P> current = queue.poll();
-					State<T, P> state = current.getState();
-					TreeNode<T> branch = current.getBranch();
-
-					int pos = state.getCurrentPosition();
-					if (pos > 0) {
-						// System.out.println("processing s' = " + state + " on
-						// " + state.getChart());
-						Symbol<T> last = state.getProduction().get(pos - 1);
-						Collection<StateCause<T, P>> causes = state.getCause();
-						// for (Iterator<StateCause> i = causes.iterator();
-						// i.hasNext(); ) {
-						StateCause<T, P> cause = new ArrayList<>(causes).get(causes.size() - 1);
-						// if (i.hasNext()) {
-						// // clone tree
-						// // transfer TreeQueue to new queue
-						// }
-
-						if (cause instanceof StateCause.Scan) {
-							// reverse-scanning
-							StateCause.Scan<T, P> scanCause = (StateCause.Scan<T, P>) cause;
-							branch.addChild(new TerminalNode<>((Terminal<T>) last));
-							queue.add(new TreeState<>(scanCause.getPreState(), branch));
-
-							// System.out.println(" - s' is result of
-							// scanning");
-							// System.out.println(" - s0 = " +
-							// scanCause.getFromState() + " on " +
-							// scanCause.getFromState().getChart() + " ->
-							// queued");
-						} else if (cause instanceof StateCause.Complete) {
-							// reverse-completion
-							StateCause.Complete<T, P> completeCause = (StateCause.Complete<T, P>) cause;
-							// from state
-							TreeNode<T> newBranch = new TreeNode<>((NonTerminal<T>) last);
-							branch.addChild(newBranch);
-							queue.add(new TreeState<>(completeCause.getChildState(), newBranch));
-							// with state
-							queue.add(new TreeState<>(completeCause.getPreState(), branch));
-
-							// System.out.println(" - s' is result of
-							// completion");
-							// System.out.println(" - s0 = " +
-							// completeCause.getFromState() + " on " +
-							// completeCause.getFromState().getChart() + " ->
-							// queued first");
-							// System.out.println(" - s = " +
-							// completeCause.getWithState() + " on " +
-							// completeCause.getWithState().getChart() + " ->
-							// queued after");
-						} else {
-							// do nothing
-
-							// System.out.println(" - s' is result of
-							// prediction");
-						}
-
-						// System.out.println(" >>> " + tree);
-						// }
-					}
-				}
-
-				trees.add(tree);
-			}
-		}
-		return trees;
+	public SyntaxTree<T, P> getSyntaxTree() {
+		return new InitialStateBinarySyntaxTree<>(grammar.getStartSymbol(), completeStates).toNaturalTree();
 	}
 }

@@ -9,7 +9,6 @@ import com.zettelnet.earley.ChartSetPrinter;
 import com.zettelnet.earley.EarleyParser;
 import com.zettelnet.earley.Grammar;
 import com.zettelnet.earley.ParseResult;
-import com.zettelnet.earley.ParseTree;
 import com.zettelnet.earley.param.DefaultParameter;
 import com.zettelnet.earley.param.DefaultParameterManager;
 import com.zettelnet.earley.symbol.NonTerminal;
@@ -48,8 +47,6 @@ public class SimpleEarleyTest {
 		ParseResult<String, DefaultParameter> result = parser.parse(tokens);
 
 		new ChartSetPrinter<String, DefaultParameter>(result.getCharts(), tokens).print(new PrintStream("E:\\temp.html"));
-		for (ParseTree<String> tree : result.getTreeForest()) {
-			System.out.println(tree);
-		}
+		System.out.println(result.getSyntaxTree());
 	}
 }

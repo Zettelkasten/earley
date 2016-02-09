@@ -5,6 +5,7 @@ import java.util.SortedMap;
 
 import com.zettelnet.earley.input.InputPosition;
 import com.zettelnet.earley.param.Parameter;
+import com.zettelnet.earley.tree.SyntaxTree;
 
 public interface ParseResult<T, P extends Parameter> {
 
@@ -12,7 +13,7 @@ public interface ParseResult<T, P extends Parameter> {
 
 	SortedMap<InputPosition<T>, Chart<T, P>> getCharts();
 
-	Collection<ParseTree<T>> getTreeForest();
-
 	Collection<State<T, P>> getCompleteStates();
+
+	SyntaxTree<T, P> getSyntaxTree();
 }

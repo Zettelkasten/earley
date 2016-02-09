@@ -7,6 +7,8 @@ import java.util.List;
 import com.zettelnet.earley.State;
 import com.zettelnet.earley.StateCause;
 import com.zettelnet.earley.param.Parameter;
+import com.zettelnet.earley.tree.SyntaxTree;
+import com.zettelnet.earley.tree.UnbinaryInitialSyntaxTree;
 
 public class StateSyntaxTree<T, P extends Parameter> implements BinarySyntaxTree<T, P> {
 
@@ -42,6 +44,10 @@ public class StateSyntaxTree<T, P extends Parameter> implements BinarySyntaxTree
 		return variants;
 	}
 
+	@Override
+	public SyntaxTree<T, P> toNaturalTree() {
+		return new UnbinaryInitialSyntaxTree<>(null, this);
+	}
 
 	@Override
 	public String toString() {

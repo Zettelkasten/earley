@@ -196,7 +196,7 @@ public class LatinParameterExample {
 		ParseResult<Token, FormParameter> result = parser.parse(tokens);
 
 		new ChartSetPrinter<Token, FormParameter>(result.getCharts(), tokens).print(new PrintStream("E:\\temp.html"));
-		System.out.println(result.getTreeForest());
+		System.out.println(result.getSyntaxTree());
 	}
 
 	public static class DummyLemma implements Lemma {

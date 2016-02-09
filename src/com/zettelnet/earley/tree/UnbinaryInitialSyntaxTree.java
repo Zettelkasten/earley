@@ -3,7 +3,6 @@ package com.zettelnet.earley.tree;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.zettelnet.earley.Grammar;
 import com.zettelnet.earley.Production;
 import com.zettelnet.earley.param.Parameter;
 import com.zettelnet.earley.symbol.NonTerminal;
@@ -12,17 +11,17 @@ import com.zettelnet.earley.tree.binary.BinarySyntaxTreeVariant;
 
 public class UnbinaryInitialSyntaxTree<T, P extends Parameter> implements SyntaxTree<T, P> {
 
-	private final Grammar<T, P> grammar;
+	private final NonTerminal<T> rootSymbol;
 	private final BinarySyntaxTree<T, P> node;
 
-	public UnbinaryInitialSyntaxTree(final Grammar<T, P> grammar, final BinarySyntaxTree<T, P> node) {
-		this.grammar = grammar;
+	public UnbinaryInitialSyntaxTree(final NonTerminal<T> rootSymbol, final BinarySyntaxTree<T, P> node) {
+		this.rootSymbol = rootSymbol;
 		this.node = node;
 	}
 
 	@Override
 	public NonTerminal<T> getRootSymbol() {
-		return grammar.getStartSymbol();
+		return rootSymbol;
 	}
 
 	@Override
@@ -71,7 +70,7 @@ public class UnbinaryInitialSyntaxTree<T, P extends Parameter> implements Syntax
 	public String toString() {
 		StringBuilder str = new StringBuilder();
 		str.append("[");
-		str.append(getRootSymbol());
+		str.append(rootSymbol);
 		Iterable<SyntaxTreeVariant<T, P>> variants = getVariants();
 		for (SyntaxTreeVariant<T, P> variant : variants) {
 			str.append(" ");

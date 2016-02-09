@@ -30,7 +30,7 @@ public interface SyntaxTree<T, P extends Parameter> {
 		}
 	}
 
-	default Set<SyntaxTreeVariant<T, P>> getVariantsCollection(int maxAmount) {
+	default Set<SyntaxTreeVariant<T, P>> getVariantsSet(int maxAmount) {
 		Set<SyntaxTreeVariant<T, P>> set = new HashSet<>();
 		for (SyntaxTreeVariant<T, P> element : getVariants()) {
 			if (--maxAmount < 0) {

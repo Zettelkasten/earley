@@ -13,7 +13,6 @@ import com.zettelnet.earley.Grammar;
 import com.zettelnet.earley.GrammarParser;
 import com.zettelnet.earley.ParameterizedSymbol;
 import com.zettelnet.earley.ParseResult;
-import com.zettelnet.earley.ParseTree;
 import com.zettelnet.earley.input.DynamicInputPositionInitializer;
 import com.zettelnet.earley.param.CopyParameterExpression;
 import com.zettelnet.earley.param.ParameterExpression;
@@ -78,10 +77,10 @@ public class LatinExample {
 
 		ParameterManager<FormParameter> parameterManager = new FormParameterManager();
 		TokenParameterizer<Token, FormParameter> parameterizer = new FormParameterizer();
-		
+
 		Grammar<Token, FormParameter> grammar = new Grammar<>(sentence, parameterManager);
 		grammar.setStartSymbolParameter(new SingletonParameterFactory<>(new FormParameter(Form.nounForm(Casus.Nominative, null, null))));
-		
+
 		ParameterExpression<Token, FormParameter> copy = new CopyParameterExpression<>(grammar, parameterizer);
 
 		grammar.addProduction(sentence,
@@ -128,9 +127,7 @@ public class LatinExample {
 		ParseResult<Token, FormParameter> result = parser.parse(tokens);
 
 		new ChartSetPrinter<Token, FormParameter>(result.getCharts(), tokens).print(new PrintStream("E:\\temp.html"));
-		for (ParseTree<Token> tree : result.getTreeForest()) {
-			System.out.println(tree);
-		}
+		System.out.println(result.getSyntaxTree());
 	}
 
 	public static class DummyLemma implements Lemma {

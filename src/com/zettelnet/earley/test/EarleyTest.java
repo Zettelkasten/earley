@@ -74,7 +74,7 @@ public class EarleyTest {
 		EarleyParseResult<String, DefaultParameter> result = parser.parse(Arrays.asList("sqrt 23 + ( 7 / 2 * - 23 * cos pi / 2 ) / 3 ! - sin 1 / 2 = 23".split(" ")));
 
 		System.out.println(result.isComplete());
-		System.out.println(result.getTreeForest());
+		System.out.println(result.getSyntaxTree());
 		try {
 			result.printChartSetsHtml(new PrintStream(new File("E:\\temp.html")));
 		} catch (IOException e) {

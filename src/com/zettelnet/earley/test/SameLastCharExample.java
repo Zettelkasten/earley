@@ -135,6 +135,6 @@ public class SameLastCharExample {
 		ParseResult<String, LastCharParameter> result = parser.parse(tokens);
 
 		new ChartSetPrinter<String, LastCharParameter>(result.getCharts(), tokens).print(new PrintStream("E:\\temp.html"));
-		System.out.println(result.getTreeForest());
+		System.out.println(result.getSyntaxTree());
 	}
 }

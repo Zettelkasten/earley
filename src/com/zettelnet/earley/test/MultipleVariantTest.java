@@ -17,9 +17,6 @@ import com.zettelnet.earley.symbol.PredicateTerminal;
 import com.zettelnet.earley.symbol.SimpleNonTerminal;
 import com.zettelnet.earley.symbol.Terminal;
 import com.zettelnet.earley.tree.SyntaxTree;
-import com.zettelnet.earley.tree.UnbinaryInitialSyntaxTree;
-import com.zettelnet.earley.tree.binary.BinarySyntaxTree;
-import com.zettelnet.earley.tree.binary.InitialStateBinarySyntaxTree;
 
 public class MultipleVariantTest {
 
@@ -74,14 +71,11 @@ public class MultipleVariantTest {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		BinarySyntaxTree<String, DefaultParameter> binaryTree = new InitialStateBinarySyntaxTree<>(grammar, result.getCompleteStates());
-		System.out.println(binaryTree);
-		
-		SyntaxTree<String, DefaultParameter> tree = new UnbinaryInitialSyntaxTree<>(grammar, binaryTree);
+
+		SyntaxTree<String, DefaultParameter> tree = result.getSyntaxTree();
 		System.out.println(tree.getProductions());
 		System.out.println(tree.getRootSymbol());
-		
+
 		System.out.println(tree);
 	}
 }
