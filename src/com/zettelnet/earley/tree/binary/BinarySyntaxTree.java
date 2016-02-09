@@ -1,4 +1,4 @@
-package com.zettelnet.earley.tree;
+package com.zettelnet.earley.tree.binary;
 
 import java.util.Collection;
 

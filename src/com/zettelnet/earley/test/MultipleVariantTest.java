@@ -16,8 +16,8 @@ import com.zettelnet.earley.symbol.NonTerminal;
 import com.zettelnet.earley.symbol.PredicateTerminal;
 import com.zettelnet.earley.symbol.SimpleNonTerminal;
 import com.zettelnet.earley.symbol.Terminal;
-import com.zettelnet.earley.tree.BinarySyntaxTree;
-import com.zettelnet.earley.tree.InitialStateBinarySyntaxTree;
+import com.zettelnet.earley.tree.binary.BinarySyntaxTree;
+import com.zettelnet.earley.tree.binary.InitialStateBinarySyntaxTree;
 
 public class MultipleVariantTest {
 

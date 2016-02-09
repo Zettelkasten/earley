@@ -1,20 +1,10 @@
-package com.zettelnet.earley.tree;
+package com.zettelnet.earley.tree.binary;
 
-import com.zettelnet.earley.Grammar;
 import com.zettelnet.earley.Production;
-import com.zettelnet.earley.State;
 import com.zettelnet.earley.param.Parameter;
 import com.zettelnet.earley.symbol.Symbol;
 
-public class InitialVariant<T, P extends Parameter> implements BinarySyntaxTreeVariant<T, P> {
-
-	private final Grammar<T, P> grammar;
-	private final State<T, P> state;
-
-	public InitialVariant(final Grammar<T, P> grammar, final State<T, P> state) {
-		this.grammar = grammar;
-		this.state = state;
-	}
+public class EpsilonVariant<T, P extends Parameter> implements BinarySyntaxTreeVariant<T, P> {
 
 	@Override
 	public BinarySyntaxTree<T, P> getPreNode() {
@@ -23,17 +13,17 @@ public class InitialVariant<T, P extends Parameter> implements BinarySyntaxTreeV
 
 	@Override
 	public Symbol<T> getSymbol() {
-		return grammar.getStartSymbol();
+		return null;
 	}
 
 	@Override
 	public Production<T, P> getChildProduction() {
-		return state.getProduction();
+		return null;
 	}
 
 	@Override
 	public BinarySyntaxTree<T, P> getChildNode() {
-		return new StateSyntaxTree<>(state);
+		return null;
 	}
 
 	@Override
