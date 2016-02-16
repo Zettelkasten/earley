@@ -25,12 +25,6 @@ public class SimpleSyntaxTreeVariant<T, P extends Parameter> implements SyntaxTr
 		return children;
 	}
 
-	// @Override
-	// public String toString() {
-	// return "Variant [production=" + production + ", children=" + children +
-	// "]";
-	// }
-
 	@Override
 	public String toString() {
 		StringBuilder str = new StringBuilder();

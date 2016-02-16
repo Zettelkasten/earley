@@ -58,6 +58,11 @@ public class SeedState<T, P extends Parameter> implements State<T, P> {
 	public Symbol<T> next() {
 		return symbol;
 	}
+	
+	@Override
+	public Symbol<T> last() {
+		return null;
+	}
 
 	@Override
 	public ParameterExpression<T, P> nextParameterExpression() {

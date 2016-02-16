@@ -10,20 +10,22 @@ import com.zettelnet.earley.symbol.Symbol;
 public interface State<T, P extends Parameter> {
 
 	Chart<T, P> getChart();
-	
+
 	Production<T, P> getProduction();
-	
+
 	int getCurrentPosition();
-	
+
 	InputPosition<T> getOriginPosition();
-	
+
 	List<StateCause<T, P>> getCause();
-	
+
 	void addCause(StateCause<T, P> newCause);
-	
+
 	Symbol<T> next();
-	
+
+	Symbol<T> last();
+
 	ParameterExpression<T, P> nextParameterExpression();
-	
+
 	P getParameter();
 }

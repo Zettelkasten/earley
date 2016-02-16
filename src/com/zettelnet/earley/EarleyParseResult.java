@@ -19,6 +19,7 @@ import com.zettelnet.earley.symbol.NonTerminal;
 import com.zettelnet.earley.symbol.Symbol;
 import com.zettelnet.earley.symbol.Terminal;
 import com.zettelnet.earley.tree.SyntaxTree;
+import com.zettelnet.earley.tree.binary.BinarySyntaxTree;
 import com.zettelnet.earley.tree.binary.InitialStateBinarySyntaxTree;
 
 public final class EarleyParseResult<T, P extends Parameter> implements ParseResult<T, P> {
@@ -181,8 +182,12 @@ public final class EarleyParseResult<T, P extends Parameter> implements ParseRes
 		return completeStates;
 	}
 
+	public BinarySyntaxTree<T, P> getBinarySyntaxTree() {
+		return new InitialStateBinarySyntaxTree<>(grammar.getStartSymbol(), completeStates);
+	}
+
 	@Override
 	public SyntaxTree<T, P> getSyntaxTree() {
-		return new InitialStateBinarySyntaxTree<>(grammar.getStartSymbol(), completeStates).toNaturalTree();
+		return getBinarySyntaxTree().toNaturalTree();
 	}
 }

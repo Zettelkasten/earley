@@ -61,6 +61,15 @@ public class SimpleState<T, P extends Parameter> implements State<T, P> {
 			return production.get(currentPosition);
 		}
 	}
+	
+	@Override
+	public Symbol<T> last() {
+		if (currentPosition > production.size()) {
+			return null;
+		} else {
+			return production.get(currentPosition - 1);
+		}
+	}
 
 	public ParameterExpression<T, P> nextParameterExpression() {
 		if (currentPosition >= production.size()) {
