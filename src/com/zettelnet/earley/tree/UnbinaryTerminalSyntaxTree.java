@@ -11,9 +11,11 @@ import com.zettelnet.earley.symbol.Terminal;
 public class UnbinaryTerminalSyntaxTree<T, P extends Parameter> implements SyntaxTree<T, P> {
 
 	private final Terminal<T> symbol;
+	private final T token;
 
-	public UnbinaryTerminalSyntaxTree(final Terminal<T> symbol) {
+	public UnbinaryTerminalSyntaxTree(final Terminal<T> symbol, final T token) {
 		this.symbol = symbol;
+		this.token = token;
 	}
 
 	@Override
@@ -26,6 +28,11 @@ public class UnbinaryTerminalSyntaxTree<T, P extends Parameter> implements Synta
 		return true;
 	}
 
+	@Override
+	public T getToken() {
+		return token;
+	}
+	
 	@Override
 	public Set<Production<T, P>> getProductions() {
 		return Collections.emptySet();
@@ -48,6 +55,6 @@ public class UnbinaryTerminalSyntaxTree<T, P extends Parameter> implements Synta
 	
 	@Override
 	public String toString() {
-		return "[" + symbol + "]";
+		return "[" + symbol + " " + token + "]";
 	}
 }

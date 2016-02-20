@@ -24,6 +24,11 @@ public class InitialVariant<T, P extends Parameter> extends AbstractBinarySyntax
 	public NonTerminal<T> getSymbol() {
 		return rootSymbol;
 	}
+	
+	@Override
+	public T getToken() {
+		return null;
+	}
 
 	@Override
 	public Production<T, P> getChildProduction() {

@@ -17,6 +17,11 @@ public class EpsilonVariant<T, P extends Parameter> extends AbstractBinarySyntax
 	}
 
 	@Override
+	public T getToken() {
+		return null;
+	}
+	
+	@Override
 	public Production<T, P> getChildProduction() {
 		return null;
 	}

@@ -37,7 +37,9 @@ public interface BinarySyntaxTreeVariant<T, P extends Parameter> {
 	BinarySyntaxTree<T, P> getPreNode();
 
 	Symbol<T> getSymbol();
-	
+
+	T getToken();
+
 	default boolean isTerminal() {
 		return getChildNode() == null;
 	}

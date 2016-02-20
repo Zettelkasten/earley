@@ -25,6 +25,11 @@ public class NonTerminalVariant<T, P extends Parameter> extends AbstractBinarySy
 	public NonTerminal<T> getSymbol() {
 		return (NonTerminal<T>) state.last();
 	}
+	
+	@Override
+	public T getToken() {
+		return null;
+	}
 
 	@Override
 	public Production<T, P> getChildProduction() {

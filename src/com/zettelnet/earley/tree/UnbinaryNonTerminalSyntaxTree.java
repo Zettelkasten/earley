@@ -38,7 +38,12 @@ public class UnbinaryNonTerminalSyntaxTree<T, P extends Parameter> implements Sy
 	public boolean isTerminal() {
 		return false;
 	}
-
+	
+	@Override
+	public T getToken() {
+		return null;
+	}
+	
 	@Override
 	public Set<Production<T, P>> getProductions() {
 		Set<Production<T, P>> set = new HashSet<>();
@@ -118,7 +123,7 @@ public class UnbinaryNonTerminalSyntaxTree<T, P extends Parameter> implements Sy
 					returnValue = new UnbinaryNonTerminalSyntaxTree<>((NonTerminal<T>) symbol, childNode);
 				} else {
 					// terminal
-					returnValue = new UnbinaryTerminalSyntaxTree<>((Terminal<T>) symbol);
+					returnValue = new UnbinaryTerminalSyntaxTree<>((Terminal<T>) symbol, variant.getToken());
 				}
 			}
 
@@ -168,7 +173,7 @@ public class UnbinaryNonTerminalSyntaxTree<T, P extends Parameter> implements Sy
 					child = new UnbinaryNonTerminalSyntaxTree<>((NonTerminal<T>) symbol, childNode);
 				} else {
 					// terminal
-					child = new UnbinaryTerminalSyntaxTree<>((Terminal<T>) symbol);
+					child = new UnbinaryTerminalSyntaxTree<>((Terminal<T>) symbol, binaryVariant.getToken());
 				}
 				children.add(0, child);
 			}

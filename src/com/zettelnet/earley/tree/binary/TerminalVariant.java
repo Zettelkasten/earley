@@ -25,6 +25,11 @@ public class TerminalVariant<T, P extends Parameter> extends AbstractBinarySynta
 	public Terminal<T> getSymbol() {
 		return (Terminal<T>) state.last();
 	}
+	
+	@Override
+	public T getToken() {
+		return cause.getToken();
+	}
 
 	@Override
 	public Production<T, P> getChildProduction() {
