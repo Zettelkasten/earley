@@ -1,10 +1,14 @@
 package com.zettelnet.earley;
 
 import java.io.PrintStream;
+import java.util.Deque;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.SortedMap;
 
 import com.zettelnet.earley.input.InputPosition;
@@ -20,6 +24,7 @@ public class ChartSetPrinter<T, P extends Parameter> {
 	private final Map<Chart<T, P>, Map<State<T, P>, Integer>> stateIds;
 
 	private boolean tableMode;
+	private final Set<State<T, P>> aliveStates;
 
 	public ChartSetPrinter(final SortedMap<InputPosition<T>, Chart<T, P>> charts, final List<T> tokens) {
 		this(charts, tokens, true);
@@ -40,6 +45,46 @@ public class ChartSetPrinter<T, P extends Parameter> {
 			}
 			stateIds.put(chart, ids);
 		}
+
+		this.aliveStates = new HashSet<>();
+		calculateAliveStates();
+	}
+	
+	private void calculateAliveStates() {
+		Deque<State<T, P>> queue = new LinkedList<>();
+
+		// find complete states
+		for (Map.Entry<InputPosition<T>, Chart<T, P>> entry : charts.entrySet()) {
+			if (entry.getKey().isComplete()) {
+				for (State<T, P> state : entry.getValue()) {
+					if (state.getCurrentPosition() == state.getProduction().size() && state.getOriginPosition().isClean()) {
+						queue.add(state);
+					}
+				}
+			}
+		}
+
+		State<T, P> next;
+		while ((next = queue.poll()) != null) {
+			if (!aliveStates.contains(next)) {
+				aliveStates.add(next);
+				for (StateCause<T, P> origin : next.getCause()) {
+					if (origin instanceof StateCause.Predict) {
+						StateCause.Predict<T, P> predict = (StateCause.Predict<T, P>) origin;
+						if (!predict.isInitial()) {
+							queue.push(predict.getParentState());
+						}
+					} else if (origin instanceof StateCause.Scan) {
+						StateCause.Scan<T, P> scan = (StateCause.Scan<T, P>) origin;
+						queue.push(scan.getPreState());
+					} else if (origin instanceof StateCause.Complete) {
+						StateCause.Complete<T, P> complete = (StateCause.Complete<T, P>) origin;
+						queue.push(complete.getPreState());
+						queue.push(complete.getChildState());
+					}
+				}
+			}
+		}
 	}
 
 	private Integer getStateId(State<T, P> state) {
@@ -58,6 +103,7 @@ public class ChartSetPrinter<T, P extends Parameter> {
 		out.print("</head>");
 		out.print("<body>");
 		out.print("<div class='container'>");
+		out.print("<input type='checkbox' id='include-dead-states' checked> <label for='include-dead-states'>Show dead states</label>");
 
 		for (Chart<T, P> chart : charts.values()) {
 			if (chart.iterator().hasNext()) {
@@ -117,11 +163,13 @@ public class ChartSetPrinter<T, P extends Parameter> {
 	}
 
 	public void printState(PrintStream out, State<T, P> state) {
+		String stateClass = "state state-" + (aliveStates.contains(state) ? "alive" : "dead");
+		
 		if (tableMode) {
-			out.printf("<tr class='state' id='state-%s-%s'>", state.getChart().getInputPosition(), getStateId(state));
+			out.printf("<tr class='%s' id='state-%s-%s'>", stateClass, state.getChart().getInputPosition(), getStateId(state));
 			out.printf("<td class='state-id'>(%s)</td>", getStateId(state) + 1);
 		} else {
-			out.printf("<li class='state' id='state-%s-%s'>", state.getChart().getInputPosition(), getStateId(state));
+			out.printf("<li class='%s' id='state-%s-%s'>", stateClass, state.getChart().getInputPosition(), getStateId(state));
 		}
 
 		Production<T, P> production = state.getProduction();
