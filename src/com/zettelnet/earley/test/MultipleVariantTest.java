@@ -6,10 +6,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.zettelnet.earley.ChartSetPrinter;
+import com.zettelnet.earley.EarleyParseResult;
 import com.zettelnet.earley.EarleyParser;
 import com.zettelnet.earley.Grammar;
-import com.zettelnet.earley.GrammarParser;
-import com.zettelnet.earley.ParseResult;
 import com.zettelnet.earley.param.DefaultParameter;
 import com.zettelnet.earley.param.DefaultParameterManager;
 import com.zettelnet.earley.symbol.NonTerminal;
@@ -17,6 +16,7 @@ import com.zettelnet.earley.symbol.PredicateTerminal;
 import com.zettelnet.earley.symbol.SimpleNonTerminal;
 import com.zettelnet.earley.symbol.Terminal;
 import com.zettelnet.earley.tree.SyntaxTree;
+import com.zettelnet.earley.tree.TreeVisualizer;
 
 public class MultipleVariantTest {
 
@@ -48,7 +48,8 @@ public class MultipleVariantTest {
 
 		// 3. Add Productions
 
-		grammar.addProduction(start, left, middle, right);
+		grammar.addProduction(start, a);
+		grammar.addProduction(start, b);
 		grammar.addProduction(left, a);
 		grammar.addProduction(middle, b);
 		grammar.addProduction(middle, c);
@@ -56,15 +57,15 @@ public class MultipleVariantTest {
 
 		// 4. Create Parser
 
-		GrammarParser<String, DefaultParameter> parser = new EarleyParser<>(grammar);
+		EarleyParser<String, DefaultParameter> parser = new EarleyParser<>(grammar);
 
 		// 5. Initialize Tokens
 
-		List<String> tokens = Arrays.asList("0", "1", "2");
+		List<String> tokens = Arrays.asList("0");
 
 		// 5. Parse
 
-		ParseResult<String, DefaultParameter> result = parser.parse(tokens);
+		EarleyParseResult<String, DefaultParameter> result = parser.parse(tokens);
 
 		try {
 			new ChartSetPrinter<String, DefaultParameter>(result.getCharts(), tokens).print(new PrintStream("temp.html"));
@@ -77,5 +78,12 @@ public class MultipleVariantTest {
 		System.out.println(tree.getRootSymbol());
 
 		System.out.println(tree);
+		System.out.println(result.getBinarySyntaxTree());
+
+		try {
+			new TreeVisualizer<String, DefaultParameter>().createDot(new PrintStream("temp.html"), tree);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

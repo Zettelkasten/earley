@@ -9,11 +9,10 @@ import java.util.Map;
 import java.util.Set;
 
 import com.zettelnet.earley.ChartSetPrinter;
+import com.zettelnet.earley.EarleyParseResult;
 import com.zettelnet.earley.EarleyParser;
 import com.zettelnet.earley.Grammar;
-import com.zettelnet.earley.GrammarParser;
 import com.zettelnet.earley.ParameterizedSymbol;
-import com.zettelnet.earley.ParseResult;
 import com.zettelnet.earley.input.DynamicInputPositionInitializer;
 import com.zettelnet.earley.param.AnyParameterExpression;
 import com.zettelnet.earley.param.CopyParameterExpression;
@@ -75,6 +74,7 @@ public class LatinParameterExample {
 		NonTerminal<Token> nounPhrase = new SimpleNonTerminal<>("NP");
 		NonTerminal<Token> nounForm = new SimpleNonTerminal<>("NF");
 		NonTerminal<Token> attribute = new SimpleNonTerminal<>("Attr");
+		NonTerminal<Token> attributeVar = new SimpleNonTerminal<>("AttrVar");
 
 		NonTerminal<Token> verbPhrase = new SimpleNonTerminal<>("VP");
 		NonTerminal<Token> verbForm = new SimpleNonTerminal<>("VF");
@@ -144,23 +144,22 @@ public class LatinParameterExample {
 				new ParameterizedSymbol<>(adverbalPhrase, any),
 				new ParameterizedSymbol<>(adverbalPhrase, any));
 
-		// NP(pi) -> NF(pi) Attr(pi)
+		// NP(pi) -> NF(pi) Attr(pi)*
 		grammar.addProduction(
 				nounPhrase,
 				new ParameterizedSymbol<>(nounForm, copy),
-				new ParameterizedSymbol<>(attribute, copy));
+				new ParameterizedSymbol<>(attributeVar, copy));
 		// NF(pi) -> n(pi)
 		grammar.addProduction(
 				nounForm,
 				new ParameterizedSymbol<>(noun, copy));
-		// Attr(pi) -> epsilon
+		// attribute varargs
 		grammar.addProduction(
-				attribute);
-		// Attr(pi) -> Attr(pi) Attr(pi)
+				attributeVar);
 		grammar.addProduction(
-				attribute,
+				attributeVar,
 				new ParameterizedSymbol<>(attribute, copy),
-				new ParameterizedSymbol<>(attribute, copy));
+				new ParameterizedSymbol<>(attributeVar, copy));
 		// Attr(pi) -> NF(pi)
 		grammar.addProduction(
 				attribute,
@@ -178,7 +177,7 @@ public class LatinParameterExample {
 			}
 		}
 
-		GrammarParser<Token, FormParameter> parser = new EarleyParser<>(grammar, new DynamicInputPositionInitializer<>());
+		EarleyParser<Token, FormParameter> parser = new EarleyParser<>(grammar, new DynamicInputPositionInitializer<>());
 
 		// lemmas
 
@@ -193,8 +192,10 @@ public class LatinParameterExample {
 		tokens.add(new Token("servi", new Determination(servus, Form.nounForm(Casus.Genitive, Numerus.Singular, Genus.Masculine))));
 		tokens.add(new Token("cantat", new Determination(canto, Form.verbForm(Person.Third, Numerus.Singular, Tense.Present, Mood.Indicative, Voice.Active))));
 
-		ParseResult<Token, FormParameter> result = parser.parse(tokens);
+		EarleyParseResult<Token, FormParameter> result = parser.parse(tokens);
 
+		System.out.println(result.getBinarySyntaxTree());
+		
 		new ChartSetPrinter<Token, FormParameter>(result.getCharts(), tokens).print(new PrintStream("E:\\temp.html"));
 		System.out.println(result.getSyntaxTree());
 	}
