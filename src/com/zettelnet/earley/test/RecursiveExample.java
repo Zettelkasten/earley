@@ -24,27 +24,16 @@ public class RecursiveExample {
 	public static void main(String[] args) throws FileNotFoundException {
 
 		NonTerminal<String> delta = new SimpleNonTerminal<>("&Delta;");
-		NonTerminal<String> gamma = new SimpleNonTerminal<>("&Gamma;");
-
 		Terminal<String> term = new AnyTokenTerminal<>("a");
 
 		ParameterManager<DefaultParameter> parameterManager = new DefaultParameterManager();
 
 		Grammar<String, DefaultParameter> grammar = new Grammar<>(delta, parameterManager);
 
-//		grammar.addProduction(
-//				gamma,
-//				delta);
-		// Attr(pi) -> epsilon
 		grammar.addProduction(
 				delta);
-		// Attr(pi) -> Attr(pi) Attr(pi)
 		grammar.addProduction(
 				delta, delta, term);
-		// Attr(pi) -> NP(Gen)
-//		grammar.addProduction(
-//				delta,
-//				term);
 
 		GrammarParser<String, DefaultParameter> parser = new EarleyParser<>(grammar, new LinearInputPositionInitializer<>());
 
