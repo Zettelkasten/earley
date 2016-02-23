@@ -23,7 +23,7 @@ public class FormParameterizer implements TokenParameterizer<Token, FormParamete
 			}
 
 			Form form = determination.getForm();
-			FormParameter parameter = new FormParameter(Form.withValues(form.getCasus(), form.getNumerus(), form.getGenus(), form.getPerson(), form.getMood(), form.getTense(), form.getVoice(), form.getComparison()));
+			FormParameter parameter = new FormParameter(form);
 			parameters.add(parameter);
 		}
 

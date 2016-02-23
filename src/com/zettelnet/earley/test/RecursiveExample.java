@@ -30,21 +30,21 @@ public class RecursiveExample {
 
 		ParameterManager<DefaultParameter> parameterManager = new DefaultParameterManager();
 
-		Grammar<String, DefaultParameter> grammar = new Grammar<>(gamma, parameterManager);
+		Grammar<String, DefaultParameter> grammar = new Grammar<>(delta, parameterManager);
 
-		grammar.addProduction(
-				gamma,
-				delta);
+//		grammar.addProduction(
+//				gamma,
+//				delta);
 		// Attr(pi) -> epsilon
 		grammar.addProduction(
 				delta);
 		// Attr(pi) -> Attr(pi) Attr(pi)
 		grammar.addProduction(
-				delta, gamma, gamma);
+				delta, delta, term);
 		// Attr(pi) -> NP(Gen)
-		grammar.addProduction(
-				delta,
-				term);
+//		grammar.addProduction(
+//				delta,
+//				term);
 
 		GrammarParser<String, DefaultParameter> parser = new EarleyParser<>(grammar, new LinearInputPositionInitializer<>());
 

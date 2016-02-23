@@ -73,6 +73,10 @@ public class Production<T, P extends Parameter> {
 		return values.size();
 	}
 
+	public boolean isEpsilon() {
+		return values.isEmpty();
+	}
+
 	public Symbol<T> get(int position) {
 		return values.get(position).getSymbol();
 	}

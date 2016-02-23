@@ -38,12 +38,12 @@ public class UnbinaryNonTerminalSyntaxTree<T, P extends Parameter> implements Sy
 	public boolean isTerminal() {
 		return false;
 	}
-	
+
 	@Override
 	public T getToken() {
 		return null;
 	}
-	
+
 	@Override
 	public Set<Production<T, P>> getProductions() {
 		Set<Production<T, P>> set = new HashSet<>();
@@ -107,29 +107,29 @@ public class UnbinaryNonTerminalSyntaxTree<T, P extends Parameter> implements Sy
 	private final Map<BinarySyntaxTreeVariant<T, P>, SyntaxTree<T, P>> childTreeCache = new WeakHashMap<>();
 
 	private SyntaxTree<T, P> toNaturalChildTree(BinarySyntaxTreeVariant<T, P> variant) {
-//		if (childTreeCache.containsKey(variant)) {
-//			return childTreeCache.get(variant);
-//		} else {
-			SyntaxTree<T, P> returnValue;
+		// if (childTreeCache.containsKey(variant)) {
+		// return childTreeCache.get(variant);
+		// } else {
+		SyntaxTree<T, P> returnValue;
 
-			Symbol<T> symbol = variant.getSymbol();
-			BinarySyntaxTree<T, P> childNode = variant.getChildNode();
+		Symbol<T> symbol = variant.getSymbol();
+		BinarySyntaxTree<T, P> childNode = variant.getChildNode();
 
-			if (symbol == null) {
-				returnValue = null;
+		if (symbol == null) {
+			returnValue = null;
+		} else {
+			if (childNode != null) {
+				// non-terminal
+				returnValue = new UnbinaryNonTerminalSyntaxTree<>((NonTerminal<T>) symbol, childNode);
 			} else {
-				if (childNode != null) {
-					// non-terminal
-					returnValue = new UnbinaryNonTerminalSyntaxTree<>((NonTerminal<T>) symbol, childNode);
-				} else {
-					// terminal
-					returnValue = new UnbinaryTerminalSyntaxTree<>((Terminal<T>) symbol, variant.getToken());
-				}
+				// terminal
+				returnValue = new UnbinaryTerminalSyntaxTree<>((Terminal<T>) symbol, variant.getToken());
 			}
+		}
 
-//			childTreeCache.put(variant, returnValue);
-			return returnValue;
-//		}
+		// childTreeCache.put(variant, returnValue);
+		return returnValue;
+		// }
 	}
 
 	private List<SyntaxTree<T, P>> createStrippedCopy(Collection<SyntaxTree<T, P>> source) {

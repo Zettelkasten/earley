@@ -13,7 +13,7 @@ public interface SyntaxTree<T, P extends Parameter> {
 	Symbol<T> getRootSymbol();
 
 	boolean isTerminal();
-	
+
 	T getToken();
 
 	Set<Production<T, P>> getProductions();

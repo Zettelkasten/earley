@@ -49,7 +49,7 @@ public class ChartSetPrinter<T, P extends Parameter> {
 		this.aliveStates = new HashSet<>();
 		calculateAliveStates();
 	}
-	
+
 	private void calculateAliveStates() {
 		Deque<State<T, P>> queue = new LinkedList<>();
 
@@ -81,6 +81,9 @@ public class ChartSetPrinter<T, P extends Parameter> {
 						StateCause.Complete<T, P> complete = (StateCause.Complete<T, P>) origin;
 						queue.push(complete.getPreState());
 						queue.push(complete.getChildState());
+					} else if (origin instanceof StateCause.Epsilon){
+						StateCause.Epsilon<T, P> epsilon = (StateCause.Epsilon<T, P>) origin;
+						queue.push(epsilon.getPreState());
 					}
 				}
 			}
@@ -164,7 +167,7 @@ public class ChartSetPrinter<T, P extends Parameter> {
 
 	public void printState(PrintStream out, State<T, P> state) {
 		String stateClass = "state state-" + (aliveStates.contains(state) ? "alive" : "dead");
-		
+
 		if (tableMode) {
 			out.printf("<tr class='%s' id='state-%s-%s'>", stateClass, state.getChart().getInputPosition(), getStateId(state));
 			out.printf("<td class='state-id'>(%s)</td>", getStateId(state) + 1);
@@ -294,6 +297,10 @@ public class ChartSetPrinter<T, P extends Parameter> {
 			printStateReference(out, complete.getChildState(), observer);
 			out.print(" and ");
 			printStateReference(out, complete.getPreState(), observer);
+		} else if (origin instanceof StateCause.Epsilon) {
+			StateCause.Epsilon<T, P> epsilon = (StateCause.Epsilon<T, P>) origin;
+			out.print("epsilonize ");
+			printStateReference(out, epsilon.getPreState(), observer);
 		} else {
 			out.print("unknown");
 		}

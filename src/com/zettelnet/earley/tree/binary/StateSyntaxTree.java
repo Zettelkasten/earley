@@ -32,6 +32,8 @@ public class StateSyntaxTree<T, P extends Parameter> implements BinarySyntaxTree
 				variants.add(new TerminalVariant<>(state, (StateCause.Scan<T, P>) cause));
 			} else if (cause instanceof StateCause.Complete) {
 				variants.add(new NonTerminalVariant<>(state, (StateCause.Complete<T, P>) cause));
+			} else if (cause instanceof StateCause.Epsilon) {
+				variants.add(new EpsilonChildVariant<>(state, (StateCause.Epsilon<T, P>) cause));
 			} else {
 				throw new AssertionError("Unknown StateCause type!");
 			}

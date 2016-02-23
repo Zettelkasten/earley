@@ -13,7 +13,7 @@ import com.zettelnet.earley.EarleyParseResult;
 import com.zettelnet.earley.EarleyParser;
 import com.zettelnet.earley.Grammar;
 import com.zettelnet.earley.ParameterizedSymbol;
-import com.zettelnet.earley.input.DynamicInputPositionInitializer;
+import com.zettelnet.earley.input.LinearInputPositionInitializer;
 import com.zettelnet.earley.param.AnyParameterExpression;
 import com.zettelnet.earley.param.CopyParameterExpression;
 import com.zettelnet.earley.param.ParameterExpression;
@@ -37,6 +37,7 @@ import com.zettelnet.latin.form.Mood;
 import com.zettelnet.latin.form.Numerus;
 import com.zettelnet.latin.form.Person;
 import com.zettelnet.latin.form.Tense;
+import com.zettelnet.latin.form.VerbType;
 import com.zettelnet.latin.form.Voice;
 import com.zettelnet.latin.form.provider.FormProvider;
 import com.zettelnet.latin.lemma.Lemma;
@@ -88,7 +89,7 @@ public class LatinParameterExample {
 		TokenParameterizer<Token, FormParameter> parameterizer = new FormParameterizer();
 
 		Grammar<Token, FormParameter> grammar = new Grammar<>(sentence, parameterManager);
-		grammar.setStartSymbolParameter(new SingletonParameterFactory<>(new FormParameter(Form.nounForm(Casus.Nominative, null, null))));
+		grammar.setStartSymbolParameter(new SingletonParameterFactory<>(new FormParameter(Form.withValues(Casus.Nominative, null, null, Person.Third, null, null, null, null, VerbType.Finite))));
 
 		ParameterExpression<Token, FormParameter> copy = new CopyParameterExpression<>(grammar, parameterizer);
 		ParameterExpression<Token, FormParameter> any = new AnyParameterExpression<>(parameterManager);
@@ -138,11 +139,11 @@ public class LatinParameterExample {
 		// AP -> epsilon
 		grammar.addProduction(
 				adverbalPhrase);
-		// AP -> AP AP
-		grammar.addProduction(
-				adverbalPhrase,
-				new ParameterizedSymbol<>(adverbalPhrase, any),
-				new ParameterizedSymbol<>(adverbalPhrase, any));
+				// AP -> AP AP
+				// grammar.addProduction(
+				// adverbalPhrase,
+				// new ParameterizedSymbol<>(adverbalPhrase, any),
+				// new ParameterizedSymbol<>(adverbalPhrase, any));
 
 		// NP(pi) -> NF(pi) Attr(pi)*
 		grammar.addProduction(
@@ -171,32 +172,50 @@ public class LatinParameterExample {
 		// NP(pi : Nom / Akk) -> S(pi : Inf Präs/Perf/Fut Akk)
 		for (Casus casus : Arrays.asList(Casus.Nominative, Casus.Accusative)) {
 			for (Tense tense : Arrays.asList(Tense.Present, Tense.Perfect, Tense.Future)) {
-				grammar.addProduction(nounPhrase,
-						new SingletonParameterFactory<>(new FormParameter(Form.nounForm(casus, null, null))),
-						new ParameterizedSymbol<>(sentence, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Form.withValues(Casus.Accusative, null, null, null, null, tense, null, null)))));
+				// grammar.addProduction(nounPhrase,
+				// new SingletonParameterFactory<>(new
+				// FormParameter(Form.nounForm(casus, null, null))),
+				// new ParameterizedSymbol<>(sentence, new
+				// SpecificParameterExpression<>(parameterManager,
+				// parameterizer, new
+				// FormParameter(Form.withValues(Casus.Accusative, null, null,
+				// null, null, tense, null, null, VerbType.Infinitive)))));
 			}
 		}
+		 grammar.addProduction(nounPhrase,
+		 new SingletonParameterFactory<>(new
+		 FormParameter(Form.nounForm(Casus.Accusative, null, null))),
+		 new ParameterizedSymbol<>(sentence, new
+		 SpecificParameterExpression<>(parameterManager, parameterizer, new
+		 FormParameter(Form.withValues(Casus.Accusative, null, null, null,
+		 null, null, null, null, VerbType.Infinitive)))));
 
-		EarleyParser<Token, FormParameter> parser = new EarleyParser<>(grammar, new DynamicInputPositionInitializer<>());
+		EarleyParser<Token, FormParameter> parser = new EarleyParser<>(grammar, new LinearInputPositionInitializer<>());
 
 		// lemmas
 
 		Lemma serva = new DummyLemma(Lemma.Type.Noun);
 		Lemma servus = new DummyLemma(Lemma.Type.Noun);
+		Lemma plaustrum = new DummyLemma(Lemma.Type.Noun);
 		Lemma canto = new DummyLemma(Lemma.Type.Verb);
+		Lemma rideo = new DummyLemma(Lemma.Type.Verb);
 
 		// tokens
 
 		List<Token> tokens = new ArrayList<>();
 		tokens.add(new Token("serva", new Determination(serva, Form.nounForm(Casus.Nominative, Numerus.Singular, Genus.Feminine))));
 		tokens.add(new Token("servi", new Determination(servus, Form.nounForm(Casus.Genitive, Numerus.Singular, Genus.Masculine))));
-		tokens.add(new Token("cantat", new Determination(canto, Form.verbForm(Person.Third, Numerus.Singular, Tense.Present, Mood.Indicative, Voice.Active))));
+		tokens.add(new Token("cantat", new Determination(canto, Form.verbForm(Person.Third, Numerus.Singular, Tense.Present, Mood.Indicative, Voice.Active, VerbType.Finite))));
+		tokens.add(new Token("ridere", new Determination(rideo, Form.verbForm(null, null, Tense.Present, null, Voice.Active, VerbType.Infinitive))));
+//		tokens.add(new Token("plaustrum", new Determination(plaustrum,
+//				Form.nounForm(Casus.Accusative, Numerus.Singular, Genus.Neuter))));
 
 		EarleyParseResult<Token, FormParameter> result = parser.parse(tokens);
 
-		System.out.println(result.getBinarySyntaxTree());
-		
 		new ChartSetPrinter<Token, FormParameter>(result.getCharts(), tokens).print(new PrintStream("E:\\temp.html"));
+
+		System.out.println(result.getBinarySyntaxTree());
+
 		System.out.println(result.getSyntaxTree());
 	}
 

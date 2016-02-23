@@ -18,13 +18,19 @@ public abstract class AbstractBinarySyntaxTreeVariant<T, P extends Parameter> im
 		if (isTerminal()) {
 			Symbol<T> symbol = getSymbol();
 			if (symbol != null) {
+				str.append("[");
 				str.append(symbol);
-				str.append(" ");
+				T token = getToken();
+				if (token != null) {
+					str.append(" ");
+					str.append(token);
+				}
+				str.append("] ");
 			}
 		} else {
 			Production<T, P> production = getChildProduction();
 			if (production != null) {
-				str.append(production);
+//				str.append(production.key());
 				str.append(" ");
 			}
 		}

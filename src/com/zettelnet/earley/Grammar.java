@@ -59,7 +59,7 @@ public class Grammar<T, P extends Parameter> {
 			}
 		}
 	}
-
+	
 	public final Production<T, P> addProduction(NonTerminal<T> left) {
 		Production<T, P> production = new Production<>(this, left);
 		addProduction(production);

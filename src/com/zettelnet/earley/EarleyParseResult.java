@@ -92,19 +92,26 @@ public final class EarleyParseResult<T, P extends Parameter> implements ParseRes
 		InputPosition<T> chartPosition = currentChart.getInputPosition();
 		StateCause<T, P> cause = new StateCause.Predict<>(state);
 
+		ParameterExpression<T, P> parameterExpression = state.nextParameterExpression();
+		P sourceParameter = state.getParameter();
+
 		Set<Production<T, P>> productions = grammar.getProductions(nonTerminal);
 		for (Production<T, P> production : productions) {
 			// get new parameter; for seed (state = null) this is the start
 			// parameter
-			ParameterExpression<T, P> parameterExpression = state.nextParameterExpression();
-			P sourceParameter = state.getParameter();
 			Collection<P> newParameters = parameterExpression.predict(sourceParameter, production.keyParameter());
 
 			for (P newParameter : newParameters) {
-				State<T, P> newState = new SimpleState<>(currentChart, production, 0, chartPosition, newParameter);
-				currentChart.add(newState, cause);
+				if (production.isEpsilon() && state.getProduction() != null) {
+					// next symbol can be resolved as epsilon - "epsilonized"
+					// (this is not the case for seed states!)
+					State<T, P> newState = new SimpleState<>(currentChart, state.getProduction(), state.getCurrentPosition() + 1, state.getOriginPosition(), sourceParameter);
+					currentChart.add(newState, new StateCause.Epsilon<>(state, production));
+				} else {
+					State<T, P> newState = new SimpleState<>(currentChart, production, 0, chartPosition, newParameter);
+					currentChart.add(newState, cause);
+				}
 			}
-
 		}
 	}
 
@@ -138,7 +145,11 @@ public final class EarleyParseResult<T, P extends Parameter> implements ParseRes
 			completeStates.add(state);
 			// complete = true;
 		}
-		if (!complete) {
+		if (!complete && !state.getProduction().isEpsilon()) {
+			// do not complete epsilon states, they are already handled by
+			// prediction (only way for epsilon states to be inserted into chart
+			// is when they are seeded)
+
 			P childParameter = state.getParameter();
 
 			// search for completors
