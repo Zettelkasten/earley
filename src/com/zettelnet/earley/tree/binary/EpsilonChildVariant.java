@@ -1,18 +1,15 @@
 package com.zettelnet.earley.tree.binary;
 
 import com.zettelnet.earley.Production;
-import com.zettelnet.earley.State;
 import com.zettelnet.earley.StateCause;
 import com.zettelnet.earley.param.Parameter;
 import com.zettelnet.earley.symbol.NonTerminal;
 
 public class EpsilonChildVariant<T, P extends Parameter> extends AbstractBinarySyntaxTreeVariant<T, P> {
 
-	private final State<T, P> state;
 	private final StateCause.Epsilon<T, P> cause;
 
-	public EpsilonChildVariant(final State<T, P> state, final StateCause.Epsilon<T, P> cause) {
-		this.state = state;
+	public EpsilonChildVariant(final StateCause.Epsilon<T, P> cause) {
 		this.cause = cause;
 	}
 
