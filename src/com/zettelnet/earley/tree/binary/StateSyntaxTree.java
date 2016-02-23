@@ -40,7 +40,7 @@ public class StateSyntaxTree<T, P extends Parameter> implements BinarySyntaxTree
 		}
 
 		if (allowEpsilon) {
-			variants.add(new EpsilonVariant<>());
+			variants.add(new EpsilonSeedVariant<>());
 		}
 
 		return variants;

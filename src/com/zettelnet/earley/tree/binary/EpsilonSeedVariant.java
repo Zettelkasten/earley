@@ -4,7 +4,7 @@ import com.zettelnet.earley.Production;
 import com.zettelnet.earley.param.Parameter;
 import com.zettelnet.earley.symbol.Symbol;
 
-public class EpsilonVariant<T, P extends Parameter> extends AbstractBinarySyntaxTreeVariant<T, P> {
+public class EpsilonSeedVariant<T, P extends Parameter> extends AbstractBinarySyntaxTreeVariant<T, P> {
 
 	@Override
 	public BinarySyntaxTree<T, P> getPreNode() {
