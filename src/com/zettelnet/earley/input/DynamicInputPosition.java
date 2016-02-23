@@ -65,6 +65,17 @@ public class DynamicInputPosition<T> implements InputPosition<T>, Comparable<Dyn
 			return availableTokens;
 		}
 	}
+	
+	@Override
+	public Collection<T> getUsedTokens() {
+		List<T> used = new ArrayList<>(usedTokens.cardinality());
+		for (int tokenIndex = 0; tokenIndex < tokens.size(); tokenIndex++) {
+			if (usedTokens.get(tokenIndex)) {
+				used.add(tokens.get(tokenIndex));
+			}
+		}
+		return used;
+	}
 
 	@Override
 	public InputPosition<T> nextPosition(T usedToken) {

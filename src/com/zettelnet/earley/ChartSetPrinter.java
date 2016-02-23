@@ -149,13 +149,20 @@ public class ChartSetPrinter<T, P extends Parameter> {
 			T token = i.next();
 
 			boolean available = position.isTokenAvailable(token);
+			boolean used = position.getUsedTokens().contains(token);
 
-			if (!available) {
+			if (available) {
+				out.print("<u>");
+			}
+			if (used) {
 				out.print("<strike>");
 			}
 			out.print(token);
-			if (!available) {
+			if (used) {
 				out.print("</strike>");
+			}
+			if (available) {
+				out.print("</u>");
 			}
 
 			if (i.hasNext()) {
