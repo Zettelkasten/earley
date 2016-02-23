@@ -68,6 +68,7 @@ public class LatinParameterExample {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	public static void main(String[] args) throws FileNotFoundException {
 
 		NonTerminal<Token> sentence = new SimpleNonTerminal<>("S");

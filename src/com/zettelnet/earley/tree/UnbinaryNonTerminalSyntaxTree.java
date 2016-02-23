@@ -7,9 +7,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.WeakHashMap;
 
 import com.zettelnet.earley.Production;
 import com.zettelnet.earley.param.Parameter;
@@ -104,12 +102,7 @@ public class UnbinaryNonTerminalSyntaxTree<T, P extends Parameter> implements Sy
 		return output;
 	}
 
-	private final Map<BinarySyntaxTreeVariant<T, P>, SyntaxTree<T, P>> childTreeCache = new WeakHashMap<>();
-
 	private SyntaxTree<T, P> toNaturalChildTree(BinarySyntaxTreeVariant<T, P> variant) {
-		// if (childTreeCache.containsKey(variant)) {
-		// return childTreeCache.get(variant);
-		// } else {
 		SyntaxTree<T, P> returnValue;
 
 		Symbol<T> symbol = variant.getSymbol();
@@ -127,9 +120,7 @@ public class UnbinaryNonTerminalSyntaxTree<T, P extends Parameter> implements Sy
 			}
 		}
 
-		// childTreeCache.put(variant, returnValue);
 		return returnValue;
-		// }
 	}
 
 	private List<SyntaxTree<T, P>> createStrippedCopy(Collection<SyntaxTree<T, P>> source) {

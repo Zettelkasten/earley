@@ -16,7 +16,6 @@ import com.zettelnet.earley.symbol.PredicateTerminal;
 import com.zettelnet.earley.symbol.SimpleNonTerminal;
 import com.zettelnet.earley.symbol.Terminal;
 import com.zettelnet.earley.tree.SyntaxTree;
-import com.zettelnet.earley.tree.TreeVisualizer;
 
 public class MultipleVariantTest {
 
@@ -79,11 +78,5 @@ public class MultipleVariantTest {
 
 		System.out.println(tree);
 		System.out.println(result.getBinarySyntaxTree());
-
-		try {
-			new TreeVisualizer<String, DefaultParameter>().createDot(new PrintStream("temp.html"), tree);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 }
