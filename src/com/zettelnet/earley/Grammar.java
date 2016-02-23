@@ -28,7 +28,11 @@ public class Grammar<T, P extends Parameter> {
 	private final ParameterManager<P> parameterManager;
 
 	public Grammar(final NonTerminal<T> startSymbol, final ParameterManager<P> parameterManager) {
-		this(startSymbol, parameterManager, parameterManager, new HashSet<>());
+		this(startSymbol, parameterManager, parameterManager);
+	}
+
+	public Grammar(final NonTerminal<T> startSymbol, final ParameterFactory<P> startSymbolParameter, final ParameterManager<P> parameterManager) {
+		this(startSymbol, startSymbolParameter, parameterManager, new HashSet<>());
 	}
 
 	public Grammar(final NonTerminal<T> startSymbol, final ParameterFactory<P> startSymbolParameter, final ParameterManager<P> parameterManager, final Set<Production<T, P>> productions) {
@@ -59,7 +63,7 @@ public class Grammar<T, P extends Parameter> {
 			}
 		}
 	}
-	
+
 	public final Production<T, P> addProduction(NonTerminal<T> left) {
 		Production<T, P> production = new Production<>(this, left);
 		addProduction(production);
