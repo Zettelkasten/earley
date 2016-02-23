@@ -81,6 +81,7 @@ public class LatinParameterExample {
 		NonTerminal<Token> verbForm = new SimpleNonTerminal<>("VF");
 		NonTerminal<Token> arguments = new SimpleNonTerminal<>("Args");
 		NonTerminal<Token> adverbalPhrase = new SimpleNonTerminal<>("AP");
+		NonTerminal<Token> adverbalPhraseVar = new SimpleNonTerminal<>("APVar");
 
 		Terminal<Token> verb = new LexemeTerminal(Lemma.Type.Verb);
 		Terminal<Token> noun = new LexemeTerminal(Lemma.Type.Noun);
@@ -102,12 +103,12 @@ public class LatinParameterExample {
 		grammar.addProduction(sentence,
 				new ParameterizedSymbol<>(verbPhrase, copy));
 
-		// // VP(pi) -> VF(pi) Args(pi) AP
+		// // VP(pi) -> VF(pi) Args(pi)* AP*
 		grammar.addProduction(
 				verbPhrase,
 				new ParameterizedSymbol<>(verbForm, copy),
 				new ParameterizedSymbol<>(arguments, copy),
-				new ParameterizedSymbol<>(adverbalPhrase, any));
+				new ParameterizedSymbol<>(adverbalPhraseVar, any));
 		// VF(pi) -> v(pi) -> TODO
 		grammar.addProduction(
 				verbForm,
@@ -138,12 +139,11 @@ public class LatinParameterExample {
 				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Form.nounForm(Casus.Dative, null, null)))));
 		// AP -> epsilon
 		grammar.addProduction(
-				adverbalPhrase);
-				// AP -> AP AP
-				// grammar.addProduction(
-				// adverbalPhrase,
-				// new ParameterizedSymbol<>(adverbalPhrase, any),
-				// new ParameterizedSymbol<>(adverbalPhrase, any));
+				adverbalPhraseVar);
+		grammar.addProduction(
+				adverbalPhraseVar,
+				adverbalPhrase,
+				adverbalPhraseVar);
 
 		// NP(pi) -> NF(pi) Attr(pi)*
 		grammar.addProduction(
@@ -172,23 +172,12 @@ public class LatinParameterExample {
 		// NP(pi : Nom / Akk) -> S(pi : Inf Präs/Perf/Fut Akk)
 		for (Casus casus : Arrays.asList(Casus.Nominative, Casus.Accusative)) {
 			for (Tense tense : Arrays.asList(Tense.Present, Tense.Perfect, Tense.Future)) {
-				// grammar.addProduction(nounPhrase,
-				// new SingletonParameterFactory<>(new
-				// FormParameter(Form.nounForm(casus, null, null))),
-				// new ParameterizedSymbol<>(sentence, new
-				// SpecificParameterExpression<>(parameterManager,
-				// parameterizer, new
-				// FormParameter(Form.withValues(Casus.Accusative, null, null,
-				// null, null, tense, null, null, VerbType.Infinitive)))));
+				grammar.addProduction(nounPhrase,
+						new SingletonParameterFactory<>(new FormParameter(Form.nounForm(casus, null, null))),
+						new ParameterizedSymbol<>(sentence, new SpecificParameterExpression<>(parameterManager, parameterizer,
+								new FormParameter(Form.withValues(Casus.Accusative, null, null, null, null, tense, null, null, VerbType.Infinitive)))));
 			}
 		}
-		 grammar.addProduction(nounPhrase,
-		 new SingletonParameterFactory<>(new
-		 FormParameter(Form.nounForm(Casus.Accusative, null, null))),
-		 new ParameterizedSymbol<>(sentence, new
-		 SpecificParameterExpression<>(parameterManager, parameterizer, new
-		 FormParameter(Form.withValues(Casus.Accusative, null, null, null,
-		 null, null, null, null, VerbType.Infinitive)))));
 
 		EarleyParser<Token, FormParameter> parser = new EarleyParser<>(grammar, new LinearInputPositionInitializer<>());
 
@@ -207,8 +196,8 @@ public class LatinParameterExample {
 		tokens.add(new Token("servi", new Determination(servus, Form.nounForm(Casus.Genitive, Numerus.Singular, Genus.Masculine))));
 		tokens.add(new Token("cantat", new Determination(canto, Form.verbForm(Person.Third, Numerus.Singular, Tense.Present, Mood.Indicative, Voice.Active, VerbType.Finite))));
 		tokens.add(new Token("ridere", new Determination(rideo, Form.verbForm(null, null, Tense.Present, null, Voice.Active, VerbType.Infinitive))));
-//		tokens.add(new Token("plaustrum", new Determination(plaustrum,
-//				Form.nounForm(Casus.Accusative, Numerus.Singular, Genus.Neuter))));
+		// tokens.add(new Token("plaustrum", new Determination(plaustrum,
+		// Form.nounForm(Casus.Accusative, Numerus.Singular, Genus.Neuter))));
 
 		EarleyParseResult<Token, FormParameter> result = parser.parse(tokens);
 
