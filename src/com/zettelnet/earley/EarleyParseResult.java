@@ -143,9 +143,9 @@ public final class EarleyParseResult<T, P extends Parameter> implements ParseRes
 		if (chartPosition.isComplete() && key.equals(grammar.getStartSymbol()) && state.getOriginPosition().isClean()) {
 			// done
 			completeStates.add(state);
-			// complete = true;
+			complete = true;
 		}
-		if (!complete && !state.getProduction().isEpsilon()) {
+		if (!state.getProduction().isEpsilon()) {
 			// do not complete epsilon states, they are already handled by
 			// prediction (only way for epsilon states to be inserted into chart
 			// is when they are seeded)
