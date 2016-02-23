@@ -25,11 +25,14 @@ public class CopyParameterExpression<T, P extends Parameter> implements Paramete
 
 	@Override
 	public Collection<P> predict(P parameter, P childParameter) {
+		System.out.println("lel - i guess i'm responsible: predict(" + parameter + ";" + childParameter + ")");
 		if (manager.isCompatible(parameter, childParameter)) {
+			System.out.println("hey, it's compatible!");
 			P result = manager.copyParameter(parameter, childParameter);
 			return Arrays.asList(result);
+		} else {
+			return Collections.emptyList();
 		}
-		return Arrays.asList(manager.copyParameter(childParameter));
 	}
 
 	@Override

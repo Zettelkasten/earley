@@ -19,14 +19,15 @@ public class SpecificParameterExpression<T, P extends Parameter> implements Para
 
 		this.parameter = parameter;
 	}
-	
+
 	@Override
 	public Collection<P> predict(P parentParameter, P childParameter) {
 		if (manager.isCompatible(parameter, childParameter)) {
 			P result = manager.copyParameter(parameter, childParameter);
 			return Arrays.asList(result);
+		} else {
+			return Collections.emptyList();
 		}
-		return Arrays.asList(manager.copyParameter(childParameter));
 	}
 
 	@Override
