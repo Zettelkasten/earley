@@ -57,7 +57,8 @@ public class ChartSetPrinter<T, P extends Parameter> {
 		for (Map.Entry<InputPosition<T>, Chart<T, P>> entry : charts.entrySet()) {
 			if (entry.getKey().isComplete()) {
 				for (State<T, P> state : entry.getValue()) {
-					if (state.getCurrentPosition() == state.getProduction().size() && state.getOriginPosition().isClean()) {
+					if (state.getCurrentPosition() == state.getProduction().size()
+							&& state.getOriginPosition().isClean()) {
 						queue.add(state);
 					}
 				}
@@ -81,7 +82,7 @@ public class ChartSetPrinter<T, P extends Parameter> {
 						StateCause.Complete<T, P> complete = (StateCause.Complete<T, P>) origin;
 						queue.push(complete.getPreState());
 						queue.push(complete.getChildState());
-					} else if (origin instanceof StateCause.Epsilon){
+					} else if (origin instanceof StateCause.Epsilon) {
 						StateCause.Epsilon<T, P> epsilon = (StateCause.Epsilon<T, P>) origin;
 						queue.push(epsilon.getPreState());
 					}
@@ -106,8 +107,21 @@ public class ChartSetPrinter<T, P extends Parameter> {
 		out.print("</head>");
 		out.print("<body>");
 		out.print("<div class='container'>");
-		out.print("<input type='checkbox' id='include-dead-states' checked> <label for='include-dead-states'>Show dead states</label>");
-
+		out.print("<input type='checkbox' id='include-dead-states' checked> <label for='include-dead-states'>Show dead states</label>; ");
+		
+		int totalStates = 0;
+		int aliveStates = 0;
+		for (Chart<T, P> chart : charts.values()) {
+			for (State<T, P> state : chart) {
+				totalStates++;
+				if (this.aliveStates.contains(state)) {
+					aliveStates++;
+				}
+			}
+		}
+		
+		out.printf("total %s (%s) states", totalStates, aliveStates);
+		
 		for (Chart<T, P> chart : charts.values()) {
 			if (chart.iterator().hasNext()) {
 				printChart(out, chart);
@@ -176,10 +190,12 @@ public class ChartSetPrinter<T, P extends Parameter> {
 		String stateClass = "state state-" + (aliveStates.contains(state) ? "alive" : "dead");
 
 		if (tableMode) {
-			out.printf("<tr class='%s' id='state-%s-%s'>", stateClass, state.getChart().getInputPosition(), getStateId(state));
+			out.printf("<tr class='%s' id='state-%s-%s'>", stateClass, state.getChart().getInputPosition(),
+					getStateId(state));
 			out.printf("<td class='state-id'>(%s)</td>", getStateId(state) + 1);
 		} else {
-			out.printf("<li class='%s' id='state-%s-%s'>", stateClass, state.getChart().getInputPosition(), getStateId(state));
+			out.printf("<li class='%s' id='state-%s-%s'>", stateClass, state.getChart().getInputPosition(),
+					getStateId(state));
 		}
 
 		Production<T, P> production = state.getProduction();
@@ -246,7 +262,8 @@ public class ChartSetPrinter<T, P extends Parameter> {
 			}
 		}
 
-		if (state.getCurrentPosition() == state.getProduction().size() && state.getOriginPosition().isClean() && state.getChart().getInputPosition() == charts.lastKey()) {
+		if (state.getCurrentPosition() == state.getProduction().size() && state.getOriginPosition().isClean()
+				&& state.getChart().getInputPosition() == charts.lastKey()) {
 			out.print(" DONE!");
 		}
 
@@ -274,7 +291,8 @@ public class ChartSetPrinter<T, P extends Parameter> {
 	}
 
 	public void printStateReference(PrintStream out, State<T, P> state, State<T, P> observer) {
-		out.printf("<span class='state-ref' data-target='state-%s-%s'>", state.getChart().getInputPosition(), getStateId(state));
+		out.printf("<span class='state-ref' data-target='state-%s-%s'>", state.getChart().getInputPosition(),
+				getStateId(state));
 		if (observer != null && !state.getChart().equals(observer.getChart())) {
 			out.printf("S(%s)", state.getChart().getInputPosition());
 		}
