@@ -53,16 +53,19 @@ public class NearleyCalculatorExample {
 		grammar.addProduction(main,
 				whitespace, addition, whitespace);
 
+		// Parentheses
 		grammar.addProduction(parentheses,
 				lit('('), addition, whitespace, lit(')'), whitespace);
 		grammar.addProduction(parentheses,
 				number);
 
+		// Exponents
 		grammar.addProduction(exponent,
 				parentheses, whitespace, lit('^'), whitespace, exponent);
 		grammar.addProduction(exponent,
 				parentheses);
 
+		// Multiplication and devision
 		grammar.addProduction(multiplication,
 				multiplication, whitespace, lit('*'), whitespace, exponent);
 		grammar.addProduction(multiplication,
@@ -70,34 +73,61 @@ public class NearleyCalculatorExample {
 		grammar.addProduction(multiplication,
 				exponent);
 
+		// Addition and subtraction
 		grammar.addProduction(addition,
 				addition, whitespace, lit('+'), whitespace, multiplication);
 		grammar.addProduction(addition,
 				addition, whitespace, lit('-'), whitespace, multiplication);
 		grammar.addProduction(addition,
-				exponent);
+				multiplication);
 
+		// A number or a function of a number
 		grammar.addProduction(number,
 				floatNumber);
+		grammar.addProduction(number,
+				lit('s'), lit('i'), lit('n'), whitespace, parentheses);
+		grammar.addProduction(number,
+				lit('c'), lit('o'), lit('s'), whitespace, parentheses);
+		grammar.addProduction(number,
+				lit('t'), lit('a'), lit('n'), whitespace, parentheses);
 
+		grammar.addProduction(number,
+				lit('a'), lit('s'), lit('i'), lit('n'), whitespace, parentheses);
+		grammar.addProduction(number,
+				lit('a'), lit('c'), lit('o'), lit('s'), whitespace, parentheses);
+		grammar.addProduction(number,
+				lit('a'), lit('t'), lit('a'), lit('n'), whitespace, parentheses);
+		
+		grammar.addProduction(number,
+				lit('p'), lit('i'));
+		grammar.addProduction(number,
+				lit('e'));
+		grammar.addProduction(number,
+				lit('s'), lit('q'), lit('r'), lit('t'), whitespace, parentheses);
+		grammar.addProduction(number,
+				lit('l'), lit('n'), whitespace, parentheses);
+		
+		// Number with a decimal point in it
 		grammar.addProduction(floatNumber,
 				intNumber, lit('.'), intNumber);
 		grammar.addProduction(floatNumber,
 				intNumber);
 
+		// Number without a decimal point
 		grammar.addProduction(intNumber,
 				digit, intNumberNull);
 		grammar.addProduction(intNumberNull);
 		grammar.addProduction(intNumberNull,
 				digit, intNumberNull);
 
+		// None, one or more whitespaces
 		grammar.addProduction(whitespace,
 				lit(' '), whitespace);
 		grammar.addProduction(whitespace);
 
 		GrammarParser<Character, DefaultParameter> parser = new EarleyParser<>(grammar);
 
-		String input = "1";
+		String input = "32.14 + 3/4^2";
 		List<Character> tokens = input.chars().mapToObj(e -> (char) e).collect(Collectors.toList());
 
 		System.out.println("Parsing " + input);
