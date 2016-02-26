@@ -45,6 +45,10 @@ public final class FormParameter implements Parameter {
 		this(DEFAULT_DATA);
 	}
 
+	public FormParameter(FormProperty... formProperties) {
+		this(makeDataMap(DEFAULT_DATA, Form.withValues(formProperties)));
+	}
+
 	public FormParameter(Form form) {
 		this(makeDataMap(DEFAULT_DATA, form));
 	}

@@ -49,7 +49,7 @@ public final class LatinGrammar {
 		TokenParameterizer<Token, FormParameter> parameterizer = new FormParameterizer();
 
 		Grammar<Token, FormParameter> grammar = new Grammar<>(sentence, parameterManager);
-		grammar.setStartSymbolParameter(new SingletonParameterFactory<>(new FormParameter(Form.withValues(Casus.Nominative, null, null, Person.Third, null, null, null, null, Finiteness.Finite))));
+		grammar.setStartSymbolParameter(new SingletonParameterFactory<>(new FormParameter(Casus.Nominative, Person.Third, Finiteness.Finite)));
 
 		ParameterExpression<Token, FormParameter> copy = new CopyParameterExpression<>(grammar, parameterizer);
 		ParameterExpression<Token, FormParameter> any = new AnyParameterExpression<>(parameterManager);
@@ -77,31 +77,31 @@ public final class LatinGrammar {
 		// Args(pi : NullVal) -> epsilon
 		grammar.addProduction(
 				arguments,
-				new SingletonParameterFactory<>(new FormParameter(Form.withValues(Valency.Null))));
+				new SingletonParameterFactory<>(new FormParameter(Valency.Null)));
 		// Args(pi : Kopula) -> NP(pi)
 		grammar.addProduction(
 				arguments,
-				new SingletonParameterFactory<>(new FormParameter(Form.withValues(Valency.Copula))),
+				new SingletonParameterFactory<>(new FormParameter(Valency.Copula)),
 				new ParameterizedSymbol<>(nounPhrase, copy));
 		// Args(pi : GenVal) -> NP(Gen)
 		grammar.addProduction(
 				arguments,
-				new SingletonParameterFactory<>(new FormParameter(Form.withValues(Valency.Genitive))),
+				new SingletonParameterFactory<>(new FormParameter(Valency.Genitive)),
 				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Form.nounForm(Casus.Genitive, null, null)))));
 		// Args(pi : DatVal) -> NP(Dat)
 		grammar.addProduction(
 				arguments,
-				new SingletonParameterFactory<>(new FormParameter(Form.withValues(Valency.Dative))),
+				new SingletonParameterFactory<>(new FormParameter(Valency.Dative)),
 				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Form.nounForm(Casus.Dative, null, null)))));
 		// Args(pi : AkkVal) -> NP(Akk)
 		grammar.addProduction(
 				arguments,
-				new SingletonParameterFactory<>(new FormParameter(Form.withValues(Valency.Accusative))),
+				new SingletonParameterFactory<>(new FormParameter(Valency.Accusative)),
 				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Form.nounForm(Casus.Accusative, null, null)))));
 		// Args(pi : AkkDatVal) -> NP(Akk) NP(Dat)
 		grammar.addProduction(
 				arguments,
-				new SingletonParameterFactory<>(new FormParameter(Form.withValues(Valency.AccusativeDative))),
+				new SingletonParameterFactory<>(new FormParameter(Valency.AccusativeDative)),
 				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Form.nounForm(Casus.Accusative, null, null)))),
 				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Form.nounForm(Casus.Dative, null, null)))));
 
@@ -116,7 +116,7 @@ public final class LatinGrammar {
 		// NP(pi : Fin) -> NF(pi) Attr(pi)*
 		grammar.addProduction(
 				nounPhrase,
-				new SingletonParameterFactory<>(new FormParameter(Form.withValues(Finiteness.Finite))),
+				new SingletonParameterFactory<>(new FormParameter(Finiteness.Finite)),
 				new ParameterizedSymbol<>(nounForm, copy),
 				new ParameterizedSymbol<>(attributeVar, copy));
 		// NF(pi) -> n(pi)
@@ -144,7 +144,7 @@ public final class LatinGrammar {
 				grammar.addProduction(nounPhrase,
 						new SingletonParameterFactory<>(new FormParameter(Form.nounForm(casus, null, null))),
 						new ParameterizedSymbol<>(sentence, new SpecificParameterExpression<>(parameterManager, parameterizer,
-								new FormParameter(Form.withValues(Casus.Accusative, null, null, null, null, tense, null, null, Finiteness.Infinitive)))));
+								new FormParameter(Casus.Accusative, tense, Finiteness.Infinitive))));
 			}
 		}
 
