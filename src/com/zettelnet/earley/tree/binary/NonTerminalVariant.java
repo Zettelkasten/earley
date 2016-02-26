@@ -37,6 +37,11 @@ public class NonTerminalVariant<T, P extends Parameter> extends AbstractBinarySy
 	}
 
 	@Override
+	public P getChildParameter() {
+		return state.getParameter();
+	}
+	
+	@Override
 	public BinarySyntaxTree<T, P> getChildNode() {
 		return new StateSyntaxTree<>(cause.getChildState());
 	}

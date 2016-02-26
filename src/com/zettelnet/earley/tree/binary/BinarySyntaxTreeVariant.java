@@ -45,6 +45,8 @@ public interface BinarySyntaxTreeVariant<T, P extends Parameter> {
 	}
 
 	Production<T, P> getChildProduction();
+	
+	P getChildParameter();
 
 	BinarySyntaxTree<T, P> getChildNode();
 }

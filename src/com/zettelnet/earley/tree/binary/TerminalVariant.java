@@ -35,6 +35,11 @@ public class TerminalVariant<T, P extends Parameter> extends AbstractBinarySynta
 	public Production<T, P> getChildProduction() {
 		return null;
 	}
+	
+	@Override
+	public P getChildParameter() {
+		return null;
+	}
 
 	@Override
 	public BinarySyntaxTree<T, P> getChildNode() {

@@ -36,6 +36,11 @@ public class InitialVariant<T, P extends Parameter> extends AbstractBinarySyntax
 	}
 
 	@Override
+	public P getChildParameter() {
+		return state.getParameter();
+	}
+	
+	@Override
 	public BinarySyntaxTree<T, P> getChildNode() {
 		return new StateSyntaxTree<>(state);
 	}

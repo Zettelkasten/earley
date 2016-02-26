@@ -69,7 +69,8 @@ public class UnbinaryNonTerminalSyntaxTree<T, P extends Parameter> implements Sy
 
 		final Deque<Iterator<BinarySyntaxTreeVariant<T, P>>> iterators = new LinkedList<>();
 		final Deque<SyntaxTree<T, P>> list = new LinkedList<>();
-		Production<T, P> production = null;
+		
+		BinarySyntaxTreeVariant<T, P> topVariant = null;
 
 		// seed
 		iterators.addFirst(this.node.getVariants().iterator());
@@ -83,12 +84,12 @@ public class UnbinaryNonTerminalSyntaxTree<T, P extends Parameter> implements Sy
 
 				// get production -> TODO NOT WORKING PROPERLY
 				if (iterators.size() == 1) {
-					production = variant.getChildProduction();
+					topVariant = variant;
 				}
 
 				BinarySyntaxTree<T, P> preNode = variant.getPreNode();
 				if (preNode == null) {
-					output.add(new SimpleSyntaxTreeVariant<>(production, createStrippedCopy(list)));
+					output.add(new SimpleSyntaxTreeVariant<>(topVariant.getChildProduction(), topVariant.getChildParameter(), createStrippedCopy(list)));
 					list.removeFirst();
 				} else {
 					iterators.addFirst(preNode.getVariants().iterator());
@@ -136,7 +137,9 @@ public class UnbinaryNonTerminalSyntaxTree<T, P extends Parameter> implements Sy
 	@Override
 	public SyntaxTreeVariant<T, P> getVariant(Iterator<Integer> variantDirections) throws NoSuchSyntaxTreeException {
 		final List<SyntaxTree<T, P>> children = new ArrayList<>();
+		
 		Production<T, P> production = null;
+		P parameter = null;
 
 		BinarySyntaxTree<T, P> binaryNode = node;
 		do {
@@ -152,6 +155,9 @@ public class UnbinaryNonTerminalSyntaxTree<T, P extends Parameter> implements Sy
 
 			if (production == null) {
 				production = binaryVariant.getChildProduction();
+			}
+			if (parameter == null) {
+				parameter = binaryVariant.getChildParameter();
 			}
 
 			Symbol<T> symbol = binaryVariant.getSymbol();
@@ -172,7 +178,7 @@ public class UnbinaryNonTerminalSyntaxTree<T, P extends Parameter> implements Sy
 			binaryNode = binaryVariant.getPreNode();
 		} while (binaryNode != null);
 
-		return new SimpleSyntaxTreeVariant<>(production, children);
+		return new SimpleSyntaxTreeVariant<>(production, parameter, children);
 	}
 
 	@Override

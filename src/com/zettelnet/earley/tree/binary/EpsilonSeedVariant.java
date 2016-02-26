@@ -20,9 +20,14 @@ public class EpsilonSeedVariant<T, P extends Parameter> extends AbstractBinarySy
 	public T getToken() {
 		return null;
 	}
-	
+
 	@Override
 	public Production<T, P> getChildProduction() {
+		return null;
+	}
+
+	@Override
+	public P getChildParameter() {
 		return null;
 	}
 

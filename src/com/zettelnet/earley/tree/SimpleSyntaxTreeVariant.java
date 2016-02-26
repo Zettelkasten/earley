@@ -8,16 +8,24 @@ import com.zettelnet.earley.param.Parameter;
 public class SimpleSyntaxTreeVariant<T, P extends Parameter> implements SyntaxTreeVariant<T, P> {
 
 	private final Production<T, P> production;
+	private final P parameter;
+	
 	private final List<SyntaxTree<T, P>> children;
 
-	public SimpleSyntaxTreeVariant(final Production<T, P> production, final List<SyntaxTree<T, P>> children) {
+	public SimpleSyntaxTreeVariant(final Production<T, P> production, final P parameter, final List<SyntaxTree<T, P>> children) {
 		this.production = production;
+		this.parameter = parameter;
 		this.children = children;
 	}
 
 	@Override
 	public Production<T, P> getProduction() {
 		return production;
+	}
+	
+	@Override
+	public P getParameter() {
+		return parameter;
 	}
 
 	@Override

@@ -32,6 +32,11 @@ public class EpsilonChildVariant<T, P extends Parameter> extends AbstractBinaryS
 	public Production<T, P> getChildProduction() {
 		return cause.getChildProduction();
 	}
+	
+	@Override
+	public P getChildParameter() {
+		return cause.getChildProduction().keyParameter();
+	}
 
 	@Override
 	public BinarySyntaxTree<T, P> getChildNode() {
