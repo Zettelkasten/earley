@@ -13,6 +13,12 @@ $(function() {
 	$('#include-dead-states').change(function() {
 		var show = $(this).prop('checked');
 
+
+		if (show) {
+			$('.chart-dead').show();
+		} else {
+			$('.chart-dead').hide();
+		}
 		if (show) {
 			$('.state-dead').show();
 		} else {

@@ -24,6 +24,8 @@ public class ChartSetPrinter<T, P extends Parameter> {
 	private final Map<Chart<T, P>, Map<State<T, P>, Integer>> stateIds;
 
 	private boolean tableMode;
+
+	private final Set<Chart<T, P>> aliveCharts;
 	private final Set<State<T, P>> aliveStates;
 
 	public ChartSetPrinter(final SortedMap<InputPosition<T>, Chart<T, P>> charts, final List<T> tokens) {
@@ -46,8 +48,10 @@ public class ChartSetPrinter<T, P extends Parameter> {
 			stateIds.put(chart, ids);
 		}
 
+		this.aliveCharts = new HashSet<>();
 		this.aliveStates = new HashSet<>();
 		calculateAliveStates();
+		calculateAliveCharts();
 	}
 
 	private void calculateAliveStates() {
@@ -57,8 +61,7 @@ public class ChartSetPrinter<T, P extends Parameter> {
 		for (Map.Entry<InputPosition<T>, Chart<T, P>> entry : charts.entrySet()) {
 			if (entry.getKey().isComplete()) {
 				for (State<T, P> state : entry.getValue()) {
-					if (state.getCurrentPosition() == state.getProduction().size()
-							&& state.getOriginPosition().isClean()) {
+					if (state.getCurrentPosition() == state.getProduction().size() && state.getOriginPosition().isClean()) {
 						queue.add(state);
 					}
 				}
@@ -69,6 +72,7 @@ public class ChartSetPrinter<T, P extends Parameter> {
 		while ((next = queue.poll()) != null) {
 			if (!aliveStates.contains(next)) {
 				aliveStates.add(next);
+
 				for (StateCause<T, P> origin : next.getCause()) {
 					if (origin instanceof StateCause.Predict) {
 						StateCause.Predict<T, P> predict = (StateCause.Predict<T, P>) origin;
@@ -91,6 +95,17 @@ public class ChartSetPrinter<T, P extends Parameter> {
 		}
 	}
 
+	private void calculateAliveCharts() {
+		for (Chart<T, P> chart : charts.values()) {
+			for (State<T, P> state : chart) {
+				if (aliveStates.contains(state)) {
+					aliveCharts.add(chart);
+					break;
+				}
+			}
+		}
+	}
+
 	private Integer getStateId(State<T, P> state) {
 		return stateIds.get(state.getChart()).get(state);
 	}
@@ -108,7 +123,7 @@ public class ChartSetPrinter<T, P extends Parameter> {
 		out.print("<body>");
 		out.print("<div class='container'>");
 		out.print("<input type='checkbox' id='include-dead-states' checked> <label for='include-dead-states'>Show dead states</label>; ");
-		
+
 		int totalStates = 0;
 		int aliveStates = 0;
 		for (Chart<T, P> chart : charts.values()) {
@@ -119,9 +134,9 @@ public class ChartSetPrinter<T, P extends Parameter> {
 				}
 			}
 		}
-		
+
 		out.printf("total %s (%s) states", totalStates, aliveStates);
-		
+
 		for (Chart<T, P> chart : charts.values()) {
 			if (chart.iterator().hasNext()) {
 				printChart(out, chart);
@@ -134,7 +149,9 @@ public class ChartSetPrinter<T, P extends Parameter> {
 	}
 
 	public void printChart(PrintStream out, Chart<T, P> chart) {
-		out.printf("<div class='chart' id='chart-%s'>", chart.getInputPosition());
+		String chartClass = "chart chart-" + (aliveCharts.contains(chart) ? "alive" : "dead");
+		
+		out.printf("<div class='%s' id='chart-%s'>", chartClass, chart.getInputPosition());
 		out.print("<h2 class='chart-title'>");
 		out.printf("S(%s) - ", chart.getInputPosition());
 		printInputPosition(out, chart.getInputPosition());
