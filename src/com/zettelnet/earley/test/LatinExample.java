@@ -4,8 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import com.zettelnet.earley.ChartSetPrinter;
 import com.zettelnet.earley.EarleyParser;
@@ -22,12 +20,13 @@ import com.zettelnet.earley.param.SpecificParameterExpression;
 import com.zettelnet.earley.param.TokenParameterizer;
 import com.zettelnet.earley.symbol.NonTerminal;
 import com.zettelnet.earley.symbol.SimpleNonTerminal;
-import com.zettelnet.earley.symbol.SimpleTerminal;
 import com.zettelnet.earley.symbol.Terminal;
 import com.zettelnet.earley.test.latin.Determination;
+import com.zettelnet.earley.test.latin.DummyLemma;
 import com.zettelnet.earley.test.latin.FormParameter;
 import com.zettelnet.earley.test.latin.FormParameterManager;
 import com.zettelnet.earley.test.latin.FormParameterizer;
+import com.zettelnet.earley.test.latin.LemmaTerminal;
 import com.zettelnet.earley.test.latin.Token;
 import com.zettelnet.latin.Form;
 import com.zettelnet.latin.form.Casus;
@@ -37,34 +36,9 @@ import com.zettelnet.latin.form.Numerus;
 import com.zettelnet.latin.form.Person;
 import com.zettelnet.latin.form.Tense;
 import com.zettelnet.latin.form.Voice;
-import com.zettelnet.latin.form.provider.FormProvider;
 import com.zettelnet.latin.lemma.Lemma;
 
 public class LatinExample {
-
-	public static class LexemeTerminal extends SimpleTerminal<Token> {
-
-		private final Lemma.Type type;
-
-		public LexemeTerminal(final Lemma.Type type) {
-			super(type.toString());
-			this.type = type;
-		}
-
-		@Override
-		public boolean isCompatibleWith(Token token) {
-			for (Determination determination : token.getDeterminations()) {
-				if (isCompatibleWith(determination)) {
-					return true;
-				}
-			}
-			return false;
-		}
-
-		public boolean isCompatibleWith(Determination determination) {
-			return determination.getLemmaType().equals(type);
-		}
-	}
 
 	public static void main(String[] args) throws FileNotFoundException {
 
@@ -72,8 +46,8 @@ public class LatinExample {
 		NonTerminal<Token> nounPhrase = new SimpleNonTerminal<>("NP");
 		NonTerminal<Token> verbPhrase = new SimpleNonTerminal<>("VP");
 
-		Terminal<Token> verb = new LexemeTerminal(Lemma.Type.Verb);
-		Terminal<Token> noun = new LexemeTerminal(Lemma.Type.Noun);
+		Terminal<Token> verb = new LemmaTerminal(Lemma.Type.Verb);
+		Terminal<Token> noun = new LemmaTerminal(Lemma.Type.Noun);
 
 		ParameterManager<FormParameter> parameterManager = new FormParameterManager();
 		TokenParameterizer<Token, FormParameter> parameterizer = new FormParameterizer();
@@ -128,68 +102,5 @@ public class LatinExample {
 
 		new ChartSetPrinter<Token, FormParameter>(result.getCharts(), tokens).print(new PrintStream("E:\\temp.html"));
 		System.out.println(result.getSyntaxTree());
-	}
-
-	public static class DummyLemma implements Lemma {
-
-		private final Lemma.Type type;
-
-		public DummyLemma(Lemma.Type type) {
-			this.type = type;
-		}
-
-		@Override
-		public String getFirstForm() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public String getForm(Form form) {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public boolean hasForm(Form form) {
-			// TODO Auto-generated method stub
-			return false;
-		}
-
-		@Override
-		public Map<Form, String> getForms() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public Set<Form> getAvailableForms() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public FormProvider<? extends Lemma> getFormProvider() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public Set<Lemma> getDerivatives() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public Lemma getDerivedFrom() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public Type getType() {
-			return type;
-		}
-
 	}
 }

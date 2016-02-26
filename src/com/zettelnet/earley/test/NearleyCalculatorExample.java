@@ -127,7 +127,7 @@ public class NearleyCalculatorExample {
 
 		GrammarParser<Character, DefaultParameter> parser = new EarleyParser<>(grammar);
 
-		String input = "32.14 + 3/4^2";
+		String input = "sin(45)*2/pi^2";
 		List<Character> tokens = input.chars().mapToObj(e -> (char) e).collect(Collectors.toList());
 
 		System.out.println("Parsing " + input);
