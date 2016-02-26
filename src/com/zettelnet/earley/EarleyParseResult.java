@@ -118,8 +118,9 @@ public final class EarleyParseResult<T, P extends Parameter> implements ParseRes
 	private void scan(State<T, P> state, Terminal<T> terminal) {
 		InputPosition<T> chartPosition = currentChart.getInputPosition();
 
-		for (T toResolve : chartPosition.getAvailableTokens()) {
-			Chart<T, P> nextChart = charts.get(chartPosition.nextPosition(toResolve));
+		for (Map.Entry<InputPosition<T>, T> entry : chartPosition.getAvailableTokens().entrySet()) {
+			Chart<T, P> nextChart = charts.get(entry.getKey());
+			T toResolve = entry.getValue();
 
 			if (nextChart != null && terminal.isCompatibleWith(toResolve)) {
 

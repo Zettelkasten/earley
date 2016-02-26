@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DynamicInputPosition<T> implements InputPosition<T>, Comparable<DynamicInputPosition<T>> {
 
@@ -45,27 +47,27 @@ public class DynamicInputPosition<T> implements InputPosition<T>, Comparable<Dyn
 	public boolean isComplete() {
 		return usedTokens.cardinality() == tokens.size();
 	}
-	
+
 	@Override
 	public boolean isTokenAvailable(T token) {
 		return !usedTokens.get(tokens.indexOf(token));
 	}
 
 	@Override
-	public Collection<T> getAvailableTokens() {
+	public Map<InputPosition<T>, T> getAvailableTokens() {
 		if (isComplete()) {
-			return Collections.emptySet();
+			return Collections.emptyMap();
 		} else {
-			List<T> availableTokens = new ArrayList<>(tokens.size() - usedTokens.cardinality());
+			Map<InputPosition<T>, T> availableTokens = new HashMap<>(tokens.size() - usedTokens.cardinality());
 			for (int tokenIndex = 0; tokenIndex < tokens.size(); tokenIndex++) {
 				if (!usedTokens.get(tokenIndex)) {
-					availableTokens.add(tokens.get(tokenIndex));
+					availableTokens.put(nextPosition(tokenIndex), tokens.get(tokenIndex));
 				}
 			}
 			return availableTokens;
 		}
 	}
-	
+
 	@Override
 	public Collection<T> getUsedTokens() {
 		List<T> used = new ArrayList<>(usedTokens.cardinality());
@@ -79,8 +81,12 @@ public class DynamicInputPosition<T> implements InputPosition<T>, Comparable<Dyn
 
 	@Override
 	public InputPosition<T> nextPosition(T usedToken) {
+		return nextPosition(getTokenIndex(usedToken));
+	}
+
+	public InputPosition<T> nextPosition(int tokenIndex) {
 		BitSet newSet = (BitSet) usedTokens.clone();
-		newSet.set(getTokenIndex(usedToken));
+		newSet.set(tokenIndex);
 		return new DynamicInputPosition<T>(tokens, newSet);
 	}
 

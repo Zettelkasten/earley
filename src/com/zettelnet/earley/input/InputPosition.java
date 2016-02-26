@@ -1,6 +1,7 @@
 package com.zettelnet.earley.input;
 
 import java.util.Collection;
+import java.util.Map;
 
 public interface InputPosition<T> {
 
@@ -16,8 +17,15 @@ public interface InputPosition<T> {
 
 	boolean isTokenAvailable(T token);
 
-	Iterable<T> getAvailableTokens();
+	Map<InputPosition<T>, T> getAvailableTokens();
 
+	/**
+	 * Should not be used because of duplicate tokens being equal.
+	 * 
+	 * @param usedToken
+	 * @return
+	 */
+	@Deprecated
 	InputPosition<T> nextPosition(T usedToken);
 
 	Collection<T> getUsedTokens();

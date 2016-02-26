@@ -1,10 +1,11 @@
 package com.zettelnet.earley.input;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class LinearInputPosition<T> implements InputPosition<T>, Comparable<LinearInputPosition<T>> {
 
@@ -42,11 +43,13 @@ public class LinearInputPosition<T> implements InputPosition<T>, Comparable<Line
 	}
 
 	@Override
-	public Collection<T> getAvailableTokens() {
+	public Map<InputPosition<T>, T> getAvailableTokens() {
 		if (isComplete()) {
-			return Collections.emptySet();
+			return Collections.emptyMap();
 		} else {
-			return Arrays.asList(tokens.get(index));
+			Map<InputPosition<T>, T> map = new HashMap<>(1);
+			map.put(nextPosition(), tokens.get(index + 1));
+			return map;
 		}
 	}
 
@@ -61,6 +64,14 @@ public class LinearInputPosition<T> implements InputPosition<T>, Comparable<Line
 
 	@Override
 	public InputPosition<T> nextPosition(T usedToken) {
+		if (isComplete()) {
+			throw new IllegalStateException();
+		} else {
+			return nextPosition();
+		}
+	}
+
+	public InputPosition<T> nextPosition() {
 		return new LinearInputPosition<>(tokens, index + 1);
 	}
 
