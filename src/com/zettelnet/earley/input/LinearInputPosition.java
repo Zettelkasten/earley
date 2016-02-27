@@ -48,7 +48,7 @@ public class LinearInputPosition<T> implements InputPosition<T>, Comparable<Line
 			return Collections.emptyMap();
 		} else {
 			Map<InputPosition<T>, T> map = new HashMap<>(1);
-			map.put(nextPosition(), tokens.get(index + 1));
+			map.put(nextPosition(), tokens.get(index));
 			return map;
 		}
 	}
