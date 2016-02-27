@@ -36,7 +36,7 @@ public class SimpleSyntaxTreeVariant<T, P extends Parameter> implements SyntaxTr
 	@Override
 	public String toString() {
 		StringBuilder str = new StringBuilder();
-		str.append("[var ");
+		str.append("[var " + getProduction() + " ");
 		for (SyntaxTree<T, P> child : children) {
 			str.append(child);
 			str.append(" ");

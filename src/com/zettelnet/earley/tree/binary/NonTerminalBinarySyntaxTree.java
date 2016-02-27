@@ -74,7 +74,7 @@ public class NonTerminalBinarySyntaxTree<T, P extends Parameter> implements Bina
 	public String toString() {
 		StringBuilder str = new StringBuilder();
 		Collection<BinarySyntaxTreeVariant<T, P>> variants = getVariants();
-		if (!variants.isEmpty()) {
+//		if (!variants.isEmpty()) {
 			if (isFirst()) {
 				str.append("[" + getRootSymbol() + " ");
 			} else {
@@ -85,7 +85,7 @@ public class NonTerminalBinarySyntaxTree<T, P extends Parameter> implements Bina
 				str.append(variant);
 			}
 			str.append("]");
-		}
+//		}
 		return str.toString();
 	}
 }

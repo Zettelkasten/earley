@@ -7,20 +7,19 @@ import java.util.Set;
 import com.zettelnet.earley.Production;
 import com.zettelnet.earley.param.Parameter;
 import com.zettelnet.earley.symbol.Terminal;
+import com.zettelnet.earley.tree.binary.BinarySyntaxTree;
 
 public class UnbinaryTerminalSyntaxTree<T, P extends Parameter> implements SyntaxTree<T, P> {
 
-	private final Terminal<T> symbol;
-	private final T token;
-
-	public UnbinaryTerminalSyntaxTree(final Terminal<T> symbol, final T token) {
-		this.symbol = symbol;
-		this.token = token;
+	private final BinarySyntaxTree<T, P> node;
+	
+	public UnbinaryTerminalSyntaxTree(final BinarySyntaxTree<T, P> node) {
+		this.node = node;
 	}
-
+	
 	@Override
 	public Terminal<T> getRootSymbol() {
-		return symbol;
+		return (Terminal<T>) node.getRootSymbol();
 	}
 
 	@Override
@@ -30,7 +29,7 @@ public class UnbinaryTerminalSyntaxTree<T, P extends Parameter> implements Synta
 
 	@Override
 	public T getToken() {
-		return token;
+		return node.getToken();
 	}
 	
 	@Override
@@ -55,6 +54,6 @@ public class UnbinaryTerminalSyntaxTree<T, P extends Parameter> implements Synta
 	
 	@Override
 	public String toString() {
-		return "[" + symbol + " " + token + "]";
+		return "[" + getRootSymbol() + " " + getToken() + "]";
 	}
 }

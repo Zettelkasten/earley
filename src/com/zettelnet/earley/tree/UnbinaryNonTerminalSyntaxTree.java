@@ -12,24 +12,20 @@ import java.util.Set;
 import com.zettelnet.earley.Production;
 import com.zettelnet.earley.param.Parameter;
 import com.zettelnet.earley.symbol.NonTerminal;
-import com.zettelnet.earley.symbol.Symbol;
-import com.zettelnet.earley.symbol.Terminal;
 import com.zettelnet.earley.tree.binary.BinarySyntaxTree;
 import com.zettelnet.earley.tree.binary.BinarySyntaxTreeVariant;
 
 public class UnbinaryNonTerminalSyntaxTree<T, P extends Parameter> implements SyntaxTree<T, P> {
 
-	private final NonTerminal<T> symbol;
 	private final BinarySyntaxTree<T, P> node;
 
-	public UnbinaryNonTerminalSyntaxTree(final NonTerminal<T> symbol, final BinarySyntaxTree<T, P> node) {
-		this.symbol = symbol;
+	public UnbinaryNonTerminalSyntaxTree(final BinarySyntaxTree<T, P> node) {
 		this.node = node;
 	}
 
 	@Override
 	public NonTerminal<T> getRootSymbol() {
-		return symbol;
+		return (NonTerminal<T>) node.getRootSymbol();
 	}
 
 	@Override
@@ -69,8 +65,8 @@ public class UnbinaryNonTerminalSyntaxTree<T, P extends Parameter> implements Sy
 
 		final Deque<Iterator<BinarySyntaxTreeVariant<T, P>>> iterators = new LinkedList<>();
 		final Deque<SyntaxTree<T, P>> list = new LinkedList<>();
-		
-		BinarySyntaxTreeVariant<T, P> topVariant = null;
+
+		BinarySyntaxTreeVariant<T, P> firstVariant = null;
 
 		// seed
 		iterators.addFirst(this.node.getVariants().iterator());
@@ -80,16 +76,15 @@ public class UnbinaryNonTerminalSyntaxTree<T, P extends Parameter> implements Sy
 
 			if (iterator.hasNext()) {
 				BinarySyntaxTreeVariant<T, P> variant = iterator.next();
-				list.addFirst(toNaturalChildTree(variant));
+				list.addFirst(toNaturalChildTree(variant.getChildNode()));
 
-				// get production -> TODO NOT WORKING PROPERLY
-				if (iterators.size() == 1) {
-					topVariant = variant;
+				if (variant.isFirst()) {
+					firstVariant = variant;
 				}
 
 				BinarySyntaxTree<T, P> preNode = variant.getPreNode();
 				if (preNode == null) {
-					output.add(new SimpleSyntaxTreeVariant<>(topVariant.getProduction(), topVariant.getParameter(), createStrippedCopy(list)));
+					output.add(new SimpleSyntaxTreeVariant<>(firstVariant.getProduction(), firstVariant.getParameter(), createStrippedCopy(list)));
 					list.removeFirst();
 				} else {
 					iterators.addFirst(preNode.getVariants().iterator());
@@ -103,25 +98,14 @@ public class UnbinaryNonTerminalSyntaxTree<T, P extends Parameter> implements Sy
 		return output;
 	}
 
-	private SyntaxTree<T, P> toNaturalChildTree(BinarySyntaxTreeVariant<T, P> variant) {
-		SyntaxTree<T, P> returnValue;
-
-		Symbol<T> symbol = variant.getSymbol();
-		BinarySyntaxTree<T, P> childNode = variant.getChildNode();
-
-		if (symbol == null) {
-			returnValue = null;
+	private SyntaxTree<T, P> toNaturalChildTree(BinarySyntaxTree<T, P> childNode) {
+		if (childNode.isTerminal()) {
+			// terminal
+			return new UnbinaryTerminalSyntaxTree<>(childNode);
 		} else {
-			if (childNode != null) {
-				// non-terminal
-				returnValue = new UnbinaryNonTerminalSyntaxTree<>((NonTerminal<T>) symbol, childNode);
-			} else {
-				// terminal
-				returnValue = new UnbinaryTerminalSyntaxTree<>((Terminal<T>) symbol, variant.getToken());
-			}
+			// non-terminal
+			return new UnbinaryNonTerminalSyntaxTree<>(childNode);
 		}
-
-		return returnValue;
 	}
 
 	private List<SyntaxTree<T, P>> createStrippedCopy(Collection<SyntaxTree<T, P>> source) {
@@ -137,7 +121,7 @@ public class UnbinaryNonTerminalSyntaxTree<T, P extends Parameter> implements Sy
 	@Override
 	public SyntaxTreeVariant<T, P> getVariant(Iterator<Integer> variantDirections) throws NoSuchSyntaxTreeException {
 		final List<SyntaxTree<T, P>> children = new ArrayList<>();
-		
+
 		Production<T, P> production = null;
 		P parameter = null;
 
@@ -160,20 +144,8 @@ public class UnbinaryNonTerminalSyntaxTree<T, P extends Parameter> implements Sy
 				parameter = binaryVariant.getParameter();
 			}
 
-			Symbol<T> symbol = binaryVariant.getSymbol();
-			BinarySyntaxTree<T, P> childNode = binaryVariant.getChildNode();
-
-			if (symbol != null) {
-				SyntaxTree<T, P> child;
-				if (childNode != null) {
-					// non-terminal
-					child = new UnbinaryNonTerminalSyntaxTree<>((NonTerminal<T>) symbol, childNode);
-				} else {
-					// terminal
-					child = new UnbinaryTerminalSyntaxTree<>((Terminal<T>) symbol, binaryVariant.getToken());
-				}
-				children.add(0, child);
-			}
+			SyntaxTree<T, P> child = toNaturalChildTree(binaryVariant.getChildNode());
+			children.add(0, child);
 
 			binaryNode = binaryVariant.getPreNode();
 		} while (binaryNode != null);
@@ -185,7 +157,7 @@ public class UnbinaryNonTerminalSyntaxTree<T, P extends Parameter> implements Sy
 	public String toString() {
 		StringBuilder str = new StringBuilder();
 		str.append("[");
-		str.append(symbol);
+		str.append(getRootSymbol());
 		Iterable<SyntaxTreeVariant<T, P>> variants = getVariants();
 		for (SyntaxTreeVariant<T, P> variant : variants) {
 			str.append(" ");

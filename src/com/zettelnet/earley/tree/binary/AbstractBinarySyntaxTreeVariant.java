@@ -17,7 +17,11 @@ public abstract class AbstractBinarySyntaxTreeVariant<T, P extends Parameter> im
 
 	@Override
 	public BinarySyntaxTree<T, P> getPreNode() {
-		return new NonTerminalBinarySyntaxTree<>(cause.getPreState());
+		if (cause.getPreState().getCurrentPosition() == 0) {
+			return null;
+		} else {
+			return new NonTerminalBinarySyntaxTree<>(cause.getPreState());
+		}
 	}
 
 	@Override
