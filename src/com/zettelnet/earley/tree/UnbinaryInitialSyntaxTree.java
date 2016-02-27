@@ -40,7 +40,7 @@ public class UnbinaryInitialSyntaxTree<T, P extends Parameter> implements Syntax
 	public Set<Production<T, P>> getProductions() {
 		Set<Production<T, P>> set = new HashSet<>();
 		for (BinarySyntaxTreeVariant<T, P> variant : node.getVariants()) {
-			set.add(variant.getChildProduction());
+			set.add(variant.getProduction());
 		}
 		return set;
 	}

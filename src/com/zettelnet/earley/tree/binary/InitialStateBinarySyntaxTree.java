@@ -24,7 +24,7 @@ public class InitialStateBinarySyntaxTree<T, P extends Parameter> implements Bin
 	public List<BinarySyntaxTreeVariant<T, P>> getVariants() {
 		List<BinarySyntaxTreeVariant<T, P>> variants = new ArrayList<>();
 		for (State<T, P> state : completeStates) {
-			variants.add(new InitialVariant<>(rootSymbol, state));
+			variants.addAll(new StateSyntaxTree<>(state).getVariants());
 		}
 		return variants;
 	}

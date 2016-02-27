@@ -29,13 +29,18 @@ public class EpsilonChildVariant<T, P extends Parameter> extends AbstractBinaryS
 	}
 
 	@Override
-	public Production<T, P> getChildProduction() {
-		return cause.getChildProduction();
+	public boolean isFirst() {
+		return false;
 	}
-	
+
 	@Override
-	public P getChildParameter() {
-		return cause.getChildProduction().keyParameter();
+	public Production<T, P> getProduction() {
+		return null;
+	}
+
+	@Override
+	public P getParameter() {
+		return null;
 	}
 
 	@Override

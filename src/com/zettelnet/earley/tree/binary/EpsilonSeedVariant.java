@@ -1,10 +1,17 @@
 package com.zettelnet.earley.tree.binary;
 
 import com.zettelnet.earley.Production;
+import com.zettelnet.earley.State;
 import com.zettelnet.earley.param.Parameter;
 import com.zettelnet.earley.symbol.Symbol;
 
 public class EpsilonSeedVariant<T, P extends Parameter> extends AbstractBinarySyntaxTreeVariant<T, P> {
+
+	private final State<T, P> state;
+
+	public EpsilonSeedVariant(State<T, P> state) {
+		this.state = state;
+	}
 
 	@Override
 	public BinarySyntaxTree<T, P> getPreNode() {
@@ -22,13 +29,18 @@ public class EpsilonSeedVariant<T, P extends Parameter> extends AbstractBinarySy
 	}
 
 	@Override
-	public Production<T, P> getChildProduction() {
-		return null;
+	public boolean isFirst() {
+		return true;
 	}
 
 	@Override
-	public P getChildParameter() {
-		return null;
+	public Production<T, P> getProduction() {
+		return state.getProduction();
+	}
+
+	@Override
+	public P getParameter() {
+		return state.getParameter();
 	}
 
 	@Override

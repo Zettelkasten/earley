@@ -43,10 +43,12 @@ public interface BinarySyntaxTreeVariant<T, P extends Parameter> {
 	default boolean isTerminal() {
 		return getChildNode() == null;
 	}
-
-	Production<T, P> getChildProduction();
 	
-	P getChildParameter();
+	boolean isFirst();
+
+	Production<T, P> getProduction();
+	
+	P getParameter();
 
 	BinarySyntaxTree<T, P> getChildNode();
 }

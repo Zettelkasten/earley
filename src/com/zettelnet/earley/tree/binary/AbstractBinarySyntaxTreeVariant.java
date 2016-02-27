@@ -10,6 +10,14 @@ public abstract class AbstractBinarySyntaxTreeVariant<T, P extends Parameter> im
 	public String toString() {
 		StringBuilder str = new StringBuilder();
 		str.append("[var ");
+		if (isFirst()) {
+			Production<T, P> production = getProduction();
+			if (production != null) {
+				str.append(production);
+				str.append(" ");
+			}
+		}
+
 		BinarySyntaxTree<T, P> preNode = getPreNode();
 		if (preNode != null) {
 			str.append(preNode);
@@ -26,12 +34,6 @@ public abstract class AbstractBinarySyntaxTreeVariant<T, P extends Parameter> im
 					str.append(token);
 				}
 				str.append("] ");
-			}
-		} else {
-			Production<T, P> production = getChildProduction();
-			if (production != null) {
-//				str.append(production.key());
-				str.append(" ");
 			}
 		}
 		BinarySyntaxTree<T, P> childNode = getChildNode();

@@ -25,22 +25,27 @@ public class NonTerminalVariant<T, P extends Parameter> extends AbstractBinarySy
 	public NonTerminal<T> getSymbol() {
 		return (NonTerminal<T>) state.last();
 	}
-	
+
 	@Override
 	public T getToken() {
 		return null;
 	}
 
 	@Override
-	public Production<T, P> getChildProduction() {
+	public boolean isFirst() {
+		return state.getCurrentPosition() == state.getProduction().size();
+	}
+
+	@Override
+	public Production<T, P> getProduction() {
 		return state.getProduction();
 	}
 
 	@Override
-	public P getChildParameter() {
+	public P getParameter() {
 		return state.getParameter();
 	}
-	
+
 	@Override
 	public BinarySyntaxTree<T, P> getChildNode() {
 		return new StateSyntaxTree<>(cause.getChildState());

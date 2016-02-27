@@ -46,7 +46,7 @@ public class UnbinaryNonTerminalSyntaxTree<T, P extends Parameter> implements Sy
 	public Set<Production<T, P>> getProductions() {
 		Set<Production<T, P>> set = new HashSet<>();
 		for (BinarySyntaxTreeVariant<T, P> variant : node.getVariants()) {
-			set.add(variant.getChildProduction());
+			set.add(variant.getProduction());
 		}
 		return set;
 	}
@@ -89,7 +89,7 @@ public class UnbinaryNonTerminalSyntaxTree<T, P extends Parameter> implements Sy
 
 				BinarySyntaxTree<T, P> preNode = variant.getPreNode();
 				if (preNode == null) {
-					output.add(new SimpleSyntaxTreeVariant<>(topVariant.getChildProduction(), topVariant.getChildParameter(), createStrippedCopy(list)));
+					output.add(new SimpleSyntaxTreeVariant<>(topVariant.getProduction(), topVariant.getParameter(), createStrippedCopy(list)));
 					list.removeFirst();
 				} else {
 					iterators.addFirst(preNode.getVariants().iterator());
@@ -154,10 +154,10 @@ public class UnbinaryNonTerminalSyntaxTree<T, P extends Parameter> implements Sy
 			BinarySyntaxTreeVariant<T, P> binaryVariant = binaryNode.getVariants().get(variantId);
 
 			if (production == null) {
-				production = binaryVariant.getChildProduction();
+				production = binaryVariant.getProduction();
 			}
 			if (parameter == null) {
-				parameter = binaryVariant.getChildParameter();
+				parameter = binaryVariant.getParameter();
 			}
 
 			Symbol<T> symbol = binaryVariant.getSymbol();
