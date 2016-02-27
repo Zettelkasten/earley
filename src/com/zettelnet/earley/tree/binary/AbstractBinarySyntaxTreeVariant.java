@@ -1,10 +1,39 @@
 package com.zettelnet.earley.tree.binary;
 
 import com.zettelnet.earley.Production;
+import com.zettelnet.earley.State;
+import com.zettelnet.earley.StateCause;
 import com.zettelnet.earley.param.Parameter;
-import com.zettelnet.earley.symbol.Symbol;
 
 public abstract class AbstractBinarySyntaxTreeVariant<T, P extends Parameter> implements BinarySyntaxTreeVariant<T, P> {
+
+	private final State<T, P> state;
+	private final StateCause<T, P> cause;
+
+	public AbstractBinarySyntaxTreeVariant(final State<T, P> state, final StateCause<T, P> cause) {
+		this.state = state;
+		this.cause = cause;
+	}
+
+	@Override
+	public BinarySyntaxTree<T, P> getPreNode() {
+		return new NonTerminalBinarySyntaxTree<>(cause.getPreState());
+	}
+
+	@Override
+	public boolean isFirst() {
+		return state.getCurrentPosition() == state.getProduction().size();
+	}
+
+	@Override
+	public Production<T, P> getProduction() {
+		return state.getProduction();
+	}
+
+	@Override
+	public P getParameter() {
+		return state.getParameter();
+	}
 
 	@Override
 	public String toString() {
@@ -22,19 +51,6 @@ public abstract class AbstractBinarySyntaxTreeVariant<T, P extends Parameter> im
 		if (preNode != null) {
 			str.append(preNode);
 			str.append(" ");
-		}
-		if (isTerminal()) {
-			Symbol<T> symbol = getSymbol();
-			if (symbol != null) {
-				str.append("[");
-				str.append(symbol);
-				T token = getToken();
-				if (token != null) {
-					str.append(" ");
-					str.append(token);
-				}
-				str.append("] ");
-			}
 		}
 		BinarySyntaxTree<T, P> childNode = getChildNode();
 		if (childNode != null) {

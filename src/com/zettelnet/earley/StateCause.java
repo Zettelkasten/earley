@@ -4,6 +4,8 @@ import com.zettelnet.earley.param.Parameter;
 
 public interface StateCause<T, P extends Parameter> {
 
+	State<T, P> getPreState();
+
 	public class Predict<T, P extends Parameter> implements StateCause<T, P> {
 
 		private final State<T, P> parent;
@@ -18,6 +20,11 @@ public interface StateCause<T, P extends Parameter> {
 
 		public boolean isInitial() {
 			return parent instanceof SeedState;
+		}
+
+		@Override
+		public State<T, P> getPreState() {
+			return null;
 		}
 	}
 

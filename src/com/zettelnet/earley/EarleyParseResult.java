@@ -195,7 +195,7 @@ public final class EarleyParseResult<T, P extends Parameter> implements ParseRes
 	}
 
 	public BinarySyntaxTree<T, P> getBinarySyntaxTree() {
-		return new InitialStateBinarySyntaxTree<>(grammar.getStartSymbol(), completeStates);
+		return new InitialStateBinarySyntaxTree<>(grammar, completeStates);
 	}
 
 	@Override

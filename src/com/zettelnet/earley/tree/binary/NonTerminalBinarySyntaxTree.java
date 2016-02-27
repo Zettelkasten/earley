@@ -7,14 +7,15 @@ import java.util.List;
 import com.zettelnet.earley.State;
 import com.zettelnet.earley.StateCause;
 import com.zettelnet.earley.param.Parameter;
+import com.zettelnet.earley.symbol.NonTerminal;
 import com.zettelnet.earley.tree.SyntaxTree;
-import com.zettelnet.earley.tree.UnbinaryInitialSyntaxTree;
+import com.zettelnet.earley.tree.UnbinaryNonTerminalSyntaxTree;
 
-public class StateSyntaxTree<T, P extends Parameter> implements BinarySyntaxTree<T, P> {
+public class NonTerminalBinarySyntaxTree<T, P extends Parameter> implements BinarySyntaxTree<T, P> {
 
 	private final State<T, P> state;
 
-	public StateSyntaxTree(final State<T, P> state) {
+	public NonTerminalBinarySyntaxTree(final State<T, P> state) {
 		this.state = state;
 	}
 
@@ -31,7 +32,7 @@ public class StateSyntaxTree<T, P extends Parameter> implements BinarySyntaxTree
 			} else if (cause instanceof StateCause.Complete) {
 				variants.add(new NonTerminalVariant<>(state, (StateCause.Complete<T, P>) cause));
 			} else if (cause instanceof StateCause.Epsilon) {
-				variants.add(new EpsilonChildVariant<>((StateCause.Epsilon<T, P>) cause));
+				variants.add(new EpsilonChildVariant<>(state, (StateCause.Epsilon<T, P>) cause));
 			} else {
 				throw new AssertionError("Unknown StateCause type!");
 			}
@@ -41,8 +42,32 @@ public class StateSyntaxTree<T, P extends Parameter> implements BinarySyntaxTree
 	}
 
 	@Override
+	public boolean isFirst() {
+		return state.getCurrentPosition() == state.getProduction().size();
+	}
+
+	@Override
+	public NonTerminal<T> getRootSymbol() {
+		return state.getProduction().key();
+	}
+
+	@Override
+	public boolean isTerminal() {
+		return false;
+	}
+
+	@Override
+	public T getToken() {
+		return null;
+	}
+
+	@Override
 	public SyntaxTree<T, P> toNaturalTree() {
-		return new UnbinaryInitialSyntaxTree<>(null, this);
+		if (!isFirst()) {
+			throw new AssertionError("Only first binary syntax tree can be converted to natural tree");
+		} else {
+			return new UnbinaryNonTerminalSyntaxTree<>(this);
+		}
 	}
 
 	@Override
@@ -50,7 +75,11 @@ public class StateSyntaxTree<T, P extends Parameter> implements BinarySyntaxTree
 		StringBuilder str = new StringBuilder();
 		Collection<BinarySyntaxTreeVariant<T, P>> variants = getVariants();
 		if (!variants.isEmpty()) {
-			str.append("[n");
+			if (isFirst()) {
+				str.append("[" + getRootSymbol() + " ");
+			} else {
+				str.append("[n ");
+			}
 			for (BinarySyntaxTreeVariant<T, P> variant : variants) {
 				str.append(" ");
 				str.append(variant);

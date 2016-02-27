@@ -3,7 +3,6 @@ package com.zettelnet.earley.tree.binary;
 import com.zettelnet.earley.Production;
 import com.zettelnet.earley.param.Parameter;
 import com.zettelnet.earley.symbol.NonTerminal;
-import com.zettelnet.earley.symbol.Symbol;
 import com.zettelnet.earley.symbol.Terminal;
 
 /**
@@ -36,14 +35,6 @@ public interface BinarySyntaxTreeVariant<T, P extends Parameter> {
 
 	BinarySyntaxTree<T, P> getPreNode();
 
-	Symbol<T> getSymbol();
-
-	T getToken();
-
-	default boolean isTerminal() {
-		return getChildNode() == null;
-	}
-	
 	boolean isFirst();
 
 	Production<T, P> getProduction();

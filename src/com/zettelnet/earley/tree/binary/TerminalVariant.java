@@ -1,6 +1,5 @@
 package com.zettelnet.earley.tree.binary;
 
-import com.zettelnet.earley.Production;
 import com.zettelnet.earley.State;
 import com.zettelnet.earley.StateCause;
 import com.zettelnet.earley.param.Parameter;
@@ -12,42 +11,13 @@ public class TerminalVariant<T, P extends Parameter> extends AbstractBinarySynta
 	private final StateCause.Scan<T, P> cause;
 
 	public TerminalVariant(final State<T, P> state, final StateCause.Scan<T, P> cause) {
+		super(state, cause);
 		this.state = state;
 		this.cause = cause;
 	}
 
 	@Override
-	public BinarySyntaxTree<T, P> getPreNode() {
-		return new StateSyntaxTree<>(cause.getPreState());
-	}
-
-	@Override
-	public Terminal<T> getSymbol() {
-		return (Terminal<T>) state.last();
-	}
-
-	@Override
-	public T getToken() {
-		return cause.getToken();
-	}
-
-	@Override
-	public boolean isFirst() {
-		return state.getCurrentPosition() == state.getProduction().size();
-	}
-
-	@Override
-	public Production<T, P> getProduction() {
-		return state.getProduction();
-	}
-
-	@Override
-	public P getParameter() {
-		return state.getParameter();
-	}
-
-	@Override
 	public BinarySyntaxTree<T, P> getChildNode() {
-		return null;
+		return new TerminalBinarySyntaxTree<>((Terminal<T>) state.last(), cause.getToken());
 	}
 }
