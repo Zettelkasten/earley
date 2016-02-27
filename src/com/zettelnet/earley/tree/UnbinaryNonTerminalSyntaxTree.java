@@ -99,12 +99,16 @@ public class UnbinaryNonTerminalSyntaxTree<T, P extends Parameter> implements Sy
 	}
 
 	private SyntaxTree<T, P> toNaturalChildTree(BinarySyntaxTree<T, P> childNode) {
-		if (childNode.isTerminal()) {
-			// terminal
-			return new UnbinaryTerminalSyntaxTree<>(childNode);
+		if (childNode == null) {
+			return null;
 		} else {
-			// non-terminal
-			return new UnbinaryNonTerminalSyntaxTree<>(childNode);
+			if (childNode.isTerminal()) {
+				// terminal
+				return new UnbinaryTerminalSyntaxTree<>(childNode);
+			} else {
+				// non-terminal
+				return new UnbinaryNonTerminalSyntaxTree<>(childNode);
+			}
 		}
 	}
 

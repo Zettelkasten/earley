@@ -144,7 +144,7 @@ public final class EarleyParseResult<T, P extends Parameter> implements ParseRes
 		if (chartPosition.isComplete() && key.equals(grammar.getStartSymbol()) && state.getOriginPosition().isClean()) {
 			// done
 			completeStates.add(state);
-			complete = true;
+			// complete = true;
 		}
 		if (!state.getProduction().isEpsilon()) {
 			// do not complete epsilon states, they are already handled by
@@ -182,7 +182,7 @@ public final class EarleyParseResult<T, P extends Parameter> implements ParseRes
 
 	@Override
 	public boolean isComplete() {
-		return complete;
+		return !completeStates.isEmpty();
 	}
 
 	@Override
@@ -190,6 +190,7 @@ public final class EarleyParseResult<T, P extends Parameter> implements ParseRes
 		return charts;
 	}
 
+	@Override
 	public Set<State<T, P>> getCompleteStates() {
 		return completeStates;
 	}
