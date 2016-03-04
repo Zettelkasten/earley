@@ -154,7 +154,7 @@ public class UnbinaryNonTerminalSyntaxTree<T, P extends Parameter> implements Sy
 			binaryNode = binaryVariant.getPreNode();
 		} while (binaryNode != null);
 
-		return new SimpleSyntaxTreeVariant<>(production, parameter, children);
+		return new SimpleSyntaxTreeVariant<>(production, parameter, createStrippedCopy(children));
 	}
 
 	@Override
