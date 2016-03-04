@@ -76,19 +76,13 @@ public interface StateCause<T, P extends Parameter> {
 	public class Epsilon<T, P extends Parameter> implements StateCause<T, P> {
 
 		private final State<T, P> pre;
-		private final Production<T, P> childProduction;
 
-		public Epsilon(final State<T, P> preState, final Production<T, P> childProduction) {
+		public Epsilon(final State<T, P> preState) {
 			this.pre = preState;
-			this.childProduction = childProduction;
 		}
 
 		public State<T, P> getPreState() {
 			return pre;
-		}
-
-		public Production<T, P> getChildProduction() {
-			return childProduction;
 		}
 	}
 }

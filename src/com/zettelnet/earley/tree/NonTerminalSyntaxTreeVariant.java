@@ -37,7 +37,7 @@ public class NonTerminalSyntaxTreeVariant<T, P extends Parameter> implements Syn
 	public String toString() {
 		StringBuilder str = new StringBuilder();
 		str.append("[var ");
-//		str.append(getParameter().toString().replace(' ', '_'));
+		str.append(getParameter().toString().replace(' ', '_'));
 		str.append(" ");
 		for (SyntaxTree<T, P> child : children) {
 			str.append(child);

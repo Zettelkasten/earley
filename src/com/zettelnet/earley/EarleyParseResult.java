@@ -95,6 +95,8 @@ public final class EarleyParseResult<T, P extends Parameter> implements ParseRes
 		ParameterExpression<T, P> parameterExpression = state.nextParameterExpression();
 		P sourceParameter = state.getParameter();
 
+		boolean allowEpsilon = false;
+
 		Set<Production<T, P>> productions = grammar.getProductions(nonTerminal);
 		for (Production<T, P> production : productions) {
 			// get new parameter; for seed (state = null) this is the start
@@ -103,15 +105,19 @@ public final class EarleyParseResult<T, P extends Parameter> implements ParseRes
 
 			for (P newParameter : newParameters) {
 				if (production.isEpsilon() && state.getProduction() != null) {
-					// next symbol can be resolved as epsilon - "epsilonized"
-					// (this is not the case for seed states!)
-					State<T, P> newState = new SimpleState<>(currentChart, state.getProduction(), state.getCurrentPosition() + 1, state.getOriginPosition(), sourceParameter);
-					currentChart.add(newState, new StateCause.Epsilon<>(state, production));
+					allowEpsilon = true;
 				} else {
 					State<T, P> newState = new SimpleState<>(currentChart, production, 0, chartPosition, newParameter);
 					currentChart.add(newState, cause);
 				}
 			}
+		}
+
+		if (allowEpsilon) {
+			// next symbol can be resolved as epsilon - "epsilonized"
+			// (this is not the case for seed states!)
+			State<T, P> newState = new SimpleState<>(currentChart, state.getProduction(), state.getCurrentPosition() + 1, state.getOriginPosition(), sourceParameter);
+			currentChart.add(newState, new StateCause.Epsilon<>(state));
 		}
 	}
 
