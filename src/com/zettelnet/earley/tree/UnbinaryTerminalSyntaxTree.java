@@ -1,5 +1,6 @@
 package com.zettelnet.earley.tree;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Set;
@@ -12,11 +13,11 @@ import com.zettelnet.earley.tree.binary.BinarySyntaxTree;
 public class UnbinaryTerminalSyntaxTree<T, P extends Parameter> implements SyntaxTree<T, P> {
 
 	private final BinarySyntaxTree<T, P> node;
-	
+
 	public UnbinaryTerminalSyntaxTree(final BinarySyntaxTree<T, P> node) {
 		this.node = node;
 	}
-	
+
 	@Override
 	public Terminal<T> getRootSymbol() {
 		return (Terminal<T>) node.getRootSymbol();
@@ -31,15 +32,19 @@ public class UnbinaryTerminalSyntaxTree<T, P extends Parameter> implements Synta
 	public T getToken() {
 		return node.getToken();
 	}
-	
+
 	@Override
 	public Set<Production<T, P>> getProductions() {
 		return Collections.emptySet();
 	}
 
+	private SyntaxTreeVariant<T, P> getVariant() {
+		return new TerminalSyntaxTreeVariant<>(node.getTokenParameter());
+	}
+
 	@Override
 	public Iterable<SyntaxTreeVariant<T, P>> getVariants() {
-		return Collections.emptyList();
+		return Arrays.asList(getVariant());
 	}
 
 	@Override
@@ -49,11 +54,22 @@ public class UnbinaryTerminalSyntaxTree<T, P extends Parameter> implements Synta
 
 	@Override
 	public SyntaxTreeVariant<T, P> getVariant(Iterator<Integer> variantDirections) throws NoSuchSyntaxTreeException {
-		throw new NoSuchSyntaxTreeException();
+		return getVariant();
 	}
-	
+
 	@Override
 	public String toString() {
-		return "[" + getRootSymbol() + " " + getToken() + "]";
+		StringBuilder str = new StringBuilder();
+		str.append("[");
+		str.append(getRootSymbol());
+		str.append(" ");
+		str.append(getToken());
+		Iterable<SyntaxTreeVariant<T, P>> variants = getVariants();
+		for (SyntaxTreeVariant<T, P> variant : variants) {
+			str.append(" ");
+			str.append(variant);
+		}
+		str.append("]");
+		return str.toString();
 	}
 }

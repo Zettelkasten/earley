@@ -1,28 +1,24 @@
 package com.zettelnet.earley.tree;
 
+import java.util.Collections;
 import java.util.List;
 
 import com.zettelnet.earley.Production;
 import com.zettelnet.earley.param.Parameter;
 
-public class SimpleSyntaxTreeVariant<T, P extends Parameter> implements SyntaxTreeVariant<T, P> {
+public class TerminalSyntaxTreeVariant<T, P extends Parameter> implements SyntaxTreeVariant<T, P> {
 
-	private final Production<T, P> production;
 	private final P parameter;
-	
-	private final List<SyntaxTree<T, P>> children;
 
-	public SimpleSyntaxTreeVariant(final Production<T, P> production, final P parameter, final List<SyntaxTree<T, P>> children) {
-		this.production = production;
+	public TerminalSyntaxTreeVariant(final P parameter) {
 		this.parameter = parameter;
-		this.children = children;
 	}
 
 	@Override
 	public Production<T, P> getProduction() {
-		return production;
+		return null;
 	}
-	
+
 	@Override
 	public P getParameter() {
 		return parameter;
@@ -30,17 +26,14 @@ public class SimpleSyntaxTreeVariant<T, P extends Parameter> implements SyntaxTr
 
 	@Override
 	public List<SyntaxTree<T, P>> getChildren() {
-		return children;
+		return Collections.emptyList();
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder str = new StringBuilder();
 		str.append("[var ");
-		for (SyntaxTree<T, P> child : children) {
-			str.append(child);
-			str.append(" ");
-		}
+		str.append(getParameter().toString().replace(' ', '_'));
 		str.append("]");
 		return str.toString();
 	}
