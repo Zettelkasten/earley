@@ -31,11 +31,14 @@ public interface StateCause<T, P extends Parameter> {
 	public class Scan<T, P extends Parameter> implements StateCause<T, P> {
 
 		private final State<T, P> pre;
-		private final T token;
 
-		public Scan(final State<T, P> preState, final T scannedToken) {
+		private final T token;
+		private final P parameter;
+
+		public Scan(final State<T, P> preState, final T scannedToken, final P scannedTokenParameter) {
 			this.pre = preState;
 			this.token = scannedToken;
+			this.parameter = scannedTokenParameter;
 		}
 
 		public State<T, P> getPreState() {
@@ -44,6 +47,10 @@ public interface StateCause<T, P extends Parameter> {
 
 		public T getToken() {
 			return token;
+		}
+
+		public P getTokenParameter() {
+			return parameter;
 		}
 	}
 

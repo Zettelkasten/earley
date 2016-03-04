@@ -16,6 +16,8 @@ public interface BinarySyntaxTree<T, P extends Parameter> {
 
 	T getToken();
 	
+	P getTokenParameter();
+	
 	boolean isFirst();
 	
 	SyntaxTree<T, P> toNaturalTree();

@@ -15,7 +15,6 @@ import com.zettelnet.earley.symbol.NonTerminal;
 import com.zettelnet.earley.symbol.PredicateTerminal;
 import com.zettelnet.earley.symbol.SimpleNonTerminal;
 import com.zettelnet.earley.symbol.Terminal;
-import com.zettelnet.earley.tree.SyntaxTree;
 
 public class MultipleVariantTest {
 
@@ -47,8 +46,7 @@ public class MultipleVariantTest {
 
 		// 3. Add Productions
 
-		grammar.addProduction(start, a);
-		grammar.addProduction(start, b);
+		grammar.addProduction(start, left, middle, right);
 		grammar.addProduction(left, a);
 		grammar.addProduction(middle, b);
 		grammar.addProduction(middle, c);
@@ -60,23 +58,19 @@ public class MultipleVariantTest {
 
 		// 5. Initialize Tokens
 
-		List<String> tokens = Arrays.asList("0");
+		List<String> tokens = Arrays.asList("0", "1", "2");
 
 		// 5. Parse
 
 		EarleyParseResult<String, DefaultParameter> result = parser.parse(tokens);
 
 		try {
-			new ChartSetPrinter<String, DefaultParameter>(result.getCharts(), tokens).print(new PrintStream("temp.html"));
+			new ChartSetPrinter<String, DefaultParameter>(result.getCharts(), tokens).print(new PrintStream("E:\\temp.html"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		SyntaxTree<String, DefaultParameter> tree = result.getSyntaxTree();
-		System.out.println(tree.getProductions());
-		System.out.println(tree.getRootSymbol());
-
-		System.out.println(tree);
 		System.out.println(result.getBinarySyntaxTree());
+		System.out.println(result.getSyntaxTree());
 	}
 }

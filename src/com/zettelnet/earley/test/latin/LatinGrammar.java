@@ -17,7 +17,6 @@ import com.zettelnet.earley.symbol.Terminal;
 import com.zettelnet.latin.Form;
 import com.zettelnet.latin.form.Casus;
 import com.zettelnet.latin.form.Finiteness;
-import com.zettelnet.latin.form.Person;
 import com.zettelnet.latin.form.Tense;
 import com.zettelnet.latin.form.Valency;
 import com.zettelnet.latin.lemma.Lemma;
@@ -32,16 +31,18 @@ public final class LatinGrammar {
 		NonTerminal<Token> nounPhrase = new SimpleNonTerminal<>("NP");
 		NonTerminal<Token> nounForm = new SimpleNonTerminal<>("NF");
 		NonTerminal<Token> attribute = new SimpleNonTerminal<>("Attr");
-		NonTerminal<Token> attributeVar = new SimpleNonTerminal<>("Attr&lowast;");
+		NonTerminal<Token> attributeVar = new SimpleNonTerminal<>("Attr*");
 
 		NonTerminal<Token> verbPhrase = new SimpleNonTerminal<>("VP");
 		NonTerminal<Token> verbForm = new SimpleNonTerminal<>("VF");
 		NonTerminal<Token> arguments = new SimpleNonTerminal<>("Args");
 		NonTerminal<Token> adverbalPhrase = new SimpleNonTerminal<>("AP");
-		NonTerminal<Token> adverbalPhraseVar = new SimpleNonTerminal<>("AP&lowast;");
+		NonTerminal<Token> adverbalPhraseVar = new SimpleNonTerminal<>("AP*");
 
 		Terminal<Token> verb = new LemmaTerminal(Lemma.Type.Verb);
 		Terminal<Token> noun = new LemmaTerminal(Lemma.Type.Noun);
+		Terminal<Token> adverb = new LemmaTerminal(Lemma.Type.Adverb);
+		Terminal<Token> adjective = new LemmaTerminal(Lemma.Type.Adjective);
 
 		// Management
 
@@ -49,7 +50,7 @@ public final class LatinGrammar {
 		TokenParameterizer<Token, FormParameter> parameterizer = new FormParameterizer();
 
 		Grammar<Token, FormParameter> grammar = new Grammar<>(sentence, parameterManager);
-		grammar.setStartSymbolParameter(new SingletonParameterFactory<>(new FormParameter(Casus.Nominative, Person.Third, Finiteness.Finite)));
+		grammar.setStartSymbolParameter(new SingletonParameterFactory<>(new FormParameter(Casus.Nominative, Finiteness.Finite)));
 
 		ParameterExpression<Token, FormParameter> copy = new CopyParameterExpression<>(grammar, parameterizer);
 		ParameterExpression<Token, FormParameter> any = new AnyParameterExpression<>(parameterManager);
@@ -78,11 +79,15 @@ public final class LatinGrammar {
 		grammar.addProduction(
 				arguments,
 				new SingletonParameterFactory<>(new FormParameter(Valency.Null)));
+		// Args(pi : SingleVal) -> epsilon
+		grammar.addProduction(
+				arguments,
+				new SingletonParameterFactory<>(new FormParameter(Valency.Single)));
 		// Args(pi : Kopula) -> NP(pi)
 		grammar.addProduction(
 				arguments,
 				new SingletonParameterFactory<>(new FormParameter(Valency.Copula)),
-				new ParameterizedSymbol<>(nounPhrase, copy));
+				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Form.nounForm(Casus.Nominative, null, null)))));
 		// Args(pi : GenVal) -> NP(Gen)
 		grammar.addProduction(
 				arguments,
@@ -112,6 +117,10 @@ public final class LatinGrammar {
 				adverbalPhraseVar,
 				adverbalPhrase,
 				adverbalPhraseVar);
+		
+		// AP -> Adv
+		grammar.addProduction(adverbalPhrase,
+				adverb);
 
 		// NP(pi : Fin) -> NF(pi) Attr(pi)*
 		grammar.addProduction(
@@ -123,6 +132,10 @@ public final class LatinGrammar {
 		grammar.addProduction(
 				nounForm,
 				new ParameterizedSymbol<>(noun, copy));
+		// NF(pi) -> adj(pi)
+		grammar.addProduction(
+				nounForm,
+				new ParameterizedSymbol<>(adjective, copy));
 		// attribute varargs
 		grammar.addProduction(
 				attributeVar);

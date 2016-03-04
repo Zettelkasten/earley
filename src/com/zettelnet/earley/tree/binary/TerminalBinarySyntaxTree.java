@@ -11,11 +11,14 @@ import com.zettelnet.earley.tree.UnbinaryTerminalSyntaxTree;
 public class TerminalBinarySyntaxTree<T, P extends Parameter> implements BinarySyntaxTree<T, P> {
 
 	private final Terminal<T> symbol;
-	private final T token;
 
-	public TerminalBinarySyntaxTree(final Terminal<T> symbol, final T token) {
+	private final T token;
+	private final P tokenParameter;
+
+	public TerminalBinarySyntaxTree(final Terminal<T> symbol, final T token, final P tokenParameter) {
 		this.symbol = symbol;
 		this.token = token;
+		this.tokenParameter = tokenParameter;
 	}
 
 	@Override
@@ -37,7 +40,12 @@ public class TerminalBinarySyntaxTree<T, P extends Parameter> implements BinaryS
 	public T getToken() {
 		return token;
 	}
-
+	
+	@Override
+	public P getTokenParameter() {
+		return tokenParameter;
+	}
+	
 	@Override
 	public boolean isFirst() {
 		return true;

@@ -51,6 +51,11 @@ public class InitialStateBinarySyntaxTree<T, P extends Parameter> implements Bin
 	}
 
 	@Override
+	public P getTokenParameter() {
+		return null;
+	}
+	
+	@Override
 	public SyntaxTree<T, P> toNaturalTree() {
 		return new UnbinaryNonTerminalSyntaxTree<>(this);
 	}

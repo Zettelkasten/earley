@@ -8,7 +8,11 @@ public class LemmaTerminal extends SimpleTerminal<Token> {
 	private final Lemma.Type type;
 
 	public LemmaTerminal(final Lemma.Type type) {
-		super(type.toString());
+		this (type, type.toString());
+	}
+
+	public LemmaTerminal(final Lemma.Type type, final String name) {
+		super(name);
 		this.type = type;
 	}
 

@@ -123,13 +123,12 @@ public final class EarleyParseResult<T, P extends Parameter> implements ParseRes
 			T toResolve = entry.getValue();
 
 			if (nextChart != null && terminal.isCompatibleWith(toResolve)) {
-
-				StateCause<T, P> origin = new StateCause.Scan<>(state, toResolve);
-
 				ParameterExpression<T, P> parameterExpression = state.nextParameterExpression();
 				P parameter = state.getParameter();
 
 				for (P newParameter : parameterExpression.scan(parameter, toResolve, terminal)) {
+					StateCause<T, P> origin = new StateCause.Scan<>(state, toResolve, newParameter);
+
 					State<T, P> newState = new SimpleState<>(nextChart, state.getProduction(), state.getCurrentPosition() + 1, state.getOriginPosition(), newParameter);
 					nextChart.add(newState, origin);
 				}

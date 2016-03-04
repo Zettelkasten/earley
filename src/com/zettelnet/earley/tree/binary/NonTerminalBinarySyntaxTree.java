@@ -60,6 +60,11 @@ public class NonTerminalBinarySyntaxTree<T, P extends Parameter> implements Bina
 	public T getToken() {
 		return null;
 	}
+	
+	@Override
+	public P getTokenParameter() {
+		return null;
+	}
 
 	@Override
 	public SyntaxTree<T, P> toNaturalTree() {

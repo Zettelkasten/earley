@@ -41,6 +41,7 @@ public class EpsilonTest {
 		}
 
 		System.out.println(result.isComplete());
+		System.out.println(result.getBinarySyntaxTree());
 		System.out.println(result.getSyntaxTree());
 	}
 }

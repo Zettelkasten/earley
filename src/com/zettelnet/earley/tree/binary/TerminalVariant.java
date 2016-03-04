@@ -18,6 +18,6 @@ public class TerminalVariant<T, P extends Parameter> extends AbstractBinarySynta
 
 	@Override
 	public BinarySyntaxTree<T, P> getChildNode() {
-		return new TerminalBinarySyntaxTree<>((Terminal<T>) state.last(), cause.getToken());
+		return new TerminalBinarySyntaxTree<>((Terminal<T>) state.last(), cause.getToken(), cause.getTokenParameter());
 	}
 }
