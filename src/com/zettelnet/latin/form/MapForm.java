@@ -93,7 +93,10 @@ public final class MapForm implements Form {
 	@Override
 	public Form retainAll(Collection<Class<? extends FormProperty>> properties) {
 		Map<Class<? extends FormProperty>, FormProperty> newData = new HashMap<>(this.data);
-		newData.keySet().retainAll(properties);
-		return new MapForm(newData);
+		if (newData.keySet().retainAll(properties)) {
+			return new MapForm(newData);
+		} else {
+			return this;
+		}
 	}
 }
