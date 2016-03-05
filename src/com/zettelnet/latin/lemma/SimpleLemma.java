@@ -1,5 +1,6 @@
 package com.zettelnet.latin.lemma;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.UUID;
@@ -26,8 +27,8 @@ public class SimpleLemma implements Lemma {
 	}
 
 	@Override
-	public String getForm(Form form) {
-		return null;
+	public Collection<String> getForm(Form form) {
+		return Collections.emptyList();
 	}
 
 	@Override
@@ -36,7 +37,7 @@ public class SimpleLemma implements Lemma {
 	}
 
 	@Override
-	public Map<Form, String> getForms() {
+	public Map<Form, Collection<String>> getForms() {
 		return Collections.emptyMap();
 	}
 
