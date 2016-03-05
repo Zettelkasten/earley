@@ -94,4 +94,6 @@ public interface Form extends PropertySet<FormProperty> {
 	public default Valency getValency() {
 		return getProperty(Valency.class);
 	}
+
+	Form retainAll(@SuppressWarnings("unchecked") Class<? extends FormProperty>... properties);
 }

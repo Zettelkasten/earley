@@ -1,5 +1,9 @@
 package com.zettelnet.latin.form;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+
 public final class BaseForm implements Form {
 
 	private static final int casusLen = Casus.values().length + 1;
@@ -170,6 +174,23 @@ public final class BaseForm implements Form {
 		} else {
 			return null;
 		}
+	}
+	
+	@Override
+	public Form retainAll(@SuppressWarnings("unchecked") Class<? extends FormProperty>... properties) {
+		Collection<Class<? extends FormProperty>> props = new HashSet<>(Arrays.asList(properties));
+		
+		Casus casus = props.contains(Casus.class) ? this.casus : null;
+		Numerus numerus = props.contains(Numerus.class) ? this.numerus : null;
+		Genus genus = props.contains(Genus.class) ? this.genus: null;
+		Person person = props.contains(Person.class) ? this.person : null;
+		Mood mood = props.contains(Mood.class) ? this.mood : null;
+		Tense tense = props.contains(Tense.class) ? this.tense : null;
+		Voice voice = props.contains(Voice.class) ? this.voice : null;
+		Comparison comparison = props.contains(Comparison.class) ? this.comparison : null;
+		Finiteness verbType = props.contains(Finiteness.class) ? this.verbType : null;
+		
+		return valueOf(casus, numerus, genus, person, mood, tense, voice, comparison, verbType);
 	}
 
 	@Override

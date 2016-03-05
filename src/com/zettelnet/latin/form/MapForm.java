@@ -1,5 +1,6 @@
 package com.zettelnet.latin.form;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,13 +13,17 @@ public final class MapForm implements Form {
 	// may not be modified
 	private final Map<Class<? extends FormProperty>, FormProperty> data;
 
-	public MapForm(FormProperty... properties) {
+	public MapForm(final FormProperty... properties) {
 		this.data = new HashMap<>(properties.length);
 		for (FormProperty property : properties) {
 			if (property != null) {
 				data.put(property.getClass(), property);
 			}
 		}
+	}
+
+	private MapForm(final Map<Class<? extends FormProperty>, FormProperty> data) {
+		this.data = data;
 	}
 
 	@Override
@@ -85,4 +90,10 @@ public final class MapForm implements Form {
 		return toString();
 	}
 
+	@Override
+	public Form retainAll(@SuppressWarnings("unchecked") Class<? extends FormProperty>... properties) {
+		Map<Class<? extends FormProperty>, FormProperty> newData = new HashMap<>(this.data);
+		newData.keySet().retainAll(Arrays.asList(properties));
+		return new MapForm(newData);
+	}
 }
