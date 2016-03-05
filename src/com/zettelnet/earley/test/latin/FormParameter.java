@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.zettelnet.earley.param.Parameter;
-import com.zettelnet.latin.Form;
-import com.zettelnet.latin.FormProperty;
+import com.zettelnet.latin.form.Form;
+import com.zettelnet.latin.form.FormProperty;
 
 public final class FormParameter implements Parameter {
 

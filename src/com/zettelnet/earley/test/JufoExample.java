@@ -8,7 +8,7 @@ import com.zettelnet.earley.EarleyParseResult;
 import com.zettelnet.earley.EarleyParser;
 import com.zettelnet.earley.Grammar;
 import com.zettelnet.earley.ParameterizedSymbol;
-import com.zettelnet.earley.input.DynamicInputPositionInitializer;
+import com.zettelnet.earley.input.LinearInputPositionInitializer;
 import com.zettelnet.earley.param.AnyParameterExpression;
 import com.zettelnet.earley.param.CopyParameterExpression;
 import com.zettelnet.earley.param.ParameterExpression;
@@ -26,10 +26,11 @@ import com.zettelnet.earley.test.latin.FormParameterManager;
 import com.zettelnet.earley.test.latin.FormParameterizer;
 import com.zettelnet.earley.test.latin.LemmaTerminal;
 import com.zettelnet.earley.test.latin.Token;
-import com.zettelnet.latin.Form;
+import com.zettelnet.earley.tree.SyntaxTreeVariant;
 import com.zettelnet.latin.form.Casus;
 import com.zettelnet.latin.form.Comparison;
 import com.zettelnet.latin.form.Finiteness;
+import com.zettelnet.latin.form.Form;
 import com.zettelnet.latin.form.Genus;
 import com.zettelnet.latin.form.Mood;
 import com.zettelnet.latin.form.Numerus;
@@ -38,6 +39,7 @@ import com.zettelnet.latin.form.Tense;
 import com.zettelnet.latin.form.Valency;
 import com.zettelnet.latin.form.Voice;
 import com.zettelnet.latin.lemma.Lemma;
+import com.zettelnet.latin.lemma.LemmaType;
 
 public class JufoExample {
 
@@ -58,10 +60,10 @@ public class JufoExample {
 		NonTerminal<Token> adverbalPhrase = new SimpleNonTerminal<>("AP");
 		NonTerminal<Token> adverbalPhraseVar = new SimpleNonTerminal<>("AP*");
 
-		Terminal<Token> verb = new LemmaTerminal(Lemma.Type.Verb);
-		Terminal<Token> noun = new LemmaTerminal(Lemma.Type.Noun);
-		Terminal<Token> adverb = new LemmaTerminal(Lemma.Type.Adverb);
-		Terminal<Token> adjective = new LemmaTerminal(Lemma.Type.Adjective);
+		Terminal<Token> verb = new LemmaTerminal(LemmaType.Verb);
+		Terminal<Token> noun = new LemmaTerminal(LemmaType.Noun);
+		Terminal<Token> adverb = new LemmaTerminal(LemmaType.Adverb);
+		Terminal<Token> adjective = new LemmaTerminal(LemmaType.Adjective);
 
 		// Management
 
@@ -180,30 +182,30 @@ public class JufoExample {
 			}
 		}
 
-		EarleyParser<Token, FormParameter> parser = new EarleyParser<>(grammar, new DynamicInputPositionInitializer<>());
+		EarleyParser<Token, FormParameter> parser = new EarleyParser<>(grammar, new LinearInputPositionInitializer<>());
 
 		// lemmas
 
-		Lemma dominusL = new DummyLemma(Lemma.Type.Noun);
-		Lemma servaL = new DummyLemma(Lemma.Type.Noun);
-		Lemma servusL = new DummyLemma(Lemma.Type.Noun);
-		Lemma plaustrumL = new DummyLemma(Lemma.Type.Noun);
-		Lemma iumentumL = new DummyLemma(Lemma.Type.Noun);
-		Lemma forumL = new DummyLemma(Lemma.Type.Noun);
-		Lemma cantoL = new DummyLemma(Lemma.Type.Verb);
-		Lemma rideoL = new DummyLemma(Lemma.Type.Verb);
-		Lemma amoL = new DummyLemma(Lemma.Type.Verb);
-		Lemma trahoL = new DummyLemma(Lemma.Type.Verb);
-		Lemma loquorL = new DummyLemma(Lemma.Type.Verb);
-		Lemma doL = new DummyLemma(Lemma.Type.Verb);
-		Lemma nonL = new DummyLemma(Lemma.Type.Adverb);
-		Lemma iamL = new DummyLemma(Lemma.Type.Adverb);
-		Lemma LatineL = new DummyLemma(Lemma.Type.Adverb);
-		Lemma tandemL = new DummyLemma(Lemma.Type.Adverb);
-		Lemma liberL = new DummyLemma(Lemma.Type.Adjective);
-		Lemma possumL = new DummyLemma(Lemma.Type.Verb);
-		Lemma sumL = new DummyLemma(Lemma.Type.Verb);
-		Lemma voloL = new DummyLemma(Lemma.Type.Verb);
+		Lemma dominusL = new DummyLemma(LemmaType.Noun);
+		Lemma servaL = new DummyLemma(LemmaType.Noun);
+		Lemma servusL = new DummyLemma(LemmaType.Noun);
+		Lemma plaustrumL = new DummyLemma(LemmaType.Noun);
+		Lemma iumentumL = new DummyLemma(LemmaType.Noun);
+		Lemma forumL = new DummyLemma(LemmaType.Noun);
+		Lemma cantoL = new DummyLemma(LemmaType.Verb);
+		Lemma rideoL = new DummyLemma(LemmaType.Verb);
+		Lemma amoL = new DummyLemma(LemmaType.Verb);
+		Lemma trahoL = new DummyLemma(LemmaType.Verb);
+		Lemma loquorL = new DummyLemma(LemmaType.Verb);
+		Lemma doL = new DummyLemma(LemmaType.Verb);
+		Lemma nonL = new DummyLemma(LemmaType.Adverb);
+		Lemma iamL = new DummyLemma(LemmaType.Adverb);
+		Lemma LatineL = new DummyLemma(LemmaType.Adverb);
+		Lemma tandemL = new DummyLemma(LemmaType.Adverb);
+		Lemma liberL = new DummyLemma(LemmaType.Adjective);
+		Lemma possumL = new DummyLemma(LemmaType.Verb);
+		Lemma sumL = new DummyLemma(LemmaType.Verb);
+		Lemma voloL = new DummyLemma(LemmaType.Verb);
 
 		// tokens
 
@@ -277,7 +279,7 @@ public class JufoExample {
 				new Determination(voloL, Person.First, Numerus.Singular, Tense.Present, Mood.Indicative, Voice.Active, Finiteness.Finite, Valency.Accusative));
 
 		// "Ich kann nicht mehr Lateinisch sprechen"
-		// List<Token> tokens = Arrays.asList(Latine, loqui, non, iam, possum);
+		 List<Token> tokens = Arrays.asList(possum, loqui, Latine);
 
 		// "Ich gebe dem Herrn einen Karren"
 		// List<Token> tokens = Arrays.asList(doT, domino, plaustrum);
@@ -287,10 +289,17 @@ public class JufoExample {
 		// vult);
 
 		// "Er will singen"
-		List<Token> tokens = Arrays.asList(cantare, vult);
+//		List<Token> tokens = Arrays.asList(cantare, vult);
 
 		EarleyParseResult<Token, FormParameter> result = parser.parse(tokens);
 
+		
 		JufoHelper.present(result, tokens);
+
+		System.out.println("-");
+		
+		for (SyntaxTreeVariant<Token, FormParameter> variant : result.getSyntaxTree().getVariants().iterator().next().getChildren().get(0).getVariants()) {
+			System.out.println(variant);
+		}
 	}
 }

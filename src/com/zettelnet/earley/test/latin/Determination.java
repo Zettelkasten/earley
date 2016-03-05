@@ -1,8 +1,9 @@
 package com.zettelnet.earley.test.latin;
 
-import com.zettelnet.latin.Form;
-import com.zettelnet.latin.FormProperty;
+import com.zettelnet.latin.form.Form;
+import com.zettelnet.latin.form.FormProperty;
 import com.zettelnet.latin.lemma.Lemma;
+import com.zettelnet.latin.lemma.LemmaType;
 
 public class Determination {
 
@@ -22,7 +23,7 @@ public class Determination {
 		return lemma;
 	}
 
-	public Lemma.Type getLemmaType() {
+	public LemmaType getLemmaType() {
 		return lemma.getType();
 	}
 

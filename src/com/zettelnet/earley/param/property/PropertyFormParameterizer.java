@@ -8,8 +8,8 @@ import com.zettelnet.earley.symbol.Terminal;
 import com.zettelnet.earley.test.latin.Determination;
 import com.zettelnet.earley.test.latin.LemmaTerminal;
 import com.zettelnet.earley.test.latin.Token;
-import com.zettelnet.latin.Form;
-import com.zettelnet.latin.FormProperty;
+import com.zettelnet.latin.form.Form;
+import com.zettelnet.latin.form.FormProperty;
 
 public class PropertyFormParameterizer implements TokenParameterizer<Token, PropertyParameter<FormProperty>> {
 

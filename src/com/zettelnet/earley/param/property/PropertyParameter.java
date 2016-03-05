@@ -3,8 +3,6 @@ package com.zettelnet.earley.param.property;
 import java.util.Map;
 
 import com.zettelnet.earley.param.Parameter;
-import com.zettelnet.latin.form.Property;
-import com.zettelnet.latin.form.PropertySet;
 
 public class PropertyParameter<T extends Property> implements Parameter {
 

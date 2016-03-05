@@ -150,7 +150,7 @@ public class ChartSetPrinter<T, P extends Parameter> {
 
 	public void printChart(PrintStream out, Chart<T, P> chart) {
 		String chartClass = "chart chart-" + (aliveCharts.contains(chart) ? "alive" : "dead");
-		
+
 		out.printf("<div class='%s' id='chart-%s'>", chartClass, chart.getInputPosition());
 		out.print("<h2 class='chart-title'>");
 		out.printf("S(%s) - ", chart.getInputPosition());
@@ -279,8 +279,7 @@ public class ChartSetPrinter<T, P extends Parameter> {
 			}
 		}
 
-		if (state.getCurrentPosition() == state.getProduction().size() && state.getOriginPosition().isClean()
-				&& state.getChart().getInputPosition() == charts.lastKey()) {
+		if (state.getCurrentPosition() == state.getProduction().size() && state.getOriginPosition().isClean() && state.getChart().getInputPosition().isComplete()) {
 			out.print(" DONE!");
 		}
 

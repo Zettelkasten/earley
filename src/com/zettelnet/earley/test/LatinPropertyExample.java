@@ -27,9 +27,9 @@ import com.zettelnet.earley.test.latin.Determination;
 import com.zettelnet.earley.test.latin.DummyLemma;
 import com.zettelnet.earley.test.latin.LemmaTerminal;
 import com.zettelnet.earley.test.latin.Token;
-import com.zettelnet.latin.Form;
-import com.zettelnet.latin.FormProperty;
 import com.zettelnet.latin.form.Casus;
+import com.zettelnet.latin.form.Form;
+import com.zettelnet.latin.form.FormProperty;
 import com.zettelnet.latin.form.Genus;
 import com.zettelnet.latin.form.Mood;
 import com.zettelnet.latin.form.Numerus;
@@ -37,6 +37,7 @@ import com.zettelnet.latin.form.Person;
 import com.zettelnet.latin.form.Tense;
 import com.zettelnet.latin.form.Voice;
 import com.zettelnet.latin.lemma.Lemma;
+import com.zettelnet.latin.lemma.LemmaType;
 
 public class LatinPropertyExample {
 
@@ -46,8 +47,8 @@ public class LatinPropertyExample {
 		NonTerminal<Token> nounPhrase = new SimpleNonTerminal<>("NP");
 		NonTerminal<Token> verbPhrase = new SimpleNonTerminal<>("VP");
 
-		Terminal<Token> verb = new LemmaTerminal(Lemma.Type.Verb);
-		Terminal<Token> noun = new LemmaTerminal(Lemma.Type.Noun);
+		Terminal<Token> verb = new LemmaTerminal(LemmaType.Verb);
+		Terminal<Token> noun = new LemmaTerminal(LemmaType.Noun);
 
 		PropertyParameterManager<FormProperty> parameterManager = new PropertyParameterManager<>(Form.ALL_PROPERTIES);
 		TokenParameterizer<Token, PropertyParameter<FormProperty>> parameterizer = new PropertyFormParameterizer(parameterManager);
@@ -76,9 +77,9 @@ public class LatinPropertyExample {
 
 		// lemmas
 
-		Lemma serva = new DummyLemma(Lemma.Type.Noun);
-		Lemma servus = new DummyLemma(Lemma.Type.Noun);
-		Lemma canto = new DummyLemma(Lemma.Type.Verb);
+		Lemma serva = new DummyLemma(LemmaType.Noun);
+		Lemma servus = new DummyLemma(LemmaType.Noun);
+		Lemma canto = new DummyLemma(LemmaType.Verb);
 
 		// tokens
 

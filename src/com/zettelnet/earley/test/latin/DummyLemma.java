@@ -1,17 +1,16 @@
 package com.zettelnet.earley.test.latin;
 
 import java.util.Map;
-import java.util.Set;
 
-import com.zettelnet.latin.Form;
-import com.zettelnet.latin.form.provider.FormProvider;
+import com.zettelnet.latin.form.Form;
 import com.zettelnet.latin.lemma.Lemma;
+import com.zettelnet.latin.lemma.LemmaType;
 
 public class DummyLemma implements Lemma {
 
-	private final Lemma.Type type;
+	private final LemmaType type;
 
-	public DummyLemma(Lemma.Type type) {
+	public DummyLemma(LemmaType type) {
 		this.type = type;
 	}
 
@@ -36,27 +35,7 @@ public class DummyLemma implements Lemma {
 	}
 
 	@Override
-	public Set<Form> getAvailableForms() {
-		return null;
-	}
-
-	@Override
-	public FormProvider<? extends Lemma> getFormProvider() {
-		return null;
-	}
-
-	@Override
-	public Set<Lemma> getDerivatives() {
-		return null;
-	}
-
-	@Override
-	public Lemma getDerivedFrom() {
-		return null;
-	}
-
-	@Override
-	public Type getType() {
+	public LemmaType getType() {
 		return type;
 	}
 }

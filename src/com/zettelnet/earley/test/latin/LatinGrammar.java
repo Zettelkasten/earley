@@ -14,12 +14,12 @@ import com.zettelnet.earley.param.TokenParameterizer;
 import com.zettelnet.earley.symbol.NonTerminal;
 import com.zettelnet.earley.symbol.SimpleNonTerminal;
 import com.zettelnet.earley.symbol.Terminal;
-import com.zettelnet.latin.Form;
 import com.zettelnet.latin.form.Casus;
 import com.zettelnet.latin.form.Finiteness;
+import com.zettelnet.latin.form.Form;
 import com.zettelnet.latin.form.Tense;
 import com.zettelnet.latin.form.Valency;
-import com.zettelnet.latin.lemma.Lemma;
+import com.zettelnet.latin.lemma.LemmaType;
 
 public final class LatinGrammar {
 
@@ -39,10 +39,10 @@ public final class LatinGrammar {
 		NonTerminal<Token> adverbalPhrase = new SimpleNonTerminal<>("AP");
 		NonTerminal<Token> adverbalPhraseVar = new SimpleNonTerminal<>("AP*");
 
-		Terminal<Token> verb = new LemmaTerminal(Lemma.Type.Verb);
-		Terminal<Token> noun = new LemmaTerminal(Lemma.Type.Noun);
-		Terminal<Token> adverb = new LemmaTerminal(Lemma.Type.Adverb);
-		Terminal<Token> adjective = new LemmaTerminal(Lemma.Type.Adjective);
+		Terminal<Token> verb = new LemmaTerminal(LemmaType.Verb);
+		Terminal<Token> noun = new LemmaTerminal(LemmaType.Noun);
+		Terminal<Token> adverb = new LemmaTerminal(LemmaType.Adverb);
+		Terminal<Token> adjective = new LemmaTerminal(LemmaType.Adjective);
 
 		// Management
 
@@ -117,7 +117,7 @@ public final class LatinGrammar {
 				adverbalPhraseVar,
 				adverbalPhrase,
 				adverbalPhraseVar);
-		
+
 		// AP -> Adv
 		grammar.addProduction(adverbalPhrase,
 				adverb);

@@ -1,17 +1,17 @@
 package com.zettelnet.earley.test.latin;
 
 import com.zettelnet.earley.symbol.SimpleTerminal;
-import com.zettelnet.latin.lemma.Lemma;
+import com.zettelnet.latin.lemma.LemmaType;
 
 public class LemmaTerminal extends SimpleTerminal<Token> {
 
-	private final Lemma.Type type;
+	private final LemmaType type;
 
-	public LemmaTerminal(final Lemma.Type type) {
+	public LemmaTerminal(final LemmaType type) {
 		this (type, type.toString());
 	}
 
-	public LemmaTerminal(final Lemma.Type type, final String name) {
+	public LemmaTerminal(final LemmaType type, final String name) {
 		super(name);
 		this.type = type;
 	}

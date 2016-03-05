@@ -7,8 +7,6 @@ import java.util.Map;
 import com.zettelnet.earley.param.ParameterFactory;
 import com.zettelnet.earley.param.ParameterManager;
 import com.zettelnet.earley.param.SingletonParameterFactory;
-import com.zettelnet.latin.form.Property;
-import com.zettelnet.latin.form.PropertySet;
 
 public final class PropertyParameterManager<T extends Property> implements ParameterManager<PropertyParameter<T>> {
 

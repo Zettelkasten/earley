@@ -5,7 +5,7 @@ import java.util.Collection;
 
 import com.zettelnet.earley.param.TokenParameterizer;
 import com.zettelnet.earley.symbol.Terminal;
-import com.zettelnet.latin.Form;
+import com.zettelnet.latin.form.Form;
 
 public class FormParameterizer implements TokenParameterizer<Token, FormParameter> {
 
