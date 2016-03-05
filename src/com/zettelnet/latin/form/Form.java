@@ -99,4 +99,6 @@ public interface Form extends PropertySet<FormProperty> {
 	Form retainAll(Collection<Class<? extends FormProperty>> properties);
 
 	boolean hasProperties(FormProperty... properties);
+
+	Form derive(FormProperty... properties);
 }

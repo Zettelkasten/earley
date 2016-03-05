@@ -109,4 +109,13 @@ public final class MapForm implements Form {
 		}
 		return true;
 	}
+
+	@Override
+	public Form derive(FormProperty... properties) {
+		Map<Class<? extends FormProperty>, FormProperty> newData = new HashMap<>(this.data);
+		for (FormProperty property : properties) {
+			newData.put(property.getClass(), property);
+		}
+		return new MapForm(newData);
+	}
 }
