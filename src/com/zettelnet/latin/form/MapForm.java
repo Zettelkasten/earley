@@ -1,6 +1,6 @@
 package com.zettelnet.latin.form;
 
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -91,9 +91,9 @@ public final class MapForm implements Form {
 	}
 
 	@Override
-	public Form retainAll(@SuppressWarnings("unchecked") Class<? extends FormProperty>... properties) {
+	public Form retainAll(Collection<Class<? extends FormProperty>> properties) {
 		Map<Class<? extends FormProperty>, FormProperty> newData = new HashMap<>(this.data);
-		newData.keySet().retainAll(Arrays.asList(properties));
+		newData.keySet().retainAll(properties);
 		return new MapForm(newData);
 	}
 }
