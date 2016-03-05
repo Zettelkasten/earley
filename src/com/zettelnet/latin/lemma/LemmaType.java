@@ -1,7 +1,5 @@
 package com.zettelnet.latin.lemma;
 
-import com.zettelnet.earley.test.latin.SimpleLemmaType;
-
 public interface LemmaType {
 
 	public static final LemmaType Noun = new SimpleLemmaType("Noun");

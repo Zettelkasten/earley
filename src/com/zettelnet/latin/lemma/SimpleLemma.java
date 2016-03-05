@@ -1,22 +1,28 @@
-package com.zettelnet.earley.test.latin;
+package com.zettelnet.latin.lemma;
 
+import java.util.Collections;
 import java.util.Map;
+import java.util.UUID;
 
 import com.zettelnet.latin.form.Form;
-import com.zettelnet.latin.lemma.Lemma;
-import com.zettelnet.latin.lemma.LemmaType;
 
-public class DummyLemma implements Lemma {
+public class SimpleLemma implements Lemma {
 
+	private final String firstForm;
 	private final LemmaType type;
 
-	public DummyLemma(LemmaType type) {
+	public SimpleLemma(final LemmaType type) {
+		this(UUID.randomUUID().toString(), type);
+	}
+
+	public SimpleLemma(final String firstForm, final LemmaType type) {
+		this.firstForm = firstForm;
 		this.type = type;
 	}
 
 	@Override
 	public String getFirstForm() {
-		return null;
+		return firstForm;
 	}
 
 	@Override
@@ -31,7 +37,7 @@ public class DummyLemma implements Lemma {
 
 	@Override
 	public Map<Form, String> getForms() {
-		return null;
+		return Collections.emptyMap();
 	}
 
 	@Override

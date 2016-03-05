@@ -24,7 +24,6 @@ import com.zettelnet.earley.symbol.NonTerminal;
 import com.zettelnet.earley.symbol.SimpleNonTerminal;
 import com.zettelnet.earley.symbol.Terminal;
 import com.zettelnet.earley.test.latin.Determination;
-import com.zettelnet.earley.test.latin.DummyLemma;
 import com.zettelnet.earley.test.latin.LemmaTerminal;
 import com.zettelnet.earley.test.latin.Token;
 import com.zettelnet.latin.form.Casus;
@@ -38,6 +37,7 @@ import com.zettelnet.latin.form.Tense;
 import com.zettelnet.latin.form.Voice;
 import com.zettelnet.latin.lemma.Lemma;
 import com.zettelnet.latin.lemma.LemmaType;
+import com.zettelnet.latin.lemma.SimpleLemma;
 
 public class LatinPropertyExample {
 
@@ -77,9 +77,9 @@ public class LatinPropertyExample {
 
 		// lemmas
 
-		Lemma serva = new DummyLemma(LemmaType.Noun);
-		Lemma servus = new DummyLemma(LemmaType.Noun);
-		Lemma canto = new DummyLemma(LemmaType.Verb);
+		Lemma serva = new SimpleLemma(LemmaType.Noun);
+		Lemma servus = new SimpleLemma(LemmaType.Noun);
+		Lemma canto = new SimpleLemma(LemmaType.Verb);
 
 		// tokens
 

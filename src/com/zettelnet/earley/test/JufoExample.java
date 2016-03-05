@@ -20,7 +20,6 @@ import com.zettelnet.earley.symbol.NonTerminal;
 import com.zettelnet.earley.symbol.SimpleNonTerminal;
 import com.zettelnet.earley.symbol.Terminal;
 import com.zettelnet.earley.test.latin.Determination;
-import com.zettelnet.earley.test.latin.DummyLemma;
 import com.zettelnet.earley.test.latin.FormParameter;
 import com.zettelnet.earley.test.latin.FormParameterManager;
 import com.zettelnet.earley.test.latin.FormParameterizer;
@@ -40,6 +39,7 @@ import com.zettelnet.latin.form.Valency;
 import com.zettelnet.latin.form.Voice;
 import com.zettelnet.latin.lemma.Lemma;
 import com.zettelnet.latin.lemma.LemmaType;
+import com.zettelnet.latin.lemma.SimpleLemma;
 
 public class JufoExample {
 
@@ -186,26 +186,26 @@ public class JufoExample {
 
 		// lemmas
 
-		Lemma dominusL = new DummyLemma(LemmaType.Noun);
-		Lemma servaL = new DummyLemma(LemmaType.Noun);
-		Lemma servusL = new DummyLemma(LemmaType.Noun);
-		Lemma plaustrumL = new DummyLemma(LemmaType.Noun);
-		Lemma iumentumL = new DummyLemma(LemmaType.Noun);
-		Lemma forumL = new DummyLemma(LemmaType.Noun);
-		Lemma cantoL = new DummyLemma(LemmaType.Verb);
-		Lemma rideoL = new DummyLemma(LemmaType.Verb);
-		Lemma amoL = new DummyLemma(LemmaType.Verb);
-		Lemma trahoL = new DummyLemma(LemmaType.Verb);
-		Lemma loquorL = new DummyLemma(LemmaType.Verb);
-		Lemma doL = new DummyLemma(LemmaType.Verb);
-		Lemma nonL = new DummyLemma(LemmaType.Adverb);
-		Lemma iamL = new DummyLemma(LemmaType.Adverb);
-		Lemma LatineL = new DummyLemma(LemmaType.Adverb);
-		Lemma tandemL = new DummyLemma(LemmaType.Adverb);
-		Lemma liberL = new DummyLemma(LemmaType.Adjective);
-		Lemma possumL = new DummyLemma(LemmaType.Verb);
-		Lemma sumL = new DummyLemma(LemmaType.Verb);
-		Lemma voloL = new DummyLemma(LemmaType.Verb);
+		Lemma dominusL = new SimpleLemma(LemmaType.Noun);
+		Lemma servaL = new SimpleLemma(LemmaType.Noun);
+		Lemma servusL = new SimpleLemma(LemmaType.Noun);
+		Lemma plaustrumL = new SimpleLemma(LemmaType.Noun);
+		Lemma iumentumL = new SimpleLemma(LemmaType.Noun);
+		Lemma forumL = new SimpleLemma(LemmaType.Noun);
+		Lemma cantoL = new SimpleLemma(LemmaType.Verb);
+		Lemma rideoL = new SimpleLemma(LemmaType.Verb);
+		Lemma amoL = new SimpleLemma(LemmaType.Verb);
+		Lemma trahoL = new SimpleLemma(LemmaType.Verb);
+		Lemma loquorL = new SimpleLemma(LemmaType.Verb);
+		Lemma doL = new SimpleLemma(LemmaType.Verb);
+		Lemma nonL = new SimpleLemma(LemmaType.Adverb);
+		Lemma iamL = new SimpleLemma(LemmaType.Adverb);
+		Lemma LatineL = new SimpleLemma(LemmaType.Adverb);
+		Lemma tandemL = new SimpleLemma(LemmaType.Adverb);
+		Lemma liberL = new SimpleLemma(LemmaType.Adjective);
+		Lemma possumL = new SimpleLemma(LemmaType.Verb);
+		Lemma sumL = new SimpleLemma(LemmaType.Verb);
+		Lemma voloL = new SimpleLemma(LemmaType.Verb);
 
 		// tokens
 
