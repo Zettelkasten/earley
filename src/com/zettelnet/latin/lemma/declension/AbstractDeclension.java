@@ -16,6 +16,24 @@ import com.zettelnet.latin.lemma.FormProvider;
 import com.zettelnet.latin.lemma.Noun;
 import com.zettelnet.latin.morph.MorphProvider;
 
+/**
+ * Generates a value of a {@link Form} of a {@link Noun}.
+ * <p>
+ * <code>form = base + ending</code>
+ * <p>
+ * The following extra rules apply:
+ * <ul>
+ * <li>the Nominative Singular is the special {@link Noun#getFirstForm()} form
+ * </li>
+ * <li>for Accusative Neuter forms, the Nominative form is used</li>
+ * <li>Nominative Plural Neuter ends on <code>-a</code></li>
+ * <li>the Vocative forms equal the Nominative forms</li>
+ * </ul>
+ * 
+ * @param noun
+ * @param form
+ * @return
+ */
 public abstract class AbstractDeclension implements FormProvider<Noun> {
 
 	private final MorphProvider endings;
