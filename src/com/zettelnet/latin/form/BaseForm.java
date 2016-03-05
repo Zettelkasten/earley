@@ -188,6 +188,16 @@ public final class BaseForm implements Form {
 
 		return valueOf(casus, numerus, genus, person, mood, tense, voice, comparison, verbType);
 	}
+	
+	@Override
+	public boolean hasProperties(FormProperty... properties) {
+		for (FormProperty property : properties) {
+			if (getProperty(property.getClass()) != property) {
+				return false;
+			}
+		}
+		return true;
+	}
 
 	@Override
 	public String toStringShort() {

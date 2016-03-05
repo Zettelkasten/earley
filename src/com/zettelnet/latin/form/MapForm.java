@@ -99,4 +99,14 @@ public final class MapForm implements Form {
 			return this;
 		}
 	}
+
+	@Override
+	public boolean hasProperties(FormProperty... properties) {
+		for (FormProperty property : properties) {
+			if (getProperty(property.getClass()) != property) {
+				return false;
+			}
+		}
+		return true;
+	}
 }
