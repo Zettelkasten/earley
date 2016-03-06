@@ -47,9 +47,7 @@ public abstract class AbstractDeclension implements FormProvider<Noun> {
 		for (String ending : endings) {
 			StringBuilder str = new StringBuilder();
 			str.append(stem);
-			if (ending != null) {
-				str.append(ending);
-			}
+			str.append(ending);
 			variants.add(str.toString());
 		}
 		return variants;
