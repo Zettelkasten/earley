@@ -9,5 +9,5 @@ public final class Conjugation {
 	public static final FormProvider<Verb> Second = new SecondConjugation();
 	public static final FormProvider<Verb> Third = new ThirdConjugation();
 	public static final FormProvider<Verb> ThirdI = new ThirdIStemConjugation();
-	public static final FormProvider<Verb> Forth = new FourthConjugation();
+	public static final FormProvider<Verb> Fourth = new FourthConjugation();
 }
