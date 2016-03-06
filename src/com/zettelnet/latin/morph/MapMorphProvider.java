@@ -2,6 +2,7 @@ package com.zettelnet.latin.morph;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,7 +33,12 @@ public class MapMorphProvider implements MorphProvider {
 
 	@Override
 	public Collection<String> getMorph(Form form) {
-		return data.get(form.retainAll(retainedProperties));
+		Collection<String> variants = data.get(form.retainAll(retainedProperties));
+		if (variants != null) {
+			return variants;
+		} else {
+			return Collections.emptyList();
+		}
 	}
 
 }
