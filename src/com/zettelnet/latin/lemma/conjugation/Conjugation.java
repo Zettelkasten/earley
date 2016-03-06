@@ -8,6 +8,6 @@ public final class Conjugation {
 	public static final FormProvider<Verb> First = new FirstConjugation();
 	public static final FormProvider<Verb> Second = new SecondConjugation();
 	public static final FormProvider<Verb> Third = new ThirdConjugation();
-	public static final FormProvider<Verb> ThirdI = new ThirdIStemConjugation();
+	public static final FormProvider<Verb> ThirdIStem = new ThirdIStemConjugation();
 	public static final FormProvider<Verb> Fourth = new FourthConjugation();
 }
