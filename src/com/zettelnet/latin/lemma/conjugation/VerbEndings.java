@@ -63,21 +63,21 @@ public class VerbEndings extends MapMorphProvider {
 		put("min_i", Person.Second, Numerus.Plural, Tense.Imperfect, Mood.Indicative, Voice.Passive);
 		put("ntur", Person.Third, Numerus.Plural, Tense.Imperfect, Mood.Indicative, Voice.Passive);
 
-		put("or", Person.First, Numerus.Singular, Tense.Future, Mood.Indicative, Voice.Passive);
+		put("r", Person.First, Numerus.Singular, Tense.Future, Mood.Indicative, Voice.Passive);
 		put("ris", Person.Second, Numerus.Singular, Tense.Future, Mood.Indicative, Voice.Passive);
 		put("tur", Person.Third, Numerus.Singular, Tense.Future, Mood.Indicative, Voice.Passive);
 		put("mur", Person.First, Numerus.Plural, Tense.Future, Mood.Indicative, Voice.Passive);
 		put("min_i", Person.Second, Numerus.Plural, Tense.Future, Mood.Indicative, Voice.Passive);
 		put("ntur", Person.Third, Numerus.Plural, Tense.Future, Mood.Indicative, Voice.Passive);
 
-		put("or", Person.First, Numerus.Singular, Tense.Present, Mood.Subjunctive, Voice.Passive);
+		put("r", Person.First, Numerus.Singular, Tense.Present, Mood.Subjunctive, Voice.Passive);
 		put("ris", Person.Second, Numerus.Singular, Tense.Present, Mood.Subjunctive, Voice.Passive);
 		put("tur", Person.Third, Numerus.Singular, Tense.Present, Mood.Subjunctive, Voice.Passive);
 		put("mur", Person.First, Numerus.Plural, Tense.Present, Mood.Subjunctive, Voice.Passive);
 		put("min_i", Person.Second, Numerus.Plural, Tense.Present, Mood.Subjunctive, Voice.Passive);
 		put("ntur", Person.Third, Numerus.Plural, Tense.Present, Mood.Subjunctive, Voice.Passive);
 
-		put("or", Person.First, Numerus.Singular, Tense.Imperfect, Mood.Subjunctive, Voice.Passive);
+		put("r", Person.First, Numerus.Singular, Tense.Imperfect, Mood.Subjunctive, Voice.Passive);
 		put("ris", Person.Second, Numerus.Singular, Tense.Imperfect, Mood.Subjunctive, Voice.Passive);
 		put("tur", Person.Third, Numerus.Singular, Tense.Imperfect, Mood.Subjunctive, Voice.Passive);
 		put("mur", Person.First, Numerus.Plural, Tense.Imperfect, Mood.Subjunctive, Voice.Passive);
@@ -106,14 +106,14 @@ public class VerbEndings extends MapMorphProvider {
 		put("erint", Person.Third, Numerus.Plural, Tense.FuturePerfect, Mood.Indicative, Voice.Active);
 
 		put("erim", Person.First, Numerus.Singular, Tense.Perfect, Mood.Subjunctive, Voice.Active);
-		put("eris", Person.Second, Numerus.Singular, Tense.Perfect, Mood.Subjunctive, Voice.Active);
+		put("er_is", Person.Second, Numerus.Singular, Tense.Perfect, Mood.Subjunctive, Voice.Active);
 		put("erit", Person.Third, Numerus.Singular, Tense.Perfect, Mood.Subjunctive, Voice.Active);
-		put("erimus", Person.First, Numerus.Plural, Tense.Perfect, Mood.Subjunctive, Voice.Active);
-		put("eritis", Person.Second, Numerus.Plural, Tense.Perfect, Mood.Subjunctive, Voice.Active);
+		put("er_imus", Person.First, Numerus.Plural, Tense.Perfect, Mood.Subjunctive, Voice.Active);
+		put("er_itis", Person.Second, Numerus.Plural, Tense.Perfect, Mood.Subjunctive, Voice.Active);
 		put("erint", Person.Third, Numerus.Plural, Tense.Perfect, Mood.Subjunctive, Voice.Active);
 
 		put("issem", Person.First, Numerus.Singular, Tense.Pluperfect, Mood.Subjunctive, Voice.Active);
-		put("isses", Person.Second, Numerus.Singular, Tense.Pluperfect, Mood.Subjunctive, Voice.Active);
+		put("iss_es", Person.Second, Numerus.Singular, Tense.Pluperfect, Mood.Subjunctive, Voice.Active);
 		put("isset", Person.Third, Numerus.Singular, Tense.Pluperfect, Mood.Subjunctive, Voice.Active);
 		put("iss_emus", Person.First, Numerus.Plural, Tense.Pluperfect, Mood.Subjunctive, Voice.Active);
 		put("iss_etis", Person.Second, Numerus.Plural, Tense.Pluperfect, Mood.Subjunctive, Voice.Active);
@@ -122,7 +122,7 @@ public class VerbEndings extends MapMorphProvider {
 		put("", Person.Second, Numerus.Singular, Tense.Present, Mood.Imperative, Voice.Active);
 		put("te", Person.Second, Numerus.Plural, Tense.Present, Mood.Imperative, Voice.Active);
 		put("re", Person.Second, Numerus.Singular, Tense.Present, Mood.Imperative, Voice.Passive);
-		put("mini", Person.Second, Numerus.Plural, Tense.Present, Mood.Imperative, Voice.Passive);
+		put("min_i", Person.Second, Numerus.Plural, Tense.Present, Mood.Imperative, Voice.Passive);
 	}
 
 }

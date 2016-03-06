@@ -44,11 +44,11 @@ public class ThirdConjugation extends AbstractConjugation {
 			// Future I Indicative Active
 
 			put("a", Person.First, Numerus.Singular, Tense.Future, Mood.Indicative, Voice.Active);
-			put("_es", Person.Second, Numerus.Singular, Tense.Future, Mood.Indicative, Voice.Active);
-			put("et", Person.Third, Numerus.Singular, Tense.Future, Mood.Indicative, Voice.Active);
-			put("_emus", Person.First, Numerus.Plural, Tense.Future, Mood.Indicative, Voice.Active);
-			put("_etis", Person.Second, Numerus.Plural, Tense.Future, Mood.Indicative, Voice.Active);
-			put("ent", Person.Third, Numerus.Plural, Tense.Future, Mood.Indicative, Voice.Active);
+			put("_e", Person.Second, Numerus.Singular, Tense.Future, Mood.Indicative, Voice.Active);
+			put("e", Person.Third, Numerus.Singular, Tense.Future, Mood.Indicative, Voice.Active);
+			put("_e", Person.First, Numerus.Plural, Tense.Future, Mood.Indicative, Voice.Active);
+			put("_e", Person.Second, Numerus.Plural, Tense.Future, Mood.Indicative, Voice.Active);
+			put("e", Person.Third, Numerus.Plural, Tense.Future, Mood.Indicative, Voice.Active);
 
 			// Present Subjunctive Active
 
@@ -71,7 +71,7 @@ public class ThirdConjugation extends AbstractConjugation {
 			// Present Indicative Passive
 
 			put("", Person.First, Numerus.Singular, Tense.Present, Mood.Indicative, Voice.Passive);
-			put(".e", Person.Second, Numerus.Singular, Tense.Present, Mood.Indicative, Voice.Passive);
+			put("e", Person.Second, Numerus.Singular, Tense.Present, Mood.Indicative, Voice.Passive);
 			put("i", Person.Third, Numerus.Singular, Tense.Present, Mood.Indicative, Voice.Passive);
 			put("i", Person.First, Numerus.Plural, Tense.Present, Mood.Indicative, Voice.Passive);
 			put("i", Person.Second, Numerus.Plural, Tense.Present, Mood.Indicative, Voice.Passive);
@@ -81,7 +81,7 @@ public class ThirdConjugation extends AbstractConjugation {
 
 			put("_eba", Person.First, Numerus.Singular, Tense.Imperfect, Mood.Indicative, Voice.Passive);
 			put("_eb_a", Person.Second, Numerus.Singular, Tense.Imperfect, Mood.Indicative, Voice.Passive);
-			put("_eba", Person.Third, Numerus.Singular, Tense.Imperfect, Mood.Indicative, Voice.Passive);
+			put("_eb_a", Person.Third, Numerus.Singular, Tense.Imperfect, Mood.Indicative, Voice.Passive);
 			put("_eb_a", Person.First, Numerus.Plural, Tense.Imperfect, Mood.Indicative, Voice.Passive);
 			put("_eb_a", Person.Second, Numerus.Plural, Tense.Imperfect, Mood.Indicative, Voice.Passive);
 			put("_eba", Person.Third, Numerus.Plural, Tense.Imperfect, Mood.Indicative, Voice.Passive);

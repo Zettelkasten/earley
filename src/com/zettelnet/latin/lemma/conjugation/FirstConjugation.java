@@ -81,7 +81,7 @@ public class FirstConjugation extends AbstractConjugation {
 
 			put("_aba", Person.First, Numerus.Singular, Tense.Imperfect, Mood.Indicative, Voice.Passive);
 			put("_ab_a", Person.Second, Numerus.Singular, Tense.Imperfect, Mood.Indicative, Voice.Passive);
-			put("_aba", Person.Third, Numerus.Singular, Tense.Imperfect, Mood.Indicative, Voice.Passive);
+			put("_ab_a", Person.Third, Numerus.Singular, Tense.Imperfect, Mood.Indicative, Voice.Passive);
 			put("_ab_a", Person.First, Numerus.Plural, Tense.Imperfect, Mood.Indicative, Voice.Passive);
 			put("_ab_a", Person.Second, Numerus.Plural, Tense.Imperfect, Mood.Indicative, Voice.Passive);
 			put("_aba", Person.Third, Numerus.Plural, Tense.Imperfect, Mood.Indicative, Voice.Passive);

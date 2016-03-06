@@ -75,13 +75,13 @@ public class SecondConjugation extends AbstractConjugation {
 			put("_e", Person.Third, Numerus.Singular, Tense.Present, Mood.Indicative, Voice.Passive);
 			put("_e", Person.First, Numerus.Plural, Tense.Present, Mood.Indicative, Voice.Passive);
 			put("_e", Person.Second, Numerus.Plural, Tense.Present, Mood.Indicative, Voice.Passive);
-			put("_e", Person.Third, Numerus.Plural, Tense.Present, Mood.Indicative, Voice.Passive);
+			put("e", Person.Third, Numerus.Plural, Tense.Present, Mood.Indicative, Voice.Passive);
 
 			// Imperfect Indicative Passive
 
 			put("_eba", Person.First, Numerus.Singular, Tense.Imperfect, Mood.Indicative, Voice.Passive);
 			put("_eb_a", Person.Second, Numerus.Singular, Tense.Imperfect, Mood.Indicative, Voice.Passive);
-			put("_eba", Person.Third, Numerus.Singular, Tense.Imperfect, Mood.Indicative, Voice.Passive);
+			put("_eb_a", Person.Third, Numerus.Singular, Tense.Imperfect, Mood.Indicative, Voice.Passive);
 			put("_eb_a", Person.First, Numerus.Plural, Tense.Imperfect, Mood.Indicative, Voice.Passive);
 			put("_eb_a", Person.Second, Numerus.Plural, Tense.Imperfect, Mood.Indicative, Voice.Passive);
 			put("_eba", Person.Third, Numerus.Plural, Tense.Imperfect, Mood.Indicative, Voice.Passive);
