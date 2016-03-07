@@ -45,4 +45,9 @@ public class SimpleLemma implements Lemma {
 	public LemmaType getType() {
 		return type;
 	}
+
+	@Override
+	public String toString() {
+		return getFirstForm();
+	}
 }

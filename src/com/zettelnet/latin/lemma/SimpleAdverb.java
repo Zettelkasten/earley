@@ -41,4 +41,9 @@ public class SimpleAdverb implements Lemma {
 	public LemmaType getType() {
 		return LemmaType.Adverb;
 	}
+
+	@Override
+	public String toString() {
+		return getFirstForm();
+	}
 }

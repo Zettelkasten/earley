@@ -42,4 +42,8 @@ public class SimpleConjunction implements Conjunction {
 		return LemmaType.Conjunction;
 	}
 
+	@Override
+	public String toString() {
+		return getFirstForm();
+	}
 }

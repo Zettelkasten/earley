@@ -53,4 +53,8 @@ public class SimpleVerb implements Verb {
 		return LemmaType.Verb;
 	}
 
+	@Override
+	public String toString() {
+		return getFirstForm();
+	}
 }

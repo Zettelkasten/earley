@@ -13,4 +13,8 @@ public class SimpleNoun extends AbstractDeclinableLemma implements Noun {
 		return LemmaType.Noun;
 	}
 
+	@Override
+	public String toString() {
+		return getFirstForm();
+	}
 }

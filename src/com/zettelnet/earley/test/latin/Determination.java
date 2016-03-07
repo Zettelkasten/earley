@@ -30,4 +30,9 @@ public class Determination {
 	public Form getForm() {
 		return form;
 	}
+
+	@Override
+	public String toString() {
+		return "Determination [" + lemma + ", " + form + "]";
+	}
 }

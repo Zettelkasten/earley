@@ -13,4 +13,8 @@ public class SimpleAdjective extends AbstractDeclinableLemma implements Adjectiv
 		return LemmaType.Adjective;
 	}
 
+	@Override
+	public String toString() {
+		return getFirstForm();
+	}
 }
