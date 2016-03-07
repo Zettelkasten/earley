@@ -6,7 +6,7 @@ import java.util.Collection;
 import com.zettelnet.latin.form.Casus;
 import com.zettelnet.latin.form.Form;
 import com.zettelnet.latin.form.Numerus;
-import com.zettelnet.latin.lemma.Noun;
+import com.zettelnet.latin.lemma.DeclinableLemma;
 import com.zettelnet.latin.morph.MapMorphProvider;
 import com.zettelnet.latin.morph.MorphProvider;
 
@@ -49,12 +49,12 @@ public class SecondDeclension extends AbstractDeclension {
 	}
 
 	@Override
-	public Collection<String> getForm(Noun noun, Form form) {
+	public Collection<String> getForm(DeclinableLemma lemma, Form form) {
 		// nouns ending on "-us" end on "-e" in Voc Sg
-		if (form.hasProperties(Casus.Vocative, Numerus.Singular) && noun.getFirstForm().endsWith("us")) {
-			return concat(noun.getStem(), Arrays.asList("e"));
+		if (form.hasProperties(Casus.Vocative, Numerus.Singular) && lemma.getFirstForm().endsWith("us")) {
+			return concat(lemma.getStem(), Arrays.asList("e"));
 		} else {
-			return super.getForm(noun, form);
+			return super.getForm(lemma, form);
 		}
 	}
 }

@@ -1,10 +1,5 @@
 package com.zettelnet.latin.lemma;
 
-import com.zettelnet.latin.form.Genus;
+public interface Noun extends Lemma, DeclinableLemma {
 
-public interface Noun extends Lemma {
-
-	String getStem();
-
-	Genus getGenus();
 }
