@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.zettelnet.earley.param.property.PropertySet;
+import com.zettelnet.latin.lemma.property.Finiteness;
+import com.zettelnet.latin.lemma.property.Valency;
 
 public interface Form extends PropertySet<FormProperty> {
 

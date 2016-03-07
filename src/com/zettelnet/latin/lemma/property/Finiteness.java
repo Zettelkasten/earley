@@ -1,4 +1,6 @@
-package com.zettelnet.latin.form;
+package com.zettelnet.latin.lemma.property;
+
+import com.zettelnet.latin.form.FormProperty;
 
 public enum Finiteness implements FormProperty {
 

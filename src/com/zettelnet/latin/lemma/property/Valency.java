@@ -1,6 +1,6 @@
-package com.zettelnet.latin.form;
+package com.zettelnet.latin.lemma.property;
 
-public enum Valency implements FormProperty {
+public enum Valency implements LemmaProperty {
 
 	Copula("Copula"),
 	Null("NullVal"),
