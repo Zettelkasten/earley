@@ -50,35 +50,35 @@ public class VerbEndings extends MapMorphProvider {
 		put("nt", Person.Third, Numerus.Plural, Tense.Imperfect, Mood.Subjunctive, Voice.Active);
 
 		put("or", Person.First, Numerus.Singular, Tense.Present, Mood.Indicative, Voice.Passive);
-		put("ris", Person.Second, Numerus.Singular, Tense.Present, Mood.Indicative, Voice.Passive);
+		put(new String[] { "ris", "re" }, Person.Second, Numerus.Singular, Tense.Present, Mood.Indicative, Voice.Passive);
 		put("tur", Person.Third, Numerus.Singular, Tense.Present, Mood.Indicative, Voice.Passive);
 		put("mur", Person.First, Numerus.Plural, Tense.Present, Mood.Indicative, Voice.Passive);
 		put("min_i", Person.Second, Numerus.Plural, Tense.Present, Mood.Indicative, Voice.Passive);
 		put("ntur", Person.Third, Numerus.Plural, Tense.Present, Mood.Indicative, Voice.Passive);
 
 		put("r", Person.First, Numerus.Singular, Tense.Imperfect, Mood.Indicative, Voice.Passive);
-		put("ris", Person.Second, Numerus.Singular, Tense.Imperfect, Mood.Indicative, Voice.Passive);
+		put(new String[] { "ris", "re" }, Person.Second, Numerus.Singular, Tense.Imperfect, Mood.Indicative, Voice.Passive);
 		put("tur", Person.Third, Numerus.Singular, Tense.Imperfect, Mood.Indicative, Voice.Passive);
 		put("mur", Person.First, Numerus.Plural, Tense.Imperfect, Mood.Indicative, Voice.Passive);
 		put("min_i", Person.Second, Numerus.Plural, Tense.Imperfect, Mood.Indicative, Voice.Passive);
 		put("ntur", Person.Third, Numerus.Plural, Tense.Imperfect, Mood.Indicative, Voice.Passive);
 
 		put("r", Person.First, Numerus.Singular, Tense.Future, Mood.Indicative, Voice.Passive);
-		put("ris", Person.Second, Numerus.Singular, Tense.Future, Mood.Indicative, Voice.Passive);
+		put(new String[] { "ris", "re" }, Person.Second, Numerus.Singular, Tense.Future, Mood.Indicative, Voice.Passive);
 		put("tur", Person.Third, Numerus.Singular, Tense.Future, Mood.Indicative, Voice.Passive);
 		put("mur", Person.First, Numerus.Plural, Tense.Future, Mood.Indicative, Voice.Passive);
 		put("min_i", Person.Second, Numerus.Plural, Tense.Future, Mood.Indicative, Voice.Passive);
 		put("ntur", Person.Third, Numerus.Plural, Tense.Future, Mood.Indicative, Voice.Passive);
 
 		put("r", Person.First, Numerus.Singular, Tense.Present, Mood.Subjunctive, Voice.Passive);
-		put("ris", Person.Second, Numerus.Singular, Tense.Present, Mood.Subjunctive, Voice.Passive);
+		put(new String[] { "ris", "re" }, Person.Second, Numerus.Singular, Tense.Present, Mood.Subjunctive, Voice.Passive);
 		put("tur", Person.Third, Numerus.Singular, Tense.Present, Mood.Subjunctive, Voice.Passive);
 		put("mur", Person.First, Numerus.Plural, Tense.Present, Mood.Subjunctive, Voice.Passive);
 		put("min_i", Person.Second, Numerus.Plural, Tense.Present, Mood.Subjunctive, Voice.Passive);
 		put("ntur", Person.Third, Numerus.Plural, Tense.Present, Mood.Subjunctive, Voice.Passive);
 
 		put("r", Person.First, Numerus.Singular, Tense.Imperfect, Mood.Subjunctive, Voice.Passive);
-		put("ris", Person.Second, Numerus.Singular, Tense.Imperfect, Mood.Subjunctive, Voice.Passive);
+		put(new String[] { "ris", "re" }, Person.Second, Numerus.Singular, Tense.Imperfect, Mood.Subjunctive, Voice.Passive);
 		put("tur", Person.Third, Numerus.Singular, Tense.Imperfect, Mood.Subjunctive, Voice.Passive);
 		put("mur", Person.First, Numerus.Plural, Tense.Imperfect, Mood.Subjunctive, Voice.Passive);
 		put("min_i", Person.Second, Numerus.Plural, Tense.Imperfect, Mood.Subjunctive, Voice.Passive);
@@ -89,7 +89,7 @@ public class VerbEndings extends MapMorphProvider {
 		put("it", Person.Third, Numerus.Singular, Tense.Perfect, Mood.Indicative, Voice.Active);
 		put("imus", Person.First, Numerus.Plural, Tense.Perfect, Mood.Indicative, Voice.Active);
 		put("istis", Person.Second, Numerus.Plural, Tense.Perfect, Mood.Indicative, Voice.Active);
-		put("_erunt", Person.Third, Numerus.Plural, Tense.Perfect, Mood.Indicative, Voice.Active);
+		put(new String[] { "_erunt", "_ere" }, Person.Third, Numerus.Plural, Tense.Perfect, Mood.Indicative, Voice.Active);
 
 		put("eram", Person.First, Numerus.Singular, Tense.Pluperfect, Mood.Indicative, Voice.Active);
 		put("er_as", Person.Second, Numerus.Singular, Tense.Pluperfect, Mood.Indicative, Voice.Active);
@@ -106,10 +106,10 @@ public class VerbEndings extends MapMorphProvider {
 		put("erint", Person.Third, Numerus.Plural, Tense.FuturePerfect, Mood.Indicative, Voice.Active);
 
 		put("erim", Person.First, Numerus.Singular, Tense.Perfect, Mood.Subjunctive, Voice.Active);
-		put("er_is", Person.Second, Numerus.Singular, Tense.Perfect, Mood.Subjunctive, Voice.Active);
+		put(new String[] { "er_is", "eris" }, Person.Second, Numerus.Singular, Tense.Perfect, Mood.Subjunctive, Voice.Active);
 		put("erit", Person.Third, Numerus.Singular, Tense.Perfect, Mood.Subjunctive, Voice.Active);
-		put("er_imus", Person.First, Numerus.Plural, Tense.Perfect, Mood.Subjunctive, Voice.Active);
-		put("er_itis", Person.Second, Numerus.Plural, Tense.Perfect, Mood.Subjunctive, Voice.Active);
+		put(new String[] { "er_imus", "erimus" }, Person.First, Numerus.Plural, Tense.Perfect, Mood.Subjunctive, Voice.Active);
+		put(new String[] { "er_itis", "eritis" }, Person.Second, Numerus.Plural, Tense.Perfect, Mood.Subjunctive, Voice.Active);
 		put("erint", Person.Third, Numerus.Plural, Tense.Perfect, Mood.Subjunctive, Voice.Active);
 
 		put("issem", Person.First, Numerus.Singular, Tense.Pluperfect, Mood.Subjunctive, Voice.Active);
