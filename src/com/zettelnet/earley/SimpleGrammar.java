@@ -36,21 +36,23 @@ public class SimpleGrammar<T, P extends Parameter> implements Grammar<T, P> {
 	}
 
 	public SimpleGrammar(final NonTerminal<T> startSymbol, final ParameterFactory<P> startSymbolParameter, final ParameterManager<P> parameterManager, final Set<Production<T, P>> productions) {
-		this.productions = productions;
 		this.startSymbol = startSymbol;
 		this.startSymbolParameter = startSymbolParameter;
 
 		this.parameterManager = parameterManager;
 
+		this.productions = new HashSet<>();
 		this.nonTerminals = new HashMap<>();
 		this.terminals = new HashSet<>();
 
-		for (Production<T, P> production : this.productions) {
+		for (Production<T, P> production : productions) {
 			addProduction(production);
 		}
 	}
 
 	public void addProduction(Production<T, P> production) {
+		this.productions.add(production);
+		
 		NonTerminal<T> key = production.key();
 		if (!nonTerminals.containsKey(key)) {
 			nonTerminals.put(key, new HashSet<>());
@@ -89,18 +91,22 @@ public class SimpleGrammar<T, P extends Parameter> implements Grammar<T, P> {
 		return production;
 	}
 
+	@Override
 	public Set<NonTerminal<T>> getNonTerminals() {
 		return nonTerminals.keySet();
 	}
 
+	@Override
 	public Set<Terminal<T>> getTerminals() {
 		return terminals;
 	}
 
+	@Override
 	public Set<Production<T, P>> getProductions() {
 		return productions;
 	}
 
+	@Override
 	public Set<Production<T, P>> getProductions(NonTerminal<T> key) {
 		Set<Production<T, P>> set = nonTerminals.get(key);
 		if (set == null) {
@@ -110,6 +116,7 @@ public class SimpleGrammar<T, P extends Parameter> implements Grammar<T, P> {
 		}
 	}
 
+	@Override
 	public NonTerminal<T> getStartSymbol() {
 		return startSymbol;
 	}
@@ -118,6 +125,7 @@ public class SimpleGrammar<T, P extends Parameter> implements Grammar<T, P> {
 		this.startSymbol = startSymbol;
 	}
 
+	@Override
 	public ParameterFactory<P> getStartSymbolParameter() {
 		return startSymbolParameter;
 	}
@@ -126,10 +134,12 @@ public class SimpleGrammar<T, P extends Parameter> implements Grammar<T, P> {
 		this.startSymbolParameter = startSymbolParameter;
 	}
 
+	@Override
 	public ParameterManager<P> getParameterManager() {
 		return parameterManager;
 	}
 
+	@Override
 	public ParameterExpression<T, P> getStartSymbolParameterExpression() {
 		return new CopyParameterExpression<T, P>(this, null);
 	}
