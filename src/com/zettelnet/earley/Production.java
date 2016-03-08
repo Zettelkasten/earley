@@ -2,6 +2,7 @@ package com.zettelnet.earley;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import com.zettelnet.earley.param.AnyParameterExpression;
@@ -37,17 +38,23 @@ public class Production<T, P extends Parameter> {
 		return list;
 	}
 
+	public Production(final Grammar<T, P> grammar, final NonTerminal<T> left) {
+		this(left, grammar.getParameterManager(), Collections.emptyList());
+	}
+
 	@SafeVarargs
 	public Production(final Grammar<T, P> grammar, final NonTerminal<T> left, final Symbol<T>... right) {
 		this(left, grammar.getParameterManager(), makeProductionSymbols(grammar.getParameterManager(), right));
 	}
 
 	@SafeVarargs
+	public Production(final Grammar<T, P> grammar, final NonTerminal<T> left, final ParameterizedSymbol<T, P>... right) {
+		this(left, grammar.getParameterManager(), right);
+	}
+
+	@SafeVarargs
 	public Production(final NonTerminal<T> left, final ParameterFactory<P> keyParameter, final ParameterizedSymbol<T, P>... right) {
-		this.key = left;
-		this.keyParameter = keyParameter;
-		this.values = Arrays.asList(right);
-		this.symbolValues = makeUnparameterizedSymbols(values);
+		this(left, keyParameter, Arrays.asList(right));
 	}
 
 	private Production(final NonTerminal<T> left, final ParameterFactory<P> keyParameter, final List<ParameterizedSymbol<T, P>> right) {
