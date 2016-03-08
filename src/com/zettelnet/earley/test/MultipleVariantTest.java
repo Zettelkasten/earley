@@ -8,7 +8,6 @@ import java.util.List;
 import com.zettelnet.earley.ChartSetPrinter;
 import com.zettelnet.earley.EarleyParseResult;
 import com.zettelnet.earley.EarleyParser;
-import com.zettelnet.earley.Grammar;
 import com.zettelnet.earley.SimpleGrammar;
 import com.zettelnet.earley.param.DefaultParameter;
 import com.zettelnet.earley.param.DefaultParameterManager;

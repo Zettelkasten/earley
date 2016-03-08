@@ -20,7 +20,6 @@ import com.zettelnet.earley.symbol.AnyTokenTerminal;
 import com.zettelnet.earley.symbol.NonTerminal;
 import com.zettelnet.earley.symbol.SimpleNonTerminal;
 import com.zettelnet.earley.symbol.Terminal;
-import com.zettelnet.earley.test.SameLastCharExample.LastCharParameter;
 
 public class SameLastCharExample {
 
