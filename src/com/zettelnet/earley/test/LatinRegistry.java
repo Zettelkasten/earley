@@ -59,8 +59,19 @@ public class LatinRegistry {
 		register(new SimpleVerb("iuv", "i_uv", "i_ut", Conjugation.First), "please");
 	}
 
+	// Ostia Altera T2
+	static {
+		// TODO ubi?
+		// TODO est
+		register(new SimpleNoun("dominus", "domin", Declension.Second, Genus.Masculine), "lord");
+		register(new SimpleNoun("vilicus", "vilic", Declension.Second, Genus.Masculine), "custodian");
+		register(new SimpleNoun("servus", "serv", Declension.Second, Genus.Masculine), "slave");
+		register(new SimpleAdverb("tum"), "then");
+		register(new SimpleNoun("caelum", "cael", Declension.Second, Genus.Neuter), "sky");
+	}
+
 	// some nouns
 	static {
-		register(new SimpleNoun("servus", "serv", Declension.Second, Genus.Masculine), "slave");
+		register(new SimpleNoun("carmen", "carmin", Declension.Third, Genus.Neuter), "song");
 	}
 }
