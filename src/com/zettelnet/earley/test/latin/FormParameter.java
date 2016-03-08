@@ -74,6 +74,10 @@ public final class FormParameter implements Parameter {
 	public FormParameter deriveWith(FormParameter with) {
 		return new FormParameter(makeDataMap(this.data, with.data));
 	}
+	
+	public Form toForm() {
+		return Form.withValues(data.values());
+	}
 
 	@Override
 	public String toString() {

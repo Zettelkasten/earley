@@ -34,6 +34,10 @@ public interface Form extends PropertySet<FormProperty> {
 		return MapForm.valueOf(properties);
 	}
 
+	public static Form withValues(Collection<FormProperty> properties) {
+		return MapForm.valueOf(properties);
+	}
+
 	public static Form nounForm(Casus casus, Numerus numerus, Genus genus) {
 		return nounForm(casus, numerus, genus, null);
 	}
