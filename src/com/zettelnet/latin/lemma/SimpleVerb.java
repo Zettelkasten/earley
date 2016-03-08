@@ -1,7 +1,10 @@
 package com.zettelnet.latin.lemma;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 
 import com.zettelnet.earley.param.property.PropertySet;
@@ -11,6 +14,7 @@ import com.zettelnet.latin.form.Numerus;
 import com.zettelnet.latin.form.Person;
 import com.zettelnet.latin.form.Tense;
 import com.zettelnet.latin.form.Voice;
+import com.zettelnet.latin.lemma.property.Finiteness;
 import com.zettelnet.latin.lemma.property.LemmaProperty;
 import com.zettelnet.latin.lemma.property.MapLemmaPropertySet;
 
@@ -25,7 +29,10 @@ public class SimpleVerb implements Verb {
 		this.stems.put(Tense.Present, presentStem);
 		this.stems.put(Tense.Perfect, perfectStem);
 		this.formProvider = formProvider;
-		this.properties = MapLemmaPropertySet.valueOf(properties);
+
+		List<LemmaProperty> propertyList = new ArrayList<>(Arrays.asList(properties));
+		propertyList.add(Finiteness.Finite);
+		this.properties = MapLemmaPropertySet.valueOf(propertyList);
 	}
 
 	@Override

@@ -1,8 +1,6 @@
 package com.zettelnet.latin.lemma.property;
 
-import com.zettelnet.latin.form.FormProperty;
-
-public enum Finiteness implements FormProperty {
+public enum Finiteness implements LemmaProperty {
 
 	Finite("Fin"), Infinitive("Inf"), Participle("Part"), Gerund("Gerund"), Gerundive("Gerundiv"), Supine("Sup");
 
