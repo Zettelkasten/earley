@@ -10,6 +10,7 @@ import com.zettelnet.latin.form.FormProperty;
 public final class FormParameter implements Parameter {
 
 	private static final Map<Class<? extends FormProperty>, FormProperty> DEFAULT_DATA;
+
 	static {
 		DEFAULT_DATA = new HashMap<>(Form.ALL_PROPERTIES.size());
 		for (Class<? extends FormProperty> propertyType : Form.ALL_PROPERTIES) {
@@ -41,20 +42,31 @@ public final class FormParameter implements Parameter {
 	// may not be modified
 	private final Map<Class<? extends FormProperty>, FormProperty> data;
 
+	private final Determination cause;
+
 	public FormParameter() {
 		this(DEFAULT_DATA);
 	}
 
-	public FormParameter(FormProperty... formProperties) {
+	public FormParameter(final FormProperty... formProperties) {
 		this(makeDataMap(DEFAULT_DATA, Form.withValues(formProperties)));
 	}
 
-	public FormParameter(Form form) {
+	public FormParameter(final Form form) {
 		this(makeDataMap(DEFAULT_DATA, form));
 	}
 
-	private FormParameter(Map<Class<? extends FormProperty>, FormProperty> data) {
+	public FormParameter(final Determination cause) {
+		this(makeDataMap(DEFAULT_DATA, cause.getForm()), cause);
+	}
+
+	private FormParameter(final Map<Class<? extends FormProperty>, FormProperty> data) {
+		this(data, null);
+	}
+
+	private FormParameter(final Map<Class<? extends FormProperty>, FormProperty> data, final Determination cause) {
 		this.data = data;
+		this.cause = cause;
 	}
 
 	public boolean isCompatibleWith(FormParameter other) {
@@ -72,11 +84,15 @@ public final class FormParameter implements Parameter {
 	}
 
 	public FormParameter deriveWith(FormParameter with) {
-		return new FormParameter(makeDataMap(this.data, with.data));
+		return new FormParameter(makeDataMap(this.data, with.data), with.cause);
 	}
-	
+
 	public Form toForm() {
 		return Form.withValues(data.values());
+	}
+	
+	public Determination getCause() {
+		return cause;
 	}
 
 	@Override
