@@ -1,5 +1,6 @@
 package com.zettelnet.latin.form;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -106,5 +107,9 @@ public interface Form extends PropertySet<FormProperty> {
 
 	boolean hasProperties(FormProperty... properties);
 
-	Form derive(FormProperty... properties);
+	default Form derive(FormProperty... properties) {
+		return derive(Arrays.asList(properties));
+	}
+
+	Form derive(Collection<? extends FormProperty> properties);
 }

@@ -25,7 +25,7 @@ public class DeterminationRegistry implements TokenFactory<Token> {
 
 	public void register(Lemma lemma) {
 		for (Entry<Form, Collection<String>> entry : lemma.getForms().entrySet()) {
-			Form form = entry.getKey();
+			Form form = entry.getKey().derive(lemma.getProperties().values());
 			for (String value : entry.getValue()) {
 				register(value, new Determination(lemma, form));
 			}

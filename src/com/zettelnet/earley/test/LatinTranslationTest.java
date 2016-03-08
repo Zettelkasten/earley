@@ -36,6 +36,7 @@ import com.zettelnet.latin.form.Numerus;
 import com.zettelnet.latin.lemma.Lemma;
 import com.zettelnet.latin.lemma.LemmaType;
 import com.zettelnet.latin.lemma.property.Finiteness;
+import com.zettelnet.latin.lemma.property.Valency;
 
 public class LatinTranslationTest {
 
@@ -92,21 +93,21 @@ public class LatinTranslationTest {
 							+ manager.process(tree.getChildren().get(1)) + "'s "
 							+ manager.process(tree.getChildren().get(0));
 				});
-		grammar.addProduction(new Production<>(grammar,
-				verbPhrase,
+		grammar.addProduction(new Production<>(verbPhrase,
+				new SingletonParameterFactory<>(new FormParameter(Valency.Single)),
 				new ParameterizedSymbol<>(verb, copy)),
 				(ProcessingManager<Token, FormParameter, String> manager, SyntaxTreeVariant<Token, FormParameter> tree) -> {
 					return manager.process(tree.getChildren().get(0));
 				});
-		grammar.addProduction(new Production<>(grammar,
-				verbPhrase,
+		grammar.addProduction(new Production<>(verbPhrase,
+				new SingletonParameterFactory<>(new FormParameter(Valency.Accusative)),
 				new ParameterizedSymbol<>(verb, copy),
 				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Casus.Accusative)))),
 				(ProcessingManager<Token, FormParameter, String> manager, SyntaxTreeVariant<Token, FormParameter> tree) -> {
 					return manager.process(tree.getChildren().get(0)) + " " + manager.process(tree.getChildren().get(1));
 				});
 
-		String raw = "servi caelum carmina cantant";
+		String raw = "carmina dicent servum";
 
 		Tokenizer<Token> tokenizer = new WhitespaceTokenizer<>(LatinRegistry.INSTANCE);
 		GrammarParser<Token, FormParameter> parser = new EarleyParser<>(grammar, new DynamicInputPositionInitializer<>());

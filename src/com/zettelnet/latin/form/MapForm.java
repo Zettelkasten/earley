@@ -43,6 +43,11 @@ public final class MapForm implements Form {
 	}
 
 	@Override
+	public Collection<FormProperty> values() {
+		return data.values();
+	}
+
+	@Override
 	public String toString() {
 		StringBuilder str = new StringBuilder();
 
@@ -116,7 +121,7 @@ public final class MapForm implements Form {
 	}
 
 	@Override
-	public Form derive(FormProperty... properties) {
+	public Form derive(Collection<? extends FormProperty> properties) {
 		Map<Class<? extends FormProperty>, FormProperty> newData = new HashMap<>(this.data);
 		for (FormProperty property : properties) {
 			newData.put(property.getClass(), property);

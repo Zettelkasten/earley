@@ -12,6 +12,7 @@ import com.zettelnet.latin.lemma.SimpleNoun;
 import com.zettelnet.latin.lemma.SimpleVerb;
 import com.zettelnet.latin.lemma.conjugation.Conjugation;
 import com.zettelnet.latin.lemma.declension.Declension;
+import com.zettelnet.latin.lemma.property.Valency;
 
 public class LatinRegistry {
 
@@ -29,34 +30,35 @@ public class LatinRegistry {
 
 	// Ostia Altera T1
 	static {
-		register(new SimpleVerb("cant", "cant_av", "cantat", Conjugation.First), "sing");
-		register(new SimpleVerb("r_id", "r_is", "r_is", Conjugation.Second), "laugh");
+		register(new SimpleVerb("cant", "cant_av", "cantat", Conjugation.First, Valency.Single), "sing");
+		register(new SimpleVerb("cant", "cant_av", "cantat", Conjugation.First, Valency.Accusative), "sing");
+		register(new SimpleVerb("r_id", "r_is", "r_is", Conjugation.Second, Valency.Single), "laugh");
 		register(new SimpleConjunction("et"), "and");
-		register(new SimpleVerb("cl_am", "cl_am_av", "cl_am_at", Conjugation.First), "cry");
-		register(new SimpleVerb("tac", "tacu", "tacit", Conjugation.Second), "silence");
+		register(new SimpleVerb("cl_am", "cl_am_av", "cl_am_at", Conjugation.First, Valency.Single), "cry");
+		register(new SimpleVerb("tac", "tacu", "tacit", Conjugation.Second, Valency.Single), "silence");
 		register(new SimpleConjunction("autem"), "however");
 		// TODO no passive
-		register(new SimpleVerb("saev", "saevi", "saev_it", Conjugation.Fourth), "fume");
+		register(new SimpleVerb("saev", "saevi", "saev_it", Conjugation.Fourth, Valency.Accusative), "fume");
 		register(new SimpleConjunction("atque"), "and");
 		register(new SimpleConjunction("ac"), "and");
 		register(new SimpleAdverb("n_on"), "not");
 		register(new SimpleAdverb("iam"), "already");
-		register(new SimpleVerb("i_urg", "i_urg_av", "i_urg_at", Conjugation.First), "argue");
+		register(new SimpleVerb("i_urg", "i_urg_av", "i_urg_at", Conjugation.First, Valency.Single), "argue");
 		// TODO impersonal in the passive
-		register(new SimpleVerb("ven", "v_en", "vent", Conjugation.Fourth), "come");
+		register(new SimpleVerb("ven", "v_en", "vent", Conjugation.Fourth, Valency.Single), "come");
 		// TODO irregular short imperative
-		register(new SimpleVerb("d_ic", "d_ix", "dict", Conjugation.Third), "say");
+		register(new SimpleVerb("d_ic", "d_ix", "dict", Conjugation.Third, Valency.Accusative), "say");
 		// TODO quis?
 		register(new SimpleConjunction("sed"), "but");
 		// TODO irregular short imperative
-		register(new SimpleVerb("maled_ic", "maled_ix", "maledict", Conjugation.Third), "offend");
+		register(new SimpleVerb("maled_ic", "maled_ix", "maledict", Conjugation.Third, Valency.Accusative), "offend");
 		register(new SimpleAdverb("semper"), "always");
 		register(new SimpleAdverb("deinde"), "upon");
 		// TODO decet
 		register(new SimpleConjunction("neque"), "and not");
 		register(new SimpleAdverb("tandem"), "finally");
-		register(new SimpleVerb("l_ud", "l_us", "l_us", Conjugation.Third), "play");
-		register(new SimpleVerb("iuv", "i_uv", "i_ut", Conjugation.First), "please");
+		register(new SimpleVerb("l_ud", "l_us", "l_us", Conjugation.Third, Valency.Accusative), "play");
+		register(new SimpleVerb("iuv", "i_uv", "i_ut", Conjugation.First, Valency.Accusative), "please");
 	}
 
 	// Ostia Altera T2

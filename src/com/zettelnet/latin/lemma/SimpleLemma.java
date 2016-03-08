@@ -5,20 +5,25 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.UUID;
 
+import com.zettelnet.earley.param.property.PropertySet;
 import com.zettelnet.latin.form.Form;
+import com.zettelnet.latin.lemma.property.LemmaProperty;
+import com.zettelnet.latin.lemma.property.MapLemmaPropertySet;
 
 public class SimpleLemma implements Lemma {
 
 	private final String firstForm;
+	private final PropertySet<LemmaProperty> properties;
 	private final LemmaType type;
 
-	public SimpleLemma(final LemmaType type) {
-		this(UUID.randomUUID().toString(), type);
+	public SimpleLemma(final LemmaType type, final LemmaProperty... properties) {
+		this(UUID.randomUUID().toString(), type, properties);
 	}
 
-	public SimpleLemma(final String firstForm, final LemmaType type) {
+	public SimpleLemma(final String firstForm, final LemmaType type, final LemmaProperty... properties) {
 		this.firstForm = firstForm;
 		this.type = type;
+		this.properties = MapLemmaPropertySet.valueOf(properties);
 	}
 
 	@Override
@@ -39,6 +44,11 @@ public class SimpleLemma implements Lemma {
 	@Override
 	public Map<Form, Collection<String>> getForms() {
 		return Collections.emptyMap();
+	}
+
+	@Override
+	public PropertySet<LemmaProperty> getProperties() {
+		return properties;
 	}
 
 	@Override

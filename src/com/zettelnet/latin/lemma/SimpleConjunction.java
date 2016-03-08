@@ -5,14 +5,19 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.zettelnet.earley.param.property.PropertySet;
 import com.zettelnet.latin.form.Form;
+import com.zettelnet.latin.lemma.property.LemmaProperty;
+import com.zettelnet.latin.lemma.property.MapLemmaPropertySet;
 
 public class SimpleConjunction implements Conjunction {
 
 	private final String firstForm;
+	private final PropertySet<LemmaProperty> properties;
 
-	public SimpleConjunction(final String firstForm) {
+	public SimpleConjunction(final String firstForm, final LemmaProperty... properties) {
 		this.firstForm = firstForm;
+		this.properties = MapLemmaPropertySet.valueOf(properties);
 	}
 
 	@Override
@@ -35,6 +40,11 @@ public class SimpleConjunction implements Conjunction {
 		Map<Form, Collection<String>> map = new HashMap<>(1);
 		map.put(Form.withValues(), Arrays.asList(firstForm));
 		return map;
+	}
+
+	@Override
+	public PropertySet<LemmaProperty> getProperties() {
+		return properties;
 	}
 
 	@Override
