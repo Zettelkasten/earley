@@ -5,10 +5,9 @@ import java.io.PrintStream;
 import java.util.List;
 
 import com.zettelnet.earley.ChartSetPrinter;
+import com.zettelnet.earley.EarleyParseResult;
 import com.zettelnet.earley.EarleyParser;
-import com.zettelnet.earley.GrammarParser;
 import com.zettelnet.earley.ParameterizedSymbol;
-import com.zettelnet.earley.ParseResult;
 import com.zettelnet.earley.Production;
 import com.zettelnet.earley.input.DynamicInputPositionInitializer;
 import com.zettelnet.earley.param.CopyParameterExpression;
@@ -107,12 +106,20 @@ public class LatinTranslationTest {
 					return manager.process(tree.getChildren().get(0)) + " " + manager.process(tree.getChildren().get(1));
 				});
 
-		String raw = "carmina dicent servum";
+		// AcI -> requires implementation of derivations for infinitive forms
+		grammar.addProduction(new Production<>(nounPhrase,
+				new SingletonParameterFactory<>(new FormParameter(Valency.Accusative)),
+				new ParameterizedSymbol<>(sentence, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Casus.Accusative, Finiteness.Infinitive)))),
+				(ProcessingManager<Token, FormParameter, String> manager, SyntaxTreeVariant<Token, FormParameter> tree) -> {
+					return "that " + manager.process(tree.getChildren().get(0));
+				});
+
+		String raw = "servus dicet dominum cantare";
 
 		Tokenizer<Token> tokenizer = new WhitespaceTokenizer<>(LatinRegistry.INSTANCE);
-		GrammarParser<Token, FormParameter> parser = new EarleyParser<>(grammar, new DynamicInputPositionInitializer<>());
+		EarleyParser<Token, FormParameter> parser = new EarleyParser<>(grammar, new DynamicInputPositionInitializer<>());
 		List<Token> tokens = tokenizer.tokenize(raw);
-		ParseResult<Token, FormParameter> result = parser.parse(tokens);
+		EarleyParseResult<Token, FormParameter> result = parser.parse(tokens);
 
 		try {
 			new ChartSetPrinter<>(result.getCharts(), tokens).print(new PrintStream("E:\\temp.html"));
@@ -122,5 +129,6 @@ public class LatinTranslationTest {
 		System.out.println(result.getSyntaxTree());
 		System.out.println(grammar.process(result.getSyntaxTree()));
 
+		JufoHelper.present(result, tokens);
 	}
 }
