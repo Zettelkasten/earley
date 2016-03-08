@@ -30,30 +30,37 @@ public class SimpleState<T, P extends Parameter> implements State<T, P> {
 		this.parameter = parameter;
 	}
 
+	@Override
 	public Chart<T, P> getChart() {
 		return chart;
 	}
 
+	@Override
 	public Production<T, P> getProduction() {
 		return production;
 	}
 
+	@Override
 	public int getCurrentPosition() {
 		return currentPosition;
 	}
 
+	@Override
 	public InputPosition<T> getOriginPosition() {
 		return originPosition;
 	}
 
+	@Override
 	public List<StateCause<T, P>> getCause() {
 		return cause;
 	}
 
+	@Override
 	public void addCause(StateCause<T, P> newCause) {
 		this.cause.add(newCause);
 	}
 
+	@Override
 	public Symbol<T> next() {
 		if (currentPosition >= production.size()) {
 			return null;
@@ -61,7 +68,7 @@ public class SimpleState<T, P extends Parameter> implements State<T, P> {
 			return production.get(currentPosition);
 		}
 	}
-	
+
 	@Override
 	public Symbol<T> last() {
 		if (currentPosition > production.size()) {
@@ -71,6 +78,7 @@ public class SimpleState<T, P extends Parameter> implements State<T, P> {
 		}
 	}
 
+	@Override
 	public ParameterExpression<T, P> nextParameterExpression() {
 		if (currentPosition >= production.size()) {
 			return null;
@@ -79,6 +87,7 @@ public class SimpleState<T, P extends Parameter> implements State<T, P> {
 		}
 	}
 
+	@Override
 	public P getParameter() {
 		return parameter;
 	}

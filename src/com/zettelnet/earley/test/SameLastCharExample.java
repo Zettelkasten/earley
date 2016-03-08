@@ -7,9 +7,9 @@ import java.util.List;
 
 import com.zettelnet.earley.ChartSetPrinter;
 import com.zettelnet.earley.EarleyParser;
-import com.zettelnet.earley.Grammar;
 import com.zettelnet.earley.ParameterizedSymbol;
 import com.zettelnet.earley.ParseResult;
+import com.zettelnet.earley.SimpleGrammar;
 import com.zettelnet.earley.input.DynamicInputPositionInitializer;
 import com.zettelnet.earley.param.CopyParameterExpression;
 import com.zettelnet.earley.param.Parameter;
@@ -20,6 +20,7 @@ import com.zettelnet.earley.symbol.AnyTokenTerminal;
 import com.zettelnet.earley.symbol.NonTerminal;
 import com.zettelnet.earley.symbol.SimpleNonTerminal;
 import com.zettelnet.earley.symbol.Terminal;
+import com.zettelnet.earley.test.SameLastCharExample.LastCharParameter;
 
 public class SameLastCharExample {
 
@@ -113,7 +114,7 @@ public class SameLastCharExample {
 		NonTerminal<String> sentence = new SimpleNonTerminal<>("S");
 		Terminal<String> word = new AnyTokenTerminal<>("w");
 
-		Grammar<String, LastCharParameter> grammar = new Grammar<>(sentence, new LastCharParameterManager());
+		SimpleGrammar<String, LastCharParameter> grammar = new SimpleGrammar<>(sentence, new LastCharParameterManager());
 
 		ParameterExpression<String, LastCharParameter> copy = new CopyParameterExpression<>(grammar, (token, terminal) -> {
 			return Arrays.asList(new LastCharParameter(token.charAt(token.length() - 1)));

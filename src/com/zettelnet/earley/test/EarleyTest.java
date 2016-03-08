@@ -7,8 +7,8 @@ import java.util.Arrays;
 
 import com.zettelnet.earley.EarleyParseResult;
 import com.zettelnet.earley.EarleyParser;
-import com.zettelnet.earley.Grammar;
 import com.zettelnet.earley.Production;
+import com.zettelnet.earley.SimpleGrammar;
 import com.zettelnet.earley.input.LinearInputPositionInitializer;
 import com.zettelnet.earley.param.DefaultParameter;
 import com.zettelnet.earley.param.DefaultParameterManager;
@@ -59,7 +59,7 @@ public class EarleyTest {
 		NonTerminal<String> start = new SimpleNonTerminal<>("S");
 		NonTerminal<String> term = new SimpleNonTerminal<>("T");
 
-		Grammar<String, DefaultParameter> grammar = new Grammar<>(start, new DefaultParameterManager());
+		SimpleGrammar<String, DefaultParameter> grammar = new SimpleGrammar<>(start, new DefaultParameterManager());
 
 		grammar.addProduction(new Production<>(grammar, start, term));
 		grammar.addProduction(new Production<>(grammar, start, term, equals, term));

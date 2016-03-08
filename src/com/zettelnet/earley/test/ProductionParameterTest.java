@@ -7,8 +7,8 @@ import java.util.Arrays;
 
 import com.zettelnet.earley.EarleyParseResult;
 import com.zettelnet.earley.EarleyParser;
-import com.zettelnet.earley.Grammar;
 import com.zettelnet.earley.ParameterizedSymbol;
+import com.zettelnet.earley.SimpleGrammar;
 import com.zettelnet.earley.input.LinearInputPositionInitializer;
 import com.zettelnet.earley.param.CopyParameterExpression;
 import com.zettelnet.earley.param.Parameter;
@@ -102,7 +102,7 @@ public class ProductionParameterTest {
 		Terminal<String> t = new AnyTokenTerminal<>("t");
 
 		ParameterManager<IntParameter> parameterManager = new IntParameterManager();
-		Grammar<String, IntParameter> grammar = new Grammar<>(a, new SingletonParameterFactory<>(new IntParameter(2)), parameterManager);
+		SimpleGrammar<String, IntParameter> grammar = new SimpleGrammar<>(a, new SingletonParameterFactory<>(new IntParameter(2)), parameterManager);
 		TokenParameterizer<String, IntParameter> parameterizer = (String token, Terminal<String> terminal) -> {
 			return Arrays.asList(new IntParameter(Integer.valueOf(token)));
 		};

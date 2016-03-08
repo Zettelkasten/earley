@@ -9,8 +9,8 @@ import java.util.List;
 import com.zettelnet.earley.ChartSetPrinter;
 import com.zettelnet.earley.EarleyParseResult;
 import com.zettelnet.earley.EarleyParser;
-import com.zettelnet.earley.Grammar;
 import com.zettelnet.earley.ParameterizedSymbol;
+import com.zettelnet.earley.SimpleGrammar;
 import com.zettelnet.earley.input.DynamicInputPositionInitializer;
 import com.zettelnet.earley.param.AnyParameterExpression;
 import com.zettelnet.earley.param.CopyParameterExpression;
@@ -29,7 +29,6 @@ import com.zettelnet.earley.test.latin.FormParameterizer;
 import com.zettelnet.earley.test.latin.LemmaTerminal;
 import com.zettelnet.earley.test.latin.Token;
 import com.zettelnet.latin.form.Casus;
-import com.zettelnet.latin.form.Finiteness;
 import com.zettelnet.latin.form.Form;
 import com.zettelnet.latin.form.Genus;
 import com.zettelnet.latin.form.Mood;
@@ -40,6 +39,7 @@ import com.zettelnet.latin.form.Voice;
 import com.zettelnet.latin.lemma.Lemma;
 import com.zettelnet.latin.lemma.LemmaType;
 import com.zettelnet.latin.lemma.SimpleLemma;
+import com.zettelnet.latin.lemma.property.Finiteness;
 
 public class LatinParameterExample {
 
@@ -65,7 +65,7 @@ public class LatinParameterExample {
 		ParameterManager<FormParameter> parameterManager = new FormParameterManager();
 		TokenParameterizer<Token, FormParameter> parameterizer = new FormParameterizer();
 
-		Grammar<Token, FormParameter> grammar = new Grammar<>(sentence, parameterManager);
+		SimpleGrammar<Token, FormParameter> grammar = new SimpleGrammar<>(sentence, parameterManager);
 		grammar.setStartSymbolParameter(new SingletonParameterFactory<>(new FormParameter(Form.withValues(Casus.Nominative, null, null, Person.Third, null, null, null, null, Finiteness.Finite))));
 
 		ParameterExpression<Token, FormParameter> copy = new CopyParameterExpression<>(grammar, parameterizer);

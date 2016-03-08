@@ -7,9 +7,9 @@ import java.util.List;
 
 import com.zettelnet.earley.ChartSetPrinter;
 import com.zettelnet.earley.EarleyParser;
-import com.zettelnet.earley.Grammar;
 import com.zettelnet.earley.GrammarParser;
 import com.zettelnet.earley.ParseResult;
+import com.zettelnet.earley.SimpleGrammar;
 import com.zettelnet.earley.input.LinearInputPositionInitializer;
 import com.zettelnet.earley.param.DefaultParameter;
 import com.zettelnet.earley.param.DefaultParameterManager;
@@ -28,7 +28,7 @@ public class RecursiveExample {
 
 		ParameterManager<DefaultParameter> parameterManager = new DefaultParameterManager();
 
-		Grammar<String, DefaultParameter> grammar = new Grammar<>(delta, parameterManager);
+		SimpleGrammar<String, DefaultParameter> grammar = new SimpleGrammar<>(delta, parameterManager);
 
 		grammar.addProduction(
 				delta);

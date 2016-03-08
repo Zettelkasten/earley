@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import com.zettelnet.earley.Grammar;
 import com.zettelnet.earley.ParameterizedSymbol;
+import com.zettelnet.earley.SimpleGrammar;
 import com.zettelnet.earley.param.AnyParameterExpression;
 import com.zettelnet.earley.param.CopyParameterExpression;
 import com.zettelnet.earley.param.ParameterExpression;
@@ -15,11 +16,11 @@ import com.zettelnet.earley.symbol.NonTerminal;
 import com.zettelnet.earley.symbol.SimpleNonTerminal;
 import com.zettelnet.earley.symbol.Terminal;
 import com.zettelnet.latin.form.Casus;
-import com.zettelnet.latin.form.Finiteness;
 import com.zettelnet.latin.form.Form;
 import com.zettelnet.latin.form.Tense;
-import com.zettelnet.latin.form.Valency;
 import com.zettelnet.latin.lemma.LemmaType;
+import com.zettelnet.latin.lemma.property.Finiteness;
+import com.zettelnet.latin.lemma.property.Valency;
 
 public final class LatinGrammar {
 
@@ -49,7 +50,7 @@ public final class LatinGrammar {
 		ParameterManager<FormParameter> parameterManager = new FormParameterManager();
 		TokenParameterizer<Token, FormParameter> parameterizer = new FormParameterizer();
 
-		Grammar<Token, FormParameter> grammar = new Grammar<>(sentence, parameterManager);
+		SimpleGrammar<Token, FormParameter> grammar = new SimpleGrammar<>(sentence, parameterManager);
 		grammar.setStartSymbolParameter(new SingletonParameterFactory<>(new FormParameter(Casus.Nominative, Finiteness.Finite)));
 
 		ParameterExpression<Token, FormParameter> copy = new CopyParameterExpression<>(grammar, parameterizer);

@@ -7,10 +7,10 @@ import java.util.List;
 
 import com.zettelnet.earley.ChartSetPrinter;
 import com.zettelnet.earley.EarleyParser;
-import com.zettelnet.earley.Grammar;
 import com.zettelnet.earley.GrammarParser;
 import com.zettelnet.earley.ParameterizedSymbol;
 import com.zettelnet.earley.ParseResult;
+import com.zettelnet.earley.SimpleGrammar;
 import com.zettelnet.earley.input.DynamicInputPositionInitializer;
 import com.zettelnet.earley.param.CopyParameterExpression;
 import com.zettelnet.earley.param.ParameterExpression;
@@ -53,7 +53,7 @@ public class LatinExample {
 		ParameterManager<FormParameter> parameterManager = new FormParameterManager();
 		TokenParameterizer<Token, FormParameter> parameterizer = new FormParameterizer();
 
-		Grammar<Token, FormParameter> grammar = new Grammar<>(sentence, parameterManager);
+		SimpleGrammar<Token, FormParameter> grammar = new SimpleGrammar<>(sentence, parameterManager);
 		grammar.setStartSymbolParameter(new SingletonParameterFactory<>(new FormParameter(Form.nounForm(Casus.Nominative, null, null))));
 
 		ParameterExpression<Token, FormParameter> copy = new CopyParameterExpression<>(grammar, parameterizer);

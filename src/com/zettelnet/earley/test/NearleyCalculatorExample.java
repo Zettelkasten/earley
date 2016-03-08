@@ -7,9 +7,9 @@ import java.util.stream.Collectors;
 
 import com.zettelnet.earley.ChartSetPrinter;
 import com.zettelnet.earley.EarleyParser;
-import com.zettelnet.earley.Grammar;
 import com.zettelnet.earley.GrammarParser;
 import com.zettelnet.earley.ParseResult;
+import com.zettelnet.earley.SimpleGrammar;
 import com.zettelnet.earley.param.DefaultParameter;
 import com.zettelnet.earley.param.DefaultParameterManager;
 import com.zettelnet.earley.symbol.MatchTerminal;
@@ -48,7 +48,7 @@ public class NearleyCalculatorExample {
 			return Character.isDigit(c);
 		});
 
-		Grammar<Character, DefaultParameter> grammar = new Grammar<>(main, new DefaultParameterManager());
+		SimpleGrammar<Character, DefaultParameter> grammar = new SimpleGrammar<>(main, new DefaultParameterManager());
 
 		grammar.addProduction(main,
 				whitespace, addition, whitespace);

@@ -7,8 +7,8 @@ import java.util.Arrays;
 
 import com.zettelnet.earley.EarleyParseResult;
 import com.zettelnet.earley.EarleyParser;
-import com.zettelnet.earley.Grammar;
 import com.zettelnet.earley.Production;
+import com.zettelnet.earley.SimpleGrammar;
 import com.zettelnet.earley.input.LinearInputPositionInitializer;
 import com.zettelnet.earley.param.DefaultParameter;
 import com.zettelnet.earley.param.DefaultParameterManager;
@@ -25,7 +25,7 @@ public class EpsilonTest {
 		NonTerminal<String> b = new SimpleNonTerminal<>("B");
 		Terminal<String> t = new AnyTokenTerminal<>("t");
 
-		Grammar<String, DefaultParameter> grammar = new Grammar<>(a, new DefaultParameterManager());
+		SimpleGrammar<String, DefaultParameter> grammar = new SimpleGrammar<>(a, new DefaultParameterManager());
 
 		grammar.addProduction(new Production<>(grammar, a, b, b, b));
 		grammar.addProduction(new Production<>(grammar, b));

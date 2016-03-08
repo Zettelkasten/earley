@@ -7,8 +7,8 @@ import java.util.List;
 
 import com.zettelnet.earley.ChartSetPrinter;
 import com.zettelnet.earley.EarleyParser;
-import com.zettelnet.earley.Grammar;
 import com.zettelnet.earley.ParseResult;
+import com.zettelnet.earley.SimpleGrammar;
 import com.zettelnet.earley.param.DefaultParameter;
 import com.zettelnet.earley.param.DefaultParameterManager;
 import com.zettelnet.earley.symbol.NonTerminal;
@@ -34,7 +34,7 @@ public class SimpleEarleyTest {
 		NonTerminal<String> term = new SimpleNonTerminal<>("T");
 		NonTerminal<String> sum = new SimpleNonTerminal<>("S");
 
-		Grammar<String, DefaultParameter> grammar = new Grammar<>(term, new DefaultParameterManager());
+		SimpleGrammar<String, DefaultParameter> grammar = new SimpleGrammar<>(term, new DefaultParameterManager());
 
 		grammar.addProduction(term, sum);
 		grammar.addProduction(sum, term, operator, term);

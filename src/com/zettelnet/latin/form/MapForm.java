@@ -13,7 +13,7 @@ public final class MapForm implements Form {
 	// may not be modified
 	private final Map<Class<? extends FormProperty>, FormProperty> data;
 
-	public MapForm(final FormProperty... properties) {
+	private MapForm(final FormProperty... properties) {
 		this.data = new HashMap<>(properties.length);
 		for (FormProperty property : properties) {
 			if (property != null) {

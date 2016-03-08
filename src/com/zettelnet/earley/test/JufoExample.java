@@ -6,8 +6,8 @@ import java.util.List;
 
 import com.zettelnet.earley.EarleyParseResult;
 import com.zettelnet.earley.EarleyParser;
-import com.zettelnet.earley.Grammar;
 import com.zettelnet.earley.ParameterizedSymbol;
+import com.zettelnet.earley.SimpleGrammar;
 import com.zettelnet.earley.input.LinearInputPositionInitializer;
 import com.zettelnet.earley.param.AnyParameterExpression;
 import com.zettelnet.earley.param.CopyParameterExpression;
@@ -28,18 +28,18 @@ import com.zettelnet.earley.test.latin.Token;
 import com.zettelnet.earley.tree.SyntaxTreeVariant;
 import com.zettelnet.latin.form.Casus;
 import com.zettelnet.latin.form.Comparison;
-import com.zettelnet.latin.form.Finiteness;
 import com.zettelnet.latin.form.Form;
 import com.zettelnet.latin.form.Genus;
 import com.zettelnet.latin.form.Mood;
 import com.zettelnet.latin.form.Numerus;
 import com.zettelnet.latin.form.Person;
 import com.zettelnet.latin.form.Tense;
-import com.zettelnet.latin.form.Valency;
 import com.zettelnet.latin.form.Voice;
 import com.zettelnet.latin.lemma.Lemma;
 import com.zettelnet.latin.lemma.LemmaType;
 import com.zettelnet.latin.lemma.SimpleLemma;
+import com.zettelnet.latin.lemma.property.Finiteness;
+import com.zettelnet.latin.lemma.property.Valency;
 
 public class JufoExample {
 
@@ -70,7 +70,7 @@ public class JufoExample {
 		ParameterManager<FormParameter> parameterManager = new FormParameterManager();
 		TokenParameterizer<Token, FormParameter> parameterizer = new FormParameterizer();
 
-		Grammar<Token, FormParameter> grammar = new Grammar<>(sentence, parameterManager);
+		SimpleGrammar<Token, FormParameter> grammar = new SimpleGrammar<>(sentence, parameterManager);
 		grammar.setStartSymbolParameter(new SingletonParameterFactory<>(new FormParameter(Casus.Nominative, Finiteness.Finite)));
 
 		ParameterExpression<Token, FormParameter> copy = new CopyParameterExpression<>(grammar, parameterizer);
