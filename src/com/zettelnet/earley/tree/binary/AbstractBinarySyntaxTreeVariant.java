@@ -7,12 +7,20 @@ import com.zettelnet.earley.param.Parameter;
 
 public abstract class AbstractBinarySyntaxTreeVariant<T, P extends Parameter> implements BinarySyntaxTreeVariant<T, P> {
 
+	private final BinarySyntaxTree<T, P> mainNode;
+	
 	private final State<T, P> state;
 	private final StateCause<T, P> cause;
 
-	public AbstractBinarySyntaxTreeVariant(final State<T, P> state, final StateCause<T, P> cause) {
+	public AbstractBinarySyntaxTreeVariant(final BinarySyntaxTree<T, P> mainNode, final State<T, P> state, final StateCause<T, P> cause) {
+		this.mainNode = mainNode;
 		this.state = state;
 		this.cause = cause;
+	}
+	
+	@Override
+	public BinarySyntaxTree<T, P> getMainNode() {
+		return mainNode;
 	}
 
 	@Override

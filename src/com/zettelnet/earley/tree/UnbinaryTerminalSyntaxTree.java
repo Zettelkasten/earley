@@ -39,7 +39,7 @@ public class UnbinaryTerminalSyntaxTree<T, P extends Parameter> implements Synta
 	}
 
 	private SyntaxTreeVariant<T, P> getVariant() {
-		return new TerminalSyntaxTreeVariant<>(node.getTokenParameter());
+		return new TerminalSyntaxTreeVariant<>(this, node.getTokenParameter());
 	}
 
 	@Override

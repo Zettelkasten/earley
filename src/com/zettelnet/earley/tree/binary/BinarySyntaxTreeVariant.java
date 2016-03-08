@@ -33,6 +33,8 @@ import com.zettelnet.earley.symbol.Terminal;
  */
 public interface BinarySyntaxTreeVariant<T, P extends Parameter> {
 
+	BinarySyntaxTree<T, P> getMainNode();
+	
 	BinarySyntaxTree<T, P> getPreNode();
 
 	boolean isFirst();

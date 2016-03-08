@@ -7,6 +7,8 @@ import com.zettelnet.earley.param.Parameter;
 
 public interface SyntaxTreeVariant<T, P extends Parameter> {
 
+	SyntaxTree<T, P> getMainTree();
+	
 	Production<T, P> getProduction();
 	
 	P getParameter();

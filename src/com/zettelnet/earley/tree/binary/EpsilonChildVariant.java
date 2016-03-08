@@ -6,8 +6,8 @@ import com.zettelnet.earley.param.Parameter;
 
 public class EpsilonChildVariant<T, P extends Parameter> extends AbstractBinarySyntaxTreeVariant<T, P> {
 
-	public EpsilonChildVariant(final State<T, P> state, final StateCause.Epsilon<T, P> cause) {
-		super(state, cause);
+	public EpsilonChildVariant(final BinarySyntaxTree<T, P> mainNode, final State<T, P> state, final StateCause.Epsilon<T, P> cause) {
+		super(mainNode, state, cause);
 	}
 
 	@Override

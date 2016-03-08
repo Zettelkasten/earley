@@ -7,15 +7,23 @@ import com.zettelnet.earley.param.Parameter;
 
 public class NonTerminalSyntaxTreeVariant<T, P extends Parameter> implements SyntaxTreeVariant<T, P> {
 
+	private final SyntaxTree<T, P> mainTree;
+	
 	private final Production<T, P> production;
 	private final P parameter;
 	
 	private final List<SyntaxTree<T, P>> children;
 
-	public NonTerminalSyntaxTreeVariant(final Production<T, P> production, final P parameter, final List<SyntaxTree<T, P>> children) {
+	public NonTerminalSyntaxTreeVariant(final SyntaxTree<T, P> mainTree, final Production<T, P> production, final P parameter, final List<SyntaxTree<T, P>> children) {
+		this.mainTree = mainTree;
 		this.production = production;
 		this.parameter = parameter;
 		this.children = children;
+	}
+	
+	@Override
+	public SyntaxTree<T, P> getMainTree() {
+		return mainTree;
 	}
 
 	@Override

@@ -10,8 +10,8 @@ public class TerminalVariant<T, P extends Parameter> extends AbstractBinarySynta
 	private final State<T, P> state;
 	private final StateCause.Scan<T, P> cause;
 
-	public TerminalVariant(final State<T, P> state, final StateCause.Scan<T, P> cause) {
-		super(state, cause);
+	public TerminalVariant(final BinarySyntaxTree<T, P> mainNode, final State<T, P> state, final StateCause.Scan<T, P> cause) {
+		super(mainNode, state, cause);
 		this.state = state;
 		this.cause = cause;
 	}

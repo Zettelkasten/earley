@@ -84,7 +84,7 @@ public class UnbinaryNonTerminalSyntaxTree<T, P extends Parameter> implements Sy
 
 				BinarySyntaxTree<T, P> preNode = variant.getPreNode();
 				if (preNode == null) {
-					output.add(new NonTerminalSyntaxTreeVariant<>(firstVariant.getProduction(), firstVariant.getParameter(), createStrippedCopy(list)));
+					output.add(new NonTerminalSyntaxTreeVariant<>(this, firstVariant.getProduction(), firstVariant.getParameter(), createStrippedCopy(list)));
 					list.removeFirst();
 				} else {
 					iterators.addFirst(preNode.getVariants().iterator());
@@ -154,7 +154,7 @@ public class UnbinaryNonTerminalSyntaxTree<T, P extends Parameter> implements Sy
 			binaryNode = binaryVariant.getPreNode();
 		} while (binaryNode != null);
 
-		return new NonTerminalSyntaxTreeVariant<>(production, parameter, createStrippedCopy(children));
+		return new NonTerminalSyntaxTreeVariant<>(this, production, parameter, createStrippedCopy(children));
 	}
 
 	@Override

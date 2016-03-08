@@ -28,11 +28,11 @@ public class NonTerminalBinarySyntaxTree<T, P extends Parameter> implements Bina
 			if (cause instanceof StateCause.Predict) {
 				// ignore
 			} else if (cause instanceof StateCause.Scan) {
-				variants.add(new TerminalVariant<>(state, (StateCause.Scan<T, P>) cause));
+				variants.add(new TerminalVariant<>(this, state, (StateCause.Scan<T, P>) cause));
 			} else if (cause instanceof StateCause.Complete) {
-				variants.add(new NonTerminalVariant<>(state, (StateCause.Complete<T, P>) cause));
+				variants.add(new NonTerminalVariant<>(this, state, (StateCause.Complete<T, P>) cause));
 			} else if (cause instanceof StateCause.Epsilon) {
-				variants.add(new EpsilonChildVariant<>(state, (StateCause.Epsilon<T, P>) cause));
+				variants.add(new EpsilonChildVariant<>(this, state, (StateCause.Epsilon<T, P>) cause));
 			} else {
 				throw new AssertionError("Unknown StateCause type!");
 			}

@@ -8,8 +8,8 @@ public class NonTerminalVariant<T, P extends Parameter> extends AbstractBinarySy
 
 	private final StateCause.Complete<T, P> cause;
 
-	public NonTerminalVariant(final State<T, P> state, final StateCause.Complete<T, P> cause) {
-		super(state, cause);
+	public NonTerminalVariant(final BinarySyntaxTree<T, P> mainNode, final State<T, P> state, final StateCause.Complete<T, P> cause) {
+		super(mainNode, state, cause);
 		this.cause = cause;
 	}
 

@@ -8,10 +8,18 @@ import com.zettelnet.earley.param.Parameter;
 
 public class TerminalSyntaxTreeVariant<T, P extends Parameter> implements SyntaxTreeVariant<T, P> {
 
+	private final SyntaxTree<T, P> mainTree;
+	
 	private final P parameter;
 
-	public TerminalSyntaxTreeVariant(final P parameter) {
+	public TerminalSyntaxTreeVariant(final SyntaxTree<T, P> mainTree, final P parameter) {
+		this.mainTree = mainTree;
 		this.parameter = parameter;
+	}
+	
+	@Override
+	public SyntaxTree<T, P> getMainTree() {
+		return mainTree;
 	}
 
 	@Override
