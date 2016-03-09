@@ -2,12 +2,13 @@ package com.zettelnet.latin.lemma.conjugation;
 
 import java.util.Arrays;
 
+import com.zettelnet.latin.form.Form;
 import com.zettelnet.latin.form.Mood;
 import com.zettelnet.latin.form.Numerus;
 import com.zettelnet.latin.form.Person;
 import com.zettelnet.latin.form.Tense;
 import com.zettelnet.latin.form.Voice;
-import com.zettelnet.latin.morph.MapMorphProvider;
+import com.zettelnet.latin.morph.MapFormMorphProvider;
 import com.zettelnet.latin.morph.MorphProvider;
 
 /**
@@ -19,7 +20,7 @@ import com.zettelnet.latin.morph.MorphProvider;
  */
 public class FirstConjugation extends AbstractConjugation {
 
-	private static class Linkings extends MapMorphProvider {
+	private static class Linkings extends MapFormMorphProvider {
 		public Linkings() {
 			super(Arrays.asList(Person.class, Numerus.class, Tense.class, Mood.class, Voice.class));
 
@@ -176,8 +177,8 @@ public class FirstConjugation extends AbstractConjugation {
 		}
 	}
 
-	public static final MorphProvider LINKINGS = new Linkings();
-	public static final MorphProvider ENDINGS = new Endings();
+	public static final MorphProvider<Form> LINKINGS = new Linkings();
+	public static final MorphProvider<Form> ENDINGS = new Endings();
 
 	public FirstConjugation() {
 		super(LINKINGS, ENDINGS);

@@ -5,8 +5,9 @@ import java.util.Collection;
 import java.util.Collections;
 
 import com.zettelnet.latin.form.Casus;
+import com.zettelnet.latin.form.Form;
 import com.zettelnet.latin.form.Numerus;
-import com.zettelnet.latin.morph.MapMorphProvider;
+import com.zettelnet.latin.morph.MapFormMorphProvider;
 import com.zettelnet.latin.morph.MorphProvider;
 
 /**
@@ -18,7 +19,7 @@ import com.zettelnet.latin.morph.MorphProvider;
  */
 public class FifthDeclension extends AbstractDeclension {
 
-	private static class Endings extends MapMorphProvider {
+	private static class Endings extends MapFormMorphProvider {
 		public Endings() {
 			super(Arrays.asList(Casus.class, Numerus.class));
 
@@ -35,7 +36,7 @@ public class FifthDeclension extends AbstractDeclension {
 		}
 	}
 
-	public static final MorphProvider ENDINGS = new Endings();
+	public static final MorphProvider<Form> ENDINGS = new Endings();
 
 	public FifthDeclension() {
 		super(ENDINGS);

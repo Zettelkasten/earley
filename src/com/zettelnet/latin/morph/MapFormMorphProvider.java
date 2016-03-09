@@ -9,16 +9,16 @@ import java.util.Map;
 import com.zettelnet.latin.form.Form;
 import com.zettelnet.latin.form.FormProperty;
 
-public class MapMorphProvider implements MorphProvider {
+public class MapFormMorphProvider implements MorphProvider<Form> {
 
 	private final Map<Form, Collection<String>> data;
 	private final Collection<Class<? extends FormProperty>> retainedProperties;
 
-	protected MapMorphProvider(Collection<Class<? extends FormProperty>> retainedProperties) {
+	protected MapFormMorphProvider(Collection<Class<? extends FormProperty>> retainedProperties) {
 		this(new HashMap<>(), retainedProperties);
 	}
 
-	public MapMorphProvider(final Map<Form, Collection<String>> data, final Collection<Class<? extends FormProperty>> retainedProperties) {
+	public MapFormMorphProvider(final Map<Form, Collection<String>> data, final Collection<Class<? extends FormProperty>> retainedProperties) {
 		this.data = data;
 		this.retainedProperties = retainedProperties;
 	}

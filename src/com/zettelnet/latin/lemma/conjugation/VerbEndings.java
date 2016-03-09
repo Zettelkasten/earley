@@ -7,9 +7,9 @@ import com.zettelnet.latin.form.Numerus;
 import com.zettelnet.latin.form.Person;
 import com.zettelnet.latin.form.Tense;
 import com.zettelnet.latin.form.Voice;
-import com.zettelnet.latin.morph.MapMorphProvider;
+import com.zettelnet.latin.morph.MapFormMorphProvider;
 
-public class VerbEndings extends MapMorphProvider {
+public class VerbEndings extends MapFormMorphProvider {
 
 	public VerbEndings() {
 		super(Arrays.asList(Person.class, Numerus.class, Tense.class, Mood.class, Voice.class));

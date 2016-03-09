@@ -37,9 +37,9 @@ import com.zettelnet.latin.morph.MorphProvider;
  */
 public abstract class AbstractDeclension implements FormProvider<DeclinableLemma> {
 
-	private final MorphProvider endings;
+	private final MorphProvider<Form> endings;
 
-	public AbstractDeclension(final MorphProvider endings) {
+	public AbstractDeclension(final MorphProvider<Form> endings) {
 		this.endings = endings;
 	}
 
