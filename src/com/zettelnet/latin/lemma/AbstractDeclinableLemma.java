@@ -1,9 +1,11 @@
 package com.zettelnet.latin.lemma;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 
 import com.zettelnet.earley.param.property.PropertySet;
+import com.zettelnet.latin.derivation.Derivation;
 import com.zettelnet.latin.form.Form;
 import com.zettelnet.latin.form.Genus;
 import com.zettelnet.latin.lemma.property.LemmaProperty;
@@ -48,6 +50,21 @@ public abstract class AbstractDeclinableLemma implements DeclinableLemma {
 	@Override
 	public Map<Form, Collection<String>> getForms() {
 		return formProvider.getForms(this);
+	}
+
+	@Override
+	public Collection<Lemma> getDerivation(Derivation derivation) {
+		return Collections.emptyList();
+	}
+
+	@Override
+	public boolean hasDerivation(Derivation derivation) {
+		return false;
+	}
+
+	@Override
+	public Map<Derivation, Collection<Lemma>> getDerivations() {
+		return Collections.emptyMap();
 	}
 
 	@Override

@@ -2,10 +2,12 @@ package com.zettelnet.latin.lemma;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.zettelnet.earley.param.property.PropertySet;
+import com.zettelnet.latin.derivation.Derivation;
 import com.zettelnet.latin.form.Form;
 import com.zettelnet.latin.lemma.property.LemmaProperty;
 import com.zettelnet.latin.lemma.property.MapLemmaPropertySet;
@@ -40,6 +42,21 @@ public class SimpleConjunction implements Conjunction {
 		Map<Form, Collection<String>> map = new HashMap<>(1);
 		map.put(Form.withValues(), Arrays.asList(firstForm));
 		return map;
+	}
+
+	@Override
+	public Collection<Lemma> getDerivation(Derivation derivation) {
+		return Collections.emptyList();
+	}
+
+	@Override
+	public boolean hasDerivation(Derivation derivation) {
+		return false;
+	}
+
+	@Override
+	public Map<Derivation, Collection<Lemma>> getDerivations() {
+		return Collections.emptyMap();
 	}
 
 	@Override

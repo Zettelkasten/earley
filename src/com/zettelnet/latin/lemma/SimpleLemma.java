@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import com.zettelnet.earley.param.property.PropertySet;
+import com.zettelnet.latin.derivation.Derivation;
 import com.zettelnet.latin.form.Form;
 import com.zettelnet.latin.lemma.property.LemmaProperty;
 import com.zettelnet.latin.lemma.property.MapLemmaPropertySet;
@@ -43,6 +44,21 @@ public class SimpleLemma implements Lemma {
 
 	@Override
 	public Map<Form, Collection<String>> getForms() {
+		return Collections.emptyMap();
+	}
+
+	@Override
+	public Collection<Lemma> getDerivation(Derivation derivation) {
+		return Collections.emptyList();
+	}
+
+	@Override
+	public boolean hasDerivation(Derivation derivation) {
+		return false;
+	}
+
+	@Override
+	public Map<Derivation, Collection<Lemma>> getDerivations() {
 		return Collections.emptyMap();
 	}
 
