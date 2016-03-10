@@ -3,8 +3,8 @@ package com.zettelnet.latin.lemma.declension;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.EnumSet;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -72,11 +72,11 @@ public abstract class AbstractDeclension implements FormProvider<DeclinableLemma
 	public abstract Collection<String> getNominativePluralNeuterEnding();
 
 	public Set<Casus> getCasusSet(final DeclinableLemma lemma) {
-		return new HashSet<>(Arrays.asList(Casus.Nominative, Casus.Genitive, Casus.Dative, Casus.Accusative, Casus.Ablative, Casus.Vocative));
+		return EnumSet.of(Casus.Nominative, Casus.Genitive, Casus.Dative, Casus.Accusative, Casus.Ablative, Casus.Vocative);
 	}
 
 	public Set<Numerus> getNumerusSet(final DeclinableLemma lemma) {
-		return new HashSet<>(Arrays.asList(Numerus.values()));
+		return EnumSet.of(Numerus.Singular, Numerus.Plural);
 	}
 
 	public Set<Genus> getGenusSet(final DeclinableLemma lemma) {

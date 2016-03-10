@@ -1,10 +1,9 @@
 package com.zettelnet.latin.lemma.conjugation;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.EnumSet;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -83,23 +82,23 @@ public abstract class AbstractConjugation implements FormProvider<Verb> {
 	}
 
 	public Set<Person> getPersonSet(final Verb verb) {
-		return new HashSet<>(Arrays.asList(Person.values()));
+		return EnumSet.allOf(Person.class);
 	}
 
 	public Set<Numerus> getNumerusSet(final Verb verb) {
-		return new HashSet<>(Arrays.asList(Numerus.values()));
+		return EnumSet.allOf(Numerus.class);
 	}
 
 	public Set<Tense> getTenseSet(final Verb verb) {
-		return new HashSet<>(Arrays.asList(Tense.values()));
+		return EnumSet.allOf(Tense.class);
 	}
 
 	public Set<Mood> getMoodSet(final Verb verb) {
-		return new HashSet<>(Arrays.asList(Mood.values()));
+		return EnumSet.allOf(Mood.class);
 	}
 
 	public Set<Voice> getVoiceSet(final Verb verb) {
-		return new HashSet<>(Arrays.asList(Voice.values()));
+		return EnumSet.allOf(Voice.class);
 	}
 
 	@Override
