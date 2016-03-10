@@ -41,7 +41,7 @@ public abstract class AbstractParticipleConjugation implements DerivationProvide
 			Collection<Lemma> lemmas = new ArrayList<>();
 
 			Form form = derivation.getForm();
-			String verbStem = lemma.getStem(Tense.Present);
+			String verbStem = lemma.getStem(getStemTense(form.getTense(), form.getVoice()));
 
 			for (String stemEnding : stemEndings.getMorph(form)) {
 
@@ -59,17 +59,19 @@ public abstract class AbstractParticipleConjugation implements DerivationProvide
 		}
 	}
 
+	public abstract Tense getStemTense(Tense tense, Voice voice);
+
 	public abstract Map<Genus, FormProvider<DeclinableLemma>> getFormProviders(Tense tense, Voice voice);
 
 	@Override
 	public boolean hasDerivation(Verb lemma, Derivation derivation) {
 		return !getDerivation(lemma, derivation).isEmpty();
 	}
-	
+
 	@Override
 	public Map<Derivation, Collection<Lemma>> getDerivations(Verb lemma) {
 		Map<Derivation, Collection<Lemma>> derivations = new HashMap<>();
-		
+
 		for (Tense tense : getTenseSet(lemma)) {
 			for (Voice voice : getVoiceSet(lemma)) {
 				Derivation derivation = Derivation.withValues(DerivationType.Participle, tense, voice);
@@ -77,7 +79,7 @@ public abstract class AbstractParticipleConjugation implements DerivationProvide
 				derivations.put(derivation, values);
 			}
 		}
-		
+
 		return derivations;
 	}
 
