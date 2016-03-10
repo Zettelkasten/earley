@@ -24,7 +24,7 @@ import com.zettelnet.latin.morph.MorphProvider;
  * <p>
  * The following extra rules apply:
  * <ul>
- * <li>the Nominative Singular is the special {@link Noun#getFirstForm()} form
+ * <li>the Nominative Singular is the special {@link Noun#getNominalForm()} form
  * </li>
  * <li>for Accusative Neuter forms, the Nominative form is used</li>
  * <li>Nominative Plural Neuter ends on <code>-a</code></li>
@@ -57,7 +57,7 @@ public abstract class AbstractDeclension implements FormProvider<DeclinableLemma
 	@Override
 	public Collection<String> getForm(final DeclinableLemma lemma, final Form form) {
 		if (form.hasProperties(Casus.Nominative, Numerus.Singular)) {
-			return Arrays.asList(lemma.getFirstForm());
+			return Arrays.asList(lemma.getFirstForm(form.getGenus()));
 		} else if (form.hasProperties(Casus.Accusative, Genus.Neuter)) {
 			return getForm(lemma, form.derive(Casus.Nominative));
 		} else if (form.hasProperties(Casus.Nominative, Numerus.Plural, Genus.Neuter)) {
@@ -80,7 +80,7 @@ public abstract class AbstractDeclension implements FormProvider<DeclinableLemma
 	}
 
 	public Set<Genus> getGenusSet(final DeclinableLemma lemma) {
-		return new HashSet<>(Arrays.asList(lemma.getGenus()));
+		return lemma.getGenus();
 	}
 
 	public boolean hasForm(final DeclinableLemma lemma, final Form form) {

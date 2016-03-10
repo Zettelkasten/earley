@@ -3,8 +3,10 @@ package com.zettelnet.latin.lemma;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumMap;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import com.zettelnet.earley.param.property.PropertySet;
 import com.zettelnet.latin.derivation.Derivation;
@@ -47,10 +49,11 @@ public class SimpleAdjective implements Adjective {
 	}
 
 	@Override
-	public String getFirstForm() {
+	public String getNominalForm() {
 		return getForm(Form.withValues(Casus.Nominative, Numerus.Singular, Genus.Masculine, Comparison.Positive)).iterator().next();
 	}
 
+	@Override
 	public String getFirstForm(Genus genus) {
 		return firstForm.get(genus);
 	}
@@ -100,8 +103,8 @@ public class SimpleAdjective implements Adjective {
 	}
 
 	@Override
-	public Genus getGenus() {
-		return null;
+	public Set<Genus> getGenus() {
+		return EnumSet.allOf(Genus.class);
 	}
 
 	@Override
@@ -111,7 +114,7 @@ public class SimpleAdjective implements Adjective {
 
 	@Override
 	public String toString() {
-		return getFirstForm();
+		return getNominalForm();
 	}
 
 }

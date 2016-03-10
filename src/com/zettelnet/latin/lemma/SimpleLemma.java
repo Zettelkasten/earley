@@ -28,7 +28,7 @@ public class SimpleLemma implements Lemma {
 	}
 
 	@Override
-	public String getFirstForm() {
+	public String getNominalForm() {
 		return firstForm;
 	}
 
@@ -74,6 +74,6 @@ public class SimpleLemma implements Lemma {
 
 	@Override
 	public String toString() {
-		return getFirstForm();
+		return getNominalForm();
 	}
 }

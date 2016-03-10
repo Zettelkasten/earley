@@ -23,7 +23,7 @@ public class SimpleConjunction implements Conjunction {
 	}
 
 	@Override
-	public String getFirstForm() {
+	public String getNominalForm() {
 		return firstForm;
 	}
 
@@ -71,6 +71,6 @@ public class SimpleConjunction implements Conjunction {
 
 	@Override
 	public String toString() {
-		return getFirstForm();
+		return getNominalForm();
 	}
 }

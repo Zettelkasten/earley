@@ -51,7 +51,7 @@ public class SecondDeclension extends AbstractDeclension {
 	@Override
 	public Collection<String> getForm(DeclinableLemma lemma, Form form) {
 		// nouns ending on "-us" end on "-e" in Voc Sg
-		if (form.hasProperties(Casus.Vocative, Numerus.Singular) && lemma.getFirstForm().endsWith("us")) {
+		if (form.hasProperties(Casus.Vocative, Numerus.Singular) && lemma.getNominalForm().endsWith("us")) {
 			return concat(lemma.getStem(), Arrays.asList("e"));
 		} else {
 			return super.getForm(lemma, form);

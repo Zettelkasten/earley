@@ -47,7 +47,7 @@ public class SimpleVerb implements Verb {
 	}
 
 	@Override
-	public String getFirstForm() {
+	public String getNominalForm() {
 		return getForm(Form.withValues(Person.First, Numerus.Singular, Tense.Present, Mood.Indicative, Voice.Active)).iterator().next();
 	}
 
@@ -98,6 +98,6 @@ public class SimpleVerb implements Verb {
 
 	@Override
 	public String toString() {
-		return getFirstForm();
+		return getNominalForm();
 	}
 }

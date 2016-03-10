@@ -15,6 +15,6 @@ public class SimpleNoun extends AbstractDeclinableLemma implements Noun {
 
 	@Override
 	public String toString() {
-		return getFirstForm();
+		return getNominalForm();
 	}
 }

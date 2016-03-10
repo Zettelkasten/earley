@@ -2,7 +2,9 @@ package com.zettelnet.latin.lemma;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.Map;
+import java.util.Set;
 
 import com.zettelnet.earley.param.property.PropertySet;
 import com.zettelnet.latin.derivation.Derivation;
@@ -16,10 +18,14 @@ public abstract class AbstractDeclinableLemma implements DeclinableLemma {
 	private final String firstForm;
 	private final String stem;
 	private final FormProvider<DeclinableLemma> formProvider;
-	private final Genus genus;
+	private final Set<Genus> genus;
 	private final PropertySet<LemmaProperty> properties;
 
 	public AbstractDeclinableLemma(final String firstForm, final String stem, final FormProvider<DeclinableLemma> formProvider, final Genus genus, final LemmaProperty... properties) {
+		this(firstForm, stem, formProvider, EnumSet.of(genus), properties);
+	}
+
+	public AbstractDeclinableLemma(final String firstForm, final String stem, final FormProvider<DeclinableLemma> formProvider, final Set<Genus> genus, final LemmaProperty... properties) {
 		this.firstForm = firstForm;
 		this.stem = stem;
 		this.formProvider = formProvider;
@@ -28,7 +34,12 @@ public abstract class AbstractDeclinableLemma implements DeclinableLemma {
 	}
 
 	@Override
-	public String getFirstForm() {
+	public String getNominalForm() {
+		return firstForm;
+	}
+	
+	@Override
+	public String getFirstForm(Genus genus) {
 		return firstForm;
 	}
 
@@ -68,7 +79,7 @@ public abstract class AbstractDeclinableLemma implements DeclinableLemma {
 	}
 
 	@Override
-	public Genus getGenus() {
+	public Set<Genus> getGenus() {
 		return genus;
 	}
 

@@ -10,7 +10,7 @@ import com.zettelnet.latin.lemma.property.LemmaProperty;
 
 public interface Lemma {
 
-	String getFirstForm();
+	String getNominalForm();
 
 	Collection<String> getForm(Form form);
 
