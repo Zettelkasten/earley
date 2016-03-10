@@ -18,11 +18,11 @@ public interface Lemma {
 
 	Map<Form, Collection<String>> getForms();
 	
-	Lemma getDerivation(Derivation derivation);
+	Collection<Lemma> getDerivation(Derivation derivation);
 	
 	boolean hasDerivation(Derivation derivation);
 	
-	Map<Derivation, Lemma> getDerivations();
+	Map<Derivation, Collection<Lemma>> getDerivations();
 
 	PropertySet<LemmaProperty> getProperties();
 

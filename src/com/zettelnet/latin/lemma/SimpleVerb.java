@@ -23,14 +23,14 @@ import com.zettelnet.latin.lemma.property.MapLemmaPropertySet;
 public class SimpleVerb implements Verb {
 
 	private final Map<Tense, String> stems;
-	
+
 	private final FormProvider<Verb> formProvider;
 	private final DerivationProvider<Verb> derivationProvider;
-	
+
 	private final PropertySet<LemmaProperty> properties;
 
-	public SimpleVerb(final String presentStem, final String perfectStem, final String supineStem, final Conjugation conjugation, final LemmaProperty... properties) {
-		this(presentStem, perfectStem, supineStem, conjugation, conjugation, properties);
+	public SimpleVerb(final String presentStem, final String perfectStem, final String supineStem, final CombinedProvider<Verb> provider, final LemmaProperty... properties) {
+		this(presentStem, perfectStem, supineStem, provider, provider, properties);
 	}
 
 	public SimpleVerb(final String presentStem, final String perfectStem, final String supineStem, final FormProvider<Verb> formProvider, final DerivationProvider<Verb> derivationProvider, final LemmaProperty... properties) {
@@ -70,19 +70,19 @@ public class SimpleVerb implements Verb {
 	public Map<Form, Collection<String>> getForms() {
 		return formProvider.getForms(this);
 	}
-	
+
 	@Override
-	public Lemma getDerivation(Derivation derivation) {
+	public Collection<Lemma> getDerivation(Derivation derivation) {
 		return derivationProvider.getDerivation(this, derivation);
 	}
-	
+
 	@Override
 	public boolean hasDerivation(Derivation derivation) {
 		return derivationProvider.hasDerivation(this, derivation);
 	}
-	
+
 	@Override
-	public Map<Derivation, Lemma> getDerivations() {
+	public Map<Derivation, Collection<Lemma>> getDerivations() {
 		return derivationProvider.getDerivations(this);
 	}
 

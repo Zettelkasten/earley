@@ -1,14 +1,15 @@
 package com.zettelnet.latin.derivation;
 
+import java.util.Collection;
 import java.util.Map;
 
 import com.zettelnet.latin.lemma.Lemma;
 
 public interface DerivationProvider<T> {
 
-	Lemma getDerivation(T lemma, Derivation derivation);
+	Collection<Lemma> getDerivation(T lemma, Derivation derivation);
 
 	boolean hasDerivation(T lemma, Derivation derivation);
 
-	Map<Derivation, Lemma> getDerivations(T lemma);
+	Map<Derivation, Collection<Lemma>> getDerivations(T lemma);
 }

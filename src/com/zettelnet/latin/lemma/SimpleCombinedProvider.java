@@ -33,7 +33,7 @@ public class SimpleCombinedProvider<T> implements CombinedProvider<T> {
 	}
 
 	@Override
-	public Lemma getDerivation(T lemma, Derivation derivation) {
+	public Collection<Lemma> getDerivation(T lemma, Derivation derivation) {
 		return derivationProvider.getDerivation(lemma, derivation);
 	}
 
@@ -43,7 +43,7 @@ public class SimpleCombinedProvider<T> implements CombinedProvider<T> {
 	}
 
 	@Override
-	public Map<Derivation, Lemma> getDerivations(T lemma) {
+	public Map<Derivation, Collection<Lemma>> getDerivations(T lemma) {
 		return derivationProvider.getDerivations(lemma);
 	}
 
