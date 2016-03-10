@@ -2,6 +2,7 @@ package com.zettelnet.latin.lemma.conjugation.derivation;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.EnumMap;
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -35,7 +36,7 @@ public abstract class AbstractParticipleConjugation implements DerivationProvide
 	@Override
 	public Collection<Lemma> getDerivation(Verb lemma, Derivation derivation) {
 		if (derivation.getType() != DerivationType.Participle) {
-			return null;
+			return Collections.emptyList();
 		} else {
 			Collection<Lemma> lemmas = new ArrayList<>();
 
@@ -62,7 +63,7 @@ public abstract class AbstractParticipleConjugation implements DerivationProvide
 
 	@Override
 	public boolean hasDerivation(Verb lemma, Derivation derivation) {
-		return getDerivation(lemma, derivation) != null;
+		return !getDerivation(lemma, derivation).isEmpty();
 	}
 	
 	@Override
