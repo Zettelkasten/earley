@@ -51,6 +51,7 @@ public abstract class AbstractDeclension implements FormProvider<DeclinableLemma
 			str.append(ending);
 			variants.add(str.toString());
 		}
+
 		return variants;
 	}
 
@@ -97,7 +98,11 @@ public abstract class AbstractDeclension implements FormProvider<DeclinableLemma
 			for (Numerus numerus : getNumerusSet(lemma)) {
 				for (Genus genus : getGenusSet(lemma)) {
 					Form form = Form.withValues(casus, numerus, genus);
-					forms.put(form, getForm(lemma, form));
+					Collection<String> variants = getForm(lemma, form);
+
+					if (!variants.isEmpty()) {
+						forms.put(form, variants);
+					}
 				}
 			}
 		}
