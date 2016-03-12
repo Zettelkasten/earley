@@ -5,11 +5,12 @@ import com.zettelnet.latin.lemma.AbstractDeclinableLemma;
 import com.zettelnet.latin.lemma.DeclinableLemma;
 import com.zettelnet.latin.lemma.FormProvider;
 import com.zettelnet.latin.lemma.LemmaType;
+import com.zettelnet.latin.lemma.property.LemmaProperty;
 
 public class SimpleNoun extends AbstractDeclinableLemma implements Noun {
 
-	public SimpleNoun(final String firstForm, final String stem, final FormProvider<DeclinableLemma> formProvider, final Genus genus) {
-		super(firstForm, stem, formProvider, genus);
+	public SimpleNoun(final String firstForm, final String stem, final FormProvider<DeclinableLemma> formProvider, final Genus genus, final LemmaProperty... properties) {
+		super(firstForm, stem, formProvider, genus, properties);
 	}
 
 	@Override
