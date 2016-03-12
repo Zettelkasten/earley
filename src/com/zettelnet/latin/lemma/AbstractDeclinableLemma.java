@@ -87,4 +87,9 @@ public abstract class AbstractDeclinableLemma implements DeclinableLemma {
 	public PropertySet<LemmaProperty> getProperties() {
 		return properties;
 	}
+	
+	@Override
+	public String toString() {
+		return getNominalForm();
+	}
 }
