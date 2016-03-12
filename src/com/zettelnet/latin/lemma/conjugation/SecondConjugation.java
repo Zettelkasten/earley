@@ -3,7 +3,7 @@ package com.zettelnet.latin.lemma.conjugation;
 import java.util.Arrays;
 
 import com.zettelnet.latin.form.FormValueProvider;
-import com.zettelnet.latin.form.MapFormProvider;
+import com.zettelnet.latin.form.MapFormValueProvider;
 import com.zettelnet.latin.form.Mood;
 import com.zettelnet.latin.form.Numerus;
 import com.zettelnet.latin.form.Person;
@@ -19,7 +19,7 @@ import com.zettelnet.latin.form.Voice;
  */
 public class SecondConjugation extends AbstractConjugation {
 
-	private static class Linkings extends MapFormProvider<String> {
+	private static class Linkings extends MapFormValueProvider<String> {
 		public Linkings() {
 			super(Arrays.asList(Person.class, Numerus.class, Tense.class, Mood.class, Voice.class));
 

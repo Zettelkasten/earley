@@ -2,14 +2,14 @@ package com.zettelnet.latin.lemma.conjugation;
 
 import java.util.Arrays;
 
-import com.zettelnet.latin.form.MapFormProvider;
+import com.zettelnet.latin.form.MapFormValueProvider;
 import com.zettelnet.latin.form.Mood;
 import com.zettelnet.latin.form.Numerus;
 import com.zettelnet.latin.form.Person;
 import com.zettelnet.latin.form.Tense;
 import com.zettelnet.latin.form.Voice;
 
-public class VerbEndings extends MapFormProvider<String> {
+public class VerbEndings extends MapFormValueProvider<String> {
 
 	public VerbEndings() {
 		super(Arrays.asList(Person.class, Numerus.class, Tense.class, Mood.class, Voice.class));

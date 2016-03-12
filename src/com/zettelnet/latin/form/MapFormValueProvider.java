@@ -6,16 +6,16 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MapFormProvider<T> implements FormValueProvider<T> {
+public class MapFormValueProvider<T> implements FormValueProvider<T> {
 
 	private final Map<Form, Collection<T>> data;
 	private final Collection<Class<? extends FormProperty>> retainedProperties;
 
-	protected MapFormProvider(Collection<Class<? extends FormProperty>> retainedProperties) {
+	protected MapFormValueProvider(Collection<Class<? extends FormProperty>> retainedProperties) {
 		this(new HashMap<>(), retainedProperties);
 	}
 
-	public MapFormProvider(final Map<Form, Collection<T>> data, final Collection<Class<? extends FormProperty>> retainedProperties) {
+	public MapFormValueProvider(final Map<Form, Collection<T>> data, final Collection<Class<? extends FormProperty>> retainedProperties) {
 		this.data = data;
 		this.retainedProperties = retainedProperties;
 	}

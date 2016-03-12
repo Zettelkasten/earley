@@ -5,7 +5,7 @@ import java.util.Collection;
 
 import com.zettelnet.latin.form.Casus;
 import com.zettelnet.latin.form.FormValueProvider;
-import com.zettelnet.latin.form.MapFormProvider;
+import com.zettelnet.latin.form.MapFormValueProvider;
 import com.zettelnet.latin.form.Numerus;
 
 /**
@@ -17,7 +17,7 @@ import com.zettelnet.latin.form.Numerus;
  */
 public class ThirdDeclension extends AbstractDeclension {
 
-	private static class Endings extends MapFormProvider<String> {
+	private static class Endings extends MapFormValueProvider<String> {
 		public Endings() {
 			super(Arrays.asList(Casus.class, Numerus.class));
 
