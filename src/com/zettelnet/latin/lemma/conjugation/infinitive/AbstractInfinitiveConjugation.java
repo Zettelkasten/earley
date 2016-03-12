@@ -21,9 +21,9 @@ import com.zettelnet.latin.lemma.FormProvider;
 import com.zettelnet.latin.lemma.Lemma;
 import com.zettelnet.latin.lemma.LemmaType;
 import com.zettelnet.latin.lemma.SimpleLemma;
-import com.zettelnet.latin.lemma.SimpleNoun;
-import com.zettelnet.latin.lemma.Verb;
-import com.zettelnet.latin.lemma.VerbStem;
+import com.zettelnet.latin.lemma.noun.SimpleNoun;
+import com.zettelnet.latin.lemma.verb.Verb;
+import com.zettelnet.latin.lemma.verb.VerbStem;
 
 public abstract class AbstractInfinitiveConjugation implements DerivationProvider<Verb> {
 

@@ -1,4 +1,4 @@
-package com.zettelnet.latin.lemma;
+package com.zettelnet.latin.lemma.adjective;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -14,6 +14,10 @@ import com.zettelnet.latin.form.Comparison;
 import com.zettelnet.latin.form.Form;
 import com.zettelnet.latin.form.Genus;
 import com.zettelnet.latin.form.Numerus;
+import com.zettelnet.latin.lemma.DeclinableLemma;
+import com.zettelnet.latin.lemma.FormProvider;
+import com.zettelnet.latin.lemma.Lemma;
+import com.zettelnet.latin.lemma.LemmaType;
 import com.zettelnet.latin.lemma.property.LemmaProperty;
 import com.zettelnet.latin.lemma.property.MapLemmaPropertySet;
 

@@ -1,4 +1,4 @@
-package com.zettelnet.latin.lemma;
+package com.zettelnet.latin.lemma.verb;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,6 +15,10 @@ import com.zettelnet.latin.form.Numerus;
 import com.zettelnet.latin.form.Person;
 import com.zettelnet.latin.form.Tense;
 import com.zettelnet.latin.form.Voice;
+import com.zettelnet.latin.lemma.CombinedProvider;
+import com.zettelnet.latin.lemma.FormProvider;
+import com.zettelnet.latin.lemma.Lemma;
+import com.zettelnet.latin.lemma.LemmaType;
 import com.zettelnet.latin.lemma.property.Finiteness;
 import com.zettelnet.latin.lemma.property.LemmaProperty;
 import com.zettelnet.latin.lemma.property.MapLemmaPropertySet;

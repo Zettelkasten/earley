@@ -1,7 +1,7 @@
 package com.zettelnet.latin.lemma.conjugation;
 
 import com.zettelnet.latin.lemma.FormProvider;
-import com.zettelnet.latin.lemma.Verb;
+import com.zettelnet.latin.lemma.verb.Verb;
 
 public final class Conjugation {
 

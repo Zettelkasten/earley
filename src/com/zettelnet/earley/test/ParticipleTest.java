@@ -9,10 +9,10 @@ import com.zettelnet.latin.form.Form;
 import com.zettelnet.latin.form.Genus;
 import com.zettelnet.latin.form.Numerus;
 import com.zettelnet.latin.lemma.Lemma;
-import com.zettelnet.latin.lemma.SimpleVerb;
-import com.zettelnet.latin.lemma.Verb;
 import com.zettelnet.latin.lemma.conjugation.Conjugation;
 import com.zettelnet.latin.lemma.conjugation.participle.FourthParticipleConjugation;
+import com.zettelnet.latin.lemma.verb.SimpleVerb;
+import com.zettelnet.latin.lemma.verb.Verb;
 
 public class ParticipleTest {
 

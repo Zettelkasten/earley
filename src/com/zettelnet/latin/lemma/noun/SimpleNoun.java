@@ -1,6 +1,10 @@
-package com.zettelnet.latin.lemma;
+package com.zettelnet.latin.lemma.noun;
 
 import com.zettelnet.latin.form.Genus;
+import com.zettelnet.latin.lemma.AbstractDeclinableLemma;
+import com.zettelnet.latin.lemma.DeclinableLemma;
+import com.zettelnet.latin.lemma.FormProvider;
+import com.zettelnet.latin.lemma.LemmaType;
 
 public class SimpleNoun extends AbstractDeclinableLemma implements Noun {
 

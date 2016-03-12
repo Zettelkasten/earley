@@ -4,9 +4,9 @@ import com.zettelnet.latin.form.Casus;
 import com.zettelnet.latin.form.Form;
 import com.zettelnet.latin.form.Genus;
 import com.zettelnet.latin.form.Numerus;
-import com.zettelnet.latin.lemma.Noun;
-import com.zettelnet.latin.lemma.SimpleNoun;
 import com.zettelnet.latin.lemma.declension.ThirdDeclension;
+import com.zettelnet.latin.lemma.noun.Noun;
+import com.zettelnet.latin.lemma.noun.SimpleNoun;
 
 public class DeclensionTest {
 

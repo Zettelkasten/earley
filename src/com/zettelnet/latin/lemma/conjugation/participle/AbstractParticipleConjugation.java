@@ -20,9 +20,9 @@ import com.zettelnet.latin.form.Voice;
 import com.zettelnet.latin.lemma.DeclinableLemma;
 import com.zettelnet.latin.lemma.FormProvider;
 import com.zettelnet.latin.lemma.Lemma;
-import com.zettelnet.latin.lemma.SimpleAdjective;
-import com.zettelnet.latin.lemma.Verb;
-import com.zettelnet.latin.lemma.VerbStem;
+import com.zettelnet.latin.lemma.adjective.SimpleAdjective;
+import com.zettelnet.latin.lemma.verb.Verb;
+import com.zettelnet.latin.lemma.verb.VerbStem;
 
 public abstract class AbstractParticipleConjugation implements DerivationProvider<Verb> {
 

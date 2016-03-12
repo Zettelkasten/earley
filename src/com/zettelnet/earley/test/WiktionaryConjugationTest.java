@@ -19,9 +19,9 @@ import com.zettelnet.latin.form.Numerus;
 import com.zettelnet.latin.form.Person;
 import com.zettelnet.latin.form.Tense;
 import com.zettelnet.latin.form.Voice;
-import com.zettelnet.latin.lemma.SimpleVerb;
-import com.zettelnet.latin.lemma.Verb;
 import com.zettelnet.latin.lemma.conjugation.Conjugation;
+import com.zettelnet.latin.lemma.verb.SimpleVerb;
+import com.zettelnet.latin.lemma.verb.Verb;
 
 public class WiktionaryConjugationTest {
 

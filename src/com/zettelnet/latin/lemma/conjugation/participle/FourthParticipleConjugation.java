@@ -10,7 +10,7 @@ import com.zettelnet.latin.form.Tense;
 import com.zettelnet.latin.form.Voice;
 import com.zettelnet.latin.lemma.DeclinableLemma;
 import com.zettelnet.latin.lemma.FormProvider;
-import com.zettelnet.latin.lemma.VerbStem;
+import com.zettelnet.latin.lemma.verb.VerbStem;
 
 public class FourthParticipleConjugation extends AbstractParticipleConjugation {
 

@@ -6,7 +6,7 @@ import com.zettelnet.latin.form.FormValueProvider;
 import com.zettelnet.latin.form.MapFormValueProvider;
 import com.zettelnet.latin.form.Tense;
 import com.zettelnet.latin.form.Voice;
-import com.zettelnet.latin.lemma.VerbStem;
+import com.zettelnet.latin.lemma.verb.VerbStem;
 
 public class FirstInfinitiveConjugation extends AbstractInfinitiveConjugation {
 

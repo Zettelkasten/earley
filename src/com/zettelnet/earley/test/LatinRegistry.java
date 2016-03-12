@@ -6,14 +6,14 @@ import java.util.Map;
 import com.zettelnet.earley.test.latin.DeterminationRegistry;
 import com.zettelnet.latin.form.Genus;
 import com.zettelnet.latin.lemma.Lemma;
-import com.zettelnet.latin.lemma.SimpleAdjective;
-import com.zettelnet.latin.lemma.SimpleAdverb;
-import com.zettelnet.latin.lemma.SimpleConjunction;
-import com.zettelnet.latin.lemma.SimpleNoun;
-import com.zettelnet.latin.lemma.SimpleVerb;
+import com.zettelnet.latin.lemma.adjective.SimpleAdjective;
+import com.zettelnet.latin.lemma.adverb.SimpleAdverb;
 import com.zettelnet.latin.lemma.conjugation.Conjugation;
+import com.zettelnet.latin.lemma.conjunction.SimpleConjunction;
 import com.zettelnet.latin.lemma.declension.Declension;
+import com.zettelnet.latin.lemma.noun.SimpleNoun;
 import com.zettelnet.latin.lemma.property.Valency;
+import com.zettelnet.latin.lemma.verb.SimpleVerb;
 
 public class LatinRegistry {
 

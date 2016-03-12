@@ -1,4 +1,4 @@
-package com.zettelnet.latin.lemma;
+package com.zettelnet.latin.lemma.verb;
 
 import java.util.EnumMap;
 import java.util.Map;

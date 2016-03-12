@@ -15,8 +15,8 @@ import com.zettelnet.latin.form.Person;
 import com.zettelnet.latin.form.Tense;
 import com.zettelnet.latin.form.Voice;
 import com.zettelnet.latin.lemma.FormProvider;
-import com.zettelnet.latin.lemma.Verb;
-import com.zettelnet.latin.lemma.VerbStem;
+import com.zettelnet.latin.lemma.verb.Verb;
+import com.zettelnet.latin.lemma.verb.VerbStem;
 
 /**
  * Generates a value of a {@link Form} of a {@link Verb}.
