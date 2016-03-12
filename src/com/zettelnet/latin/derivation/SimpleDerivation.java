@@ -26,6 +26,11 @@ public class SimpleDerivation implements Derivation {
 	public Form getForm() {
 		return form;
 	}
+	
+	@Override
+	public String toString() {
+		return type + " " + form;
+	}
 
 	@Override
 	public int hashCode() {
