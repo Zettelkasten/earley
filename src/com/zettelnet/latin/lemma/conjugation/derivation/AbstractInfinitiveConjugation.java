@@ -65,7 +65,10 @@ public abstract class AbstractInfinitiveConjugation implements DerivationProvide
 			for (Voice voice : getVoiceSet(lemma)) {
 				Derivation derivation = Derivation.withValues(DerivationType.Infinitive, tense, voice);
 				Collection<Lemma> values = getDerivation(lemma, derivation);
-				derivations.put(derivation, values);
+				
+				if (!values.isEmpty()) {
+					derivations.put(derivation, values);
+				}
 			}
 		}
 

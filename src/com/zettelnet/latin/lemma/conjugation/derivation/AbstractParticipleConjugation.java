@@ -76,7 +76,10 @@ public abstract class AbstractParticipleConjugation implements DerivationProvide
 			for (Voice voice : getVoiceSet(lemma)) {
 				Derivation derivation = Derivation.withValues(DerivationType.Participle, tense, voice);
 				Collection<Lemma> values = getDerivation(lemma, derivation);
-				derivations.put(derivation, values);
+
+				if (!values.isEmpty()) {
+					derivations.put(derivation, values);
+				}
 			}
 		}
 
