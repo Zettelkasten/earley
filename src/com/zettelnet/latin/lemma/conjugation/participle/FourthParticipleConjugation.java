@@ -1,4 +1,4 @@
-package com.zettelnet.latin.lemma.conjugation.derivation;
+package com.zettelnet.latin.lemma.conjugation.participle;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -12,7 +12,7 @@ import com.zettelnet.latin.lemma.DeclinableLemma;
 import com.zettelnet.latin.lemma.FormProvider;
 import com.zettelnet.latin.lemma.VerbStem;
 
-public class ThirdIStemParticipleConjugation extends AbstractParticipleConjugation {
+public class FourthParticipleConjugation extends AbstractParticipleConjugation {
 
 	private static class FirstFormEndings extends MapFormValueProvider<String> {
 		public FirstFormEndings() {
@@ -37,7 +37,7 @@ public class ThirdIStemParticipleConjugation extends AbstractParticipleConjugati
 		public StemEndings() {
 			super(Arrays.asList(Tense.class, Voice.class));
 
-			put("ient", Tense.Present, Voice.Active);
+			put("i_ent", Tense.Present, Voice.Active);
 			put("", Tense.Perfect, Voice.Passive);
 			put("_ur", Tense.Future, Voice.Active);
 			put("iend", Tense.Future, Voice.Passive);
@@ -49,7 +49,7 @@ public class ThirdIStemParticipleConjugation extends AbstractParticipleConjugati
 	public static final FormValueProvider<VerbStem> STEM_TYPES = new ParticipleStems();
 	public static final FormValueProvider<Map<Genus, FormProvider<DeclinableLemma>>> FORM_PROVIDERS = new ParticipleFormProviders();
 
-	public ThirdIStemParticipleConjugation() {
+	public FourthParticipleConjugation() {
 		super(FIRST_FORM_ENDINGS, STEM_ENDINGS, STEM_TYPES, FORM_PROVIDERS);
 	}
 }

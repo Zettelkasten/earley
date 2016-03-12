@@ -1,4 +1,4 @@
-package com.zettelnet.latin.lemma.conjugation.derivation;
+package com.zettelnet.latin.lemma.conjugation.infinitive;
 
 import java.util.Arrays;
 
@@ -8,15 +8,15 @@ import com.zettelnet.latin.form.Tense;
 import com.zettelnet.latin.form.Voice;
 import com.zettelnet.latin.lemma.VerbStem;
 
-public class FirstInfinitiveConjugation extends AbstractInfinitiveConjugation {
+public class SecondInfinitiveConjugation extends AbstractInfinitiveConjugation {
 
 	private static class FirstFormEndings extends MapFormValueProvider<String> {
 		public FirstFormEndings() {
 			super(Arrays.asList(Tense.class, Voice.class));
 
-			put("_ere", Tense.Present, Voice.Active);
-			put("_er_i", Tense.Present, Voice.Passive);
-			put("_evisse", Tense.Perfect, Voice.Active);
+			put("_are", Tense.Present, Voice.Active);
+			put("_ar_i", Tense.Present, Voice.Passive);
+			put("_avisse", Tense.Perfect, Voice.Active);
 		}
 	}
 
@@ -24,7 +24,7 @@ public class FirstInfinitiveConjugation extends AbstractInfinitiveConjugation {
 		public StemEndings() {
 			super(Arrays.asList(Tense.class, Voice.class));
 
-			put("end", Tense.Present, Voice.Active);
+			put("and", Tense.Present, Voice.Active);
 		}
 	}
 
@@ -32,7 +32,7 @@ public class FirstInfinitiveConjugation extends AbstractInfinitiveConjugation {
 	public static final FormValueProvider<String> STEM_ENDINGS = new StemEndings();
 	public static final FormValueProvider<VerbStem> STEM_TYPES = new InfinitiveStems();
 
-	public FirstInfinitiveConjugation() {
+	public SecondInfinitiveConjugation() {
 		super(FIRST_FORM_ENDINGS, STEM_ENDINGS, STEM_TYPES);
 	}
 }

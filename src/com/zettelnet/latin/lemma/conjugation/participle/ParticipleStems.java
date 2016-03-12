@@ -1,4 +1,4 @@
-package com.zettelnet.latin.lemma.conjugation.derivation;
+package com.zettelnet.latin.lemma.conjugation.participle;
 
 import java.util.Arrays;
 

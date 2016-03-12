@@ -12,7 +12,7 @@ import com.zettelnet.latin.lemma.Lemma;
 import com.zettelnet.latin.lemma.SimpleVerb;
 import com.zettelnet.latin.lemma.Verb;
 import com.zettelnet.latin.lemma.conjugation.Conjugation;
-import com.zettelnet.latin.lemma.conjugation.derivation.FourthParticipleConjugation;
+import com.zettelnet.latin.lemma.conjugation.participle.FourthParticipleConjugation;
 
 public class ParticipleTest {
 
