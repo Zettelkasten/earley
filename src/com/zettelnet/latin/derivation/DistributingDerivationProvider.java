@@ -10,16 +10,16 @@ import com.zettelnet.latin.lemma.Lemma;
 public class DistributingDerivationProvider<T> implements DerivationProvider<T> {
 
 	private final Map<DerivationType, DerivationProvider<T>> providers;
-	
+
 	public DistributingDerivationProvider() {
 		this.providers = new HashMap<>();
 	}
-	
+
 	public DistributingDerivationProvider<T> addProvider(final DerivationType type, final DerivationProvider<T> provider) {
 		providers.put(type, provider);
 		return this;
 	}
-	
+
 	@Override
 	public Collection<Lemma> getDerivation(T lemma, Derivation derivation) {
 		DerivationType type = derivation.getType();

@@ -6,14 +6,14 @@ import com.zettelnet.latin.form.Numerus;
 import com.zettelnet.latin.form.Person;
 import com.zettelnet.latin.form.Tense;
 import com.zettelnet.latin.form.Voice;
-import com.zettelnet.latin.lemma.conjugation.FirstConjugation;
+import com.zettelnet.latin.lemma.conjugation.Conjugation;
 import com.zettelnet.latin.lemma.verb.SimpleVerb;
 import com.zettelnet.latin.lemma.verb.Verb;
 
 public class ConjugationTest {
 
 	public static void main(String[] args) {
-		Verb verb = new SimpleVerb("cant", "cantav", "cantat", new FirstConjugation());
+		Verb verb = new SimpleVerb("cant", "cantav", "cantat", Conjugation.First);
 		System.out.println(verb.getNominalForm());
 		for (Mood mood : Mood.values()) {
 			for (Tense tense : Tense.values()) {
