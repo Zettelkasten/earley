@@ -16,16 +16,19 @@ import com.zettelnet.latin.form.FormValueProvider;
 import com.zettelnet.latin.form.Genus;
 import com.zettelnet.latin.form.Tense;
 import com.zettelnet.latin.form.Voice;
+import com.zettelnet.latin.lemma.DeclinableLemma;
+import com.zettelnet.latin.lemma.FormProvider;
 import com.zettelnet.latin.lemma.Lemma;
 import com.zettelnet.latin.lemma.SimpleNoun;
 import com.zettelnet.latin.lemma.Verb;
 import com.zettelnet.latin.lemma.VerbStem;
-import com.zettelnet.latin.lemma.declension.Declension;
 
 public abstract class AbstractInfinitiveConjugation implements DerivationProvider<Verb> {
 
 	private final FormValueProvider<String> firstFormEndings;
 	private final FormValueProvider<String> stemEndings;
+
+	private static final FormProvider<DeclinableLemma> formProvider = new InfinitiveDeclension();
 
 	public AbstractInfinitiveConjugation(final FormValueProvider<String> firstFormEndings, final FormValueProvider<String> stemEndings) {
 		this.firstFormEndings = firstFormEndings;
@@ -46,7 +49,7 @@ public abstract class AbstractInfinitiveConjugation implements DerivationProvide
 				String firstForm = verbStem + firstFormEndings.getValue(form).iterator().next();
 				String stem = verbStem + stemEnding;
 
-				Lemma infinitive = new SimpleNoun(firstForm, stem, Declension.Second, Genus.Neuter);
+				Lemma infinitive = new SimpleNoun(firstForm, stem, formProvider, Genus.Neuter);
 				lemmas.add(infinitive);
 			}
 			return lemmas;
