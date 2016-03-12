@@ -14,9 +14,9 @@ public class FirstInfinitiveConjugation extends AbstractInfinitiveConjugation {
 		public FirstFormEndings() {
 			super(Arrays.asList(Tense.class, Voice.class));
 
-			put("_ere", Tense.Present, Voice.Active);
-			put("_er_i", Tense.Present, Voice.Passive);
-			put("_evisse", Tense.Perfect, Voice.Active);
+			put("_are", Tense.Present, Voice.Active);
+			put("_ar_i", Tense.Present, Voice.Passive);
+			put("_avisse", Tense.Perfect, Voice.Active);
 		}
 	}
 
@@ -24,7 +24,7 @@ public class FirstInfinitiveConjugation extends AbstractInfinitiveConjugation {
 		public StemEndings() {
 			super(Arrays.asList(Tense.class, Voice.class));
 
-			put("end", Tense.Present, Voice.Active);
+			put("and", Tense.Present, Voice.Active);
 		}
 	}
 
