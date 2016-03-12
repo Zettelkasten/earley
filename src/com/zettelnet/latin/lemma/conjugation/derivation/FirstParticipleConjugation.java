@@ -12,13 +12,6 @@ import com.zettelnet.latin.lemma.DeclinableLemma;
 import com.zettelnet.latin.lemma.FormProvider;
 import com.zettelnet.latin.lemma.VerbStem;
 
-/**
- * Represents the <strong>first conjugation</strong>, also known as
- * <strong>a-conjugation</strong>.
- * 
- * @author Zettelkasten
- *
- */
 public class FirstParticipleConjugation extends AbstractParticipleConjugation {
 
 	private static class FirstFormEndings extends MapFormValueProvider<String> {
