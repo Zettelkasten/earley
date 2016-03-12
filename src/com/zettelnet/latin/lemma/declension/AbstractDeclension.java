@@ -65,7 +65,7 @@ public abstract class AbstractDeclension implements FormProvider<DeclinableLemma
 		} else if (form.hasProperties(Casus.Vocative)) {
 			return getForm(lemma, form.derive(Casus.Nominative));
 		} else {
-			return concat(lemma.getStem(), endings.getMorph(form));
+			return concat(lemma.getStem(), endings.getValue(form));
 		}
 	}
 

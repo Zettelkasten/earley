@@ -42,10 +42,10 @@ public abstract class AbstractInfinitiveConjugation implements DerivationProvide
 			Form form = derivation.getForm();
 			String verbStem = lemma.getStem(VerbStem.Present);
 
-			for (String stemEnding : stemEndings.getMorph(form)) {
-				String firstForm = verbStem + firstFormEndings.getMorph(form).iterator().next();
+			for (String stemEnding : stemEndings.getValue(form)) {
+				String firstForm = verbStem + firstFormEndings.getValue(form).iterator().next();
 				String stem = verbStem + stemEnding;
-				
+
 				Lemma infinitive = new SimpleNoun(firstForm, stem, Declension.Second, Genus.Neuter);
 				lemmas.add(infinitive);
 			}
@@ -66,7 +66,7 @@ public abstract class AbstractInfinitiveConjugation implements DerivationProvide
 			for (Voice voice : getVoiceSet(lemma)) {
 				Derivation derivation = Derivation.withValues(DerivationType.Infinitive, tense, voice);
 				Collection<Lemma> values = getDerivation(lemma, derivation);
-				
+
 				if (!values.isEmpty()) {
 					derivations.put(derivation, values);
 				}

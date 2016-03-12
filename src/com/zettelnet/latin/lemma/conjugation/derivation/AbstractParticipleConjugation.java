@@ -29,9 +29,18 @@ public abstract class AbstractParticipleConjugation implements DerivationProvide
 	private final FormValueProvider<String> firstFormEndings;
 	private final FormValueProvider<String> stemEndings;
 
-	public AbstractParticipleConjugation(final FormValueProvider<String> firstFormEndings, final FormValueProvider<String> stemEndings) {
+	private final FormValueProvider<VerbStem> stemTypes;
+	private final FormValueProvider<Map<Genus, FormProvider<DeclinableLemma>>> formProviders;
+
+	public AbstractParticipleConjugation(final FormValueProvider<String> firstFormEndings, final FormValueProvider<String> stemEndings, final FormValueProvider<VerbStem> stemTypes, final FormValueProvider<Map<Genus, FormProvider<DeclinableLemma>>> formProviders) {
 		this.firstFormEndings = firstFormEndings;
 		this.stemEndings = stemEndings;
+		this.stemTypes = stemTypes;
+		this.formProviders = formProviders;
+	}
+
+	private static <T> T first(Collection<T> collection) {
+		return collection.iterator().next();
 	}
 
 	@Override
@@ -42,16 +51,16 @@ public abstract class AbstractParticipleConjugation implements DerivationProvide
 			Collection<Lemma> lemmas = new ArrayList<>();
 
 			Form form = derivation.getForm();
-			String verbStem = lemma.getStem(getStemType(form.getTense(), form.getVoice()));
 
-			for (String stemEnding : stemEndings.getMorph(form)) {
+			for (String stemEnding : stemEndings.getValue(form)) {
+				String verbStem = lemma.getStem(first(stemTypes.getValue(form)));
 
 				Map<Genus, String> firstForms = new EnumMap<>(Genus.class);
 				for (Genus genus : Genus.values()) {
-					firstForms.put(genus, verbStem + firstFormEndings.getMorph(form.derive(genus)).iterator().next());
+					firstForms.put(genus, verbStem + first(firstFormEndings.getValue(form.derive(genus))));
 				}
 				String stem = verbStem + stemEnding;
-				Map<Genus, FormProvider<DeclinableLemma>> formProviders = getFormProviders(form.getTense(), form.getVoice());
+				Map<Genus, FormProvider<DeclinableLemma>> formProviders = first(this.formProviders.getValue(form));
 
 				Lemma participle = new SimpleAdjective(firstForms, stem, formProviders);
 				lemmas.add(participle);
@@ -59,10 +68,6 @@ public abstract class AbstractParticipleConjugation implements DerivationProvide
 			return lemmas;
 		}
 	}
-
-	public abstract VerbStem getStemType(Tense tense, Voice voice);
-
-	public abstract Map<Genus, FormProvider<DeclinableLemma>> getFormProviders(Tense tense, Voice voice);
 
 	@Override
 	public boolean hasDerivation(Verb lemma, Derivation derivation) {

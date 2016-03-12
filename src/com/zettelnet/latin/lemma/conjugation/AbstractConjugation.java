@@ -70,8 +70,8 @@ public abstract class AbstractConjugation implements FormProvider<Verb> {
 		// form = stem + vowel + ending
 		Collection<String> variants = new ArrayList<>();
 
-		for (String linkingMorph : linkings.getMorph(form)) {
-			for (String endingMorph : endings.getMorph(form)) {
+		for (String linkingMorph : linkings.getValue(form)) {
+			for (String endingMorph : endings.getValue(form)) {
 				StringBuilder str = new StringBuilder();
 				str.append(verb.getStem(getStemType(form)));
 				str.append(linkingMorph);

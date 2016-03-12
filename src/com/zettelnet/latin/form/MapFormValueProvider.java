@@ -28,7 +28,7 @@ public class MapFormValueProvider<T> implements FormValueProvider<T> {
 		this.data.put(Form.withValues(formProperties), Arrays.asList(values));
 	}
 
-	public Collection<T> getMorph(Form form) {
+	public Collection<T> getValue(Form form) {
 		Collection<T> variants = data.get(form.retainAll(retainedProperties));
 		if (variants != null) {
 			return variants;

@@ -5,10 +5,10 @@ import java.util.function.Function;
 
 public interface FormValueProvider<T> extends Function<Form, Collection<T>> {
 
-	Collection<T> getMorph(final Form key);
+	Collection<T> getValue(final Form key);
 
 	@Override
 	default Collection<T> apply(Form key) {
-		return getMorph(key);
+		return getValue(key);
 	}
 }
