@@ -13,6 +13,7 @@ import com.zettelnet.latin.derivation.Derivation;
 import com.zettelnet.latin.derivation.DerivationProvider;
 import com.zettelnet.latin.derivation.DerivationType;
 import com.zettelnet.latin.form.Form;
+import com.zettelnet.latin.form.FormValueProvider;
 import com.zettelnet.latin.form.Genus;
 import com.zettelnet.latin.form.Tense;
 import com.zettelnet.latin.form.Voice;
@@ -21,14 +22,13 @@ import com.zettelnet.latin.lemma.FormProvider;
 import com.zettelnet.latin.lemma.Lemma;
 import com.zettelnet.latin.lemma.SimpleAdjective;
 import com.zettelnet.latin.lemma.Verb;
-import com.zettelnet.latin.morph.MorphProvider;
 
 public abstract class AbstractParticipleConjugation implements DerivationProvider<Verb> {
 
-	private final MorphProvider<Form> firstFormEndings;
-	private final MorphProvider<Form> stemEndings;
+	private final FormValueProvider<String> firstFormEndings;
+	private final FormValueProvider<String> stemEndings;
 
-	public AbstractParticipleConjugation(final MorphProvider<Form> firstFormEndings, final MorphProvider<Form> stemEndings) {
+	public AbstractParticipleConjugation(final FormValueProvider<String> firstFormEndings, final FormValueProvider<String> stemEndings) {
 		this.firstFormEndings = firstFormEndings;
 		this.stemEndings = stemEndings;
 	}

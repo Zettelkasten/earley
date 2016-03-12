@@ -12,6 +12,7 @@ import com.zettelnet.latin.derivation.Derivation;
 import com.zettelnet.latin.derivation.DerivationProvider;
 import com.zettelnet.latin.derivation.DerivationType;
 import com.zettelnet.latin.form.Form;
+import com.zettelnet.latin.form.FormValueProvider;
 import com.zettelnet.latin.form.Genus;
 import com.zettelnet.latin.form.Tense;
 import com.zettelnet.latin.form.Voice;
@@ -19,14 +20,13 @@ import com.zettelnet.latin.lemma.Lemma;
 import com.zettelnet.latin.lemma.SimpleNoun;
 import com.zettelnet.latin.lemma.Verb;
 import com.zettelnet.latin.lemma.declension.Declension;
-import com.zettelnet.latin.morph.MorphProvider;
 
 public abstract class AbstractInfinitiveConjugation implements DerivationProvider<Verb> {
 
-	private final MorphProvider<Form> firstFormEndings;
-	private final MorphProvider<Form> stemEndings;
+	private final FormValueProvider<String> firstFormEndings;
+	private final FormValueProvider<String> stemEndings;
 
-	public AbstractInfinitiveConjugation(final MorphProvider<Form> firstFormEndings, final MorphProvider<Form> stemEndings) {
+	public AbstractInfinitiveConjugation(final FormValueProvider<String> firstFormEndings, final FormValueProvider<String> stemEndings) {
 		this.firstFormEndings = firstFormEndings;
 		this.stemEndings = stemEndings;
 	}

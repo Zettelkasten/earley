@@ -5,10 +5,9 @@ import java.util.Collection;
 import java.util.Collections;
 
 import com.zettelnet.latin.form.Casus;
-import com.zettelnet.latin.form.Form;
+import com.zettelnet.latin.form.FormValueProvider;
+import com.zettelnet.latin.form.MapFormProvider;
 import com.zettelnet.latin.form.Numerus;
-import com.zettelnet.latin.morph.MapFormMorphProvider;
-import com.zettelnet.latin.morph.MorphProvider;
 
 /**
  * Represents the <strong>third declension</strong>, also known as <strong>mixed
@@ -19,7 +18,7 @@ import com.zettelnet.latin.morph.MorphProvider;
  */
 public class FifthDeclension extends AbstractDeclension {
 
-	private static class Endings extends MapFormMorphProvider {
+	private static class Endings extends MapFormProvider<String> {
 		public Endings() {
 			super(Arrays.asList(Casus.class, Numerus.class));
 
@@ -36,7 +35,7 @@ public class FifthDeclension extends AbstractDeclension {
 		}
 	}
 
-	public static final MorphProvider<Form> ENDINGS = new Endings();
+	public static final FormValueProvider<String> ENDINGS = new Endings();
 
 	public FifthDeclension() {
 		super(ENDINGS);

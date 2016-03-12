@@ -10,12 +10,12 @@ import java.util.Set;
 
 import com.zettelnet.latin.form.Casus;
 import com.zettelnet.latin.form.Form;
+import com.zettelnet.latin.form.FormValueProvider;
 import com.zettelnet.latin.form.Genus;
 import com.zettelnet.latin.form.Numerus;
 import com.zettelnet.latin.lemma.DeclinableLemma;
 import com.zettelnet.latin.lemma.FormProvider;
 import com.zettelnet.latin.lemma.Noun;
-import com.zettelnet.latin.morph.MorphProvider;
 
 /**
  * Generates a value of a {@link Form} of a {@link Noun}.
@@ -37,9 +37,9 @@ import com.zettelnet.latin.morph.MorphProvider;
  */
 public abstract class AbstractDeclension implements FormProvider<DeclinableLemma> {
 
-	private final MorphProvider<Form> endings;
+	private final FormValueProvider<String> endings;
 
-	public AbstractDeclension(final MorphProvider<Form> endings) {
+	public AbstractDeclension(final FormValueProvider<String> endings) {
 		this.endings = endings;
 	}
 

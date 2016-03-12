@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.zettelnet.latin.form.Form;
+import com.zettelnet.latin.form.FormValueProvider;
 import com.zettelnet.latin.form.Mood;
 import com.zettelnet.latin.form.Numerus;
 import com.zettelnet.latin.form.Person;
@@ -15,7 +16,6 @@ import com.zettelnet.latin.form.Tense;
 import com.zettelnet.latin.form.Voice;
 import com.zettelnet.latin.lemma.FormProvider;
 import com.zettelnet.latin.lemma.Verb;
-import com.zettelnet.latin.morph.MorphProvider;
 
 /**
  * Generates a value of a {@link Form} of a {@link Verb}.
@@ -28,10 +28,10 @@ import com.zettelnet.latin.morph.MorphProvider;
  */
 public abstract class AbstractConjugation implements FormProvider<Verb> {
 
-	private final MorphProvider<Form> linkings;
-	private final MorphProvider<Form> endings;
+	private final FormValueProvider<String> linkings;
+	private final FormValueProvider<String> endings;
 
-	public AbstractConjugation(final MorphProvider<Form> linkings, final MorphProvider<Form> endings) {
+	public AbstractConjugation(final FormValueProvider<String> linkings, final FormValueProvider<String> endings) {
 		this.linkings = linkings;
 		this.endings = endings;
 	}
