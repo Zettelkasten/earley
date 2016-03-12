@@ -3,7 +3,6 @@ package com.zettelnet.latin.lemma;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +21,7 @@ import com.zettelnet.latin.lemma.property.MapLemmaPropertySet;
 
 public class SimpleVerb implements Verb {
 
-	private final Map<Tense, String> stems;
+	private final Map<VerbStem, String> stems;
 
 	private final FormProvider<Verb> formProvider;
 	private final DerivationProvider<Verb> derivationProvider;
@@ -30,13 +29,15 @@ public class SimpleVerb implements Verb {
 	private final PropertySet<LemmaProperty> properties;
 
 	public SimpleVerb(final String presentStem, final String perfectStem, final String supineStem, final CombinedProvider<Verb> provider, final LemmaProperty... properties) {
-		this(presentStem, perfectStem, supineStem, provider, provider, properties);
+		this(VerbStem.makeMap(presentStem, perfectStem, supineStem), provider, provider, properties);
 	}
 
 	public SimpleVerb(final String presentStem, final String perfectStem, final String supineStem, final FormProvider<Verb> formProvider, final DerivationProvider<Verb> derivationProvider, final LemmaProperty... properties) {
-		this.stems = new EnumMap<>(Tense.class);
-		this.stems.put(Tense.Present, presentStem);
-		this.stems.put(Tense.Perfect, perfectStem);
+		this(VerbStem.makeMap(presentStem, perfectStem, supineStem), formProvider, derivationProvider, properties);
+	}
+
+	public SimpleVerb(final Map<VerbStem, String> stems, final FormProvider<Verb> formProvider, final DerivationProvider<Verb> derivationProvider, final LemmaProperty... properties) {
+		this.stems = stems;
 
 		this.formProvider = formProvider;
 		this.derivationProvider = derivationProvider;
@@ -52,8 +53,8 @@ public class SimpleVerb implements Verb {
 	}
 
 	@Override
-	public String getStem(Tense tense) {
-		return stems.get(tense);
+	public String getStem(VerbStem stemType) {
+		return stems.get(stemType);
 	}
 
 	@Override

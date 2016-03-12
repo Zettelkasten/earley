@@ -2,7 +2,6 @@ package com.zettelnet.latin.lemma;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.EnumMap;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,20 +24,12 @@ public class SimpleAdjective implements Adjective {
 	private final Map<Genus, FormProvider<DeclinableLemma>> formProviders;
 	private final PropertySet<LemmaProperty> properties;
 
-	private static <T> Map<Genus, T> makeGenusMap(T masculine, T feminine, T neuter) {
-		Map<Genus, T> map = new EnumMap<>(Genus.class);
-		map.put(Genus.Masculine, masculine);
-		map.put(Genus.Feminine, feminine);
-		map.put(Genus.Neuter, neuter);
-		return map;
-	}
-
 	public SimpleAdjective(final String masculineForm, final String feminineForm, final String neuterForm, final String stem, final Map<Genus, FormProvider<DeclinableLemma>> formProvider, LemmaProperty... lemmaProperties) {
-		this(makeGenusMap(masculineForm, feminineForm, neuterForm), stem, formProvider);
+		this(Genus.makeMap(masculineForm, feminineForm, neuterForm), stem, formProvider);
 	}
 
 	public SimpleAdjective(final String masculineForm, final String feminineForm, final String neuterForm, final String stem, final FormProvider<DeclinableLemma> formProvider, LemmaProperty... lemmaProperties) {
-		this(makeGenusMap(masculineForm, feminineForm, neuterForm), stem, makeGenusMap(formProvider, formProvider, formProvider));
+		this(Genus.makeMap(masculineForm, feminineForm, neuterForm), stem, Genus.makeMap(formProvider, formProvider, formProvider));
 	}
 
 	public SimpleAdjective(final Map<Genus, String> firstForm, final String stem, final Map<Genus, FormProvider<DeclinableLemma>> formProvider, LemmaProperty... lemmaProperties) {

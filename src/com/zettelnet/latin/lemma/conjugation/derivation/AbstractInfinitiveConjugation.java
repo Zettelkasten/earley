@@ -19,6 +19,7 @@ import com.zettelnet.latin.form.Voice;
 import com.zettelnet.latin.lemma.Lemma;
 import com.zettelnet.latin.lemma.SimpleNoun;
 import com.zettelnet.latin.lemma.Verb;
+import com.zettelnet.latin.lemma.VerbStem;
 import com.zettelnet.latin.lemma.declension.Declension;
 
 public abstract class AbstractInfinitiveConjugation implements DerivationProvider<Verb> {
@@ -39,7 +40,7 @@ public abstract class AbstractInfinitiveConjugation implements DerivationProvide
 			Collection<Lemma> lemmas = new ArrayList<>();
 
 			Form form = derivation.getForm();
-			String verbStem = lemma.getStem(Tense.Present);
+			String verbStem = lemma.getStem(VerbStem.Present);
 
 			for (String stemEnding : stemEndings.getMorph(form)) {
 				String firstForm = verbStem + firstFormEndings.getMorph(form).iterator().next();

@@ -14,7 +14,7 @@ public class ConjugationTest {
 
 	public static void main(String[] args) {
 		Verb verb = new SimpleVerb("cant", "cantav", "cantat", new FirstConjugation());
-		System.out.println(verb.getFirstForm());
+		System.out.println(verb.getNominalForm());
 		for (Mood mood : Mood.values()) {
 			for (Tense tense : Tense.values()) {
 				for (Voice voice : Voice.values()) {

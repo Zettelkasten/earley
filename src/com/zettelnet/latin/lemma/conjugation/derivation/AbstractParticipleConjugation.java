@@ -22,6 +22,7 @@ import com.zettelnet.latin.lemma.FormProvider;
 import com.zettelnet.latin.lemma.Lemma;
 import com.zettelnet.latin.lemma.SimpleAdjective;
 import com.zettelnet.latin.lemma.Verb;
+import com.zettelnet.latin.lemma.VerbStem;
 
 public abstract class AbstractParticipleConjugation implements DerivationProvider<Verb> {
 
@@ -41,7 +42,7 @@ public abstract class AbstractParticipleConjugation implements DerivationProvide
 			Collection<Lemma> lemmas = new ArrayList<>();
 
 			Form form = derivation.getForm();
-			String verbStem = lemma.getStem(getStemTense(form.getTense(), form.getVoice()));
+			String verbStem = lemma.getStem(getStemType(form.getTense(), form.getVoice()));
 
 			for (String stemEnding : stemEndings.getMorph(form)) {
 
@@ -59,7 +60,7 @@ public abstract class AbstractParticipleConjugation implements DerivationProvide
 		}
 	}
 
-	public abstract Tense getStemTense(Tense tense, Voice voice);
+	public abstract VerbStem getStemType(Tense tense, Voice voice);
 
 	public abstract Map<Genus, FormProvider<DeclinableLemma>> getFormProviders(Tense tense, Voice voice);
 

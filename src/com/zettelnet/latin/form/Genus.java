@@ -1,5 +1,8 @@
 package com.zettelnet.latin.form;
 
+import java.util.EnumMap;
+import java.util.Map;
+
 public enum Genus implements FormProperty {
 
 	Masculine("m"), Feminine("f"), Neuter("n");
@@ -18,5 +21,13 @@ public enum Genus implements FormProperty {
 	@Override
 	public String toString() {
 		return shortName();
+	}
+
+	public static <T> Map<Genus, T> makeMap(T masculine, T feminine, T neuter) {
+		Map<Genus, T> map = new EnumMap<>(Genus.class);
+		map.put(Masculine, masculine);
+		map.put(Feminine, feminine);
+		map.put(Neuter, neuter);
+		return map;
 	}
 }

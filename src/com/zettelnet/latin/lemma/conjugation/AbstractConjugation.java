@@ -16,6 +16,7 @@ import com.zettelnet.latin.form.Tense;
 import com.zettelnet.latin.form.Voice;
 import com.zettelnet.latin.lemma.FormProvider;
 import com.zettelnet.latin.lemma.Verb;
+import com.zettelnet.latin.lemma.VerbStem;
 
 /**
  * Generates a value of a {@link Form} of a {@link Verb}.
@@ -49,16 +50,16 @@ public abstract class AbstractConjugation implements FormProvider<Verb> {
 		return variants;
 	}
 
-	public Tense getStemTense(Form form) {
+	public VerbStem getStemType(Form form) {
 		switch (form.getTense()) {
 		case Present:
 		case Imperfect:
 		case Future:
-			return Tense.Present;
+			return VerbStem.Present;
 		case Perfect:
 		case Pluperfect:
 		case FuturePerfect:
-			return Tense.Perfect;
+			return VerbStem.Perfect;
 		default:
 			throw new AssertionError("Unknown tense");
 		}
@@ -72,7 +73,7 @@ public abstract class AbstractConjugation implements FormProvider<Verb> {
 		for (String linkingMorph : linkings.getMorph(form)) {
 			for (String endingMorph : endings.getMorph(form)) {
 				StringBuilder str = new StringBuilder();
-				str.append(verb.getStem(getStemTense(form)));
+				str.append(verb.getStem(getStemType(form)));
 				str.append(linkingMorph);
 				str.append(endingMorph);
 				variants.add(str.toString());

@@ -6,6 +6,7 @@ import java.util.Map;
 import com.zettelnet.earley.test.latin.DeterminationRegistry;
 import com.zettelnet.latin.form.Genus;
 import com.zettelnet.latin.lemma.Lemma;
+import com.zettelnet.latin.lemma.SimpleAdjective;
 import com.zettelnet.latin.lemma.SimpleAdverb;
 import com.zettelnet.latin.lemma.SimpleConjunction;
 import com.zettelnet.latin.lemma.SimpleNoun;
@@ -70,6 +71,8 @@ public class LatinRegistry {
 		register(new SimpleNoun("servus", "serv", Declension.Second, Genus.Masculine), "slave");
 		register(new SimpleAdverb("tum"), "then");
 		register(new SimpleNoun("caelum", "cael", Declension.Second, Genus.Neuter), "sky");
+		register(new SimpleAdjective("obsc_urus", "obsc_ura", "obsc_urum", "obsc_ur", Declension.FirstAndSecond), "dark");
+		
 	}
 
 	// some nouns
