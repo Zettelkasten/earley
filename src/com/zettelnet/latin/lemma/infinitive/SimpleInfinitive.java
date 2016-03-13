@@ -17,17 +17,20 @@ import com.zettelnet.latin.lemma.Lemma;
 import com.zettelnet.latin.lemma.LemmaType;
 import com.zettelnet.latin.lemma.property.LemmaProperty;
 import com.zettelnet.latin.lemma.property.MapLemmaPropertySet;
+import com.zettelnet.latin.lemma.verb.Verb;
 
 public class SimpleInfinitive implements Infinitive {
 
 	private final String firstForm;
 	private final Set<Genus> genus;
 
+	private final Verb verb;
 	private final PropertySet<LemmaProperty> properties;
 
-	public SimpleInfinitive(final String firstForm, final Genus genus, final LemmaProperty... properties) {
+	public SimpleInfinitive(final String firstForm, final Genus genus, final Verb verb, final LemmaProperty... properties) {
 		this.firstForm = firstForm;
 		this.genus = EnumSet.of(genus);
+		this.verb = verb;
 		this.properties = MapLemmaPropertySet.valueOf(properties);
 	}
 
@@ -91,6 +94,16 @@ public class SimpleInfinitive implements Infinitive {
 	@Override
 	public LemmaType getType() {
 		return LemmaType.Infinitive;
+	}
+
+	@Override
+	public boolean isDerivation() {
+		return true;
+	}
+
+	@Override
+	public Verb getDerivedFrom() {
+		return verb;
 	}
 
 	@Override

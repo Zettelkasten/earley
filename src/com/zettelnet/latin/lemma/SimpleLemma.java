@@ -71,7 +71,17 @@ public class SimpleLemma implements Lemma {
 	public LemmaType getType() {
 		return type;
 	}
-
+	
+	@Override
+	public boolean isDerivation() {
+		return false;
+	}
+	
+	@Override
+	public Lemma getDerivedFrom() {
+		return null;
+	}
+	
 	@Override
 	public String toString() {
 		return getNominalForm();

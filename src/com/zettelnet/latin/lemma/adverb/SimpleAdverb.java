@@ -45,12 +45,12 @@ public class SimpleAdverb implements Lemma {
 		map.put(Form.withValues(), Arrays.asList(firstForm));
 		return map;
 	}
-	
+
 	@Override
 	public Collection<Lemma> getDerivation(Derivation derivation) {
 		return Collections.emptyList();
 	}
-	
+
 	@Override
 	public boolean hasDerivation(Derivation derivation) {
 		return false;
@@ -60,7 +60,7 @@ public class SimpleAdverb implements Lemma {
 	public Map<Derivation, Collection<Lemma>> getDerivations() {
 		return Collections.emptyMap();
 	}
-	
+
 	@Override
 	public PropertySet<LemmaProperty> getProperties() {
 		return properties;
@@ -69,6 +69,16 @@ public class SimpleAdverb implements Lemma {
 	@Override
 	public LemmaType getType() {
 		return LemmaType.Adverb;
+	}
+
+	@Override
+	public boolean isDerivation() {
+		return false;
+	}
+
+	@Override
+	public Lemma getDerivedFrom() {
+		return null;
 	}
 
 	@Override

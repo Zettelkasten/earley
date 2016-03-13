@@ -72,6 +72,16 @@ public class SimpleConjunction implements Conjunction {
 	}
 
 	@Override
+	public boolean isDerivation() {
+		return false;
+	}
+
+	@Override
+	public Lemma getDerivedFrom() {
+		return null;
+	}
+
+	@Override
 	public String toString() {
 		return getNominalForm();
 	}

@@ -27,4 +27,8 @@ public interface Lemma {
 	PropertySet<LemmaProperty> getProperties();
 
 	LemmaType getType();
+	
+	boolean isDerivation();
+	
+	Lemma getDerivedFrom();
 }
