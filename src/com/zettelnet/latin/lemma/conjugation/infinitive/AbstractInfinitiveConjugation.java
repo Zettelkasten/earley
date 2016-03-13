@@ -19,9 +19,8 @@ import com.zettelnet.latin.form.Voice;
 import com.zettelnet.latin.lemma.DeclinableLemma;
 import com.zettelnet.latin.lemma.FormProvider;
 import com.zettelnet.latin.lemma.Lemma;
-import com.zettelnet.latin.lemma.LemmaType;
-import com.zettelnet.latin.lemma.SimpleLemma;
-import com.zettelnet.latin.lemma.noun.SimpleNoun;
+import com.zettelnet.latin.lemma.infinitive.SimpleGerund;
+import com.zettelnet.latin.lemma.infinitive.SimpleInfinitive;
 import com.zettelnet.latin.lemma.verb.Verb;
 import com.zettelnet.latin.lemma.verb.VerbStem;
 
@@ -33,7 +32,7 @@ public abstract class AbstractInfinitiveConjugation implements DerivationProvide
 	private final FormValueProvider<VerbStem> stemTypes;
 	private static final FormProvider<DeclinableLemma> formProvider = new InfinitiveDeclension();
 
-	public AbstractInfinitiveConjugation(final FormValueProvider<String> firstFormEndings, final FormValueProvider<String> stemEndings,  final FormValueProvider<VerbStem> stemTypes) {
+	public AbstractInfinitiveConjugation(final FormValueProvider<String> firstFormEndings, final FormValueProvider<String> stemEndings, final FormValueProvider<VerbStem> stemTypes) {
 		this.firstFormEndings = firstFormEndings;
 		this.stemEndings = stemEndings;
 		this.stemTypes = stemTypes;
@@ -42,7 +41,6 @@ public abstract class AbstractInfinitiveConjugation implements DerivationProvide
 	private static <T> T first(Collection<T> collection) {
 		return collection.iterator().next();
 	}
-
 
 	@Override
 	public Collection<Lemma> getDerivation(Verb lemma, Derivation derivation) {
@@ -61,14 +59,14 @@ public abstract class AbstractInfinitiveConjugation implements DerivationProvide
 				Collection<String> stemEndings = this.stemEndings.getValue(form);
 				if (stemEndings.isEmpty()) {
 					// infinitive without inflected forms
-					Lemma infinitive = new SimpleLemma(firstForm, LemmaType.Noun);
+					Lemma infinitive = new SimpleInfinitive(firstForm, Genus.Neuter);
 					lemmas.add(infinitive);
 				} else {
 					// infinitive / gerund with inflected forms
 					for (String stemEnding : stemEndings) {
 						String stem = verbStem + stemEnding;
 
-						Lemma gerund = new SimpleNoun(firstForm, stem, formProvider, Genus.Neuter);
+						Lemma gerund = new SimpleGerund(firstForm, stem, formProvider, Genus.Neuter);
 						lemmas.add(gerund);
 					}
 				}

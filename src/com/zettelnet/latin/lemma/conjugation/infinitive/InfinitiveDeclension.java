@@ -47,8 +47,8 @@ public class InfinitiveDeclension extends AbstractDeclension {
 
 	@Override
 	public Collection<String> getForm(DeclinableLemma lemma, Form form) {
-		// gerunds are declined as if they were masculine
-		return super.getForm(lemma, form.derive(Genus.Masculine));
+		// gerunds are declined as if they were masculine; numerus is always singular
+		return super.getForm(lemma, form.derive(Numerus.Singular, Genus.Masculine));
 	}
 	
 	@Override
