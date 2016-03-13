@@ -20,7 +20,7 @@ import com.zettelnet.latin.form.Voice;
 import com.zettelnet.latin.lemma.DeclinableLemma;
 import com.zettelnet.latin.lemma.FormProvider;
 import com.zettelnet.latin.lemma.Lemma;
-import com.zettelnet.latin.lemma.adjective.SimpleAdjective;
+import com.zettelnet.latin.lemma.participle.SimpleParticiple;
 import com.zettelnet.latin.lemma.verb.Verb;
 import com.zettelnet.latin.lemma.verb.VerbStem;
 
@@ -62,7 +62,7 @@ public abstract class AbstractParticipleConjugation implements DerivationProvide
 				String stem = verbStem + stemEnding;
 				Map<Genus, FormProvider<DeclinableLemma>> formProviders = first(this.formProviders.getValue(form));
 
-				Lemma participle = new SimpleAdjective(firstForms, stem, formProviders);
+				Lemma participle = new SimpleParticiple(firstForms, stem, formProviders, lemma);
 				lemmas.add(participle);
 			}
 			return lemmas;

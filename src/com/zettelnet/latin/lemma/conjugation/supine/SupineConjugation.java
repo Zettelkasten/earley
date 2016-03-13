@@ -13,7 +13,7 @@ import com.zettelnet.latin.form.Genus;
 import com.zettelnet.latin.lemma.DeclinableLemma;
 import com.zettelnet.latin.lemma.FormProvider;
 import com.zettelnet.latin.lemma.Lemma;
-import com.zettelnet.latin.lemma.noun.SimpleNoun;
+import com.zettelnet.latin.lemma.supine.SimpleSupine;
 import com.zettelnet.latin.lemma.verb.Verb;
 import com.zettelnet.latin.lemma.verb.VerbStem;
 
@@ -30,7 +30,7 @@ public class SupineConjugation implements DerivationProvider<Verb> {
 			return Collections.emptyList();
 		} else {
 			String stem = lemma.getStem(VerbStem.Supine);
-			Lemma supine = new SimpleNoun(null, stem, formProvider, Genus.Neuter);
+			Lemma supine = new SimpleSupine(stem, formProvider, Genus.Neuter, lemma);
 			return Arrays.asList(supine);
 		}
 	}
