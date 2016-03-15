@@ -21,6 +21,7 @@ import com.zettelnet.earley.process.ProcessingManager;
 import com.zettelnet.earley.symbol.NonTerminal;
 import com.zettelnet.earley.symbol.SimpleNonTerminal;
 import com.zettelnet.earley.symbol.Terminal;
+import com.zettelnet.earley.test.latin.Determination;
 import com.zettelnet.earley.test.latin.FormParameter;
 import com.zettelnet.earley.test.latin.FormParameterManager;
 import com.zettelnet.earley.test.latin.FormParameterizer;
@@ -45,9 +46,11 @@ public class LatinTranslationTest {
 		NonTerminal<Token> sentence = new SimpleNonTerminal<>("S");
 		NonTerminal<Token> nounPhrase = new SimpleNonTerminal<>("NP");
 		NonTerminal<Token> verbPhrase = new SimpleNonTerminal<>("VP");
+		NonTerminal<Token> verbForm = new SimpleNonTerminal<>("VF");
 
 		Terminal<Token> noun = new LemmaTerminal(LemmaType.Noun);
 		Terminal<Token> verb = new LemmaTerminal(LemmaType.Verb);
+		Terminal<Token> infinitive = new LemmaTerminal(LemmaType.Infinitive);
 
 		ParameterManager<FormParameter> parameterManager = new FormParameterManager();
 		ProcessableGrammar<Token, FormParameter, String> grammar = new ProcessableGrammar<>(sentence, parameterManager);
@@ -59,12 +62,17 @@ public class LatinTranslationTest {
 		grammar.setProcessor(noun, (ProcessingManager<Token, FormParameter, String> manager, SyntaxTreeVariant<Token, FormParameter> tree) -> {
 			Lemma lemma = tree.getParameter().getCause().getLemma();
 			Form form = tree.getParameter().toForm();
-			return LatinRegistry.TRANSLATIONS.get(lemma) + (form.getNumerus() == Numerus.Plural ? "s" : "");
+			return LatinRegistry.getTranslation(lemma) + (form.getNumerus() == Numerus.Plural ? "s" : "");
 		});
 		grammar.setProcessor(verb, (ProcessingManager<Token, FormParameter, String> manager, SyntaxTreeVariant<Token, FormParameter> tree) -> {
 			Lemma lemma = tree.getParameter().getCause().getLemma();
 			Form form = tree.getParameter().toForm();
-			return LatinRegistry.TRANSLATIONS.get(lemma) + (form.getNumerus() == Numerus.Plural ? "" : "s");
+			return LatinRegistry.getTranslation(lemma) + (form.getNumerus() == Numerus.Plural ? "" : "s");
+		});
+		grammar.setProcessor(infinitive, (ProcessingManager<Token, FormParameter, String> manager, SyntaxTreeVariant<Token, FormParameter> tree) -> {
+			Lemma lemma = tree.getParameter().getCause().getLemma();
+			Form form = tree.getParameter().toForm();
+			return LatinRegistry.getTranslation(lemma) + (form.getNumerus() == Numerus.Plural ? "" : "s");
 		});
 
 		grammar.addProduction(new Production<>(grammar,
@@ -92,21 +100,32 @@ public class LatinTranslationTest {
 							+ manager.process(tree.getChildren().get(1)) + "'s "
 							+ manager.process(tree.getChildren().get(0));
 				});
+		grammar.addProduction(new Production<>(verbForm,
+				new SingletonParameterFactory<>(new FormParameter(Finiteness.Finite)),
+				new ParameterizedSymbol<>(verb, copy)),
+				(ProcessingManager<Token, FormParameter, String> manager, SyntaxTreeVariant<Token, FormParameter> tree) -> {
+					return manager.process(tree.getChildren().get(0));
+				});
+		grammar.addProduction(new Production<>(verbForm,
+				new SingletonParameterFactory<>(new FormParameter(Finiteness.Infinitive)),
+				new ParameterizedSymbol<>(infinitive, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Casus.Nominative)))),
+				(ProcessingManager<Token, FormParameter, String> manager, SyntaxTreeVariant<Token, FormParameter> tree) -> {
+					return manager.process(tree.getChildren().get(0));
+				});
 		grammar.addProduction(new Production<>(verbPhrase,
 				new SingletonParameterFactory<>(new FormParameter(Valency.Single)),
-				new ParameterizedSymbol<>(verb, copy)),
+				new ParameterizedSymbol<>(verbForm, copy)),
 				(ProcessingManager<Token, FormParameter, String> manager, SyntaxTreeVariant<Token, FormParameter> tree) -> {
 					return manager.process(tree.getChildren().get(0));
 				});
 		grammar.addProduction(new Production<>(verbPhrase,
 				new SingletonParameterFactory<>(new FormParameter(Valency.Accusative)),
-				new ParameterizedSymbol<>(verb, copy),
+				new ParameterizedSymbol<>(verbForm, copy),
 				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Casus.Accusative)))),
 				(ProcessingManager<Token, FormParameter, String> manager, SyntaxTreeVariant<Token, FormParameter> tree) -> {
 					return manager.process(tree.getChildren().get(0)) + " " + manager.process(tree.getChildren().get(1));
 				});
 
-		// AcI -> requires implementation of derivations for infinitive forms
 		grammar.addProduction(new Production<>(nounPhrase,
 				new SingletonParameterFactory<>(new FormParameter(Valency.Accusative)),
 				new ParameterizedSymbol<>(sentence, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Casus.Accusative, Finiteness.Infinitive)))),
@@ -119,6 +138,14 @@ public class LatinTranslationTest {
 		Tokenizer<Token> tokenizer = new WhitespaceTokenizer<>(LatinRegistry.INSTANCE);
 		EarleyParser<Token, FormParameter> parser = new EarleyParser<>(grammar, new DynamicInputPositionInitializer<>());
 		List<Token> tokens = tokenizer.tokenize(raw);
+		
+		for (Token token : tokens) {
+			System.out.println(token.getContent() + ": ");
+			for (Determination determination : token.getDeterminations()) {
+				System.out.println("\t" + determination + "; " + determination.getLemmaType());
+			}
+		}
+		
 		EarleyParseResult<Token, FormParameter> result = parser.parse(tokens);
 
 		try {

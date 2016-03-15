@@ -18,6 +18,7 @@ import com.zettelnet.earley.symbol.Terminal;
 import com.zettelnet.latin.form.Casus;
 import com.zettelnet.latin.form.Form;
 import com.zettelnet.latin.form.Tense;
+import com.zettelnet.latin.form.Voice;
 import com.zettelnet.latin.lemma.LemmaType;
 import com.zettelnet.latin.lemma.property.Finiteness;
 import com.zettelnet.latin.lemma.property.Valency;
@@ -72,10 +73,22 @@ public final class LatinGrammar {
 				new ParameterizedSymbol<>(verbForm, copy),
 				new ParameterizedSymbol<>(arguments, copy),
 				new ParameterizedSymbol<>(adverbalPhraseVar, any));
-		// VF(pi) -> v(pi) -> TODO
+		
+		// VF(pi) -> v(pi)
 		grammar.addProduction(
 				verbForm,
+				new SingletonParameterFactory<>(new FormParameter(Tense.Present)),
 				new ParameterizedSymbol<>(verb, copy));
+		grammar.addProduction(
+				verbForm,
+				new SingletonParameterFactory<>(new FormParameter(Tense.Imperfect)),
+				new ParameterizedSymbol<>(verb, copy));
+		grammar.addProduction(
+				verbForm,
+				new SingletonParameterFactory<>(new FormParameter(Tense.Perfect, Voice.Active)),
+				new ParameterizedSymbol<>(verb, copy));
+		// TODO
+		
 		// Args(pi : NullVal) -> epsilon
 		grammar.addProduction(
 				arguments,
@@ -152,7 +165,7 @@ public final class LatinGrammar {
 		grammar.addProduction(
 				attribute,
 				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Form.nounForm(Casus.Genitive, null, null, null)))));
-		// NP(pi : Nom / Akk) -> S(pi : Inf Präs/Perf/Fut Akk)
+		// NP(pi : Nom / Akk) -> S(pi : Inf Prï¿½s/Perf/Fut Akk)
 		for (Casus casus : Arrays.asList(Casus.Nominative, Casus.Accusative)) {
 			for (Tense tense : Arrays.asList(Tense.Present)) {
 				grammar.addProduction(nounPhrase,

@@ -28,6 +28,16 @@ public class LatinRegistry {
 		INSTANCE.register(lemma);
 		TRANSLATIONS.put(lemma, translation);
 	}
+	
+	public static String getTranslation(Lemma lemma) {
+		if (TRANSLATIONS.containsKey(lemma)) {
+			return TRANSLATIONS.get(lemma);
+		} else if (lemma.isDerivation()) {
+			return getTranslation(lemma.getDerivedFrom());
+		} else {
+			return "%" + lemma.getNominalForm() + "%";
+		}
+	}
 
 	// Ostia Altera T1
 	static {
@@ -78,5 +88,9 @@ public class LatinRegistry {
 	// some nouns
 	static {
 		register(new SimpleNoun("carmen", "carmin", Declension.Third, Genus.Neuter), "song");
+	}
+	
+	static {
+		System.out.println("Initialized latin registry with " + INSTANCE.getSize() + " entries");
 	}
 }
