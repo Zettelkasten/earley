@@ -84,6 +84,19 @@ public class LatinRegistry {
 		register(new SimpleAdjective("obsc_urus", "obsc_ura", "obsc_urum", "obsc_ur", Declension.FirstAndSecond), "dark");
 		
 	}
+	
+	// Names
+	static {
+		// T1
+		register(new SimpleNoun("Domitilla", "Domitill", Declension.First, Genus.Feminine), "Domitilla");
+		register(new SimpleNoun("L_ucius", "L_uci", Declension.Second, Genus.Masculine), "Lucius");
+		register(new SimpleNoun("Tertia", "Terti", Declension.First, Genus.Feminine), "Tertia");
+		register(new SimpleNoun("Polybius", "Polybi", Declension.Second, Genus.Masculine), "Polybius");
+		// T2
+		register(new SimpleNoun("Pomp_onius", "Pomp_oni", Declension.Second, Genus.Masculine), "Pomponius");
+		register(new SimpleNoun("M_arcellus", "M_arcell", Declension.Second, Genus.Masculine), "Marcellus");
+		register(new SimpleNoun("Sel_enus", "Sel_en", Declension.Second, Genus.Masculine), "Selenus");
+	}
 
 	// some nouns
 	static {
