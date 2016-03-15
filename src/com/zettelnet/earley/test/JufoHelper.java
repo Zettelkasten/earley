@@ -51,9 +51,9 @@ public class JufoHelper {
 		str.append(tree.getRootSymbol());
 		if (!tree.isTerminal()) {
 			SyntaxTreeVariant<T, P> variant = tree.getVariant(Collections.<Integer> emptyList().iterator());
-			 str.append("(");
-			 str.append(variant.getParameter().toString().replace(' ', '_'));
-			 str.append(")");
+//			 str.append("(");
+//			 str.append(variant.getParameter().toString().replace(' ', '_'));
+//			 str.append(")");
 			for (SyntaxTree<T, P> child : variant.getChildren()) {
 				str.append(" ");
 				str.append(toStringBold(child));
