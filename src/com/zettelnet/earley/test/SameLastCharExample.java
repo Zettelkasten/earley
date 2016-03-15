@@ -96,6 +96,11 @@ public class SameLastCharExample {
 		}
 
 		@Override
+		public LastCharParameter scanParameter(LastCharParameter parameter, LastCharParameter tokenParameter) {
+			return parameter;
+		}
+
+		@Override
 		public boolean isCompatible(LastCharParameter parent, LastCharParameter other) {
 			if (parent.getLastChar() == 0) {
 				return true;

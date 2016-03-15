@@ -56,6 +56,11 @@ public final class PropertyParameterManager<T extends Property> implements Param
 	}
 
 	@Override
+	public PropertyParameter<T> scanParameter(PropertyParameter<T> parameter, PropertyParameter<T> tokenParameter) {
+		return parameter;
+	}
+
+	@Override
 	public boolean isCompatible(PropertyParameter<T> parent, PropertyParameter<T> child) {
 		return parent.isCompatibleWith(child);
 	}

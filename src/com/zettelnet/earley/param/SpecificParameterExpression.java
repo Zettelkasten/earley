@@ -34,7 +34,7 @@ public class SpecificParameterExpression<T, P extends Parameter> implements Para
 	public Collection<P> scan(P parentParameter, T token, Terminal<T> terminal) {
 		for (P tokenParameter : parameterizer.getTokenParameters(token, terminal)) {
 			if (manager.isCompatible(parameter, tokenParameter)) {
-				return Arrays.asList(manager.copyParameter(parentParameter));
+				return Arrays.asList(manager.scanParameter(parentParameter, tokenParameter));
 			}
 		}
 		return Collections.emptyList();

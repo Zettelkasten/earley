@@ -86,6 +86,10 @@ public final class FormParameter implements Parameter {
 	public FormParameter deriveWith(FormParameter with) {
 		return new FormParameter(makeDataMap(this.data, with.data), with.cause);
 	}
+	
+	public FormParameter scanWith(FormParameter tokenParameter) {
+		return new FormParameter(this.data, tokenParameter.getCause());
+	}
 
 	public Form toForm() {
 		return Form.withValues(data.values());

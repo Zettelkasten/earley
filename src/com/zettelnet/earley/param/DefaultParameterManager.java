@@ -16,6 +16,11 @@ public class DefaultParameterManager implements ParameterManager<DefaultParamete
 	public DefaultParameter copyParameter(DefaultParameter origin, DefaultParameter with) {
 		return DefaultParameter.INSTANCE;
 	}
+	
+	@Override
+	public DefaultParameter scanParameter(DefaultParameter parameter, DefaultParameter tokenParameter) {
+		return DefaultParameter.INSTANCE;
+	}
 
 	@Override
 	public boolean isCompatible(DefaultParameter parent, DefaultParameter child) {

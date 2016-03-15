@@ -41,6 +41,11 @@ public class ProductionParameterTest {
 		}
 
 		@Override
+		public IntParameter scanParameter(IntParameter parameter, IntParameter tokenParameter) {
+			return parameter;
+		}
+
+		@Override
 		public boolean isCompatible(IntParameter parent, IntParameter child) {
 			if (child.getValue() == -1) {
 				return true;
