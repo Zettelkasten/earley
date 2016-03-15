@@ -30,6 +30,12 @@ public class DeterminationRegistry implements TokenFactory<Token> {
 				register(value, new Determination(lemma, form));
 			}
 		}
+		
+		for (Collection<Lemma> collection : lemma.getDerivations().values()) {
+			for (Lemma derivation : collection) {
+				register(derivation);
+			}
+		}
 	}
 
 	public void register(String value, Determination determination) {
@@ -47,6 +53,10 @@ public class DeterminationRegistry implements TokenFactory<Token> {
 		} else {
 			return formsStripped.get(key);
 		}
+	}
+
+	public int getSize() {
+		return formsStripped.size();
 	}
 
 	@Override
