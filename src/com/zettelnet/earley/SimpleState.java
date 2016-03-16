@@ -153,7 +153,7 @@ public class SimpleState<T, P extends Parameter> implements State<T, P> {
 		if (currentPosition != other.getCurrentPosition()) {
 			return false;
 		}
-		if (originPosition != other.getOriginPosition()) {
+		if (!originPosition.equals(other.getOriginPosition())) {
 			return false;
 		}
 		if (!chart.equals(other.getChart())) {
