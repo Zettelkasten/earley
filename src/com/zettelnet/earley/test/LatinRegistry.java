@@ -47,9 +47,9 @@ public class LatinRegistry {
 		register(new SimpleConjunction("et"), "and");
 		register(new SimpleVerb("cl_am", "cl_am_av", "cl_am_at", Conjugation.First, Valency.Single), "cry");
 		register(new SimpleVerb("tac", "tacu", "tacit", Conjugation.Second, Valency.Single), "silence");
-		register(new SimpleConjunction("autem"), "however");
+		register(new SimpleAdverb("autem"), "however");
 		// TODO no passive
-		register(new SimpleVerb("saev", "saevi", "saev_it", Conjugation.Fourth, Valency.Accusative), "fume");
+		register(new SimpleVerb("saev", "saevi", "saev_it", Conjugation.Fourth, Valency.Single), "fume");
 		register(new SimpleConjunction("atque"), "and");
 		register(new SimpleConjunction("ac"), "and");
 		register(new SimpleAdverb("n_on"), "not");
@@ -58,10 +58,12 @@ public class LatinRegistry {
 		// TODO impersonal in the passive
 		register(new SimpleVerb("ven", "v_en", "vent", Conjugation.Fourth, Valency.Single), "come");
 		// TODO irregular short imperative
+		register(new SimpleVerb("d_ic", "d_ix", "dict", Conjugation.Third, Valency.Single), "say");
 		register(new SimpleVerb("d_ic", "d_ix", "dict", Conjugation.Third, Valency.Accusative), "say");
 		// TODO quis?
 		register(new SimpleConjunction("sed"), "but");
 		// TODO irregular short imperative
+		register(new SimpleVerb("maled_ic", "maled_ix", "maledict", Conjugation.Third, Valency.Single), "complain");
 		register(new SimpleVerb("maled_ic", "maled_ix", "maledict", Conjugation.Third, Valency.Accusative), "offend");
 		register(new SimpleAdverb("semper"), "always");
 		register(new SimpleAdverb("deinde"), "upon");
@@ -70,6 +72,9 @@ public class LatinRegistry {
 		register(new SimpleAdverb("tandem"), "finally");
 		register(new SimpleVerb("l_ud", "l_us", "l_us", Conjugation.Third, Valency.Accusative), "play");
 		register(new SimpleVerb("iuv", "i_uv", "i_ut", Conjugation.First, Valency.Accusative), "please");
+		
+		// extra
+		register(new SimpleVerb("ulul", "ulul_av", "ulul_at", Conjugation.First, Valency.Single), "howl");
 	}
 
 	// Ostia Altera T2
@@ -91,6 +96,7 @@ public class LatinRegistry {
 		register(new SimpleNoun("Domitilla", "Domitill", Declension.First, Genus.Feminine), "Domitilla");
 		register(new SimpleNoun("L_ucius", "L_uci", Declension.Second, Genus.Masculine), "Lucius");
 		register(new SimpleNoun("Tertia", "Terti", Declension.First, Genus.Feminine), "Tertia");
+		register(new SimpleNoun("Publius", "Publi", Declension.Second, Genus.Masculine), "Publius");
 		register(new SimpleNoun("Polybius", "Polybi", Declension.Second, Genus.Masculine), "Polybius");
 		// T2
 		register(new SimpleNoun("Pomp_onius", "Pomp_oni", Declension.Second, Genus.Masculine), "Pomponius");
