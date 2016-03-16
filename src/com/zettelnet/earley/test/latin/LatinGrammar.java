@@ -17,8 +17,8 @@ import com.zettelnet.earley.symbol.SimpleNonTerminal;
 import com.zettelnet.earley.symbol.Terminal;
 import com.zettelnet.latin.form.Casus;
 import com.zettelnet.latin.form.Form;
+import com.zettelnet.latin.form.Numerus;
 import com.zettelnet.latin.form.Tense;
-import com.zettelnet.latin.form.Voice;
 import com.zettelnet.latin.lemma.LemmaType;
 import com.zettelnet.latin.lemma.property.Finiteness;
 import com.zettelnet.latin.lemma.property.Valency;
@@ -45,6 +45,8 @@ public final class LatinGrammar {
 		Terminal<Token> noun = new LemmaTerminal(LemmaType.Noun);
 		Terminal<Token> adverb = new LemmaTerminal(LemmaType.Adverb);
 		Terminal<Token> adjective = new LemmaTerminal(LemmaType.Adjective);
+		Terminal<Token> conjunction = new LemmaTerminal(LemmaType.Conjunction);
+		Terminal<Token> infinitive = new LemmaTerminal(LemmaType.Infinitive);
 
 		// Management
 
@@ -73,22 +75,18 @@ public final class LatinGrammar {
 				new ParameterizedSymbol<>(verbForm, copy),
 				new ParameterizedSymbol<>(arguments, copy),
 				new ParameterizedSymbol<>(adverbalPhraseVar, any));
-		
+
 		// VF(pi) -> v(pi)
 		grammar.addProduction(
 				verbForm,
-				new SingletonParameterFactory<>(new FormParameter(Tense.Present)),
-				new ParameterizedSymbol<>(verb, copy));
-		grammar.addProduction(
-				verbForm,
-				new SingletonParameterFactory<>(new FormParameter(Tense.Imperfect)),
-				new ParameterizedSymbol<>(verb, copy));
-		grammar.addProduction(
-				verbForm,
-				new SingletonParameterFactory<>(new FormParameter(Tense.Perfect, Voice.Active)),
+				new SingletonParameterFactory<>(new FormParameter(Finiteness.Finite)),
 				new ParameterizedSymbol<>(verb, copy));
 		// TODO
-		
+		grammar.addProduction(
+				verbForm,
+				new SingletonParameterFactory<>(new FormParameter(Finiteness.Infinitive)),
+				new ParameterizedSymbol<>(infinitive, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Casus.Nominative))));
+
 		// Args(pi : NullVal) -> epsilon
 		grammar.addProduction(
 				arguments,
@@ -168,12 +166,29 @@ public final class LatinGrammar {
 		// NP(pi : Nom / Akk) -> S(pi : Inf Pr�s/Perf/Fut Akk)
 		for (Casus casus : Arrays.asList(Casus.Nominative, Casus.Accusative)) {
 			for (Tense tense : Arrays.asList(Tense.Present)) {
-				grammar.addProduction(nounPhrase,
+				grammar.addProduction(
+						nounPhrase,
 						new SingletonParameterFactory<>(new FormParameter(Form.nounForm(casus, null, null))),
-						new ParameterizedSymbol<>(sentence, new SpecificParameterExpression<>(parameterManager, parameterizer,
-								new FormParameter(Casus.Accusative, tense, Finiteness.Infinitive))));
+						new ParameterizedSymbol<>(sentence, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Casus.Accusative, tense, Finiteness.Infinitive))));
 			}
 		}
+
+		// coordinations
+
+		// NP(pi : Pl) -> NP(?) conj NP(?)
+		grammar.addProduction(
+				nounPhrase,
+				new SingletonParameterFactory<>(new FormParameter(Numerus.Plural)),
+				new ParameterizedSymbol<>(nounPhrase, any),
+				new ParameterizedSymbol<>(conjunction, any),
+				new ParameterizedSymbol<>(nounPhrase, any));
+
+		// VP(pi) -> VP(pi) conj VP(pi)
+		grammar.addProduction(
+				verbPhrase,
+				new ParameterizedSymbol<>(verbPhrase, any),
+				new ParameterizedSymbol<>(conjunction, any),
+				new ParameterizedSymbol<>(verbPhrase, any));
 
 		return grammar;
 	}
