@@ -14,7 +14,6 @@ import com.zettelnet.earley.symbol.NonTerminal;
 import com.zettelnet.earley.symbol.SimpleNonTerminal;
 import com.zettelnet.earley.symbol.Terminal;
 import com.zettelnet.latin.form.Casus;
-import com.zettelnet.latin.form.Form;
 import com.zettelnet.latin.form.Numerus;
 import com.zettelnet.latin.form.Tense;
 import com.zettelnet.latin.lemma.LemmaType;
@@ -97,28 +96,28 @@ public final class LatinGrammar {
 		grammar.addProduction(
 				arguments,
 				new SingletonParameterFactory<>(new FormParameter(Valency.Copula)),
-				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Form.nounForm(Casus.Nominative, null, null)))));
+				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Casus.Nominative))));
 		// Args(pi : GenVal) -> NP(Gen)
 		grammar.addProduction(
 				arguments,
 				new SingletonParameterFactory<>(new FormParameter(Valency.Genitive)),
-				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Form.nounForm(Casus.Genitive, null, null)))));
+				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Casus.Genitive))));
 		// Args(pi : DatVal) -> NP(Dat)
 		grammar.addProduction(
 				arguments,
 				new SingletonParameterFactory<>(new FormParameter(Valency.Dative)),
-				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Form.nounForm(Casus.Dative, null, null)))));
+				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Casus.Dative))));
 		// Args(pi : AkkVal) -> NP(Akk)
 		grammar.addProduction(
 				arguments,
 				new SingletonParameterFactory<>(new FormParameter(Valency.Accusative)),
-				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Form.nounForm(Casus.Accusative, null, null)))));
+				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Casus.Accusative))));
 		// Args(pi : AkkDatVal) -> NP(Akk) NP(Dat)
 		grammar.addProduction(
 				arguments,
 				new SingletonParameterFactory<>(new FormParameter(Valency.AccusativeDative)),
-				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Form.nounForm(Casus.Accusative, null, null)))),
-				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Form.nounForm(Casus.Dative, null, null)))));
+				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Casus.Accusative))),
+				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Casus.Dative))));
 
 		// AP var
 		grammar.addProduction(
@@ -160,7 +159,7 @@ public final class LatinGrammar {
 		// Attr(pi) -> NP(Gen)
 		grammar.addProduction(
 				attribute,
-				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Form.nounForm(Casus.Genitive, null, null, null)))));
+				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Casus.Genitive, null, null, null))));
 		// NP(pi : Nom / Akk) -> S(pi : Inf Pr�s/Perf/Fut Akk)
 		grammar.addProduction(
 				nounPhrase,
