@@ -1,7 +1,5 @@
 package com.zettelnet.earley.test.latin;
 
-import java.util.Arrays;
-
 import com.zettelnet.earley.Grammar;
 import com.zettelnet.earley.ParameterizedSymbol;
 import com.zettelnet.earley.SimpleGrammar;
@@ -164,14 +162,10 @@ public final class LatinGrammar {
 				attribute,
 				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Form.nounForm(Casus.Genitive, null, null, null)))));
 		// NP(pi : Nom / Akk) -> S(pi : Inf Pr�s/Perf/Fut Akk)
-		for (Casus casus : Arrays.asList(Casus.Nominative, Casus.Accusative)) {
-			for (Tense tense : Arrays.asList(Tense.Present)) {
-				grammar.addProduction(
-						nounPhrase,
-						new SingletonParameterFactory<>(new FormParameter(Form.nounForm(casus, null, null))),
-						new ParameterizedSymbol<>(sentence, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Casus.Accusative, tense, Finiteness.Infinitive))));
-			}
-		}
+		grammar.addProduction(
+				nounPhrase,
+				new SingletonParameterFactory<>(new FormParameter(Casus.Nominative, Casus.Accusative)),
+				new ParameterizedSymbol<>(sentence, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Casus.Accusative, Tense.Present, Tense.Perfect, Tense.Future, Finiteness.Infinitive))));
 
 		// coordinations
 
