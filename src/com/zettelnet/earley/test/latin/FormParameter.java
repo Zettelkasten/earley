@@ -14,6 +14,16 @@ import com.zettelnet.latin.form.FormProperty;
 
 public final class FormParameter implements Parameter {
 
+	public static Set<FormProperty> deriveProperties(Set<FormProperty> parentProperties, Set<FormProperty> childProperties) {
+		Set<FormProperty> set = new HashSet<>(parentProperties);
+		set.retainAll(childProperties);
+		return set;
+	}
+
+	public static boolean isCompatable(Set<FormProperty> parentProperties, Set<FormProperty> childProperties) {
+		return !deriveProperties(parentProperties, childProperties).isEmpty();
+	}
+
 	private static final Map<Class<? extends FormProperty>, Set<FormProperty>> DEFAULT_DATA = new HashMap<>();
 
 	private static <T> Set<T> singleSet(T value) {
@@ -87,11 +97,11 @@ public final class FormParameter implements Parameter {
 		this(makeDataMap(DEFAULT_DATA, cause.getForm()), cause);
 	}
 
-	private FormParameter(final Map<Class<? extends FormProperty>, Set<FormProperty>> data) {
+	public FormParameter(final Map<Class<? extends FormProperty>, Set<FormProperty>> data) {
 		this(data, null);
 	}
 
-	private FormParameter(final Map<Class<? extends FormProperty>, Set<FormProperty>> data, final Determination cause) {
+	public FormParameter(final Map<Class<? extends FormProperty>, Set<FormProperty>> data, final Determination cause) {
 		this.data = data;
 		this.cause = cause;
 	}
@@ -104,12 +114,8 @@ public final class FormParameter implements Parameter {
 			if (other.data.containsKey(propertyType)) {
 				Set<FormProperty> childValue = other.data.get(propertyType);
 
-				// if at least one of this properties is contained in the other
-				// set, it is compatible
-				for (FormProperty property : parentValue) {
-					if (!childValue.contains(property)) {
-						return false;
-					}
+				if (!isCompatable(parentValue, childValue)) {
+					return false;
 				}
 			}
 		}
@@ -136,6 +142,14 @@ public final class FormParameter implements Parameter {
 
 	public Determination getCause() {
 		return cause;
+	}
+
+	public Set<FormProperty> getProperty(Class<? extends FormProperty> propertyType) {
+		return data.get(propertyType);
+	}
+
+	public Map<Class<? extends FormProperty>, Set<FormProperty>> getProperties() {
+		return data;
 	}
 
 	@Override
@@ -188,4 +202,5 @@ public final class FormParameter implements Parameter {
 		}
 		return true;
 	}
+
 }
