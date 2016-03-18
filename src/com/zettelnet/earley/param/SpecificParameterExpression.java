@@ -1,5 +1,6 @@
 package com.zettelnet.earley.param;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -32,12 +33,14 @@ public class SpecificParameterExpression<T, P extends Parameter> implements Para
 
 	@Override
 	public Collection<P> scan(P parentParameter, T token, Terminal<T> terminal) {
+		Collection<P> results = new ArrayList<>();
 		for (P tokenParameter : parameterizer.getTokenParameters(token, terminal)) {
 			if (manager.isCompatible(specifiedParameter, tokenParameter)) {
-				return Arrays.asList(manager.scanParameter(parentParameter, tokenParameter));
+				P result = manager.scanParameter(parentParameter, tokenParameter);
+				results.add(result);
 			}
 		}
-		return Collections.emptyList();
+		return results;
 	}
 
 	@Override
