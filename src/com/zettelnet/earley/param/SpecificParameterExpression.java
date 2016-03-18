@@ -11,19 +11,19 @@ public class SpecificParameterExpression<T, P extends Parameter> implements Para
 	private final ParameterManager<P> manager;
 	private final TokenParameterizer<T, P> parameterizer;
 
-	private final P parameter;
+	private final P specifiedParameter;
 
 	public SpecificParameterExpression(final ParameterManager<P> manager, final TokenParameterizer<T, P> parameterizer, final P parameter) {
 		this.manager = manager;
 		this.parameterizer = parameterizer;
 
-		this.parameter = parameter;
+		this.specifiedParameter = parameter;
 	}
 
 	@Override
 	public Collection<P> predict(P parentParameter, P childParameter) {
-		if (manager.isCompatible(parameter, childParameter)) {
-			P result = manager.copyParameter(parameter, childParameter);
+		if (manager.isCompatible(specifiedParameter, childParameter)) {
+			P result = manager.copyParameter(specifiedParameter, childParameter);
 			return Arrays.asList(result);
 		} else {
 			return Collections.emptyList();
@@ -33,7 +33,7 @@ public class SpecificParameterExpression<T, P extends Parameter> implements Para
 	@Override
 	public Collection<P> scan(P parentParameter, T token, Terminal<T> terminal) {
 		for (P tokenParameter : parameterizer.getTokenParameters(token, terminal)) {
-			if (manager.isCompatible(parameter, tokenParameter)) {
+			if (manager.isCompatible(specifiedParameter, tokenParameter)) {
 				return Arrays.asList(manager.scanParameter(parentParameter, tokenParameter));
 			}
 		}
@@ -42,7 +42,7 @@ public class SpecificParameterExpression<T, P extends Parameter> implements Para
 
 	@Override
 	public Collection<P> complete(P parentParameter, P childParameter) {
-		if (manager.isCompatible(parameter, childParameter)) {
+		if (manager.isCompatible(specifiedParameter, childParameter)) {
 			return Arrays.asList(manager.copyParameter(parentParameter));
 		} else {
 			return Collections.emptyList();
@@ -51,6 +51,6 @@ public class SpecificParameterExpression<T, P extends Parameter> implements Para
 
 	@Override
 	public String toString() {
-		return parameter.toString();
+		return specifiedParameter.toString();
 	}
 }
