@@ -22,4 +22,8 @@ public class CopyIndividualPropertyExpression implements IndividualPropertyExpre
 		return FormParameter.deriveProperties(parameter, childParameter);
 	}
 
+	@Override
+	public String toString(Class<? extends FormProperty> propertyType) {
+		return propertyType.getSimpleName() + "[&pi;]";
+	}
 }

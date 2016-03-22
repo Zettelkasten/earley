@@ -104,4 +104,19 @@ public class IndividualFormParameterExpression<T> implements ParameterExpression
 		return Arrays.asList(new FormParameter(newData));
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder str = new StringBuilder();
+
+		for (Map.Entry<Class<? extends FormProperty>, IndividualPropertyExpression> entry : handlers.entrySet()) {
+			str.append(' ');
+			str.append(entry.getValue().toString(entry.getKey()));
+		}
+
+		if (str.length() == 0) {
+			return "?";
+		} else {
+			return str.substring(1);
+		}
+	}
 }

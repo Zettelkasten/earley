@@ -1,6 +1,7 @@
 package com.zettelnet.earley.test.latin.individual;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.Set;
 
 import com.zettelnet.earley.test.latin.FormParameter;
@@ -33,4 +34,15 @@ public class SpecificIndividualPropertyExpression implements IndividualPropertyE
 		}
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder str = new StringBuilder();
+		for (Iterator<FormProperty> i = specifiedParameter.iterator(); i.hasNext();) {
+			str.append(i.next().shortName());
+			if (i.hasNext()) {
+				str.append('/');
+			}
+		}
+		return str.toString();
+	}
 }

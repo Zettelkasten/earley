@@ -12,4 +12,8 @@ public interface IndividualPropertyExpression {
 
 	Set<FormProperty> complete(Set<FormProperty> parameter, Set<FormProperty> childParameter);
 
+	default String toString(Class<? extends FormProperty> propertyType) {
+		return toString();
+	}
+
 }
