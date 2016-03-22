@@ -15,9 +15,15 @@ import com.zettelnet.latin.form.FormProperty;
 public final class FormParameter implements Parameter {
 
 	public static Set<FormProperty> deriveProperties(Set<FormProperty> parentProperties, Set<FormProperty> childProperties) {
-		Set<FormProperty> set = new HashSet<>(parentProperties);
-		set.retainAll(childProperties);
-		return set;
+		if (parentProperties == null) {
+			return childProperties;
+		} else if (childProperties == null) {
+			return parentProperties;
+		} else {
+			Set<FormProperty> set = new HashSet<>(parentProperties);
+			set.retainAll(childProperties);
+			return set;
+		}
 	}
 
 	public static boolean isCompatable(Set<FormProperty> parentProperties, Set<FormProperty> childProperties) {

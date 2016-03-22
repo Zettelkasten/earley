@@ -13,6 +13,7 @@ import com.zettelnet.earley.param.TokenParameterizer;
 import com.zettelnet.earley.symbol.NonTerminal;
 import com.zettelnet.earley.symbol.SimpleNonTerminal;
 import com.zettelnet.earley.symbol.Terminal;
+import com.zettelnet.earley.test.latin.individual.IndividualFormParameterExpression;
 import com.zettelnet.latin.form.Casus;
 import com.zettelnet.latin.form.Numerus;
 import com.zettelnet.latin.form.Tense;
@@ -159,7 +160,7 @@ public final class LatinGrammar {
 		// Attr(pi) -> NP(Gen)
 		grammar.addProduction(
 				attribute,
-				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Casus.Genitive, null, null, null))));
+				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Casus.Genitive))));
 		// NP(pi : Nom / Akk) -> S(pi : Inf Pr�s/Perf/Fut Akk)
 		grammar.addProduction(
 				nounPhrase,
@@ -172,9 +173,9 @@ public final class LatinGrammar {
 		grammar.addProduction(
 				nounPhrase,
 				new SingletonParameterFactory<>(new FormParameter(Numerus.Plural)),
-				new ParameterizedSymbol<>(nounPhrase, any),
+				new ParameterizedSymbol<>(nounPhrase, new IndividualFormParameterExpression<>(parameterizer).copy(Casus.class)),
 				new ParameterizedSymbol<>(conjunction, any),
-				new ParameterizedSymbol<>(nounPhrase, any));
+				new ParameterizedSymbol<>(nounPhrase, new IndividualFormParameterExpression<>(parameterizer).copy(Casus.class)));
 
 		// VP(pi) -> VP(pi) conj VP(pi)
 		grammar.addProduction(
