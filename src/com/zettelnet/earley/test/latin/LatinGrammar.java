@@ -180,9 +180,9 @@ public final class LatinGrammar {
 		// VP(pi) -> VP(pi) conj VP(pi)
 		grammar.addProduction(
 				verbPhrase,
-				new ParameterizedSymbol<>(verbPhrase, any),
+				new ParameterizedSymbol<>(verbPhrase, new IndividualFormParameterExpression<>(parameterizer).copy(Numerus.class).copy(Finiteness.class)),
 				new ParameterizedSymbol<>(conjunction, any),
-				new ParameterizedSymbol<>(verbPhrase, any));
+				new ParameterizedSymbol<>(verbPhrase, new IndividualFormParameterExpression<>(parameterizer).copy(Numerus.class).copy(Finiteness.class)));
 
 		return grammar;
 	}
