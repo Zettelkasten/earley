@@ -59,10 +59,12 @@ public class IndividualFormParameterExpression<T> implements ParameterExpression
 			Class<? extends FormProperty> propertyType = entry.getKey();
 			IndividualPropertyExpression expression = entry.getValue();
 			Set<FormProperty> properties = expression.predict(parameter.getProperty(propertyType), childParameter.getProperty(propertyType));
-			if (properties.isEmpty()) {
-				return Collections.emptyList();
-			} else {
-				newData.put(entry.getKey(), properties);
+			if (properties != null) {
+				if (properties.isEmpty()) {
+					return Collections.emptyList();
+				} else {
+					newData.put(entry.getKey(), properties);
+				}
 			}
 		}
 		return Arrays.asList(new FormParameter(newData));
@@ -77,10 +79,12 @@ public class IndividualFormParameterExpression<T> implements ParameterExpression
 				Class<? extends FormProperty> propertyType = entry.getKey();
 				IndividualPropertyExpression expression = entry.getValue();
 				Set<FormProperty> properties = expression.scan(parameter.getProperty(propertyType), tokenParameter.getProperty(propertyType));
-				if (properties.isEmpty()) {
-					return Collections.emptyList();
-				} else {
-					newData.put(entry.getKey(), properties);
+				if (properties != null) {
+					if (properties.isEmpty()) {
+						return Collections.emptyList();
+					} else {
+						newData.put(entry.getKey(), properties);
+					}
 				}
 			}
 			results.add(new FormParameter(newData));
@@ -95,10 +99,12 @@ public class IndividualFormParameterExpression<T> implements ParameterExpression
 			Class<? extends FormProperty> propertyType = entry.getKey();
 			IndividualPropertyExpression expression = entry.getValue();
 			Set<FormProperty> properties = expression.complete(parameter.getProperty(propertyType), childParameter.getProperty(propertyType));
-			if (properties.isEmpty()) {
-				return Collections.emptyList();
-			} else {
-				newData.put(entry.getKey(), properties);
+			if (properties != null) {
+				if (properties.isEmpty()) {
+					return Collections.emptyList();
+				} else {
+					newData.put(entry.getKey(), properties);
+				}
 			}
 		}
 		return Arrays.asList(new FormParameter(newData));
