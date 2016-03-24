@@ -12,7 +12,6 @@ import com.zettelnet.latin.lemma.property.Valency;
 
 public interface Form extends PropertySet<FormProperty> {
 
-	@Deprecated
 	public static final Set<Class<? extends FormProperty>> ALL_PROPERTIES = getAllProperties();
 
 	static Set<Class<? extends FormProperty>> getAllProperties() {
@@ -25,8 +24,6 @@ public interface Form extends PropertySet<FormProperty> {
 		properties.add(Tense.class);
 		properties.add(Voice.class);
 		properties.add(Comparison.class);
-		properties.add(Finiteness.class);
-		properties.add(Valency.class);
 
 		return Collections.unmodifiableSet(properties);
 	}
