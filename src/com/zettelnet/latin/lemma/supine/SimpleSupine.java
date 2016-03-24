@@ -1,5 +1,6 @@
 package com.zettelnet.latin.lemma.supine;
 
+import com.zettelnet.latin.derivation.Derivation;
 import com.zettelnet.latin.form.Casus;
 import com.zettelnet.latin.form.Form;
 import com.zettelnet.latin.form.Genus;
@@ -14,13 +15,15 @@ import com.zettelnet.latin.lemma.verb.Verb;
 public class SimpleSupine extends AbstractDeclinableLemma implements Supine {
 
 	private final Verb verb;
+	private final Derivation derivation;
 
-	public SimpleSupine(String stem, FormProvider<DeclinableLemma> formProvider, Genus genus, Verb verb, LemmaProperty... properties) {
+	public SimpleSupine(String stem, FormProvider<DeclinableLemma> formProvider, Genus genus, Verb verb, Derivation derivation, LemmaProperty... properties) {
 		super(null, stem, formProvider, genus, properties);
 
 		this.verb = verb;
+		this.derivation = derivation;
 	}
-	
+
 	@Override
 	public String getNominalForm() {
 		return getForm(Form.withValues(Casus.Accusative, Numerus.Singular)).iterator().next();
@@ -39,5 +42,10 @@ public class SimpleSupine extends AbstractDeclinableLemma implements Supine {
 	@Override
 	public Verb getDerivedFrom() {
 		return verb;
+	}
+
+	@Override
+	public Derivation getDerivationKind() {
+		return derivation;
 	}
 }

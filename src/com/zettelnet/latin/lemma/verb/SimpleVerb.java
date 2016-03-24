@@ -110,6 +110,11 @@ public class SimpleVerb implements Verb {
 	public Lemma getDerivedFrom() {
 		return null;
 	}
+	
+	@Override
+	public Derivation getDerivationKind() {
+		return null;
+	}
 
 	@Override
 	public String toString() {

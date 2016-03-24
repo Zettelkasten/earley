@@ -1,5 +1,6 @@
 package com.zettelnet.latin.lemma.noun;
 
+import com.zettelnet.latin.derivation.Derivation;
 import com.zettelnet.latin.form.Genus;
 import com.zettelnet.latin.lemma.AbstractDeclinableLemma;
 import com.zettelnet.latin.lemma.DeclinableLemma;
@@ -9,7 +10,7 @@ import com.zettelnet.latin.lemma.LemmaType;
 import com.zettelnet.latin.lemma.property.LemmaProperty;
 
 public class SimpleNoun extends AbstractDeclinableLemma implements Noun {
-
+	
 	public SimpleNoun(final String firstForm, final String stem, final FormProvider<DeclinableLemma> formProvider, final Genus genus, final LemmaProperty... properties) {
 		super(firstForm, stem, formProvider, genus, properties);
 	}
@@ -26,6 +27,11 @@ public class SimpleNoun extends AbstractDeclinableLemma implements Noun {
 
 	@Override
 	public Lemma getDerivedFrom() {
+		return null;
+	}
+	
+	@Override
+	public Derivation getDerivationKind() {
 		return null;
 	}
 }

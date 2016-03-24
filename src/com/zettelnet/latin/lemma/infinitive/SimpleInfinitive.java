@@ -25,12 +25,15 @@ public class SimpleInfinitive implements Infinitive {
 	private final Set<Genus> genus;
 
 	private final Verb verb;
+	private final Derivation derivation;
+	
 	private final PropertySet<LemmaProperty> properties;
 
-	public SimpleInfinitive(final String firstForm, final Genus genus, final Verb verb, final LemmaProperty... properties) {
+	public SimpleInfinitive(final String firstForm, final Genus genus, final Verb verb, final Derivation derivation, final LemmaProperty... properties) {
 		this.firstForm = firstForm;
 		this.genus = EnumSet.of(genus);
 		this.verb = verb;
+		this.derivation = derivation;
 		this.properties = MapLemmaPropertySet.valueOf(properties);
 	}
 
@@ -104,6 +107,11 @@ public class SimpleInfinitive implements Infinitive {
 	@Override
 	public Verb getDerivedFrom() {
 		return verb;
+	}
+	
+	@Override
+	public Derivation getDerivationKind() {
+		return derivation;
 	}
 
 	@Override

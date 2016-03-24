@@ -30,7 +30,7 @@ public class SupineConjugation implements DerivationProvider<Verb> {
 			return Collections.emptyList();
 		} else {
 			String stem = lemma.getStem(VerbStem.Supine);
-			Lemma supine = new SimpleSupine(stem, formProvider, Genus.Neuter, lemma);
+			Lemma supine = new SimpleSupine(stem, formProvider, Genus.Neuter, lemma, derivation);
 			return Arrays.asList(supine);
 		}
 	}

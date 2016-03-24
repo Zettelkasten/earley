@@ -31,4 +31,6 @@ public interface Lemma {
 	boolean isDerivation();
 	
 	Lemma getDerivedFrom();
+	
+	Derivation getDerivationKind();
 }

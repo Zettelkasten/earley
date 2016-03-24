@@ -80,6 +80,11 @@ public class SimpleConjunction implements Conjunction {
 	public Lemma getDerivedFrom() {
 		return null;
 	}
+	
+	@Override
+	public Derivation getDerivationKind() {
+		return null;
+	}
 
 	@Override
 	public String toString() {

@@ -59,14 +59,14 @@ public abstract class AbstractInfinitiveConjugation implements DerivationProvide
 				Collection<String> stemEndings = this.stemEndings.getValue(form);
 				if (stemEndings.isEmpty()) {
 					// infinitive without inflected forms
-					Lemma infinitive = new SimpleInfinitive(firstForm, Genus.Neuter, lemma);
+					Lemma infinitive = new SimpleInfinitive(firstForm, Genus.Neuter, lemma, derivation);
 					lemmas.add(infinitive);
 				} else {
 					// infinitive / gerund with inflected forms
 					for (String stemEnding : stemEndings) {
 						String stem = verbStem + stemEnding;
 
-						Lemma gerund = new SimpleGerund(firstForm, stem, formProvider, Genus.Neuter, lemma);
+						Lemma gerund = new SimpleGerund(firstForm, stem, formProvider, Genus.Neuter, lemma, derivation);
 						lemmas.add(gerund);
 					}
 				}
