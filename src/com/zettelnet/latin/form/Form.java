@@ -1,31 +1,40 @@
 package com.zettelnet.latin.form;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.zettelnet.earley.param.property.PropertySet;
 import com.zettelnet.latin.lemma.property.Finiteness;
 import com.zettelnet.latin.lemma.property.Valency;
 
-public interface Form extends PropertySet<FormProperty> {
+public interface Form extends PropertySet<FormProperty>, Comparable<Form> {
 
-	public static final Set<Class<? extends FormProperty>> ALL_PROPERTIES = getAllProperties();
+	public static final Set<Class<? extends FormProperty>> ALL_PROPERTIES = Collections.unmodifiableSet(new HashSet<>(getAllProperties()));
+	public static final List<Class<? extends FormProperty>> ALL_PROPERTIES_SORTED = Collections.unmodifiableList(getAllProperties());
 
-	static Set<Class<? extends FormProperty>> getAllProperties() {
-		Set<Class<? extends FormProperty>> properties = new HashSet<>();
+	static List<Class<? extends FormProperty>> getAllProperties() {
+		List<Class<? extends FormProperty>> properties = new ArrayList<>();
 		properties.add(Casus.class);
+		properties.add(Person.class);
 		properties.add(Numerus.class);
 		properties.add(Genus.class);
-		properties.add(Person.class);
 		properties.add(Mood.class);
 		properties.add(Tense.class);
 		properties.add(Voice.class);
 		properties.add(Comparison.class);
 
-		return Collections.unmodifiableSet(properties);
+		// these values have to be here so Form#compareTo(..) and
+		// Form#toString(..) work until LemmaProperties are no longer
+		// FormProperties
+		properties.add(Finiteness.class);
+		properties.add(Valency.class);
+
+		return properties;
 	}
 
 	public static Form withValues(FormProperty... properties) {

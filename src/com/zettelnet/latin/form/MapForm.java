@@ -3,6 +3,7 @@ package com.zettelnet.latin.form;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.ListIterator;
 import java.util.Map;
 
 public final class MapForm implements Form {
@@ -51,7 +52,8 @@ public final class MapForm implements Form {
 	public String toString() {
 		StringBuilder str = new StringBuilder();
 
-		for (FormProperty property : data.values()) {
+		for (Class<? extends FormProperty> propertyType : Form.ALL_PROPERTIES_SORTED) {
+			FormProperty property = getProperty(propertyType);
 			if (property != null) {
 				str.append(' ');
 				str.append(property.shortName());
@@ -127,5 +129,24 @@ public final class MapForm implements Form {
 			newData.put(property.getClass(), property);
 		}
 		return new MapForm(newData);
+	}
+
+	@Override
+	public int compareTo(Form other) {
+		if (this.equals(other)) {
+			return 0;
+		} else {
+			ListIterator<Class<? extends FormProperty>> i = Form.ALL_PROPERTIES_SORTED.listIterator(Form.ALL_PROPERTIES_SORTED.size());
+			while (i.hasPrevious()) {
+				Class<? extends FormProperty> propertyType = i.previous();
+				FormProperty thisProperty = this.getProperty(propertyType);
+				FormProperty otherProperty = other.getProperty(propertyType);
+
+				if (thisProperty != null && otherProperty != null && thisProperty.ordinal() != otherProperty.ordinal()) {
+					return thisProperty.ordinal() - otherProperty.ordinal();
+				}
+			}
+			throw new AssertionError("Form properties technically equal but form is not equal");
+		}
 	}
 }

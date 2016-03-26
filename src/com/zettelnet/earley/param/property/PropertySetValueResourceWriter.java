@@ -4,16 +4,24 @@ import java.io.PrintStream;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class PropertySetValueResourceWriter<T extends PropertySet<?>> {
 
 	private final PropertySetWriter<T> keyWriter;
 
 	private final PrintStream out;
+	
+	private boolean sortSections;
 
 	public PropertySetValueResourceWriter(final PropertySetWriter<T> keyWriter, final PrintStream out) {
+		this(keyWriter, out, true);
+	}
+	
+	public PropertySetValueResourceWriter(final PropertySetWriter<T> keyWriter, final PrintStream out, boolean sortSections) {
 		this.keyWriter = keyWriter;
 		this.out = out;
+		this.sortSections = sortSections;
 	}
 
 	public void printResource(final PropertySetValueResource<T> resource) {
@@ -35,7 +43,11 @@ public class PropertySetValueResourceWriter<T extends PropertySet<?>> {
 		}
 	}
 
-	private void printSectionValues(final Map<T, Collection<String>> sectionValues) {
+	private void printSectionValues(Map<T, Collection<String>> sectionValues) {
+		if (sortSections) {
+			sectionValues = new TreeMap<>(sectionValues);
+		}
+		
 		for (Map.Entry<T, Collection<String>> entry : sectionValues.entrySet()) {
 			T key = entry.getKey();
 			keyWriter.print(out, key);
@@ -43,6 +55,7 @@ public class PropertySetValueResourceWriter<T extends PropertySet<?>> {
 			out.print(PropertySetValueResource.ASSIGN);
 
 			Collection<String> value = entry.getValue();
+			
 			for (Iterator<String> i = value.iterator(); i.hasNext();) {
 				String str = i.next();
 				out.print(PropertySetValueResource.QUOTATION);
