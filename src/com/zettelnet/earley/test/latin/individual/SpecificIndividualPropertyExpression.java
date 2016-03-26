@@ -4,29 +4,29 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.Set;
 
+import com.zettelnet.earley.param.property.Property;
 import com.zettelnet.earley.test.latin.FormParameter;
-import com.zettelnet.latin.form.FormProperty;
 
 public class SpecificIndividualPropertyExpression implements IndividualPropertyExpression {
 
-	private final Set<FormProperty> specifiedParameter;
-	
-	public SpecificIndividualPropertyExpression(final Set<FormProperty> parameter) {
+	private final Set<Property> specifiedParameter;
+
+	public SpecificIndividualPropertyExpression(final Set<Property> parameter) {
 		this.specifiedParameter = parameter;
 	}
-	
+
 	@Override
-	public Set<FormProperty> predict(Set<FormProperty> parameter, Set<FormProperty> childParameter) {
+	public Set<Property> predict(Set<Property> parameter, Set<Property> childParameter) {
 		return FormParameter.deriveProperties(specifiedParameter, childParameter);
 	}
 
 	@Override
-	public Set<FormProperty> scan(Set<FormProperty> parameter, Set<FormProperty> tokenParameter) {
+	public Set<Property> scan(Set<Property> parameter, Set<Property> tokenParameter) {
 		return FormParameter.deriveProperties(specifiedParameter, tokenParameter);
 	}
 
 	@Override
-	public Set<FormProperty> complete(Set<FormProperty> parameter, Set<FormProperty> childParameter) {
+	public Set<Property> complete(Set<Property> parameter, Set<Property> childParameter) {
 		if (FormParameter.isCompatable(specifiedParameter, childParameter)) {
 			return parameter;
 		} else {
@@ -37,7 +37,7 @@ public class SpecificIndividualPropertyExpression implements IndividualPropertyE
 	@Override
 	public String toString() {
 		StringBuilder str = new StringBuilder();
-		for (Iterator<FormProperty> i = specifiedParameter.iterator(); i.hasNext();) {
+		for (Iterator<Property> i = specifiedParameter.iterator(); i.hasNext();) {
 			str.append(i.next().shortName());
 			if (i.hasNext()) {
 				str.append('/');

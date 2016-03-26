@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Set;
 
 import com.zettelnet.earley.param.property.PropertySet;
-import com.zettelnet.latin.lemma.property.Finiteness;
-import com.zettelnet.latin.lemma.property.Valency;
 
 public interface Form extends PropertySet<FormProperty>, Comparable<Form> {
 
@@ -27,12 +25,6 @@ public interface Form extends PropertySet<FormProperty>, Comparable<Form> {
 		properties.add(Tense.class);
 		properties.add(Voice.class);
 		properties.add(Comparison.class);
-
-		// these values have to be here so Form#compareTo(..) and
-		// Form#toString(..) work until LemmaProperties are no longer
-		// FormProperties
-		properties.add(Finiteness.class);
-		properties.add(Valency.class);
 
 		return properties;
 	}
@@ -54,15 +46,11 @@ public interface Form extends PropertySet<FormProperty>, Comparable<Form> {
 	}
 
 	public static Form verbForm(Person person, Numerus numerus, Tense tense, Mood mood, Voice voice) {
-		return verbForm(person, numerus, tense, mood, voice, null);
-	}
-
-	public static Form verbForm(Person person, Numerus numerus, Tense tense, Mood mood, Voice voice, Finiteness verbType) {
-		return withValues(null, numerus, null, person, mood, tense, voice, null, verbType);
+		return withValues(person, numerus, tense, mood, voice);
 	}
 
 	@Override
-	<T extends FormProperty> boolean hasProperty(Class<T> property);
+	boolean hasProperty(Class<? extends FormProperty> property);
 
 	@Override
 	<T extends FormProperty> T getProperty(Class<T> property);
@@ -101,21 +89,14 @@ public interface Form extends PropertySet<FormProperty>, Comparable<Form> {
 		return getProperty(Comparison.class);
 	}
 
-	public default Finiteness getVerbType() {
-		return getProperty(Finiteness.class);
-	}
-
-	public default Valency getValency() {
-		return getProperty(Valency.class);
-	}
-
+	@Override
 	Form retainAll(Collection<Class<? extends FormProperty>> properties);
 
-	boolean hasProperties(FormProperty... properties);
-
+	@Override
 	default Form derive(FormProperty... properties) {
 		return derive(Arrays.asList(properties));
 	}
 
+	@Override
 	Form derive(Collection<? extends FormProperty> properties);
 }

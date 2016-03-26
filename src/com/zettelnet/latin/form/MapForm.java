@@ -33,7 +33,7 @@ public final class MapForm implements Form {
 	}
 
 	@Override
-	public <T extends FormProperty> boolean hasProperty(Class<T> property) {
+	public boolean hasProperty(Class<? extends FormProperty> property) {
 		return data.containsKey(property);
 	}
 

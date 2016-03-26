@@ -6,12 +6,12 @@ import java.util.EnumSet;
 import java.util.Map;
 import java.util.Set;
 
+import com.zettelnet.earley.param.property.MapPropertySet;
 import com.zettelnet.earley.param.property.PropertySet;
 import com.zettelnet.latin.derivation.Derivation;
 import com.zettelnet.latin.form.Form;
 import com.zettelnet.latin.form.Genus;
 import com.zettelnet.latin.lemma.property.LemmaProperty;
-import com.zettelnet.latin.lemma.property.MapLemmaPropertySet;
 
 public abstract class AbstractDeclinableLemma implements DeclinableLemma {
 
@@ -30,7 +30,7 @@ public abstract class AbstractDeclinableLemma implements DeclinableLemma {
 		this.stem = stem;
 		this.formProvider = formProvider;
 		this.genus = genus;
-		this.properties = MapLemmaPropertySet.valueOf(properties);
+		this.properties = MapPropertySet.withValues(properties);
 	}
 
 	@Override

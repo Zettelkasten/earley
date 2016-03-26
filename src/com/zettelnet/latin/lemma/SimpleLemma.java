@@ -5,11 +5,11 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.UUID;
 
+import com.zettelnet.earley.param.property.MapPropertySet;
 import com.zettelnet.earley.param.property.PropertySet;
 import com.zettelnet.latin.derivation.Derivation;
 import com.zettelnet.latin.form.Form;
 import com.zettelnet.latin.lemma.property.LemmaProperty;
-import com.zettelnet.latin.lemma.property.MapLemmaPropertySet;
 
 public class SimpleLemma implements Lemma {
 
@@ -24,7 +24,7 @@ public class SimpleLemma implements Lemma {
 	public SimpleLemma(final String firstForm, final LemmaType type, final LemmaProperty... properties) {
 		this.firstForm = firstForm;
 		this.type = type;
-		this.properties = MapLemmaPropertySet.valueOf(properties);
+		this.properties = MapPropertySet.withValues(properties);
 	}
 
 	@Override

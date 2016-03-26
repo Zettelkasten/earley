@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.zettelnet.earley.param.property.MapPropertySet;
 import com.zettelnet.earley.param.property.PropertySet;
 import com.zettelnet.latin.derivation.Derivation;
 import com.zettelnet.latin.form.Casus;
@@ -16,7 +17,6 @@ import com.zettelnet.latin.form.Genus;
 import com.zettelnet.latin.lemma.Lemma;
 import com.zettelnet.latin.lemma.LemmaType;
 import com.zettelnet.latin.lemma.property.LemmaProperty;
-import com.zettelnet.latin.lemma.property.MapLemmaPropertySet;
 import com.zettelnet.latin.lemma.verb.Verb;
 
 public class SimpleInfinitive implements Infinitive {
@@ -34,7 +34,7 @@ public class SimpleInfinitive implements Infinitive {
 		this.genus = EnumSet.of(genus);
 		this.verb = verb;
 		this.derivation = derivation;
-		this.properties = MapLemmaPropertySet.valueOf(properties);
+		this.properties = MapPropertySet.withValues(properties);
 	}
 
 	@Override

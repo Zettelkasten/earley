@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.zettelnet.earley.param.property.MapPropertySet;
 import com.zettelnet.earley.param.property.PropertySet;
 import com.zettelnet.latin.derivation.Derivation;
 import com.zettelnet.latin.form.Casus;
@@ -19,7 +20,6 @@ import com.zettelnet.latin.lemma.FormProvider;
 import com.zettelnet.latin.lemma.Lemma;
 import com.zettelnet.latin.lemma.LemmaType;
 import com.zettelnet.latin.lemma.property.LemmaProperty;
-import com.zettelnet.latin.lemma.property.MapLemmaPropertySet;
 
 public class SimpleAdjective implements Adjective {
 
@@ -40,7 +40,7 @@ public class SimpleAdjective implements Adjective {
 		this.firstForm = firstForm;
 		this.stem = stem;
 		this.formProviders = formProvider;
-		this.properties = MapLemmaPropertySet.valueOf(lemmaProperties);
+		this.properties = MapPropertySet.withValues(lemmaProperties);
 	}
 
 	@Override

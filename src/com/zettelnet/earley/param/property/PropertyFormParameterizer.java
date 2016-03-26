@@ -31,7 +31,7 @@ public class PropertyFormParameterizer implements TokenParameterizer<Token, Prop
 				}
 			}
 
-			Form form = determination.getForm();
+			Form form = determination.toForm();
 			PropertyParameter<FormProperty> parameter = manager.makeParameter(form);
 			parameters.add(parameter);
 		}

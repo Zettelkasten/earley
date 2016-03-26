@@ -9,28 +9,30 @@ import java.util.Map;
 import java.util.Set;
 
 import com.zettelnet.earley.param.Parameter;
+import com.zettelnet.earley.param.property.Property;
+import com.zettelnet.earley.param.property.PropertySet;
 import com.zettelnet.latin.form.Form;
 import com.zettelnet.latin.form.FormProperty;
 
 public final class FormParameter implements Parameter {
 
-	public static Set<FormProperty> deriveProperties(Set<FormProperty> parentProperties, Set<FormProperty> childProperties) {
+	public static Set<Property> deriveProperties(Set<Property> parentProperties, Set<Property> childProperties) {
 		if (parentProperties == null) {
 			return childProperties;
 		} else if (childProperties == null) {
 			return parentProperties;
 		} else {
-			Set<FormProperty> set = new HashSet<>(parentProperties);
+			Set<Property> set = new HashSet<>(parentProperties);
 			set.retainAll(childProperties);
 			return set;
 		}
 	}
 
-	public static boolean isCompatable(Set<FormProperty> parentProperties, Set<FormProperty> childProperties) {
+	public static boolean isCompatable(Set<Property> parentProperties, Set<Property> childProperties) {
 		return !deriveProperties(parentProperties, childProperties).isEmpty();
 	}
 
-	private static final Map<Class<? extends FormProperty>, Set<FormProperty>> DEFAULT_DATA = new HashMap<>();
+	private static final Map<Class<? extends Property>, Set<Property>> DEFAULT_DATA = new HashMap<>();
 
 	private static <T> Set<T> singleSet(T value) {
 		Set<T> set = new HashSet<>(1);
@@ -38,10 +40,10 @@ public final class FormParameter implements Parameter {
 		return set;
 	}
 
-	private static Map<Class<? extends FormProperty>, Set<FormProperty>> makeDataMap(Map<Class<? extends FormProperty>, Set<FormProperty>> sourceData, Form form) {
-		final Map<Class<? extends FormProperty>, Set<FormProperty>> data = new HashMap<>(sourceData);
-		for (FormProperty property : form.values()) {
-			Class<? extends FormProperty> propertyType = property.getClass();
+	private static Map<Class<? extends Property>, Set<Property>> makeDataMap(Map<Class<? extends Property>, Set<Property>> sourceData, PropertySet<?> form) {
+		final Map<Class<? extends Property>, Set<Property>> data = new HashMap<>(sourceData);
+		for (Property property : form.values()) {
+			Class<? extends Property> propertyType = property.getClass();
 			if (!data.containsKey(propertyType)) {
 				data.put(propertyType, singleSet(property));
 			} else {
@@ -51,11 +53,11 @@ public final class FormParameter implements Parameter {
 		return data;
 	}
 
-	private static Map<Class<? extends FormProperty>, Set<FormProperty>> makeDataMap(Map<Class<? extends FormProperty>, Set<FormProperty>> sourceData, Map<Class<? extends FormProperty>, Set<FormProperty>> newData) {
-		final Map<Class<? extends FormProperty>, Set<FormProperty>> data = new HashMap<>(sourceData);
-		for (Map.Entry<Class<? extends FormProperty>, Set<FormProperty>> entry : newData.entrySet()) {
-			Class<? extends FormProperty> propertyType = entry.getKey();
-			Set<FormProperty> property = entry.getValue();
+	private static Map<Class<? extends Property>, Set<Property>> makeDataMap(Map<Class<? extends Property>, Set<Property>> sourceData, Map<Class<? extends Property>, Set<Property>> newData) {
+		final Map<Class<? extends Property>, Set<Property>> data = new HashMap<>(sourceData);
+		for (Map.Entry<Class<? extends Property>, Set<Property>> entry : newData.entrySet()) {
+			Class<? extends Property> propertyType = entry.getKey();
+			Set<Property> property = entry.getValue();
 			if (!data.containsKey(propertyType)) {
 				data.put(propertyType, property);
 			} else {
@@ -65,11 +67,11 @@ public final class FormParameter implements Parameter {
 		return data;
 	}
 
-	private static Map<Class<? extends FormProperty>, Set<FormProperty>> makeDataMap(FormProperty... formProperties) {
-		final Map<Class<? extends FormProperty>, Set<FormProperty>> data = new HashMap<>(formProperties.length);
+	private static Map<Class<? extends Property>, Set<Property>> makeDataMap(Property... formProperties) {
+		final Map<Class<? extends Property>, Set<Property>> data = new HashMap<>(formProperties.length);
 
-		for (FormProperty property : formProperties) {
-			Class<? extends FormProperty> propertyType = property.getClass();
+		for (Property property : formProperties) {
+			Class<? extends Property> propertyType = property.getClass();
 			if (!data.containsKey(propertyType)) {
 				data.put(propertyType, new HashSet<>());
 			}
@@ -83,7 +85,7 @@ public final class FormParameter implements Parameter {
 	// represents all properties by key
 	// property keys not contained in this map allow ANY value; empty value sets
 	// are not allowed
-	private final Map<Class<? extends FormProperty>, Set<FormProperty>> data;
+	private final Map<Class<? extends Property>, Set<Property>> data;
 
 	private final Determination cause;
 
@@ -91,34 +93,34 @@ public final class FormParameter implements Parameter {
 		this(DEFAULT_DATA);
 	}
 
-	public FormParameter(final FormProperty... formProperties) {
+	public FormParameter(final Property... formProperties) {
 		this(makeDataMap(DEFAULT_DATA, makeDataMap(formProperties)));
 	}
 
-	public FormParameter(final Form form) {
-		this(makeDataMap(DEFAULT_DATA, form));
+	public FormParameter(final PropertySet<?> properties) {
+		this(makeDataMap(DEFAULT_DATA, properties));
 	}
 
 	public FormParameter(final Determination cause) {
-		this(makeDataMap(DEFAULT_DATA, cause.getForm()), cause);
+		this(makeDataMap(DEFAULT_DATA, cause.getProperties()), cause);
 	}
 
-	public FormParameter(final Map<Class<? extends FormProperty>, Set<FormProperty>> data) {
+	public FormParameter(final Map<Class<? extends Property>, Set<Property>> data) {
 		this(data, null);
 	}
 
-	public FormParameter(final Map<Class<? extends FormProperty>, Set<FormProperty>> data, final Determination cause) {
+	public FormParameter(final Map<Class<? extends Property>, Set<Property>> data, final Determination cause) {
 		this.data = data;
 		this.cause = cause;
 	}
 
 	public boolean isCompatibleWith(FormParameter other) {
-		for (Map.Entry<Class<? extends FormProperty>, Set<FormProperty>> entry : data.entrySet()) {
-			Class<? extends FormProperty> propertyType = entry.getKey();
-			Set<FormProperty> parentValue = entry.getValue();
+		for (Map.Entry<Class<? extends Property>, Set<Property>> entry : data.entrySet()) {
+			Class<? extends Property> propertyType = entry.getKey();
+			Set<Property> parentValue = entry.getValue();
 
 			if (other.data.containsKey(propertyType)) {
-				Set<FormProperty> childValue = other.data.get(propertyType);
+				Set<Property> childValue = other.data.get(propertyType);
 
 				if (!isCompatable(parentValue, childValue)) {
 					return false;
@@ -137,11 +139,14 @@ public final class FormParameter implements Parameter {
 		return new FormParameter(this.data, tokenParameter.getCause());
 	}
 
-	// warning: ignores duplicate parameters
+	// warning: ignores duplicate parameters & non form properties
 	public Form toForm() {
 		Collection<FormProperty> properties = new HashSet<>();
-		for (Set<FormProperty> propertySet : data.values()) {
-			properties.add(propertySet.iterator().next());
+		for (Set<Property> propertySet : data.values()) {
+			Property first = propertySet.iterator().next();
+			if (first instanceof FormProperty) {
+				properties.add((FormProperty) first);
+			}
 		}
 		return Form.withValues(properties);
 	}
@@ -150,11 +155,11 @@ public final class FormParameter implements Parameter {
 		return cause;
 	}
 
-	public Set<FormProperty> getProperty(Class<? extends FormProperty> propertyType) {
+	public Set<Property> getProperty(Class<? extends Property> propertyType) {
 		return data.get(propertyType);
 	}
 
-	public Map<Class<? extends FormProperty>, Set<FormProperty>> getProperties() {
+	public Map<Class<? extends Property>, Set<Property>> getProperties() {
 		return data;
 	}
 
@@ -162,9 +167,9 @@ public final class FormParameter implements Parameter {
 	public String toString() {
 		StringBuilder str = new StringBuilder();
 
-		for (Set<FormProperty> propertySet : data.values()) {
+		for (Set<Property> propertySet : data.values()) {
 			str.append(' ');
-			for (Iterator<FormProperty> i = propertySet.iterator(); i.hasNext();) {
+			for (Iterator<Property> i = propertySet.iterator(); i.hasNext();) {
 				str.append(i.next().shortName());
 				if (i.hasNext()) {
 					str.append('/');

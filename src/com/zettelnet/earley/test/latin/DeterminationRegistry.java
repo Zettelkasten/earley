@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.zettelnet.earley.param.property.PropertySet;
+import com.zettelnet.earley.param.property.PropertySets;
 import com.zettelnet.earley.token.TokenFactory;
 import com.zettelnet.latin.form.Form;
 import com.zettelnet.latin.lemma.Lemma;
@@ -25,12 +27,12 @@ public class DeterminationRegistry implements TokenFactory<Token> {
 
 	public void register(Lemma lemma) {
 		for (Entry<Form, Collection<String>> entry : lemma.getForms().entrySet()) {
-			Form form = entry.getKey().derive(lemma.getProperties().values());
+			PropertySet<?> properties = PropertySets.derive(entry.getKey(), lemma.getProperties());
 			for (String value : entry.getValue()) {
-				register(value, new Determination(lemma, form));
+				register(value, new Determination(lemma, properties));
 			}
 		}
-		
+
 		for (Collection<Lemma> collection : lemma.getDerivations().values()) {
 			for (Lemma derivation : collection) {
 				register(derivation);

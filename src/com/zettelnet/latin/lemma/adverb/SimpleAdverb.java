@@ -6,13 +6,13 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.zettelnet.earley.param.property.MapPropertySet;
 import com.zettelnet.earley.param.property.PropertySet;
 import com.zettelnet.latin.derivation.Derivation;
 import com.zettelnet.latin.form.Form;
 import com.zettelnet.latin.lemma.Lemma;
 import com.zettelnet.latin.lemma.LemmaType;
 import com.zettelnet.latin.lemma.property.LemmaProperty;
-import com.zettelnet.latin.lemma.property.MapLemmaPropertySet;
 
 public class SimpleAdverb implements Lemma {
 
@@ -21,7 +21,7 @@ public class SimpleAdverb implements Lemma {
 
 	public SimpleAdverb(final String firstForm, final LemmaProperty... properties) {
 		this.firstForm = firstForm;
-		this.properties = MapLemmaPropertySet.valueOf(properties);
+		this.properties = MapPropertySet.withValues(properties);
 	}
 
 	@Override

@@ -2,17 +2,17 @@ package com.zettelnet.earley.test.latin.individual;
 
 import java.util.Set;
 
-import com.zettelnet.latin.form.FormProperty;
+import com.zettelnet.earley.param.property.Property;
 
 public interface IndividualPropertyExpression {
 
-	Set<FormProperty> predict(Set<FormProperty> parameter, Set<FormProperty> childParameter);
+	Set<Property> predict(Set<Property> parameter, Set<Property> childParameter);
 
-	Set<FormProperty> scan(Set<FormProperty> parameter, Set<FormProperty> tokenParameter);
+	Set<Property> scan(Set<Property> parameter, Set<Property> tokenParameter);
 
-	Set<FormProperty> complete(Set<FormProperty> parameter, Set<FormProperty> childParameter);
+	Set<Property> complete(Set<Property> parameter, Set<Property> childParameter);
 
-	default String toString(Class<? extends FormProperty> propertyType) {
+	default String toString(Class<? extends Property> propertyType) {
 		return toString();
 	}
 
