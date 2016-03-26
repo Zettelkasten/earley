@@ -1,9 +1,10 @@
 package com.zettelnet.earley.param.property;
 
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -13,6 +14,8 @@ public class PropertySetValueResource<T extends PropertySet<?>> {
 	public static final char SECTION_HEADER = '$';
 
 	public static final String ASSIGN = "=";
+	public static final String ENUMERATION = "\\s+,\\s+";
+	public static final char QUOTATION = '\"';
 
 	private final PropertySetParser<T> keyParser;
 
@@ -89,8 +92,19 @@ public class PropertySetValueResource<T extends PropertySet<?>> {
 	}
 
 	private Collection<String> parseValue(String raw) throws IOException {
-		// TODO Add support for multiple variants
-		return Arrays.asList(raw);
+		String[] rawTokens = raw.split(ENUMERATION);
+		
+		List<String> list = new ArrayList<>();
+		
+		for (String rawToken : rawTokens) {
+			if (rawToken.length() < 2 || rawToken.charAt(0) != QUOTATION || rawToken.charAt(rawToken.length() - 1) != QUOTATION) {
+				throw new IOException(String.format("Missing quotation marks surrounding token %s", rawToken));
+			} else {
+				list.add(rawToken.substring(1, rawToken.length() - 1));
+			}
+		}
+		
+		return list;
 	}
 
 	public Collection<String> getValue(String section, T key) {

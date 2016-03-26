@@ -2,6 +2,7 @@ package com.zettelnet.earley.param.property;
 
 import java.io.PrintStream;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Map;
 
 public class PropertySetValueResourceWriter<T extends PropertySet<?>> {
@@ -42,9 +43,15 @@ public class PropertySetValueResourceWriter<T extends PropertySet<?>> {
 			out.print(PropertySetValueResource.ASSIGN);
 
 			Collection<String> value = entry.getValue();
-			if (value.size() == 1) {
-				String singleValue = value.iterator().next();
-				out.print(singleValue);
+			for (Iterator<String> i = value.iterator(); i.hasNext();) {
+				String str = i.next();
+				out.print(PropertySetValueResource.QUOTATION);
+				out.print(str);
+				out.print(PropertySetValueResource.QUOTATION);
+
+				if (i.hasNext()) {
+					out.print(',');
+				}
 			}
 
 			out.println();
