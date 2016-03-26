@@ -20,14 +20,15 @@ public class MapFormValueProvider<T> implements FormValueProvider<T> {
 		this.retainedProperties = retainedProperties;
 	}
 
-	protected void put(T value, FormProperty... formProperties) {
+	public void put(T value, FormProperty... formProperties) {
 		this.data.put(Form.withValues(formProperties), Arrays.asList(value));
 	}
 
-	protected void put(T[] values, FormProperty... formProperties) {
+	public void put(T[] values, FormProperty... formProperties) {
 		this.data.put(Form.withValues(formProperties), Arrays.asList(values));
 	}
 	
+	@Override
 	public Collection<T> getValue(Form form) {
 		Collection<T> variants = data.get(form.retainAll(retainedProperties));
 		if (variants != null) {
@@ -35,5 +36,9 @@ public class MapFormValueProvider<T> implements FormValueProvider<T> {
 		} else {
 			return Collections.emptyList();
 		}
+	}
+	
+	public Map<Form, Collection<T>> getValues() {
+		return data;
 	}
 }
