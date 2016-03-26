@@ -116,10 +116,10 @@ public class SimpleAdjective implements Adjective {
 	public Lemma getDerivedFrom() {
 		return null;
 	}
-	
+
 	@Override
 	public Derivation getDerivationKind() {
- 		return null;
+		return null;
 	}
 
 	@Override

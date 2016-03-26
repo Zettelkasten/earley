@@ -9,10 +9,10 @@ import java.util.Scanner;
 
 public class PropertySetValueResource<T extends PropertySet<?>> {
 
-	private static final char COMMENT = '#';
-	private static final char SECTION_HEADER = '$';
+	public static final char COMMENT = '#';
+	public static final char SECTION_HEADER = '$';
 
-	private static final String ASSIGN = "=";
+	public static final String ASSIGN = "=";
 
 	private final PropertySetParser<T> keyParser;
 
@@ -103,5 +103,9 @@ public class PropertySetValueResource<T extends PropertySet<?>> {
 
 	public Map<String, Map<T, Collection<String>>> getSections() {
 		return data;
+	}
+
+	public boolean containsSection(String section) {
+		return data.containsKey(section);
 	}
 }
