@@ -56,10 +56,13 @@ public class WiktionaryConjugationTest {
 
 	@Test
 	public void test() {
-		testWiktionaryVerb("cant", "cant_av", "cantat", Conjugation.First);
-		testWiktionaryVerb("aud", "aud_iv", "aud_it", Conjugation.Fourth);
 		testWiktionaryVerb("ag", "_eg", "_act", Conjugation.Third);
+		testWiktionaryVerb("aud", "aud_iv", "aud_it", Conjugation.Fourth);
+		testWiktionaryVerb("cant", "cant_av", "cantat", Conjugation.First);
 		testWiktionaryVerb("cap", "c_ep", "capt", Conjugation.ThirdIStem);
 		testWiktionaryVerb("hab", "habu", "habit", Conjugation.Second);
+		testWiktionaryVerb("laud", "laud_av", "laud_at", Conjugation.First);
+		testWiktionaryVerb("r_id", "r_is", "r_is", Conjugation.Second);
+		testWiktionaryVerb("terr", "terru", "territ", Conjugation.Second);
 	}
 }

@@ -106,10 +106,10 @@ public class VerbEndings extends MapFormValueProvider<String> {
 		put("erint", Person.Third, Numerus.Plural, Tense.FuturePerfect, Mood.Indicative, Voice.Active);
 
 		put("erim", Person.First, Numerus.Singular, Tense.Perfect, Mood.Subjunctive, Voice.Active);
-		put(new String[] { "er_is", "eris" }, Person.Second, Numerus.Singular, Tense.Perfect, Mood.Subjunctive, Voice.Active);
+		put("er_is", Person.Second, Numerus.Singular, Tense.Perfect, Mood.Subjunctive, Voice.Active);
 		put("erit", Person.Third, Numerus.Singular, Tense.Perfect, Mood.Subjunctive, Voice.Active);
-		put(new String[] { "er_imus", "erimus" }, Person.First, Numerus.Plural, Tense.Perfect, Mood.Subjunctive, Voice.Active);
-		put(new String[] { "er_itis", "eritis" }, Person.Second, Numerus.Plural, Tense.Perfect, Mood.Subjunctive, Voice.Active);
+		put("er_imus", Person.First, Numerus.Plural, Tense.Perfect, Mood.Subjunctive, Voice.Active);
+		put("er_itis", Person.Second, Numerus.Plural, Tense.Perfect, Mood.Subjunctive, Voice.Active);
 		put("erint", Person.Third, Numerus.Plural, Tense.Perfect, Mood.Subjunctive, Voice.Active);
 
 		put("issem", Person.First, Numerus.Singular, Tense.Pluperfect, Mood.Subjunctive, Voice.Active);
