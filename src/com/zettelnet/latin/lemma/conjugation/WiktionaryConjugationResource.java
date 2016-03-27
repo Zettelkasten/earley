@@ -1,10 +1,9 @@
-package com.zettelnet.earley.test;
+package com.zettelnet.latin.lemma.conjugation;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -19,36 +18,25 @@ import com.zettelnet.latin.form.Numerus;
 import com.zettelnet.latin.form.Person;
 import com.zettelnet.latin.form.Tense;
 import com.zettelnet.latin.form.Voice;
-import com.zettelnet.latin.lemma.conjugation.Conjugation;
-import com.zettelnet.latin.lemma.verb.SimpleVerb;
+import com.zettelnet.latin.lemma.FormProvider;
 import com.zettelnet.latin.lemma.verb.Verb;
 
-public class WiktionaryConjugationTest {
+public class WiktionaryConjugationResource implements FormProvider<Verb> {
 
-	public static void main(String[] args) throws FileNotFoundException {
-//		File file = new File("E:\\wiktionary-tests\\cant_o.txt");
-//		Verb verb = new SimpleVerb("cant", "cant_av", "cantat", Conjugation.First);
-//		File file = new File("E:\\wiktionary-tests\\audi_o.txt");
-//		Verb verb = new SimpleVerb("aud", "aud_iv", "aud_it", Conjugation.Fourth);
-//		File file = new File("E:\\wiktionary-tests\\ag_o.txt");
-//		Verb verb = new SimpleVerb("ag", "_eg", "_act", Conjugation.Third);
-//		File file = new File("E:\\wiktionary-tests\\capi_o.txt");
-//		Verb verb = new SimpleVerb("cap", "c_ep", "capt", Conjugation.ThirdIStem);
-		File file = new File("E:\\wiktionary-tests\\habe_o.txt");
-		Verb verb = new SimpleVerb("hab", "habu", "habit", Conjugation.Second);
-		
-		Map<Form, Collection<String>> forms = new HashMap<>();
+	private static final List<Form> formColumns = Arrays.asList(
+			Form.withValues(Person.First, Numerus.Singular),
+			Form.withValues(Person.Second, Numerus.Singular),
+			Form.withValues(Person.Third, Numerus.Singular),
+			Form.withValues(Person.First, Numerus.Plural),
+			Form.withValues(Person.Second, Numerus.Plural),
+			Form.withValues(Person.Third, Numerus.Plural));
 
-		Scanner in = new Scanner(file, "UTF-8");
+	private final Map<Form, Collection<String>> forms;
+
+	public WiktionaryConjugationResource(final Scanner in) {
+		this.forms = new HashMap<>();
 
 		Form formBase = Form.withValues();
-		List<Form> formColumns = Arrays.asList(
-				Form.withValues(Person.First, Numerus.Singular),
-				Form.withValues(Person.Second, Numerus.Singular),
-				Form.withValues(Person.Third, Numerus.Singular),
-				Form.withValues(Person.First, Numerus.Plural),
-				Form.withValues(Person.Second, Numerus.Plural),
-				Form.withValues(Person.Third, Numerus.Plural));
 
 		mainLoop: while (in.hasNextLine()) {
 			String line = in.nextLine();
@@ -117,7 +105,7 @@ public class WiktionaryConjugationTest {
 				}
 
 				for (String value : split.pollFirst().split("\\s*,\\s*")) {
-					if (!"—".equals(value)) {
+					if (!"—".equals(value) && !value.contains(" ")) {
 						value = value.replaceAll("ā", "_a");
 						value = value.replaceAll("ē", "_e");
 						value = value.replaceAll("ō", "_o");
@@ -128,39 +116,30 @@ public class WiktionaryConjugationTest {
 				}
 			}
 		}
-
+		
 		for (Iterator<Collection<String>> i = forms.values().iterator(); i.hasNext();) {
 			if (i.next().isEmpty()) {
 				i.remove();
 			}
 		}
+	}
+	
+	private Form retainForm(Form form) {
+		return form.retainAll(Arrays.asList(Person.class, Numerus.class, Tense.class, Mood.class, Voice.class));
+	}
 
-		for (Mood mood : Mood.values()) {
-			for (Tense tense : Tense.values()) {
-				for (Voice voice : Voice.values()) {
-					for (Numerus numerus : Numerus.values()) {
-						for (Person person : Person.values()) {
-							Form form = Form.withValues(person, numerus, tense, mood, voice);
-							if (verb.hasForm(form)) {
-								Collection<String> selfForm = verb.getForm(form);
-								Collection<String> wiktionaryForm = forms.get(form);
+	@Override
+	public Collection<String> getForm(Verb lemma, Form form) {
+		return forms.getOrDefault(retainForm(form), Collections.emptyList());
+	}
 
-								if (!selfForm.equals(wiktionaryForm)) {
-									System.out.println(form + ": " + selfForm + "\tvs\twiktionary " + wiktionaryForm);
-								}
-							}
-						}
-					}
-				}
-			}
-		}
+	@Override
+	public boolean hasForm(Verb lemma, Form form) {
+		return forms.containsKey(retainForm(form));
+	}
 
-		forms.keySet().removeAll(verb.getForms().keySet());
-		System.out.println("===== wiktionary only forms =====");
-		for (Map.Entry<Form, Collection<String>> entry : forms.entrySet()) {
-			System.out.println(entry.getKey() + ": " + entry.getValue());
-		}
-
-		in.close();
+	@Override
+	public Map<Form, Collection<String>> getForms(Verb lemma) {
+		return forms;
 	}
 }
