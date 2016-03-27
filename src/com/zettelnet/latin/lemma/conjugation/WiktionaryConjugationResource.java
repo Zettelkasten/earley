@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import com.zettelnet.earley.param.property.PropertySetValueResource;
 import com.zettelnet.latin.form.Form;
 import com.zettelnet.latin.form.Mood;
 import com.zettelnet.latin.form.Numerus;
@@ -21,7 +22,7 @@ import com.zettelnet.latin.form.Voice;
 import com.zettelnet.latin.lemma.FormProvider;
 import com.zettelnet.latin.lemma.verb.Verb;
 
-public class WiktionaryConjugationResource implements FormProvider<Verb> {
+public class WiktionaryConjugationResource implements FormProvider<Verb>, PropertySetValueResource<Form> {
 
 	private static final List<Form> formColumns = Arrays.asList(
 			Form.withValues(Person.First, Numerus.Singular),
@@ -141,5 +142,35 @@ public class WiktionaryConjugationResource implements FormProvider<Verb> {
 	@Override
 	public Map<Form, Collection<String>> getForms(Verb lemma) {
 		return forms;
+	}
+
+	@Override
+	public Collection<String> getValue(String section, Form key) {
+		if (section != null) {
+			return null;
+		} else {
+			return forms.get(key);
+		}
+	}
+
+	@Override
+	public Map<Form, Collection<String>> getSection(String section) {
+		if (section != null) {
+			return null;
+		} else {
+			return forms;
+		}
+	}
+
+	@Override
+	public Map<String, Map<Form, Collection<String>>> getSections() {
+		Map<String, Map<Form, Collection<String>>> map = new HashMap<>();
+		map.put(null, forms);
+		return map;
+	}
+
+	@Override
+	public boolean containsSection(String section) {
+		return section == null;
 	}
 }

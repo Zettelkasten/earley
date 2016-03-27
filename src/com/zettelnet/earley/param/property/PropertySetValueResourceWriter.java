@@ -26,7 +26,7 @@ public class PropertySetValueResourceWriter<T extends PropertySet<?>> {
 	}
 
 	public void printResource(final PropertySetValueResource<T> resource) {
-		out.println(String.format("%c Auto generated %s", PropertySetValueResource.COMMENT, new Date()));
+		out.println(String.format("%c Auto generated %s", PropertySetValueResourceReader.COMMENT, new Date()));
 		out.println();
 		
 		// null section key is treated extra
@@ -38,7 +38,7 @@ public class PropertySetValueResourceWriter<T extends PropertySet<?>> {
 			String sectionKey = entry.getKey();
 
 			if (sectionKey != null) {
-				out.print(PropertySetValueResource.SECTION_HEADER);
+				out.print(PropertySetValueResourceReader.SECTION_HEADER);
 				out.print(sectionKey);
 				out.println();
 
@@ -56,15 +56,15 @@ public class PropertySetValueResourceWriter<T extends PropertySet<?>> {
 			T key = entry.getKey();
 			keyWriter.print(out, key);
 
-			out.print(PropertySetValueResource.ASSIGN);
+			out.print(PropertySetValueResourceReader.ASSIGN);
 
 			Collection<String> value = entry.getValue();
 
 			for (Iterator<String> i = value.iterator(); i.hasNext();) {
 				String str = i.next();
-				out.print(PropertySetValueResource.QUOTATION);
+				out.print(PropertySetValueResourceReader.QUOTATION);
 				out.print(str);
-				out.print(PropertySetValueResource.QUOTATION);
+				out.print(PropertySetValueResourceReader.QUOTATION);
 
 				if (i.hasNext()) {
 					out.print(',');
