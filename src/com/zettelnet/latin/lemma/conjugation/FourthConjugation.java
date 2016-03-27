@@ -164,6 +164,14 @@ public class FourthConjugation extends AbstractConjugation {
 			put("_i", Person.Second, Numerus.Plural, Tense.Present, Mood.Imperative, Voice.Active);
 			put("_i", Person.Second, Numerus.Singular, Tense.Present, Mood.Imperative, Voice.Passive);
 			put("_i", Person.Second, Numerus.Plural, Tense.Present, Mood.Imperative, Voice.Passive);
+
+			put("_i", Person.Second, Numerus.Singular, Tense.Future, Mood.Imperative, Voice.Active);
+			put("_i", Person.Third, Numerus.Singular, Tense.Future, Mood.Imperative, Voice.Active);
+			put("_i", Person.Second, Numerus.Plural, Tense.Future, Mood.Imperative, Voice.Active);
+			put("iu", Person.Third, Numerus.Plural, Tense.Future, Mood.Imperative, Voice.Active);
+			put("_i", Person.Second, Numerus.Singular, Tense.Future, Mood.Imperative, Voice.Passive);
+			put("_i", Person.Third, Numerus.Singular, Tense.Future, Mood.Imperative, Voice.Passive);
+			put("iu", Person.Third, Numerus.Plural, Tense.Future, Mood.Imperative, Voice.Passive);
 		}
 	}
 

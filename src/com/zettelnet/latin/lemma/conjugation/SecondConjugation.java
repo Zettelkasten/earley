@@ -164,6 +164,14 @@ public class SecondConjugation extends AbstractConjugation {
 			put("_e", Person.Second, Numerus.Plural, Tense.Present, Mood.Imperative, Voice.Active);
 			put("_e", Person.Second, Numerus.Singular, Tense.Present, Mood.Imperative, Voice.Passive);
 			put("_e", Person.Second, Numerus.Plural, Tense.Present, Mood.Imperative, Voice.Passive);
+
+			put("_e", Person.Second, Numerus.Singular, Tense.Future, Mood.Imperative, Voice.Active);
+			put("_e", Person.Third, Numerus.Singular, Tense.Future, Mood.Imperative, Voice.Active);
+			put("_e", Person.Second, Numerus.Plural, Tense.Future, Mood.Imperative, Voice.Active);
+			put("e", Person.Third, Numerus.Plural, Tense.Future, Mood.Imperative, Voice.Active);
+			put("_e", Person.Second, Numerus.Singular, Tense.Future, Mood.Imperative, Voice.Passive);
+			put("_e", Person.Third, Numerus.Singular, Tense.Future, Mood.Imperative, Voice.Passive);
+			put("e", Person.Third, Numerus.Plural, Tense.Future, Mood.Imperative, Voice.Passive);
 		}
 	}
 

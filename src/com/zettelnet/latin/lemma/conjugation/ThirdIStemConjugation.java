@@ -164,6 +164,14 @@ public class ThirdIStemConjugation extends AbstractConjugation {
 			put("i", Person.Second, Numerus.Plural, Tense.Present, Mood.Imperative, Voice.Active);
 			put("e", Person.Second, Numerus.Singular, Tense.Present, Mood.Imperative, Voice.Passive);
 			put("i", Person.Second, Numerus.Plural, Tense.Present, Mood.Imperative, Voice.Passive);
+			
+			put("i", Person.Second, Numerus.Singular, Tense.Future, Mood.Imperative, Voice.Active);
+			put("i", Person.Third, Numerus.Singular, Tense.Future, Mood.Imperative, Voice.Active);
+			put("i", Person.Second, Numerus.Plural, Tense.Future, Mood.Imperative, Voice.Active);
+			put("iu", Person.Third, Numerus.Plural, Tense.Future, Mood.Imperative, Voice.Active);
+			put("i", Person.Second, Numerus.Singular, Tense.Future, Mood.Imperative, Voice.Passive);
+			put("i", Person.Third, Numerus.Singular, Tense.Future, Mood.Imperative, Voice.Passive);
+			put("iu", Person.Third, Numerus.Plural, Tense.Future, Mood.Imperative, Voice.Passive);
 		}
 	}
 

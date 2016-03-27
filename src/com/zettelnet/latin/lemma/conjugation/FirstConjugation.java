@@ -164,6 +164,14 @@ public class FirstConjugation extends AbstractConjugation {
 			put("_a", Person.Second, Numerus.Plural, Tense.Present, Mood.Imperative, Voice.Active);
 			put("_a", Person.Second, Numerus.Singular, Tense.Present, Mood.Imperative, Voice.Passive);
 			put("_a", Person.Second, Numerus.Plural, Tense.Present, Mood.Imperative, Voice.Passive);
+
+			put("_a", Person.Second, Numerus.Singular, Tense.Future, Mood.Imperative, Voice.Active);
+			put("_a", Person.Third, Numerus.Singular, Tense.Future, Mood.Imperative, Voice.Active);
+			put("_a", Person.Second, Numerus.Plural, Tense.Future, Mood.Imperative, Voice.Active);
+			put("a", Person.Third, Numerus.Plural, Tense.Future, Mood.Imperative, Voice.Active);
+			put("_a", Person.Second, Numerus.Singular, Tense.Future, Mood.Imperative, Voice.Passive);
+			put("_a", Person.Third, Numerus.Singular, Tense.Future, Mood.Imperative, Voice.Passive);
+			put("a", Person.Third, Numerus.Plural, Tense.Future, Mood.Imperative, Voice.Passive);
 		}
 	}
 

@@ -123,6 +123,14 @@ public class VerbEndings extends MapFormValueProvider<String> {
 		put("te", Person.Second, Numerus.Plural, Tense.Present, Mood.Imperative, Voice.Active);
 		put("re", Person.Second, Numerus.Singular, Tense.Present, Mood.Imperative, Voice.Passive);
 		put("min_i", Person.Second, Numerus.Plural, Tense.Present, Mood.Imperative, Voice.Passive);
+
+		put("t_o", Person.Second, Numerus.Singular, Tense.Future, Mood.Imperative, Voice.Active);
+		put("t_o", Person.Third, Numerus.Singular, Tense.Future, Mood.Imperative, Voice.Active);
+		put("t_ote", Person.Second, Numerus.Plural, Tense.Future, Mood.Imperative, Voice.Active);
+		put("nt_o", Person.Third, Numerus.Plural, Tense.Future, Mood.Imperative, Voice.Active);
+		put("tor", Person.Second, Numerus.Singular, Tense.Future, Mood.Imperative, Voice.Passive);
+		put("tor", Person.Third, Numerus.Singular, Tense.Future, Mood.Imperative, Voice.Passive);
+		put("ntor", Person.Third, Numerus.Plural, Tense.Future, Mood.Imperative, Voice.Passive);
 	}
 
 }
