@@ -27,10 +27,10 @@ public class PropertySetValueResourceWriter<T extends PropertySet<?>> {
 
 	public void printResource(final PropertySetValueResource<T> resource) {
 		out.println(String.format("%c Auto generated %s", PropertySetValueResourceReader.COMMENT, new Date()));
-		out.println();
 		
 		// null section key is treated extra
 		if (resource.containsSection(null)) {
+			out.println();
 			printSectionValues(resource.getSection(null));
 		}
 
@@ -38,6 +38,7 @@ public class PropertySetValueResourceWriter<T extends PropertySet<?>> {
 			String sectionKey = entry.getKey();
 
 			if (sectionKey != null) {
+				out.println();
 				out.print(PropertySetValueResourceReader.SECTION_HEADER);
 				out.print(sectionKey);
 				out.println();
