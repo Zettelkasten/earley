@@ -92,6 +92,10 @@ public interface Form extends PropertySet<FormProperty>, Comparable<Form> {
 	@Override
 	Form retainAll(Collection<Class<? extends FormProperty>> properties);
 
+	default Form derive(Form withForm) {
+		return derive(withForm.values());
+	}
+	
 	@Override
 	default Form derive(FormProperty... properties) {
 		return derive(Arrays.asList(properties));
