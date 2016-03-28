@@ -24,6 +24,8 @@ import com.zettelnet.latin.lemma.verb.Verb;
 
 public class WiktionaryConjugationResource implements FormProvider<Verb>, PropertySetValueResource<Form> {
 
+	public static final String FINITE_FORMS = "FiniteForms";
+	
 	private static final List<Form> formColumns = Arrays.asList(
 			Form.withValues(Person.First, Numerus.Singular),
 			Form.withValues(Person.Second, Numerus.Singular),
@@ -32,10 +34,13 @@ public class WiktionaryConjugationResource implements FormProvider<Verb>, Proper
 			Form.withValues(Person.Second, Numerus.Plural),
 			Form.withValues(Person.Third, Numerus.Plural));
 
+	private final Map<String, Map<Form, Collection<String>>> data;
 	private final Map<Form, Collection<String>> forms;
 
 	public WiktionaryConjugationResource(final Scanner in) {
+		this.data = new HashMap<>();
 		this.forms = new HashMap<>();
+		data.put(FINITE_FORMS, forms);
 
 		Form formBase = Form.withValues();
 
@@ -146,31 +151,21 @@ public class WiktionaryConjugationResource implements FormProvider<Verb>, Proper
 
 	@Override
 	public Collection<String> getValue(String section, Form key) {
-		if (section != null) {
-			return null;
-		} else {
-			return forms.get(key);
-		}
+		return data.get(section).get(key);
 	}
 
 	@Override
 	public Map<Form, Collection<String>> getSection(String section) {
-		if (section != null) {
-			return null;
-		} else {
-			return forms;
-		}
+		return data.get(section);
 	}
 
 	@Override
 	public Map<String, Map<Form, Collection<String>>> getSections() {
-		Map<String, Map<Form, Collection<String>>> map = new HashMap<>();
-		map.put(null, forms);
-		return map;
+		return data;
 	}
 
 	@Override
 	public boolean containsSection(String section) {
-		return section == null;
+		return data.containsKey(section);
 	}
 }
