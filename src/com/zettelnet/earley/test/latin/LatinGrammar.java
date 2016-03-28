@@ -24,6 +24,9 @@ import com.zettelnet.latin.lemma.property.Valency;
 
 public final class LatinGrammar {
 
+	private LatinGrammar() {
+	}
+	
 	public static Grammar<Token, FormParameter> makeGrammar() {
 		// Symbols
 

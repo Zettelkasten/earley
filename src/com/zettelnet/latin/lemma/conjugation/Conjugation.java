@@ -18,6 +18,9 @@ import com.zettelnet.latin.lemma.verb.Verb;
 
 public final class Conjugation {
 
+	private Conjugation() {
+	}
+	
 	public static final CombinedProvider<Verb> First = new SimpleCombinedProvider<>(new FirstConjugation(), new DistributingDerivationProvider<Verb>()
 			.addProvider(DerivationType.Participle, new FirstParticipleConjugation())
 			.addProvider(DerivationType.Infinitive, new FirstInfinitiveConjugation())

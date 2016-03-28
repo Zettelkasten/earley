@@ -9,6 +9,9 @@ import com.zettelnet.latin.lemma.FormProvider;
 
 public final class Declension {
 
+	private Declension() {
+	}
+	
 	public static final FormProvider<DeclinableLemma> First = new FirstDeclension();
 	public static final FormProvider<DeclinableLemma> Second = new SecondDeclension();
 	public static final FormProvider<DeclinableLemma> Third = new ThirdDeclension();
