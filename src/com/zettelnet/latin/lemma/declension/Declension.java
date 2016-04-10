@@ -17,7 +17,7 @@ public final class Declension {
 	public static final FormProvider<DeclinableLemma> Third = new ThirdDeclension();
 	public static final FormProvider<DeclinableLemma> ThirdIStem = new ThirdIStemDeclension();
 	public static final FormProvider<DeclinableLemma> ThirdMixed = new ThirdMixedDeclension();
-	public static final FormProvider<DeclinableLemma> Forth = new FourthDeclension();
+	public static final FormProvider<DeclinableLemma> Fourth = new FourthDeclension();
 	public static final FormProvider<DeclinableLemma> Fifth = new FifthDeclension();
 	
 	public static final Map<Genus, FormProvider<DeclinableLemma>> FirstAndSecond = new EnumMap<>(Genus.class);
