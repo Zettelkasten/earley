@@ -102,7 +102,7 @@ public final class LatinGrammar {
 		grammar.addProduction(
 				arguments,
 				key(Valency.Copula),
-				new ParameterizedSymbol<>(nounPhrase, specify(parameterManager, parameterizer, Casus.Nominative)));
+				new ParameterizedSymbol<>(nounPhrase, copy));
 		// Args(pi : GenVal) -> NP(Gen)
 		grammar.addProduction(
 				arguments,
