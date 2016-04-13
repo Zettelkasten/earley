@@ -16,6 +16,7 @@ import com.zettelnet.earley.symbol.NonTerminal;
 import com.zettelnet.earley.symbol.SimpleNonTerminal;
 import com.zettelnet.earley.symbol.Terminal;
 import com.zettelnet.latin.form.Casus;
+import com.zettelnet.latin.form.Genus;
 import com.zettelnet.latin.form.Numerus;
 import com.zettelnet.latin.form.Tense;
 import com.zettelnet.latin.lemma.LemmaType;
@@ -184,9 +185,9 @@ public final class LatinGrammar {
 		// VP(pi) -> VP(pi) conj VP(pi)
 		grammar.addProduction(
 				verbPhrase,
-				new ParameterizedSymbol<>(verbPhrase, copy(parameterizer, Numerus.class, Finiteness.class)),
+				new ParameterizedSymbol<>(verbPhrase, copy(parameterizer, Casus.class, Numerus.class, Genus.class, Finiteness.class)),
 				new ParameterizedSymbol<>(conjunction, any),
-				new ParameterizedSymbol<>(verbPhrase, copy(parameterizer, Numerus.class, Finiteness.class)));
+				new ParameterizedSymbol<>(verbPhrase, copy(parameterizer, Casus.class, Numerus.class, Genus.class, Finiteness.class)));
 
 		return grammar;
 	}
