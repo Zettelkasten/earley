@@ -40,7 +40,7 @@ public class Determination {
 	// warning: ignores non form properties
 	public Form toForm() {
 		Collection<FormProperty> formProperties = new HashSet<>();
-		for (Property property : formProperties) {
+		for (Property property : this.properties.values()) {
 			if (property instanceof FormProperty) {
 				formProperties.add((FormProperty) property);
 			}
