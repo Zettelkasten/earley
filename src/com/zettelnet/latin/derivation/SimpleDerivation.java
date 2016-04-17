@@ -5,6 +5,10 @@ import com.zettelnet.latin.form.FormProperty;
 
 public class SimpleDerivation implements Derivation {
 
+	public static Derivation withValues(DerivationType type, Form form) {
+		return new SimpleDerivation(type, form);
+	}
+
 	public static Derivation withValues(DerivationType type, FormProperty... formProperties) {
 		return new SimpleDerivation(type, Form.withValues(formProperties));
 	}
@@ -26,7 +30,7 @@ public class SimpleDerivation implements Derivation {
 	public Form getForm() {
 		return form;
 	}
-	
+
 	@Override
 	public String toString() {
 		return type + " " + form;
