@@ -1,19 +1,24 @@
 package com.zettelnet.latin.lemma.conjugation;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Deque;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
-import com.zettelnet.earley.param.property.PropertySetValueResource;
+import com.zettelnet.latin.derivation.Derivation;
+import com.zettelnet.latin.derivation.DerivationProvider;
+import com.zettelnet.latin.derivation.DerivationType;
+import com.zettelnet.latin.derivation.DistributingDerivationProvider;
 import com.zettelnet.latin.form.Casus;
 import com.zettelnet.latin.form.Form;
 import com.zettelnet.latin.form.Genus;
@@ -22,15 +27,15 @@ import com.zettelnet.latin.form.Numerus;
 import com.zettelnet.latin.form.Person;
 import com.zettelnet.latin.form.Tense;
 import com.zettelnet.latin.form.Voice;
+import com.zettelnet.latin.lemma.DeclinableLemma;
 import com.zettelnet.latin.lemma.FormProvider;
+import com.zettelnet.latin.lemma.Lemma;
+import com.zettelnet.latin.lemma.LemmaFactory;
+import com.zettelnet.latin.lemma.infinitive.SimpleGerund;
+import com.zettelnet.latin.lemma.verb.SimpleVerb;
 import com.zettelnet.latin.lemma.verb.Verb;
 
-public class WiktionaryConjugationResource implements FormProvider<Verb>, PropertySetValueResource<Form> {
-
-	public static final String FINITE_FORMS = "FiniteForms";
-	public static final String INFINITIVES = "Infinitives";
-	public static final String PARTICIPLES = "Participles";
-	public static final String SUPINE = "Supine";
+public class WiktionaryConjugationResource implements LemmaFactory<Verb>, FormProvider<Verb> {
 
 	private static final List<Form> finiteColumns = Arrays.asList(
 			Form.withValues(Person.First, Numerus.Singular),
@@ -53,33 +58,88 @@ public class WiktionaryConjugationResource implements FormProvider<Verb>, Proper
 			Form.withValues(Casus.Genitive),
 			Form.withValues(Casus.Dative),
 			Form.withValues(Casus.Accusative));
-	
+
 	private static final List<Form> supineColumns = Arrays.asList(
 			Form.withValues(Casus.Accusative),
 			Form.withValues(Casus.Ablative));
 
-	private final Map<String, Map<Form, Collection<String>>> data;
-	
 	private final Map<Form, Collection<String>> forms;
 	private final Map<Form, Collection<String>> infinitives;
 	private final Map<Form, Collection<String>> participles;
 	private final Map<Form, Collection<String>> supine;
+
+	private final DerivationProvider<Verb> derivationProvider;
 
 	private static enum NonFiniteType {
 		Infinitive, Participle, GerundAndSupine;
 	}
 
 	public WiktionaryConjugationResource(final Scanner in) {
-		this.data = new LinkedHashMap<>();
+		this.derivationProvider = new DistributingDerivationProvider<Verb>()
+				.addProvider(DerivationType.Infinitive, new DerivationProvider<Verb>() {
+					private Form retainForm(Form form) {
+						return form.retainAll(Arrays.asList(Tense.class, Voice.class));
+					}
+
+					@Override
+					public Collection<Lemma> getDerivation(Verb lemma, Derivation derivation) {
+						Form baseForm = retainForm(derivation.getForm());
+						List<Lemma> lemmas = new ArrayList<>();
+						for (String firstForm : infinitives.get(baseForm.derive(Casus.Nominative))) {
+							Lemma gerund = new SimpleGerund(firstForm, null, new FormProvider<DeclinableLemma>() {
+								@Override
+								public Collection<String> getForm(DeclinableLemma lemma, Form form) {
+									return infinitives.get(baseForm.derive(form));
+								}
+
+								@Override
+								public boolean hasForm(DeclinableLemma lemma, Form form) {
+									return infinitives.containsKey(baseForm.derive(form.getCasus()));
+								}
+
+								public Set<Casus> getCasusSet() {
+									return EnumSet.allOf(Casus.class);
+								}
+
+								@Override
+								public Map<Form, Collection<String>> getForms(DeclinableLemma lemma) {
+									Map<Form, Collection<String>> forms = new HashMap<>();
+									for (Casus casus : getCasusSet()) {
+										Form form = Form.withValues(casus);
+										if (hasForm(lemma, form)) {
+											forms.put(form, getForm(lemma, form));
+										}
+									}
+									return forms;
+								}
+
+							}, Genus.Neuter, lemma, derivation);
+							lemmas.add(gerund);
+						}
+						return lemmas;
+					}
+
+					@Override
+					public boolean hasDerivation(Verb lemma, Derivation derivation) {
+						return !getDerivation(lemma, derivation).isEmpty();
+					}
+
+					@Override
+					public Map<Derivation, Collection<Lemma>> getDerivations(Verb lemma) {
+						Map<Derivation, Collection<Lemma>> derivations = new HashMap<>();
+						for (Form form : infinitives.keySet()) {
+							Derivation derivation = Derivation.withValues(DerivationType.Infinitive, retainForm(form));
+							derivations.put(derivation, getDerivation(lemma, derivation));
+						}
+						return derivations;
+					}
+				});
+		// TODO: Add Participles, Supine
 
 		this.forms = new HashMap<>();
-		data.put(FINITE_FORMS, forms);
 		this.infinitives = new HashMap<>();
-		data.put(INFINITIVES, infinitives);
 		this.participles = new HashMap<>();
-		data.put(PARTICIPLES, participles);
 		this.supine = new HashMap<>();
-		data.put(SUPINE, supine);
 
 		Form formBase = Form.withValues();
 		NonFiniteType nonFiniteType = null;
@@ -176,7 +236,7 @@ public class WiktionaryConjugationResource implements FormProvider<Verb>, Proper
 					addRow(infinitives, gerundColumns, Form.withValues(Tense.Present, Voice.Active), split);
 					// ablative = dative
 					infinitives.put(Form.withValues(Tense.Present, Voice.Active, Casus.Ablative), infinitives.get(Form.withValues(Tense.Present, Voice.Active, Casus.Dative)));
-					
+
 					addRow(supine, supineColumns, Form.withValues(), split);
 					break;
 				default:
@@ -185,7 +245,8 @@ public class WiktionaryConjugationResource implements FormProvider<Verb>, Proper
 			}
 		}
 
-		for (Map<Form, Collection<String>> section : data.values()) {
+		// remove empty values
+		for (Map<Form, Collection<String>> section : Arrays.asList(forms, infinitives, participles, supine)) {
 			for (Iterator<Collection<String>> i = section.values().iterator(); i.hasNext();) {
 				if (i.next().isEmpty()) {
 					i.remove();
@@ -216,6 +277,11 @@ public class WiktionaryConjugationResource implements FormProvider<Verb>, Proper
 		}
 	}
 
+	@Override
+	public Verb makeLemma() {
+		return new SimpleVerb(null, this, derivationProvider);
+	}
+
 	private Form retainFiniteForm(Form form) {
 		return form.retainAll(Arrays.asList(Person.class, Numerus.class, Tense.class, Mood.class, Voice.class));
 	}
@@ -233,25 +299,5 @@ public class WiktionaryConjugationResource implements FormProvider<Verb>, Proper
 	@Override
 	public Map<Form, Collection<String>> getForms(Verb lemma) {
 		return forms;
-	}
-
-	@Override
-	public Collection<String> getValue(String section, Form key) {
-		return data.get(section).get(key);
-	}
-
-	@Override
-	public Map<Form, Collection<String>> getSection(String section) {
-		return data.get(section);
-	}
-
-	@Override
-	public Map<String, Map<Form, Collection<String>>> getSections() {
-		return data;
-	}
-
-	@Override
-	public boolean containsSection(String section) {
-		return data.containsKey(section);
 	}
 }
