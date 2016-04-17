@@ -92,10 +92,14 @@ public interface Form extends PropertySet<FormProperty>, Comparable<Form> {
 	@Override
 	Form retainAll(Collection<Class<? extends FormProperty>> properties);
 
+	default Form retainAll(@SuppressWarnings("unchecked") Class<? extends FormProperty>... properties) {
+		return retainAll(Arrays.asList(properties));
+	}
+
 	default Form derive(Form withForm) {
 		return derive(withForm.values());
 	}
-	
+
 	@Override
 	default Form derive(FormProperty... properties) {
 		return derive(Arrays.asList(properties));
