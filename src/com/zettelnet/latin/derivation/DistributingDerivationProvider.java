@@ -20,6 +20,13 @@ public class DistributingDerivationProvider<T> implements DerivationProvider<T> 
 		return this;
 	}
 
+	public DistributingDerivationProvider<T> addProvider(final DerivationType[] types, final DerivationProvider<T> provider) {
+		for (DerivationType type : types) {
+			addProvider(type, provider);
+		}
+		return this;
+	}
+
 	@Override
 	public Collection<Lemma> getDerivation(T lemma, Derivation derivation) {
 		DerivationType type = derivation.getType();

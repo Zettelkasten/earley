@@ -31,7 +31,7 @@ import com.zettelnet.latin.lemma.DeclinableLemma;
 import com.zettelnet.latin.lemma.FormProvider;
 import com.zettelnet.latin.lemma.Lemma;
 import com.zettelnet.latin.lemma.LemmaFactory;
-import com.zettelnet.latin.lemma.infinitive.SimpleGerund;
+import com.zettelnet.latin.lemma.gerund.SimpleGerund;
 import com.zettelnet.latin.lemma.verb.SimpleVerb;
 import com.zettelnet.latin.lemma.verb.Verb;
 

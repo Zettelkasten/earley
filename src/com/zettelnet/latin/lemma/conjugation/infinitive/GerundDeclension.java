@@ -22,7 +22,7 @@ import com.zettelnet.latin.lemma.declension.AbstractDeclension;
  * @author Zettelkasten
  *
  */
-public class InfinitiveDeclension extends AbstractDeclension {
+public class GerundDeclension extends AbstractDeclension {
 
 	private static class Endings extends MapFormValueProvider<String> {
 		public Endings() {
@@ -36,7 +36,7 @@ public class InfinitiveDeclension extends AbstractDeclension {
 
 	public static final FormValueProvider<String> ENDINGS = new Endings();
 
-	public InfinitiveDeclension() {
+	public GerundDeclension() {
 		super(ENDINGS);
 	}
 
@@ -50,10 +50,10 @@ public class InfinitiveDeclension extends AbstractDeclension {
 		// gerunds are declined as if they were masculine
 		return super.getForm(lemma, form.derive(Genus.Masculine));
 	}
-	
+
 	@Override
 	public Set<Casus> getCasusSet(final DeclinableLemma lemma) {
-		return EnumSet.of(Casus.Nominative, Casus.Genitive, Casus.Dative, Casus.Accusative);
+		return EnumSet.of(Casus.Genitive, Casus.Dative, Casus.Accusative);
 	}
 
 	@Override

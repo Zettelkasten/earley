@@ -26,7 +26,7 @@ public class SimpleInfinitive implements Infinitive {
 
 	private final Verb verb;
 	private final Derivation derivation;
-	
+
 	private final PropertySet<LemmaProperty> properties;
 
 	public SimpleInfinitive(final String firstForm, final Genus genus, final Verb verb, final Derivation derivation, final LemmaProperty... properties) {
@@ -54,18 +54,23 @@ public class SimpleInfinitive implements Infinitive {
 
 	@Override
 	public Collection<String> getForm(Form form) {
-		return Arrays.asList(firstForm);
+		if (hasForm(form)) {
+			return Arrays.asList(firstForm);
+		} else {
+			return Collections.emptyList();
+		}
 	}
 
 	@Override
 	public boolean hasForm(Form form) {
-		return form.hasProperties(Casus.Nominative);
+		return form.hasProperties(Casus.Nominative) || form.hasProperties(Casus.Accusative);
 	}
 
 	@Override
 	public Map<Form, Collection<String>> getForms() {
 		Map<Form, Collection<String>> map = new HashMap<>(1);
 		map.put(Form.withValues(Casus.Nominative), Arrays.asList(firstForm));
+		map.put(Form.withValues(Casus.Accusative), Arrays.asList(firstForm));
 		return map;
 	}
 
@@ -108,7 +113,7 @@ public class SimpleInfinitive implements Infinitive {
 	public Verb getDerivedFrom() {
 		return verb;
 	}
-	
+
 	@Override
 	public Derivation getDerivationKind() {
 		return derivation;

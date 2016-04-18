@@ -1,10 +1,12 @@
 package com.zettelnet.latin.lemma.conjugation.infinitive;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -19,18 +21,20 @@ import com.zettelnet.latin.form.Voice;
 import com.zettelnet.latin.lemma.DeclinableLemma;
 import com.zettelnet.latin.lemma.FormProvider;
 import com.zettelnet.latin.lemma.Lemma;
-import com.zettelnet.latin.lemma.infinitive.SimpleGerund;
+import com.zettelnet.latin.lemma.gerund.SimpleGerund;
 import com.zettelnet.latin.lemma.infinitive.SimpleInfinitive;
 import com.zettelnet.latin.lemma.verb.Verb;
 import com.zettelnet.latin.lemma.verb.VerbStem;
 
 public abstract class AbstractInfinitiveConjugation implements DerivationProvider<Verb> {
 
+	public static final Set<DerivationType> TYPES = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(DerivationType.Infinitive, DerivationType.Gerund)));
+
 	private final FormValueProvider<String> firstFormEndings;
 	private final FormValueProvider<String> stemEndings;
 
 	private final FormValueProvider<VerbStem> stemTypes;
-	private static final FormProvider<DeclinableLemma> formProvider = new InfinitiveDeclension();
+	private static final FormProvider<DeclinableLemma> formProvider = new GerundDeclension();
 
 	public AbstractInfinitiveConjugation(final FormValueProvider<String> firstFormEndings, final FormValueProvider<String> stemEndings, final FormValueProvider<VerbStem> stemTypes) {
 		this.firstFormEndings = firstFormEndings;
@@ -44,7 +48,7 @@ public abstract class AbstractInfinitiveConjugation implements DerivationProvide
 
 	@Override
 	public Collection<Lemma> getDerivation(Verb lemma, Derivation derivation) {
-		if (derivation.getType() != DerivationType.Infinitive) {
+		if (derivation.getType() != DerivationType.Infinitive && derivation.getType() != DerivationType.Gerund) {
 			return Collections.emptyList();
 		} else {
 			Collection<Lemma> lemmas = new ArrayList<>();
@@ -58,16 +62,27 @@ public abstract class AbstractInfinitiveConjugation implements DerivationProvide
 
 				Collection<String> stemEndings = this.stemEndings.getValue(form);
 				if (stemEndings.isEmpty()) {
-					// infinitive without inflected forms
-					Lemma infinitive = new SimpleInfinitive(firstForm, Genus.Neuter, lemma, derivation);
-					lemmas.add(infinitive);
+					// infinitive
+					if (derivation.getType() != DerivationType.Infinitive) {
+						return Collections.emptyList();
+					} else {
+						Lemma infinitive = new SimpleInfinitive(firstForm, Genus.Neuter, lemma, derivation);
+						lemmas.add(infinitive);
+					}
 				} else {
-					// infinitive / gerund with inflected forms
+					// has inflected forms -> infinitive AND gerund
 					for (String stemEnding : stemEndings) {
 						String stem = verbStem + stemEnding;
 
-						Lemma gerund = new SimpleGerund(firstForm, stem, formProvider, Genus.Neuter, lemma, derivation);
-						lemmas.add(gerund);
+						if (derivation.getType() == DerivationType.Infinitive) {
+							Lemma infinitive = new SimpleInfinitive(firstForm, Genus.Neuter, lemma, derivation);
+							lemmas.add(infinitive);
+						} else if (derivation.getType() == DerivationType.Gerund) {
+							Lemma gerund = new SimpleGerund(verbStem + stemEnding + "um", stem, formProvider, Genus.Neuter, lemma, derivation);
+							lemmas.add(gerund);
+						} else {
+							throw new AssertionError();
+						}
 					}
 				}
 			}
@@ -86,11 +101,13 @@ public abstract class AbstractInfinitiveConjugation implements DerivationProvide
 
 		for (Tense tense : getTenseSet(lemma)) {
 			for (Voice voice : getVoiceSet(lemma)) {
-				Derivation derivation = Derivation.withValues(DerivationType.Infinitive, tense, voice);
-				Collection<Lemma> values = getDerivation(lemma, derivation);
+				for (DerivationType type : TYPES) {
+					Derivation derivation = Derivation.withValues(type, tense, voice);
+					Collection<Lemma> values = getDerivation(lemma, derivation);
 
-				if (!values.isEmpty()) {
-					derivations.put(derivation, values);
+					if (!values.isEmpty()) {
+						derivations.put(derivation, values);
+					}
 				}
 			}
 		}
