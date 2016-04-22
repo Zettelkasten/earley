@@ -62,7 +62,7 @@ public abstract class AbstractParticipleConjugation implements DerivationProvide
 				String stem = verbStem + stemEnding;
 				Map<Genus, FormProvider<DeclinableLemma>> formProviders = first(this.formProviders.getValue(form));
 
-				Lemma participle = new SimpleParticiple(firstForms, stem, formProviders, lemma);
+				Lemma participle = new SimpleParticiple(firstForms, stem, formProviders, lemma, derivation);
 				lemmas.add(participle);
 			}
 			return lemmas;
