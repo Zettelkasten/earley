@@ -1,5 +1,7 @@
 package com.zettelnet.earley.test.latin;
 
+import com.zettelnet.earley.ParameterizedSymbol;
+import com.zettelnet.earley.SimpleGrammar;
 import com.zettelnet.earley.param.ParameterExpression;
 import com.zettelnet.earley.param.ParameterFactory;
 import com.zettelnet.earley.param.ParameterManager;
@@ -7,6 +9,7 @@ import com.zettelnet.earley.param.SingletonParameterFactory;
 import com.zettelnet.earley.param.SpecificParameterExpression;
 import com.zettelnet.earley.param.TokenParameterizer;
 import com.zettelnet.earley.param.property.Property;
+import com.zettelnet.earley.symbol.NonTerminal;
 import com.zettelnet.earley.test.latin.individual.IndividualFormParameterExpression;
 
 public final class LatinHelper {
@@ -29,5 +32,10 @@ public final class LatinHelper {
 
 	static ParameterFactory<FormParameter> key(Property... formProperties) {
 		return new SingletonParameterFactory<FormParameter>(new FormParameter(formProperties));
+	}
+	
+	static void makeOptional(SimpleGrammar<Token, FormParameter> grammar, NonTerminal<Token> optionalSymbol, NonTerminal<Token> symbol, ParameterExpression<Token, FormParameter> expression) {
+		grammar.addProduction(optionalSymbol);
+		grammar.addProduction(optionalSymbol, new ParameterizedSymbol<>(symbol, expression));
 	}
 }

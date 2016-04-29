@@ -2,6 +2,7 @@ package com.zettelnet.earley.test.latin;
 
 import static com.zettelnet.earley.test.latin.LatinHelper.copy;
 import static com.zettelnet.earley.test.latin.LatinHelper.key;
+import static com.zettelnet.earley.test.latin.LatinHelper.makeOptional;
 import static com.zettelnet.earley.test.latin.LatinHelper.specify;
 
 import com.zettelnet.earley.Grammar;
@@ -20,6 +21,7 @@ import com.zettelnet.latin.form.Genus;
 import com.zettelnet.latin.form.Numerus;
 import com.zettelnet.latin.form.Tense;
 import com.zettelnet.latin.lemma.LemmaType;
+import com.zettelnet.latin.lemma.property.AccusativeValency;
 import com.zettelnet.latin.lemma.property.Finiteness;
 import com.zettelnet.latin.lemma.property.Valency;
 
@@ -27,22 +29,23 @@ public final class LatinGrammar {
 
 	private LatinGrammar() {
 	}
-	
+
 	public static Grammar<Token, FormParameter> makeGrammar() {
 		// Symbols
 
 		NonTerminal<Token> sentence = new SimpleNonTerminal<>("S");
 
 		NonTerminal<Token> nounPhrase = new SimpleNonTerminal<>("NP");
+		NonTerminal<Token> nounPhraseOpt = new SimpleNonTerminal<>("[NP]");
 		NonTerminal<Token> nounForm = new SimpleNonTerminal<>("NF");
-		NonTerminal<Token> attribute = new SimpleNonTerminal<>("Attr");
-		NonTerminal<Token> attributeVar = new SimpleNonTerminal<>("Attr*");
+		NonTerminal<Token> adjectivePhrase = new SimpleNonTerminal<>("AP");
+		NonTerminal<Token> adjectivePhraseOpt = new SimpleNonTerminal<>("[AP]");
 
 		NonTerminal<Token> verbPhrase = new SimpleNonTerminal<>("VP");
 		NonTerminal<Token> verbForm = new SimpleNonTerminal<>("VF");
 		NonTerminal<Token> arguments = new SimpleNonTerminal<>("Args");
-		NonTerminal<Token> adverbalPhrase = new SimpleNonTerminal<>("AP");
-		NonTerminal<Token> adverbalPhraseVar = new SimpleNonTerminal<>("AP*");
+		NonTerminal<Token> adverbalPhrase = new SimpleNonTerminal<>("AdvP");
+		NonTerminal<Token> adverbalPhraseVar = new SimpleNonTerminal<>("AdvP*");
 
 		Terminal<Token> verb = new LemmaTerminal(LemmaType.Verb);
 		Terminal<Token> noun = new LemmaTerminal(LemmaType.Noun);
@@ -50,6 +53,7 @@ public final class LatinGrammar {
 		Terminal<Token> adjective = new LemmaTerminal(LemmaType.Adjective);
 		Terminal<Token> conjunction = new LemmaTerminal(LemmaType.Conjunction);
 		Terminal<Token> infinitive = new LemmaTerminal(LemmaType.Infinitive);
+		Terminal<Token> participle = new LemmaTerminal(LemmaType.Participle);
 
 		// Management
 
@@ -72,7 +76,7 @@ public final class LatinGrammar {
 		grammar.addProduction(sentence,
 				new ParameterizedSymbol<>(verbPhrase, copy));
 
-		// VP(pi) -> VF(pi) Args(pi) AP*
+		// VP(pi) -> VF(pi) Args(pi) AdvP*
 		grammar.addProduction(
 				verbPhrase,
 				new ParameterizedSymbol<>(verbForm, copy),
@@ -89,6 +93,10 @@ public final class LatinGrammar {
 				verbForm,
 				key(Finiteness.Infinitive),
 				new ParameterizedSymbol<>(infinitive, specify(parameterManager, parameterizer, Casus.Nominative)));
+		grammar.addProduction(
+				verbForm,
+				key(Finiteness.Participle),
+				new ParameterizedSymbol<>(participle, copy));
 
 		// Args(pi : NullVal) -> epsilon
 		grammar.addProduction(
@@ -116,16 +124,24 @@ public final class LatinGrammar {
 		// Args(pi : AkkVal) -> NP(Akk)
 		grammar.addProduction(
 				arguments,
-				key(Valency.Accusative),
+				key(Valency.Accusative, AccusativeValency.Default),
 				new ParameterizedSymbol<>(nounPhrase, specify(parameterManager, parameterizer, Casus.Accusative)));
+		// Args(pi : AkkVal) -> NP(Akk)
+		grammar.addProduction(
+				arguments,
+				key(Valency.Accusative, AccusativeValency.Omit));
 		// Args(pi : AkkDatVal) -> NP(Akk) NP(Dat)
 		grammar.addProduction(
 				arguments,
-				key(Valency.AccusativeDative),
+				key(Valency.AccusativeDative, AccusativeValency.Default),
 				new ParameterizedSymbol<>(nounPhrase, specify(parameterManager, parameterizer, Casus.Accusative)),
 				new ParameterizedSymbol<>(nounPhrase, specify(parameterManager, parameterizer, Casus.Dative)));
+		grammar.addProduction(
+				arguments,
+				key(Valency.AccusativeDative, AccusativeValency.Omit),
+				new ParameterizedSymbol<>(nounPhrase, specify(parameterManager, parameterizer, Casus.Dative)));
 
-		// AP var
+		// AdvP var
 		grammar.addProduction(
 				adverbalPhraseVar);
 		grammar.addProduction(
@@ -133,48 +149,41 @@ public final class LatinGrammar {
 				adverbalPhrase,
 				adverbalPhraseVar);
 
-		// AP -> Adv
+		// AdvP -> Adv
 		grammar.addProduction(adverbalPhrase,
 				adverb);
 
-		// NP(pi : Fin) -> NF(pi) Attr(pi)*
+		// NP(pi : Fin) -> NF(pi) [AP(pi)] [NP(Gen)] [NP(pi)] [pron(pi)*] TODO
 		grammar.addProduction(
 				nounPhrase,
 				key(Finiteness.Finite),
 				new ParameterizedSymbol<>(nounForm, copy),
-				new ParameterizedSymbol<>(attributeVar, copy));
+				new ParameterizedSymbol<>(adjectivePhraseOpt, copy),
+				new ParameterizedSymbol<>(nounPhraseOpt, specify(parameterManager, parameterizer, Casus.Genitive)),
+				new ParameterizedSymbol<>(nounPhraseOpt, copy));
 		// NF(pi) -> n(pi)
 		grammar.addProduction(
 				nounForm,
 				new ParameterizedSymbol<>(noun, copy));
-		// NF(pi) -> adj(pi)
-		grammar.addProduction(
-				nounForm,
-				new ParameterizedSymbol<>(adjective, copy));
-		// attribute varargs
-		grammar.addProduction(
-				attributeVar);
-		grammar.addProduction(
-				attributeVar,
-				new ParameterizedSymbol<>(attribute, copy),
-				new ParameterizedSymbol<>(attributeVar, copy));
-		// Attr(pi) -> NF(pi)
-		grammar.addProduction(
-				attribute,
-				new ParameterizedSymbol<>(nounForm, copy));
-		// Attr(pi) -> NP(Gen)
-		grammar.addProduction(
-				attribute,
-				new ParameterizedSymbol<>(nounPhrase, specify(parameterManager, parameterizer, Casus.Genitive)));
 		// NP(pi : Nom / Akk) -> S(pi : Inf Pr�s/Perf/Fut Akk)
 		grammar.addProduction(
 				nounPhrase,
 				key(Casus.Nominative, Casus.Accusative),
 				new ParameterizedSymbol<>(sentence, specify(parameterManager, parameterizer, Casus.Accusative, Tense.Present, Tense.Perfect, Tense.Future, Finiteness.Infinitive)));
 
+		// AP(pi) -> adj(pi) AdvP(pi)*
+		grammar.addProduction(
+				adjectivePhrase,
+				new ParameterizedSymbol<>(adjective, copy),
+				new ParameterizedSymbol<>(adverbalPhraseVar, copy));
+		// AP(pi) -> VP(Participle AccVal/AccDatVal OmitAkkArgs)
+		grammar.addProduction(
+				adjectivePhrase,
+				new ParameterizedSymbol<>(verbPhrase, specify(parameterManager, parameterizer, Finiteness.Participle, Valency.Accusative, Valency.AccusativeDative, AccusativeValency.Omit)));
+
 		// coordinations
 
-		// NP(pi : Pl) -> NP(?) conj NP(?)
+		// NP(pi : Pl) -> NP(casus[pi]) conj NP(casus[pi])
 		grammar.addProduction(
 				nounPhrase,
 				key(Numerus.Plural),
@@ -182,12 +191,26 @@ public final class LatinGrammar {
 				new ParameterizedSymbol<>(conjunction, any),
 				new ParameterizedSymbol<>(nounPhrase, copy(parameterizer, Casus.class)));
 
+		// AP(pi) -> AP(?) conj AP(?)
+		grammar.addProduction(
+				adjectivePhrase,
+				new ParameterizedSymbol<>(adjectivePhrase, copy),
+				new ParameterizedSymbol<>(conjunction, any),
+				new ParameterizedSymbol<>(adjectivePhrase, copy));
+		grammar.addProduction(
+				adjectivePhrase,
+				new ParameterizedSymbol<>(adjectivePhrase, copy),
+				new ParameterizedSymbol<>(adjectivePhrase, copy));
+
 		// VP(pi) -> VP(pi) conj VP(pi)
 		grammar.addProduction(
 				verbPhrase,
 				new ParameterizedSymbol<>(verbPhrase, copy(parameterizer, Casus.class, Numerus.class, Genus.class, Finiteness.class)),
 				new ParameterizedSymbol<>(conjunction, any),
 				new ParameterizedSymbol<>(verbPhrase, copy(parameterizer, Casus.class, Numerus.class, Genus.class, Finiteness.class)));
+
+		makeOptional(grammar, nounPhraseOpt, nounPhrase, copy);
+		makeOptional(grammar, adjectivePhraseOpt, adjectivePhrase, copy);
 
 		return grammar;
 	}
