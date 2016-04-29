@@ -26,7 +26,7 @@ public class SimpleAdjective implements Adjective {
 	private final Map<Genus, String> firstForm;
 	private final String stem;
 	private final Map<Genus, FormProvider<DeclinableLemma>> formProviders;
-	private final PropertySet<LemmaProperty> properties;
+	private PropertySet<LemmaProperty> properties;
 
 	public SimpleAdjective(final String masculineForm, final String feminineForm, final String neuterForm, final String stem, final Map<Genus, FormProvider<DeclinableLemma>> formProvider, LemmaProperty... lemmaProperties) {
 		this(Genus.makeMap(masculineForm, feminineForm, neuterForm), stem, formProvider);
@@ -90,6 +90,10 @@ public class SimpleAdjective implements Adjective {
 	@Override
 	public PropertySet<LemmaProperty> getProperties() {
 		return properties;
+	}
+
+	protected void setProperties(PropertySet<LemmaProperty> properties) {
+		this.properties = properties;
 	}
 
 	@Override

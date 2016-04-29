@@ -19,7 +19,7 @@ public abstract class AbstractDeclinableLemma implements DeclinableLemma {
 	private final String stem;
 	private final FormProvider<DeclinableLemma> formProvider;
 	private final Set<Genus> genus;
-	private final PropertySet<LemmaProperty> properties;
+	private PropertySet<LemmaProperty> properties;
 
 	public AbstractDeclinableLemma(final String firstForm, final String stem, final FormProvider<DeclinableLemma> formProvider, final Genus genus, final LemmaProperty... properties) {
 		this(firstForm, stem, formProvider, EnumSet.of(genus), properties);
@@ -86,6 +86,10 @@ public abstract class AbstractDeclinableLemma implements DeclinableLemma {
 	@Override
 	public PropertySet<LemmaProperty> getProperties() {
 		return properties;
+	}
+	
+	protected void setProperties(PropertySet<LemmaProperty> properties) {
+		this.properties = properties;
 	}
 	
 	@Override

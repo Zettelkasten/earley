@@ -6,6 +6,7 @@ import com.zettelnet.latin.lemma.AbstractDeclinableLemma;
 import com.zettelnet.latin.lemma.DeclinableLemma;
 import com.zettelnet.latin.lemma.FormProvider;
 import com.zettelnet.latin.lemma.LemmaType;
+import com.zettelnet.latin.lemma.property.Finiteness;
 import com.zettelnet.latin.lemma.property.LemmaProperty;
 import com.zettelnet.latin.lemma.verb.Verb;
 
@@ -19,6 +20,8 @@ public class SimpleGerund extends AbstractDeclinableLemma implements Gerund {
 
 		this.verb = verb;
 		this.derivation = derivation;
+		
+		setProperties(getProperties().derive(verb.getProperties().values()).derive(Finiteness.Gerund));
 	}
 
 	@Override

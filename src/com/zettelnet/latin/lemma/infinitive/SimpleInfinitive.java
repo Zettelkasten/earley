@@ -16,6 +16,7 @@ import com.zettelnet.latin.form.Form;
 import com.zettelnet.latin.form.Genus;
 import com.zettelnet.latin.lemma.Lemma;
 import com.zettelnet.latin.lemma.LemmaType;
+import com.zettelnet.latin.lemma.property.Finiteness;
 import com.zettelnet.latin.lemma.property.LemmaProperty;
 import com.zettelnet.latin.lemma.verb.Verb;
 
@@ -34,7 +35,7 @@ public class SimpleInfinitive implements Infinitive {
 		this.genus = EnumSet.of(genus);
 		this.verb = verb;
 		this.derivation = derivation;
-		this.properties = MapPropertySet.withValues(properties);
+		this.properties = MapPropertySet.withValues(properties).derive(verb.getProperties().values()).derive(Finiteness.Infinitive);
 	}
 
 	@Override

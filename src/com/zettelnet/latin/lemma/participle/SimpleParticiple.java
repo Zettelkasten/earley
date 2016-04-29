@@ -8,6 +8,7 @@ import com.zettelnet.latin.lemma.DeclinableLemma;
 import com.zettelnet.latin.lemma.FormProvider;
 import com.zettelnet.latin.lemma.LemmaType;
 import com.zettelnet.latin.lemma.adjective.SimpleAdjective;
+import com.zettelnet.latin.lemma.property.Finiteness;
 import com.zettelnet.latin.lemma.property.LemmaProperty;
 import com.zettelnet.latin.lemma.verb.Verb;
 
@@ -21,6 +22,8 @@ public class SimpleParticiple extends SimpleAdjective implements Participle {
 
 		this.verb = verb;
 		this.derivation = derivation;
+
+		setProperties(getProperties().derive(verb.getProperties().values()).derive(Finiteness.Participle));
 	}
 
 	@Override
