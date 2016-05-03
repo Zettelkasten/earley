@@ -34,6 +34,15 @@ public class IndividualFormParameterExpression<T> implements ParameterExpression
 		return this;
 	}
 
+	@SafeVarargs
+	public final IndividualFormParameterExpression<T> copy(Class<? extends Property>... propertyTypes) {
+		for (Class<? extends Property> type : propertyTypes) {
+			handlers.put(type, COPY);
+		}
+
+		return this;
+	}
+
 	public IndividualFormParameterExpression<T> specify(Property... properties) {
 		Map<Class<? extends Property>, Set<Property>> specified = new HashMap<>();
 
