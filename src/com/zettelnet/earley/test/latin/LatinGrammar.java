@@ -20,8 +20,8 @@ import com.zettelnet.latin.form.Casus;
 import com.zettelnet.latin.form.Genus;
 import com.zettelnet.latin.form.Numerus;
 import com.zettelnet.latin.form.Tense;
+import com.zettelnet.latin.form.Voice;
 import com.zettelnet.latin.lemma.LemmaType;
-import com.zettelnet.latin.lemma.property.AccusativeValency;
 import com.zettelnet.latin.lemma.property.Finiteness;
 import com.zettelnet.latin.lemma.property.Valency;
 
@@ -121,24 +121,25 @@ public final class LatinGrammar {
 				arguments,
 				key(Valency.Dative),
 				new ParameterizedSymbol<>(nounPhrase, specify(parameterManager, parameterizer, Casus.Dative)));
-		// Args(pi : AkkVal) -> NP(Akk)
+		// Args(pi : AkkVal Akt) -> NP(Akk)
 		grammar.addProduction(
 				arguments,
-				key(Valency.Accusative, AccusativeValency.Default),
+				key(Valency.Accusative, Voice.Active),
 				new ParameterizedSymbol<>(nounPhrase, specify(parameterManager, parameterizer, Casus.Accusative)));
-		// Args(pi : AkkVal) -> NP(Akk)
+		// Args(pi : AkkVal Pass) -> epsilon
 		grammar.addProduction(
 				arguments,
-				key(Valency.Accusative, AccusativeValency.Omit));
-		// Args(pi : AkkDatVal) -> NP(Akk) NP(Dat)
+				key(Valency.Accusative, Voice.Passive));
+		// Args(pi : AkkDatVal Akt) -> NP(Akk) NP(Dat)
 		grammar.addProduction(
 				arguments,
-				key(Valency.AccusativeDative, AccusativeValency.Default),
+				key(Valency.AccusativeDative, Voice.Active),
 				new ParameterizedSymbol<>(nounPhrase, specify(parameterManager, parameterizer, Casus.Accusative)),
 				new ParameterizedSymbol<>(nounPhrase, specify(parameterManager, parameterizer, Casus.Dative)));
+		// Args(pi : AkkDatVal Pass) -> NP(Dat)
 		grammar.addProduction(
 				arguments,
-				key(Valency.AccusativeDative, AccusativeValency.Omit),
+				key(Valency.AccusativeDative, Voice.Passive),
 				new ParameterizedSymbol<>(nounPhrase, specify(parameterManager, parameterizer, Casus.Dative)));
 
 		// AdvP var
@@ -176,38 +177,38 @@ public final class LatinGrammar {
 				adjectivePhrase,
 				new ParameterizedSymbol<>(adjective, copy),
 				new ParameterizedSymbol<>(adverbalPhraseVar, copy));
-		// AP(pi) -> VP(Participle AccVal/AccDatVal OmitAkkArgs)
+		// AP(pi) -> VP(Participle)
 		grammar.addProduction(
 				adjectivePhrase,
-				new ParameterizedSymbol<>(verbPhrase, specify(parameterManager, parameterizer, Finiteness.Participle, Valency.Accusative, Valency.AccusativeDative, AccusativeValency.Omit)));
+				new ParameterizedSymbol<>(verbPhrase, specify(parameterManager, parameterizer, Finiteness.Participle)));
 
 		// coordinations
 
-		// NP(pi : Pl) -> NP(casus[pi]) conj NP(casus[pi])
-		grammar.addProduction(
-				nounPhrase,
-				key(Numerus.Plural),
-				new ParameterizedSymbol<>(nounPhrase, copy(parameterizer, Casus.class)),
-				new ParameterizedSymbol<>(conjunction, any),
-				new ParameterizedSymbol<>(nounPhrase, copy(parameterizer, Casus.class)));
-
-		// AP(pi) -> AP(?) conj AP(?)
-		grammar.addProduction(
-				adjectivePhrase,
-				new ParameterizedSymbol<>(adjectivePhrase, copy),
-				new ParameterizedSymbol<>(conjunction, any),
-				new ParameterizedSymbol<>(adjectivePhrase, copy));
-		grammar.addProduction(
-				adjectivePhrase,
-				new ParameterizedSymbol<>(adjectivePhrase, copy),
-				new ParameterizedSymbol<>(adjectivePhrase, copy));
-
-		// VP(pi) -> VP(pi) conj VP(pi)
-		grammar.addProduction(
-				verbPhrase,
-				new ParameterizedSymbol<>(verbPhrase, copy(parameterizer, Casus.class, Numerus.class, Genus.class, Finiteness.class)),
-				new ParameterizedSymbol<>(conjunction, any),
-				new ParameterizedSymbol<>(verbPhrase, copy(parameterizer, Casus.class, Numerus.class, Genus.class, Finiteness.class)));
+//		// NP(pi : Pl) -> NP(casus[pi]) conj NP(casus[pi])
+//		grammar.addProduction(
+//				nounPhrase,
+//				key(Numerus.Plural),
+//				new ParameterizedSymbol<>(nounPhrase, copy(parameterizer, Casus.class)),
+//				new ParameterizedSymbol<>(conjunction, any),
+//				new ParameterizedSymbol<>(nounPhrase, copy(parameterizer, Casus.class)));
+//
+//		// AP(pi) -> AP(?) conj AP(?)
+//		grammar.addProduction(
+//				adjectivePhrase,
+//				new ParameterizedSymbol<>(adjectivePhrase, copy),
+//				new ParameterizedSymbol<>(conjunction, any),
+//				new ParameterizedSymbol<>(adjectivePhrase, copy));
+//		grammar.addProduction(
+//				adjectivePhrase,
+//				new ParameterizedSymbol<>(adjectivePhrase, copy),
+//				new ParameterizedSymbol<>(adjectivePhrase, copy));
+//
+//		// VP(pi) -> VP(pi) conj VP(pi)
+//		grammar.addProduction(
+//				verbPhrase,
+//				new ParameterizedSymbol<>(verbPhrase, copy(parameterizer, Casus.class, Numerus.class, Genus.class, Finiteness.class)),
+//				new ParameterizedSymbol<>(conjunction, any),
+//				new ParameterizedSymbol<>(verbPhrase, copy(parameterizer, Casus.class, Numerus.class, Genus.class, Finiteness.class)));
 
 		makeOptional(grammar, nounPhraseOpt, nounPhrase, copy);
 		makeOptional(grammar, adjectivePhraseOpt, adjectivePhrase, copy);
