@@ -27,7 +27,7 @@ public class DeterminationRegistry implements TokenFactory<Token> {
 
 	public void register(Lemma lemma) {
 		for (Entry<Form, Collection<String>> entry : lemma.getForms().entrySet()) {
-			PropertySet<?> properties = PropertySets.derive(entry.getKey(), lemma.getProperties());
+			PropertySet<?> properties = makeFinalPropertySet(lemma, entry.getKey());
 			for (String value : entry.getValue()) {
 				register(value, new Determination(lemma, properties));
 			}
@@ -38,6 +38,17 @@ public class DeterminationRegistry implements TokenFactory<Token> {
 				register(derivation);
 			}
 		}
+	}
+
+	private static PropertySet<?> makeFinalPropertySet(Lemma lemma, Form finiteForm) {
+		// properties = lemmaProperties + derivationProperties +
+		// finiteFormProperties
+		PropertySet<?> properties = lemma.getProperties();
+		if (lemma.isDerivation()) {
+			properties = PropertySets.derive(properties, lemma.getDerivationKind().getForm());
+		}
+		properties = PropertySets.derive(properties, finiteForm);
+		return properties;
 	}
 
 	public void register(String value, Determination determination) {
