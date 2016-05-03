@@ -184,31 +184,31 @@ public final class LatinGrammar {
 
 		// coordinations
 
-//		// NP(pi : Pl) -> NP(casus[pi]) conj NP(casus[pi])
-//		grammar.addProduction(
-//				nounPhrase,
-//				key(Numerus.Plural),
-//				new ParameterizedSymbol<>(nounPhrase, copy(parameterizer, Casus.class)),
-//				new ParameterizedSymbol<>(conjunction, any),
-//				new ParameterizedSymbol<>(nounPhrase, copy(parameterizer, Casus.class)));
-//
-//		// AP(pi) -> AP(?) conj AP(?)
-//		grammar.addProduction(
-//				adjectivePhrase,
-//				new ParameterizedSymbol<>(adjectivePhrase, copy),
-//				new ParameterizedSymbol<>(conjunction, any),
-//				new ParameterizedSymbol<>(adjectivePhrase, copy));
-//		grammar.addProduction(
-//				adjectivePhrase,
-//				new ParameterizedSymbol<>(adjectivePhrase, copy),
-//				new ParameterizedSymbol<>(adjectivePhrase, copy));
-//
-//		// VP(pi) -> VP(pi) conj VP(pi)
-//		grammar.addProduction(
-//				verbPhrase,
-//				new ParameterizedSymbol<>(verbPhrase, copy(parameterizer, Casus.class, Numerus.class, Genus.class, Finiteness.class)),
-//				new ParameterizedSymbol<>(conjunction, any),
-//				new ParameterizedSymbol<>(verbPhrase, copy(parameterizer, Casus.class, Numerus.class, Genus.class, Finiteness.class)));
+		// NP(pi : Pl) -> NP(casus[pi]) conj NP(casus[pi])
+		grammar.addProduction(
+				nounPhrase,
+				key(Numerus.Plural),
+				new ParameterizedSymbol<>(nounPhrase, copy(parameterizer, Casus.class)),
+				new ParameterizedSymbol<>(conjunction, any),
+				new ParameterizedSymbol<>(nounPhrase, copy(parameterizer, Casus.class)));
+
+		// AP(pi) -> AP(?) conj AP(?)
+		grammar.addProduction(
+				adjectivePhrase,
+				new ParameterizedSymbol<>(adjectivePhrase, copy),
+				new ParameterizedSymbol<>(conjunction, any),
+				new ParameterizedSymbol<>(adjectivePhrase, copy));
+		grammar.addProduction(
+				adjectivePhrase,
+				new ParameterizedSymbol<>(adjectivePhrase, copy),
+				new ParameterizedSymbol<>(adjectivePhrase, copy));
+
+		// VP(pi) -> VP(pi) conj VP(pi)
+		grammar.addProduction(
+				verbPhrase,
+				new ParameterizedSymbol<>(verbPhrase, copy(parameterizer, Casus.class, Numerus.class, Genus.class, Finiteness.class)),
+				new ParameterizedSymbol<>(conjunction, any),
+				new ParameterizedSymbol<>(verbPhrase, copy(parameterizer, Casus.class, Numerus.class, Genus.class, Finiteness.class)));
 
 		makeOptional(grammar, nounPhraseOpt, nounPhrase, copy);
 		makeOptional(grammar, adjectivePhraseOpt, adjectivePhrase, copy);
