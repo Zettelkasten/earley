@@ -1,4 +1,4 @@
-package com.zettelnet.earley.test.latin;
+package com.zettelnet.latin.param;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -13,6 +13,7 @@ import com.zettelnet.earley.param.property.Property;
 import com.zettelnet.earley.param.property.PropertySet;
 import com.zettelnet.latin.form.Form;
 import com.zettelnet.latin.form.FormProperty;
+import com.zettelnet.latin.token.Determination;
 
 public final class FormParameter implements Parameter {
 

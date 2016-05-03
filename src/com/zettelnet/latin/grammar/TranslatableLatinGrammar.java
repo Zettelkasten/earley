@@ -1,4 +1,4 @@
-package com.zettelnet.earley.test.latin;
+package com.zettelnet.latin.grammar;
 
 import com.zettelnet.earley.ParameterizedSymbol;
 import com.zettelnet.earley.Production;
@@ -20,9 +20,14 @@ import com.zettelnet.latin.form.Casus;
 import com.zettelnet.latin.form.Form;
 import com.zettelnet.latin.form.Numerus;
 import com.zettelnet.latin.lemma.Lemma;
+import com.zettelnet.latin.lemma.LemmaTerminal;
 import com.zettelnet.latin.lemma.LemmaType;
 import com.zettelnet.latin.lemma.property.Finiteness;
 import com.zettelnet.latin.lemma.property.Valency;
+import com.zettelnet.latin.param.FormParameter;
+import com.zettelnet.latin.param.FormParameterManager;
+import com.zettelnet.latin.param.FormParameterizer;
+import com.zettelnet.latin.token.Token;
 
 public class TranslatableLatinGrammar {
 

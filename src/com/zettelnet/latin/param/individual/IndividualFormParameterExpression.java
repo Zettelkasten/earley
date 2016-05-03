@@ -1,4 +1,4 @@
-package com.zettelnet.earley.test.latin.individual;
+package com.zettelnet.latin.param.individual;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,7 +13,7 @@ import com.zettelnet.earley.param.ParameterExpression;
 import com.zettelnet.earley.param.TokenParameterizer;
 import com.zettelnet.earley.param.property.Property;
 import com.zettelnet.earley.symbol.Terminal;
-import com.zettelnet.earley.test.latin.FormParameter;
+import com.zettelnet.latin.param.FormParameter;
 
 public class IndividualFormParameterExpression<T> implements ParameterExpression<T, FormParameter> {
 

@@ -19,12 +19,6 @@ import com.zettelnet.earley.param.TokenParameterizer;
 import com.zettelnet.earley.symbol.NonTerminal;
 import com.zettelnet.earley.symbol.SimpleNonTerminal;
 import com.zettelnet.earley.symbol.Terminal;
-import com.zettelnet.earley.test.latin.Determination;
-import com.zettelnet.earley.test.latin.FormParameter;
-import com.zettelnet.earley.test.latin.FormParameterManager;
-import com.zettelnet.earley.test.latin.FormParameterizer;
-import com.zettelnet.earley.test.latin.LemmaTerminal;
-import com.zettelnet.earley.test.latin.Token;
 import com.zettelnet.earley.tree.SyntaxTreeVariant;
 import com.zettelnet.latin.form.Casus;
 import com.zettelnet.latin.form.Comparison;
@@ -36,10 +30,16 @@ import com.zettelnet.latin.form.Person;
 import com.zettelnet.latin.form.Tense;
 import com.zettelnet.latin.form.Voice;
 import com.zettelnet.latin.lemma.Lemma;
+import com.zettelnet.latin.lemma.LemmaTerminal;
 import com.zettelnet.latin.lemma.LemmaType;
 import com.zettelnet.latin.lemma.SimpleLemma;
 import com.zettelnet.latin.lemma.property.Finiteness;
 import com.zettelnet.latin.lemma.property.Valency;
+import com.zettelnet.latin.param.FormParameter;
+import com.zettelnet.latin.param.FormParameterManager;
+import com.zettelnet.latin.param.FormParameterizer;
+import com.zettelnet.latin.token.Determination;
+import com.zettelnet.latin.token.Token;
 
 public class JufoExample {
 
@@ -172,7 +172,7 @@ public class JufoExample {
 		grammar.addProduction(
 				attribute,
 				new ParameterizedSymbol<>(nounPhrase, new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(Form.nounForm(Casus.Genitive, null, null, null)))));
-		// NP(pi : Nom / Akk) -> S(pi : Inf Präs/Perf/Fut Akk)
+		// NP(pi : Nom / Akk) -> S(pi : Inf Prï¿½s/Perf/Fut Akk)
 		for (Casus casus : Arrays.asList(Casus.Nominative, Casus.Accusative)) {
 			for (Tense tense : Arrays.asList(Tense.Present)) {
 				grammar.addProduction(nounPhrase,

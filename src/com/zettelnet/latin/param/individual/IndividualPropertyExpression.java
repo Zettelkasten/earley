@@ -1,4 +1,4 @@
-package com.zettelnet.earley.test.latin.individual;
+package com.zettelnet.latin.param.individual;
 
 import java.util.Set;
 

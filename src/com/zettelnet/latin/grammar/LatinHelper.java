@@ -1,4 +1,4 @@
-package com.zettelnet.earley.test.latin;
+package com.zettelnet.latin.grammar;
 
 import com.zettelnet.earley.ParameterizedSymbol;
 import com.zettelnet.earley.SimpleGrammar;
@@ -10,9 +10,11 @@ import com.zettelnet.earley.param.SpecificParameterExpression;
 import com.zettelnet.earley.param.TokenParameterizer;
 import com.zettelnet.earley.param.property.Property;
 import com.zettelnet.earley.symbol.NonTerminal;
-import com.zettelnet.earley.test.latin.individual.IndividualFormParameterExpression;
+import com.zettelnet.latin.param.FormParameter;
+import com.zettelnet.latin.param.individual.IndividualFormParameterExpression;
+import com.zettelnet.latin.token.Token;
 
-public final class LatinHelper {
+final class LatinHelper {
 
 	private LatinHelper() {
 	}

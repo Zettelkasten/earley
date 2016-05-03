@@ -1,4 +1,4 @@
-package com.zettelnet.earley.test.latin;
+package com.zettelnet.latin.param;
 
 import com.zettelnet.earley.param.ParameterManager;
 

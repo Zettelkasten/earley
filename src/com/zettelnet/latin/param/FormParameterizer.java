@@ -1,10 +1,13 @@
-package com.zettelnet.earley.test.latin;
+package com.zettelnet.latin.param;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 import com.zettelnet.earley.param.TokenParameterizer;
 import com.zettelnet.earley.symbol.Terminal;
+import com.zettelnet.latin.lemma.LemmaTerminal;
+import com.zettelnet.latin.token.Determination;
+import com.zettelnet.latin.token.Token;
 
 public class FormParameterizer implements TokenParameterizer<Token, FormParameter> {
 

@@ -1,11 +1,11 @@
-package com.zettelnet.earley.test.latin.individual;
+package com.zettelnet.latin.param.individual;
 
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Set;
 
 import com.zettelnet.earley.param.property.Property;
-import com.zettelnet.earley.test.latin.FormParameter;
+import com.zettelnet.latin.param.FormParameter;
 
 public class SpecificIndividualPropertyExpression implements IndividualPropertyExpression {
 

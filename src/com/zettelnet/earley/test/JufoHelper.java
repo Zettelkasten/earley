@@ -21,10 +21,10 @@ public class JufoHelper {
 			e.printStackTrace();
 		}
 
-		System.out.println(result.getBinarySyntaxTree());
-
-		System.out.println(result.getSyntaxTree());
-		System.out.println(toStringBold(result.getSyntaxTree()));
+//		System.out.println(result.getBinarySyntaxTree());
+//
+//		System.out.println(result.getSyntaxTree());
+//		System.out.println(toStringBold(result.getSyntaxTree()));
 
 		 DrawTree.draw(new String[0], toStringBold(result.getSyntaxTree()));
 	}

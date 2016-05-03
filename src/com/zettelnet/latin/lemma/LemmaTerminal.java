@@ -1,7 +1,8 @@
-package com.zettelnet.earley.test.latin;
+package com.zettelnet.latin.lemma;
 
 import com.zettelnet.earley.symbol.SimpleTerminal;
-import com.zettelnet.latin.lemma.LemmaType;
+import com.zettelnet.latin.token.Determination;
+import com.zettelnet.latin.token.Token;
 
 public class LemmaTerminal extends SimpleTerminal<Token> {
 

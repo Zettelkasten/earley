@@ -1,4 +1,4 @@
-package com.zettelnet.earley.test.latin;
+package com.zettelnet.latin.token;
 
 import java.util.Collection;
 import java.util.HashSet;

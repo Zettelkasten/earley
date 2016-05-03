@@ -1,9 +1,9 @@
-package com.zettelnet.earley.test.latin;
+package com.zettelnet.latin.grammar;
 
-import static com.zettelnet.earley.test.latin.LatinHelper.copy;
-import static com.zettelnet.earley.test.latin.LatinHelper.key;
-import static com.zettelnet.earley.test.latin.LatinHelper.makeOptional;
-import static com.zettelnet.earley.test.latin.LatinHelper.specify;
+import static com.zettelnet.latin.grammar.LatinHelper.copy;
+import static com.zettelnet.latin.grammar.LatinHelper.key;
+import static com.zettelnet.latin.grammar.LatinHelper.makeOptional;
+import static com.zettelnet.latin.grammar.LatinHelper.specify;
 
 import com.zettelnet.earley.Grammar;
 import com.zettelnet.earley.ParameterizedSymbol;
@@ -16,15 +16,20 @@ import com.zettelnet.earley.param.TokenParameterizer;
 import com.zettelnet.earley.symbol.NonTerminal;
 import com.zettelnet.earley.symbol.SimpleNonTerminal;
 import com.zettelnet.earley.symbol.Terminal;
-import com.zettelnet.earley.test.latin.individual.IndividualFormParameterExpression;
 import com.zettelnet.latin.form.Casus;
 import com.zettelnet.latin.form.Genus;
 import com.zettelnet.latin.form.Numerus;
 import com.zettelnet.latin.form.Tense;
 import com.zettelnet.latin.form.Voice;
+import com.zettelnet.latin.lemma.LemmaTerminal;
 import com.zettelnet.latin.lemma.LemmaType;
 import com.zettelnet.latin.lemma.property.Finiteness;
 import com.zettelnet.latin.lemma.property.Valency;
+import com.zettelnet.latin.param.FormParameter;
+import com.zettelnet.latin.param.FormParameterManager;
+import com.zettelnet.latin.param.FormParameterizer;
+import com.zettelnet.latin.param.individual.IndividualFormParameterExpression;
+import com.zettelnet.latin.token.Token;
 
 public final class LatinGrammar {
 
