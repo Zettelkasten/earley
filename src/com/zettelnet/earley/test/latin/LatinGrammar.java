@@ -16,6 +16,7 @@ import com.zettelnet.earley.param.TokenParameterizer;
 import com.zettelnet.earley.symbol.NonTerminal;
 import com.zettelnet.earley.symbol.SimpleNonTerminal;
 import com.zettelnet.earley.symbol.Terminal;
+import com.zettelnet.earley.test.latin.individual.IndividualFormParameterExpression;
 import com.zettelnet.latin.form.Casus;
 import com.zettelnet.latin.form.Genus;
 import com.zettelnet.latin.form.Numerus;
@@ -180,7 +181,7 @@ public final class LatinGrammar {
 		// AP(pi) -> VP(Participle)
 		grammar.addProduction(
 				adjectivePhrase,
-				new ParameterizedSymbol<>(verbPhrase, specify(parameterManager, parameterizer, Finiteness.Participle)));
+				new ParameterizedSymbol<>(verbPhrase, new IndividualFormParameterExpression<>(parameterizer).specify(Finiteness.Participle).copy(Casus.class, Numerus.class, Genus.class)));
 
 		// coordinations
 
