@@ -38,11 +38,11 @@ public interface Form extends PropertySet<FormProperty>, Comparable<Form> {
 	}
 
 	public static Form nounForm(Casus casus, Numerus numerus, Genus genus) {
-		return nounForm(casus, numerus, genus, null);
+		return withValues(casus, numerus, genus);
 	}
 
 	public static Form nounForm(Casus casus, Numerus numerus, Genus genus, Person person) {
-		return withValues(casus, numerus, genus, person, null, null, null, null, null);
+		return withValues(casus, numerus, genus, person);
 	}
 
 	public static Form verbForm(Person person, Numerus numerus, Tense tense, Mood mood, Voice voice) {
