@@ -3,8 +3,12 @@ package com.zettelnet.earley.test;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.zettelnet.earley.test.latin.DeterminationRegistry;
 import com.zettelnet.latin.form.Genus;
+import com.zettelnet.latin.form.Mood;
+import com.zettelnet.latin.form.Numerus;
+import com.zettelnet.latin.form.Person;
+import com.zettelnet.latin.form.Tense;
+import com.zettelnet.latin.form.Voice;
 import com.zettelnet.latin.lemma.Lemma;
 import com.zettelnet.latin.lemma.adjective.SimpleAdjective;
 import com.zettelnet.latin.lemma.adverb.SimpleAdverb;
@@ -12,11 +16,17 @@ import com.zettelnet.latin.lemma.conjugation.Conjugation;
 import com.zettelnet.latin.lemma.conjunction.SimpleConjunction;
 import com.zettelnet.latin.lemma.declension.Declension;
 import com.zettelnet.latin.lemma.noun.SimpleNoun;
+import com.zettelnet.latin.lemma.property.Finiteness;
 import com.zettelnet.latin.lemma.property.Valency;
 import com.zettelnet.latin.lemma.verb.SimpleVerb;
+import com.zettelnet.latin.token.Determination;
+import com.zettelnet.latin.token.DeterminationRegistry;
 
-public class LatinRegistry {
+public final class LatinRegistry {
 
+	private LatinRegistry() {
+	}
+	
 	public static DeterminationRegistry INSTANCE = new DeterminationRegistry();
 	public static Map<Lemma, String> TRANSLATIONS = new HashMap<>();
 
@@ -71,7 +81,7 @@ public class LatinRegistry {
 		register(new SimpleConjunction("neque"), "and not");
 		register(new SimpleAdverb("tandem"), "finally");
 		register(new SimpleVerb("l_ud", "l_us", "l_us", Conjugation.Third, Valency.Accusative), "play");
-		register(new SimpleVerb("iuv", "i_uv", "i_ut", Conjugation.First, Valency.Accusative), "please");
+		register(new SimpleVerb("iuv", "i_uv", "i_ut", Conjugation.First, Valency.Single), "is fun");
 		
 		// extra
 		register(new SimpleVerb("ulul", "ulul_av", "ulul_at", Conjugation.First, Valency.Single), "howl");
@@ -81,13 +91,40 @@ public class LatinRegistry {
 	static {
 		// TODO ubi?
 		// TODO est
+		Lemma sum = new SimpleVerb("sum", "fu", "fu", Conjugation.First, Valency.Copula);
+		INSTANCE.register("est", new Determination(sum, Person.First, Numerus.Singular, Tense.Present, Mood.Indicative, Voice.Active, Finiteness.Finite, Valency.Copula));
+
 		register(new SimpleNoun("dominus", "domin", Declension.Second, Genus.Masculine), "lord");
 		register(new SimpleNoun("vilicus", "vilic", Declension.Second, Genus.Masculine), "custodian");
 		register(new SimpleNoun("servus", "serv", Declension.Second, Genus.Masculine), "slave");
 		register(new SimpleAdverb("tum"), "then");
 		register(new SimpleNoun("caelum", "cael", Declension.Second, Genus.Neuter), "sky");
 		register(new SimpleAdjective("obsc_urus", "obsc_ura", "obsc_urum", "obsc_ur", Declension.FirstAndSecond), "dark");
-		
+		// TODO -que
+		register(new SimpleNoun("serva", "serv", Declension.First, Genus.Feminine), "slave");
+		// TODO c_ur?
+		register(new SimpleVerb("lab_or", "lab_or_av", "lab_or_at", Conjugation.First, Valency.Single), "work");
+		register(new SimpleAdverb("subit_o"), "suddenly");
+		register(new SimpleVerb("interrog", "interrog_av", "interrog_at", Conjugation.First), "ask");
+		register(new SimpleNoun("plaustrum", "plaustr", Declension.Second, Genus.Neuter), "wagon");
+		register(new SimpleNoun("fr_umentum", "fr_ument", Declension.Second, Genus.Neuter), "wheat");
+		// TODO enim
+		register(new SimpleAdjective("m_aturus", "m_atura", "m_aturum", "m_atur", Declension.FirstAndSecond), "ripe");
+		register(new SimpleAdverb("quoque"), "also");
+		register(new SimpleNoun("domina", "domin", Declension.First, Genus.Feminine), "lady");
+		register(new SimpleNoun("puella", "puell", Declension.First, Genus.Feminine), "girl");
+		// TODO ecce!
+		register(new SimpleAdverb("etiam"), "and also");
+		register(new SimpleAdverb("imm_o"), "on the contrary");
+		register(new SimpleAdverb("v_er_o"), "truly");
+		register(new SimpleAdjective("c_unctus", "c_uncta", "c_unctum", "c_unct", Declension.FirstAndSecond), "whole");
+		// TODO adsum
+		register(new SimpleAdjective("onustus", "onusta", "onustum", "onust", Declension.FirstAndSecond), "loaded");
+		register(new SimpleAdjective("d_efessus", "d_efessa", "d_efessum", "d_efess", Declension.FirstAndSecond), "exhausted");
+		register(new SimpleAdverb("iterum"), "again");
+		register(new SimpleAdverb("nunc"), "now");
+		register(new SimpleAdjective("laetus", "laeta", "laetum", "laet", Declension.FirstAndSecond), "happy");
+		register(new SimpleAdjective("salvus", "salva", "salvum", "salv", Declension.FirstAndSecond), "safe");
 	}
 	
 	// Names
@@ -107,6 +144,7 @@ public class LatinRegistry {
 	// some nouns
 	static {
 		register(new SimpleNoun("carmen", "carmin", Declension.Third, Genus.Neuter), "song");
+		register(new SimpleVerb("d", "ded", "dat", Conjugation.First, Valency.AccusativeDative), "give");
 	}
 	
 	static {
