@@ -2,7 +2,7 @@ package com.zettelnet.latin.form;
 
 public enum Comparison implements FormProperty {
 
-	Positive("1"), Comparative("2"), Superlative("3");
+	Positive("Pos"), Comparative("Comp"), Superlative("Super");
 
 	private final String shortName;
 
