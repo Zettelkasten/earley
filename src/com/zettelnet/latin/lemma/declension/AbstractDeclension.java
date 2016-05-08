@@ -30,10 +30,6 @@ import com.zettelnet.latin.lemma.noun.Noun;
  * <li>Nominative Plural Neuter ends on <code>-a</code></li>
  * <li>the Vocative forms equal the Nominative forms</li>
  * </ul>
- * 
- * @param noun
- * @param form
- * @return
  */
 public abstract class AbstractDeclension implements FormProvider<DeclinableLemma> {
 
