@@ -37,4 +37,5 @@ public final class LatinSymbol {
 	public static final Terminal<Token> Preposition = new LemmaTerminal(LemmaType.Preposition);
 	public static final Terminal<Token> Interjection = new LemmaTerminal(LemmaType.Interjection);
 	public static final Terminal<Token> Pronoun = new LemmaTerminal(LemmaType.Pronoun);
+	public static final NonTerminal<Token> PronounOpt = new SimpleNonTerminal<>("[pron]");
 }

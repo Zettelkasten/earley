@@ -10,6 +10,7 @@ import com.zettelnet.earley.param.SpecificParameterExpression;
 import com.zettelnet.earley.param.TokenParameterizer;
 import com.zettelnet.earley.param.property.Property;
 import com.zettelnet.earley.symbol.NonTerminal;
+import com.zettelnet.earley.symbol.Symbol;
 import com.zettelnet.latin.param.FormParameter;
 import com.zettelnet.latin.param.individual.IndividualFormParameterExpression;
 import com.zettelnet.latin.token.Token;
@@ -36,7 +37,7 @@ final class LatinHelper {
 		return new SingletonParameterFactory<FormParameter>(new FormParameter(formProperties));
 	}
 	
-	static void makeOptional(SimpleGrammar<Token, FormParameter> grammar, NonTerminal<Token> optionalSymbol, NonTerminal<Token> symbol, ParameterExpression<Token, FormParameter> expression) {
+	static void makeOptional(SimpleGrammar<Token, FormParameter> grammar, NonTerminal<Token> optionalSymbol, Symbol<Token> symbol, ParameterExpression<Token, FormParameter> expression) {
 		grammar.addProduction(optionalSymbol);
 		grammar.addProduction(optionalSymbol, new ParameterizedSymbol<>(symbol, expression));
 	}

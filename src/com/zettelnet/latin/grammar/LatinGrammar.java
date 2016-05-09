@@ -24,6 +24,8 @@ import static com.zettelnet.latin.grammar.LatinSymbol.Supine;
 import static com.zettelnet.latin.grammar.LatinSymbol.Verb;
 import static com.zettelnet.latin.grammar.LatinSymbol.VerbForm;
 import static com.zettelnet.latin.grammar.LatinSymbol.VerbPhrase;
+import static com.zettelnet.latin.grammar.LatinSymbol.Pronoun;
+import static com.zettelnet.latin.grammar.LatinSymbol.PronounOpt;
 
 import com.zettelnet.earley.Grammar;
 import com.zettelnet.earley.ParameterizedSymbol;
@@ -164,7 +166,8 @@ public final class LatinGrammar {
 				new ParameterizedSymbol<>(NounForm, copy),
 				new ParameterizedSymbol<>(AdjectivePhraseOpt, copy),
 				new ParameterizedSymbol<>(NounPhraseOpt, specify(parameterManager, parameterizer, Casus.Genitive)),
-				new ParameterizedSymbol<>(NounPhraseOpt, copy));
+				new ParameterizedSymbol<>(NounPhraseOpt, copy),
+				new ParameterizedSymbol<>(PronounOpt, copy));
 		// NF(pi) -> n(pi)
 		grammar.addProduction(
 				NounForm,
@@ -215,6 +218,7 @@ public final class LatinGrammar {
 
 		makeOptional(grammar, NounPhraseOpt, NounPhrase, copy);
 		makeOptional(grammar, AdjectivePhraseOpt, AdjectivePhrase, copy);
+		makeOptional(grammar, PronounOpt, Pronoun, copy);
 
 		return grammar;
 	}
