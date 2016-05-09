@@ -1,5 +1,9 @@
 package com.zettelnet.latin.grammar;
 
+import static com.zettelnet.latin.grammar.LatinHelper.copy;
+import static com.zettelnet.latin.grammar.LatinHelper.key;
+import static com.zettelnet.latin.grammar.LatinHelper.makeOptional;
+import static com.zettelnet.latin.grammar.LatinHelper.specify;
 import static com.zettelnet.latin.grammar.LatinSymbol.Adjective;
 import static com.zettelnet.latin.grammar.LatinSymbol.AdjectivePhrase;
 import static com.zettelnet.latin.grammar.LatinSymbol.AdjectivePhraseOpt;
@@ -8,6 +12,7 @@ import static com.zettelnet.latin.grammar.LatinSymbol.AdverbalPhrase;
 import static com.zettelnet.latin.grammar.LatinSymbol.AdverbalPhraseVar;
 import static com.zettelnet.latin.grammar.LatinSymbol.Arguments;
 import static com.zettelnet.latin.grammar.LatinSymbol.Conjunction;
+import static com.zettelnet.latin.grammar.LatinSymbol.Gerund;
 import static com.zettelnet.latin.grammar.LatinSymbol.Infinitive;
 import static com.zettelnet.latin.grammar.LatinSymbol.Noun;
 import static com.zettelnet.latin.grammar.LatinSymbol.NounForm;
@@ -15,13 +20,10 @@ import static com.zettelnet.latin.grammar.LatinSymbol.NounPhrase;
 import static com.zettelnet.latin.grammar.LatinSymbol.NounPhraseOpt;
 import static com.zettelnet.latin.grammar.LatinSymbol.Participle;
 import static com.zettelnet.latin.grammar.LatinSymbol.Sentence;
+import static com.zettelnet.latin.grammar.LatinSymbol.Supine;
 import static com.zettelnet.latin.grammar.LatinSymbol.Verb;
 import static com.zettelnet.latin.grammar.LatinSymbol.VerbForm;
 import static com.zettelnet.latin.grammar.LatinSymbol.VerbPhrase;
-import static com.zettelnet.latin.grammar.LatinHelper.copy;
-import static com.zettelnet.latin.grammar.LatinHelper.key;
-import static com.zettelnet.latin.grammar.LatinHelper.makeOptional;
-import static com.zettelnet.latin.grammar.LatinHelper.specify;
 
 import com.zettelnet.earley.Grammar;
 import com.zettelnet.earley.ParameterizedSymbol;
@@ -87,11 +89,19 @@ public final class LatinGrammar {
 		grammar.addProduction(
 				VerbForm,
 				key(Finiteness.Infinitive),
-				new ParameterizedSymbol<>(Infinitive, specify(parameterManager, parameterizer, Casus.Nominative)));
+				new ParameterizedSymbol<>(Infinitive, copy));
 		grammar.addProduction(
 				VerbForm,
 				key(Finiteness.Participle),
 				new ParameterizedSymbol<>(Participle, copy));
+		grammar.addProduction(
+				VerbForm,
+				key(Finiteness.Gerund),
+				new ParameterizedSymbol<>(Gerund, copy));
+		grammar.addProduction(
+				VerbForm,
+				key(Finiteness.Supine),
+				new ParameterizedSymbol<>(Supine, copy));
 
 		// Args(pi : NullVal) -> epsilon
 		grammar.addProduction(
