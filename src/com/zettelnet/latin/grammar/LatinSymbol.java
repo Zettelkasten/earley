@@ -32,4 +32,9 @@ public final class LatinSymbol {
 	public static final Terminal<Token> Conjunction = new LemmaTerminal(LemmaType.Conjunction);
 	public static final Terminal<Token> Infinitive = new LemmaTerminal(LemmaType.Infinitive);
 	public static final Terminal<Token> Participle = new LemmaTerminal(LemmaType.Participle);
+	public static final Terminal<Token> Gerund = new LemmaTerminal(LemmaType.Gerund);
+	public static final Terminal<Token> Supine = new LemmaTerminal(LemmaType.Supine);
+	public static final Terminal<Token> Preposition = new LemmaTerminal(LemmaType.Preposition);
+	public static final Terminal<Token> Interjection = new LemmaTerminal(LemmaType.Interjection);
+	public static final Terminal<Token> Pronoun = new LemmaTerminal(LemmaType.Pronoun);
 }
