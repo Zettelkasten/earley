@@ -27,7 +27,7 @@ public final class Conjugation {
 			.addProvider(DerivationType.Supine, new SupineConjugation()));
 	public static final CombinedProvider<Verb> Second = new SimpleCombinedProvider<>(new SecondConjugation(), new DistributingDerivationProvider<Verb>()
 			.addProvider(DerivationType.Participle, new SecondParticipleConjugation())
-			.addProvider(new DerivationType[] { DerivationType.Infinitive, DerivationType.Gerund }, new FirstInfinitiveConjugation())
+			.addProvider(new DerivationType[] { DerivationType.Infinitive, DerivationType.Gerund }, new SecondInfinitiveConjugation())
 			.addProvider(DerivationType.Supine, new SupineConjugation()));
 	public static final CombinedProvider<Verb> Third = new SimpleCombinedProvider<>(new ThirdConjugation(), new DistributingDerivationProvider<Verb>()
 			.addProvider(DerivationType.Participle, new ThirdParticipleConjugation())
