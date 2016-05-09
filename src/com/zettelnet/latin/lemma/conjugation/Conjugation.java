@@ -6,6 +6,7 @@ import com.zettelnet.latin.lemma.CombinedProvider;
 import com.zettelnet.latin.lemma.SimpleCombinedProvider;
 import com.zettelnet.latin.lemma.conjugation.infinitive.FirstInfinitiveConjugation;
 import com.zettelnet.latin.lemma.conjugation.infinitive.FourthInfinitiveConjugation;
+import com.zettelnet.latin.lemma.conjugation.infinitive.SecondInfinitiveConjugation;
 import com.zettelnet.latin.lemma.conjugation.infinitive.ThirdIStemInfinitiveConjugation;
 import com.zettelnet.latin.lemma.conjugation.infinitive.ThirdInfinitiveConjugation;
 import com.zettelnet.latin.lemma.conjugation.participle.FirstParticipleConjugation;
