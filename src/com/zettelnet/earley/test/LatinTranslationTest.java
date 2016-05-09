@@ -9,12 +9,12 @@ import com.zettelnet.earley.EarleyParseResult;
 import com.zettelnet.earley.EarleyParser;
 import com.zettelnet.earley.input.DynamicInputPositionInitializer;
 import com.zettelnet.earley.process.ProcessableGrammar;
-import com.zettelnet.earley.test.latin.Determination;
-import com.zettelnet.earley.test.latin.FormParameter;
-import com.zettelnet.earley.test.latin.Token;
-import com.zettelnet.earley.test.latin.TranslatableLatinGrammar;
 import com.zettelnet.earley.token.Tokenizer;
 import com.zettelnet.earley.token.WhitespaceTokenizer;
+import com.zettelnet.latin.grammar.TranslatableLatinGrammar;
+import com.zettelnet.latin.param.FormParameter;
+import com.zettelnet.latin.token.Determination;
+import com.zettelnet.latin.token.Token;
 
 public class LatinTranslationTest {
 
@@ -43,7 +43,5 @@ public class LatinTranslationTest {
 
 		System.out.println(result.getSyntaxTree());
 		System.out.println(grammar.process(result.getSyntaxTree()));
-
-		JufoHelper.present(result, tokens);
 	}
 }
