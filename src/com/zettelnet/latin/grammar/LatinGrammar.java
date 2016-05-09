@@ -161,7 +161,6 @@ public final class LatinGrammar {
 		// NP(pi : Fin) -> NF(pi) [AP(pi)] [NP(Gen)] [NP(pi)] [pron(pi)*] TODO
 		grammar.addProduction(
 				NounPhrase,
-				key(Finiteness.Finite),
 				new ParameterizedSymbol<>(NounForm, copy),
 				new ParameterizedSymbol<>(AdjectivePhraseOpt, copy),
 				new ParameterizedSymbol<>(NounPhraseOpt, specify(parameterManager, parameterizer, Casus.Genitive)),
