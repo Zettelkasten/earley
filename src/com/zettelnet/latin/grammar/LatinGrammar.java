@@ -85,7 +85,6 @@ public final class LatinGrammar {
 				VerbForm,
 				key(Finiteness.Finite),
 				new ParameterizedSymbol<>(Verb, copy));
-		// TODO
 		grammar.addProduction(
 				VerbForm,
 				key(Finiteness.Infinitive),
