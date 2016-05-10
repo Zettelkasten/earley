@@ -160,14 +160,13 @@ public final class LatinGrammar {
 		grammar.addProduction(AdverbalPhrase,
 				Adverb);
 
-		// NP(pi : Fin) -> NF(pi) [AP(pi)] [NP(Gen)] [NP(pi)] [pron(pi)*] TODO
+		// NP(pi : Fin) -> NF(pi) [AP(pi)] [NP(Gen)] [NP(pi)]
 		grammar.addProduction(
 				NounPhrase,
 				new ParameterizedSymbol<>(NounForm, copy),
 				new ParameterizedSymbol<>(AdjectivePhraseOpt, copy),
 				new ParameterizedSymbol<>(NounPhraseOpt, specify(parameterManager, parameterizer, Casus.Genitive)),
-				new ParameterizedSymbol<>(NounPhraseOpt, copy),
-				new ParameterizedSymbol<>(PronounOpt, copy));
+				new ParameterizedSymbol<>(NounPhraseOpt, copy));
 		// NF(pi) -> n(pi)
 		grammar.addProduction(
 				NounForm,
@@ -182,6 +181,11 @@ public final class LatinGrammar {
 		grammar.addProduction(
 				AdjectivePhrase,
 				new ParameterizedSymbol<>(Adjective, copy),
+				new ParameterizedSymbol<>(AdverbalPhraseVar, copy));
+		// AP(pi) -> pron(pi) AdvP(pi)*
+		grammar.addProduction(
+				AdjectivePhrase,
+				new ParameterizedSymbol<>(Pronoun, copy),
 				new ParameterizedSymbol<>(AdverbalPhraseVar, copy));
 		// AP(pi) -> VP(Participle)
 		grammar.addProduction(
