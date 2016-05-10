@@ -2,7 +2,7 @@ package com.zettelnet.german.form;
 
 public enum GermanTense implements GermanFormProperty {
 
-	Present("Pre"), Future("Fut"), Perfect("Per"), Pluperfect("Plu"), FuturePerfect("FuP");
+	Present("Pre"), Future("Fut"), Past("Past"), Perfect("Per"), Pluperfect("Plu"), FuturePerfect("FuP");
 
 	private final String shortName;
 
