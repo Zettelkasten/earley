@@ -220,6 +220,13 @@ public final class LatinGrammar {
 				new ParameterizedSymbol<>(Conjunction, any),
 				new ParameterizedSymbol<>(VerbPhrase, copy(parameterizer, Casus.class, Numerus.class, Genus.class, Finiteness.class)));
 
+		// VF(pi) -> VF(pi) conj VF(pi)
+		grammar.addProduction(
+				VerbForm,
+				new ParameterizedSymbol<>(VerbForm, copy),
+				new ParameterizedSymbol<>(Conjunction, any),
+				new ParameterizedSymbol<>(VerbForm, copy));
+		
 		makeOptional(grammar, NounPhraseOpt, NounPhrase, copy);
 		makeOptional(grammar, AdjectivePhraseOpt, AdjectivePhrase, copy);
 		makeOptional(grammar, PronounOpt, Pronoun, copy);
