@@ -1,0 +1,76 @@
+TRANSLATIONS (key: Symbol)
+
+Non-Terminal-Translations (key: Production)
+
+S(π) → NP(π) VP(π)
+     ⇒ S(π) {~NP ~VP}
+S(π) → VP(π)
+     ⇒ S(π) {pron(ger[kngp[π]]) ~VP}
+
+
+     VP(π) → VF(π) Args(π) AdvP(π)∗
+VP(π : HS) ⇒ VP(π) {~VF ~Args ~AdvP}
+VP(π : NS) ⇒ VP(π) {~Args ~AdvP ~VF}
+     VP(π) → VP(kng[π] fin[π]) conj VP(kng[π] fin[π])				VP-Koordination
+           ⇒ VP(π) {~VP⁰ ~conj ~VP¹}						 � Modus-Kongr.
+           ⇒ VP(π) {~VP⁰ ~conj ~VP¹}
+
+ VF(π : Fin) → v(π)
+             ⇒ v(ger[π])
+ VF(π : Inf) → inf(π)
+             ⇒ zu inf(ger[π])							 � Modalverben
+VF(π : Part) → part(π)
+VF(π : Grnd) → grnd(π)
+       VF(π) → VF(π) conj VF(π)							VF-Koordination
+             ⇒ VF(π) {~VF⁰ ~conj ~VF¹}						 � Modus-Kongr.
+
+       Args(π : NullVal) → ε
+                         ⇒ ε
+     Args(π : EinzelVal) → ε
+                         ⇒ ε
+        Args(π : Kopula) → NP(π)
+                         ⇒ ~NP
+        Args(π : GenVal) → NP(Gen)
+                         ⇒ ~NP
+        Args(π : DatVal) → NP(Dat)
+                         ⇒ ~NP
+    Args(π : AkkVal Akt) → NP(Akk)
+                         ⇒ ~NP
+   Args(π : AkkVal Pass) → ε
+                         ⇒ ~NP
+ Args(π : AkkDatVal Akt) → NP(Akk) NP(Dat)
+                         ⇒ ~NP⁰ ~NP¹
+Args(π : AkkDatVal Pass) → NP(Dat)
+                         ⇒ ~NP
+
+AdvP(π) → adv(π)
+        ⇒ adv(ger[π])
+
+
+          NP(π) → NF(π) [AP(π)] [NP(Gen)] [NP(π)]				Attribute
+                ⇒ NP(π) {n(ger[π]) [~AP] [~NP⁰] [~NP¹]}
+NP(π : Nom/Akk) → S(π : Akk Pres/Perf/Fut Inf)					AcI
+                ⇒ NP(π) {conj[dass] ~S[π & NS]}
+
+NP(π : Pl) → NP(kasus[π]) conj NP(kasus[π])					NP-Koordination
+           ⇒ NP(π) {~NP⁰ ~conj ~NP¹}
+
+NF(π) → n(π)
+										 � NF-Koordination
+
+AP(π) → adj(π) AdvP(π)∗
+      ⇒ AP(π) {adj(π) ~AdvP∗}
+AP(π) → pron(π) AdvP(π)∗							 � Adverbiale
+      ⇒ AP(π) {pron(π) ~AdvP∗}							 � mehrere Pron.
+AP(π) → VP(Part kng[π])								PC
+      ⇒ AP(π) {~VP[π & NS]}
+AP(π) → AP(π) [conj] AP(π)							AP-Koordination
+      ⇒ AP(π) {~NP⁰ ~conj ~NP¹}
+
+
+AdvP(π)∗ → ε
+         | AdvP(π) AdvP(π)∗
+
+Terminal-Translations (key: Terminal)
+
+conj(π) ⇒ conj(ger[π])

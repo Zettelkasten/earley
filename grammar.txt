@@ -1,0 +1,41 @@
+S(π) → NP(π) VP(π)
+     | VP(π)
+
+
+VP(π) → VF(π) Args(π) AdvP(π)∗
+VP(π) → VP(kng[π] fin[π]) conj VP(kng[π] fin[π])				VP-Koordination
+																 � Modus-Kongr.
+ VF(π : Fin) → v(π)
+ VF(π : Inf) → inf(π)
+VF(π : Part) → part(π)
+VF(π : Grnd) → grnd(π)
+       VF(π) → VF(π) conj VF(π)									VF-Koordination
+																 � Modus-Kongr.
+       Args(π : NullVal) → ε
+     Args(π : EinzelVal) → ε
+        Args(π : Kopula) → NP(π)
+        Args(π : GenVal) → NP(Gen)
+        Args(π : DatVal) → NP(Dat)
+    Args(π : AkkVal Akt) → NP(Akk)
+   Args(π : AkkVal Pass) → ε
+ Args(π : AkkDatVal Akt) → NP(Akk) NP(Dat)
+Args(π : AkkDatVal Pass) → NP(Dat)
+
+AdvP(π) → adv(π)
+
+
+          NP(π) → NF(π) [AP(π)] [NP(Gen)] [NP(π)]				Attribute
+NP(π : Nom/Akk) → S(π : Akk Pres/Perf/Fut Inf)					AcI
+
+NP(π : Pl) → NP(kasus[π]) conj NP(kasus[π])						NP-Koordination
+
+NF(π) → n(π)
+																 � NF-Koordination
+
+AP(π) → adj(π) AdvP(π)∗
+      | pron(π) AdvP(π)∗										 � Adverbiale
+      | VP(Part kng[π])											PC
+AP(π) → AP(π) [conj] AP(π)										AP-Koordination
+
+AdvP(π)∗ → ε
+         | AdvP(π) AdvP(π)∗
