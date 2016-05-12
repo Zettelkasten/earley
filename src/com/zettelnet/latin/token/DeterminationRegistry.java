@@ -9,11 +9,11 @@ import java.util.Map.Entry;
 
 import com.zettelnet.earley.param.property.PropertySet;
 import com.zettelnet.earley.param.property.PropertySets;
-import com.zettelnet.earley.token.TokenFactory;
+import com.zettelnet.earley.token.TokenScanner;
 import com.zettelnet.latin.form.Form;
 import com.zettelnet.latin.lemma.Lemma;
 
-public class DeterminationRegistry implements TokenFactory<Token> {
+public class DeterminationRegistry implements TokenScanner<Token> {
 
 	private final Map<String, Collection<Determination>> formsStripped;
 

@@ -1,6 +1,6 @@
 package com.zettelnet.earley.token;
 
-public interface TokenFactory<T> {
+public interface TokenScanner<T> {
 
 	T makeToken(String content);
 }

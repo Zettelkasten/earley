@@ -5,9 +5,9 @@ import java.util.List;
 
 public class WhitespaceTokenizer<T> implements Tokenizer<T> {
 
-	private final TokenFactory<T> factory;
+	private final TokenScanner<T> factory;
 
-	public WhitespaceTokenizer(final TokenFactory<T> tokenFactory) {
+	public WhitespaceTokenizer(final TokenScanner<T> tokenFactory) {
 		this.factory = tokenFactory;
 	}
 
