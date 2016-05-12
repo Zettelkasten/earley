@@ -9,4 +9,8 @@ public interface Property {
 	default String shortName() {
 		return name();
 	}
+	
+	default Class<? extends Property> getType() {
+		return getClass();
+	}
 }

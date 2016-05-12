@@ -23,7 +23,7 @@ public final class MapForm implements Form {
 		this.data = new HashMap<>(properties.size());
 		for (FormProperty property : properties) {
 			if (property != null) {
-				data.put(property.getClass(), property);
+				data.put(property.getType(), property);
 			}
 		}
 	}
@@ -115,7 +115,7 @@ public final class MapForm implements Form {
 	@Override
 	public boolean hasProperties(FormProperty... properties) {
 		for (FormProperty property : properties) {
-			if (getProperty(property.getClass()) != property) {
+			if (getProperty(property.getType()) != property) {
 				return false;
 			}
 		}
@@ -126,7 +126,7 @@ public final class MapForm implements Form {
 	public Form derive(Collection<? extends FormProperty> properties) {
 		Map<Class<? extends FormProperty>, FormProperty> newData = new HashMap<>(this.data);
 		for (FormProperty property : properties) {
-			newData.put(property.getClass(), property);
+			newData.put(property.getType(), property);
 		}
 		return new MapForm(newData);
 	}

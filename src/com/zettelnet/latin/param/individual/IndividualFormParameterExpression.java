@@ -47,7 +47,7 @@ public class IndividualFormParameterExpression<T> implements ParameterExpression
 		Map<Class<? extends Property>, Set<Property>> specified = new HashMap<>();
 
 		for (Property property : properties) {
-			Class<? extends Property> propertyType = property.getClass();
+			Class<? extends Property> propertyType = property.getType();
 			if (!specified.containsKey(propertyType)) {
 				specified.put(propertyType, new HashSet<>());
 			}

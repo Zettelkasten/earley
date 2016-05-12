@@ -44,7 +44,7 @@ public final class FormParameter implements Parameter {
 	private static Map<Class<? extends Property>, Set<Property>> makeDataMap(Map<Class<? extends Property>, Set<Property>> sourceData, PropertySet<?> form) {
 		final Map<Class<? extends Property>, Set<Property>> data = new HashMap<>(sourceData);
 		for (Property property : form.values()) {
-			Class<? extends Property> propertyType = property.getClass();
+			Class<? extends Property> propertyType = property.getType();
 			if (!data.containsKey(propertyType)) {
 				data.put(propertyType, singleSet(property));
 			} else {
@@ -72,7 +72,7 @@ public final class FormParameter implements Parameter {
 		final Map<Class<? extends Property>, Set<Property>> data = new HashMap<>(formProperties.length);
 
 		for (Property property : formProperties) {
-			Class<? extends Property> propertyType = property.getClass();
+			Class<? extends Property> propertyType = property.getType();
 			if (!data.containsKey(propertyType)) {
 				data.put(propertyType, new HashSet<>());
 			}

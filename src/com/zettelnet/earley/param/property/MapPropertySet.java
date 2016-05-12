@@ -22,7 +22,7 @@ public final class MapPropertySet<T extends Property> implements PropertySet<T> 
 		this.data = new HashMap<>(properties.size());
 		for (T property : properties) {
 			if (property != null) {
-				data.put(property.getClass(), property);
+				data.put(property.getType(), property);
 			}
 		}
 	}
@@ -102,7 +102,7 @@ public final class MapPropertySet<T extends Property> implements PropertySet<T> 
 	@Override
 	public boolean hasProperties(T... properties) {
 		for (T property : properties) {
-			if (getProperty((Class<? extends T>) property.getClass()) != property) {
+			if (getProperty((Class<? extends T>) property.getType()) != property) {
 				return false;
 			}
 		}
@@ -113,7 +113,7 @@ public final class MapPropertySet<T extends Property> implements PropertySet<T> 
 	public PropertySet<T> derive(Collection<? extends T> properties) {
 		Map<Class<? extends Property>, T> newData = new HashMap<>(this.data);
 		for (T property : properties) {
-			newData.put(property.getClass(), property);
+			newData.put(property.getType(), property);
 		}
 		return new MapPropertySet<>(newData);
 	}

@@ -28,7 +28,7 @@ public class FormParameterBuilder {
 	}
 
 	public FormParameterBuilder with(Property property) {
-		Class<? extends Property> propertyType = property.getClass();
+		Class<? extends Property> propertyType = property.getType();
 		if (!data.containsKey(propertyType)) {
 			data.put(propertyType, new HashSet<>());
 		}

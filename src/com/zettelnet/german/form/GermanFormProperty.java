@@ -9,4 +9,9 @@ public interface GermanFormProperty extends Property {
 	String name();
 
 	String shortName();
+	
+	@Override
+	default Class<? extends GermanFormProperty> getType() {
+		return getClass();
+	}
 }

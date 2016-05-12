@@ -23,7 +23,7 @@ public final class MapGermanForm implements GermanForm {
 		this.data = new HashMap<>(properties.size());
 		for (GermanFormProperty property : properties) {
 			if (property != null) {
-				data.put(property.getClass(), property);
+				data.put(property.getType(), property);
 			}
 		}
 	}
@@ -115,7 +115,7 @@ public final class MapGermanForm implements GermanForm {
 	@Override
 	public boolean hasProperties(GermanFormProperty... properties) {
 		for (GermanFormProperty property : properties) {
-			if (getProperty(property.getClass()) != property) {
+			if (getProperty(property.getType()) != property) {
 				return false;
 			}
 		}
@@ -126,7 +126,7 @@ public final class MapGermanForm implements GermanForm {
 	public GermanForm derive(Collection<? extends GermanFormProperty> properties) {
 		Map<Class<? extends GermanFormProperty>, GermanFormProperty> newData = new HashMap<>(this.data);
 		for (GermanFormProperty property : properties) {
-			newData.put(property.getClass(), property);
+			newData.put(property.getType(), property);
 		}
 		return new MapGermanForm(newData);
 	}
