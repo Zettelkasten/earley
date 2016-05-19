@@ -14,7 +14,7 @@ import com.zettelnet.latin.lemma.Lemma;
 import com.zettelnet.latin.lemma.LemmaType;
 import com.zettelnet.latin.lemma.property.LemmaProperty;
 
-public class SimpleInterjection implements Interjection {
+public class SimpleInterjection implements Lemma {
 
 	private final String firstForm;
 	private final PropertySet<LemmaProperty> properties;

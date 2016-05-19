@@ -18,25 +18,25 @@ import com.zettelnet.latin.form.FormValueProvider;
 import com.zettelnet.latin.form.Genus;
 import com.zettelnet.latin.form.Tense;
 import com.zettelnet.latin.form.Voice;
-import com.zettelnet.latin.lemma.DeclinableLemma;
 import com.zettelnet.latin.lemma.FormProvider;
 import com.zettelnet.latin.lemma.Lemma;
 import com.zettelnet.latin.lemma.simple.SimpleGerund;
 import com.zettelnet.latin.lemma.simple.SimpleInfinitive;
-import com.zettelnet.latin.lemma.simple.Verb;
-import com.zettelnet.latin.lemma.simple.VerbStem;
+import com.zettelnet.latin.lemma.simple.conjugation.ConjugableLemma;
+import com.zettelnet.latin.lemma.simple.conjugation.ConjugationStem;
+import com.zettelnet.latin.lemma.simple.declension.DeclinableLemma;
 
-public abstract class AbstractInfinitiveConjugation implements DerivationProvider<Verb> {
+public abstract class AbstractInfinitiveConjugation implements DerivationProvider<ConjugableLemma> {
 
 	public static final Set<DerivationType> TYPES = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(DerivationType.Infinitive, DerivationType.Gerund)));
 
 	private final FormValueProvider<String> firstFormEndings;
 	private final FormValueProvider<String> stemEndings;
 
-	private final FormValueProvider<VerbStem> stemTypes;
+	private final FormValueProvider<ConjugationStem> stemTypes;
 	private static final FormProvider<DeclinableLemma> formProvider = new GerundDeclension();
 
-	public AbstractInfinitiveConjugation(final FormValueProvider<String> firstFormEndings, final FormValueProvider<String> stemEndings, final FormValueProvider<VerbStem> stemTypes) {
+	public AbstractInfinitiveConjugation(final FormValueProvider<String> firstFormEndings, final FormValueProvider<String> stemEndings, final FormValueProvider<ConjugationStem> stemTypes) {
 		this.firstFormEndings = firstFormEndings;
 		this.stemEndings = stemEndings;
 		this.stemTypes = stemTypes;
@@ -47,7 +47,7 @@ public abstract class AbstractInfinitiveConjugation implements DerivationProvide
 	}
 
 	@Override
-	public Collection<Lemma> getDerivation(Verb lemma, Derivation derivation) {
+	public Collection<Lemma> getDerivation(ConjugableLemma lemma, Derivation derivation) {
 		if (derivation.getType() != DerivationType.Infinitive && derivation.getType() != DerivationType.Gerund) {
 			return Collections.emptyList();
 		} else {
@@ -57,8 +57,8 @@ public abstract class AbstractInfinitiveConjugation implements DerivationProvide
 
 			Collection<String> firstFormEndings = this.firstFormEndings.getValue(form);
 			if (!firstFormEndings.isEmpty()) {
-				String verbStem = lemma.getStem(first(stemTypes.getValue(form)));
-				String firstForm = verbStem + first(firstFormEndings);
+				String VerbStem = lemma.getStem(first(stemTypes.getValue(form)));
+				String firstForm = VerbStem + first(firstFormEndings);
 
 				Collection<String> stemEndings = this.stemEndings.getValue(form);
 				if (stemEndings.isEmpty()) {
@@ -72,13 +72,13 @@ public abstract class AbstractInfinitiveConjugation implements DerivationProvide
 				} else {
 					// has inflected forms -> infinitive AND gerund
 					for (String stemEnding : stemEndings) {
-						String stem = verbStem + stemEnding;
+						String stem = VerbStem + stemEnding;
 
 						if (derivation.getType() == DerivationType.Infinitive) {
 							Lemma infinitive = new SimpleInfinitive(firstForm, Genus.Neuter, lemma, derivation);
 							lemmas.add(infinitive);
 						} else if (derivation.getType() == DerivationType.Gerund) {
-							Lemma gerund = new SimpleGerund(verbStem + stemEnding + "um", stem, formProvider, Genus.Neuter, lemma, derivation);
+							Lemma gerund = new SimpleGerund(VerbStem + stemEnding + "um", stem, formProvider, Genus.Neuter, lemma, derivation);
 							lemmas.add(gerund);
 						} else {
 							throw new AssertionError();
@@ -91,12 +91,12 @@ public abstract class AbstractInfinitiveConjugation implements DerivationProvide
 	}
 
 	@Override
-	public boolean hasDerivation(Verb lemma, Derivation derivation) {
+	public boolean hasDerivation(ConjugableLemma lemma, Derivation derivation) {
 		return !getDerivation(lemma, derivation).isEmpty();
 	}
 
 	@Override
-	public Map<Derivation, Collection<Lemma>> getDerivations(Verb lemma) {
+	public Map<Derivation, Collection<Lemma>> getDerivations(ConjugableLemma lemma) {
 		Map<Derivation, Collection<Lemma>> derivations = new HashMap<>();
 
 		for (Tense tense : getTenseSet(lemma)) {
@@ -115,11 +115,11 @@ public abstract class AbstractInfinitiveConjugation implements DerivationProvide
 		return derivations;
 	}
 
-	public Set<Tense> getTenseSet(Verb lemma) {
+	public Set<Tense> getTenseSet(ConjugableLemma lemma) {
 		return EnumSet.of(Tense.Present, Tense.Perfect);
 	}
 
-	public Set<Voice> getVoiceSet(Verb lemma) {
+	public Set<Voice> getVoiceSet(ConjugableLemma lemma) {
 		return EnumSet.of(Voice.Active, Voice.Passive);
 	}
 }

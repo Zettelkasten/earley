@@ -27,15 +27,14 @@ import com.zettelnet.latin.form.Numerus;
 import com.zettelnet.latin.form.Person;
 import com.zettelnet.latin.form.Tense;
 import com.zettelnet.latin.form.Voice;
-import com.zettelnet.latin.lemma.DeclinableLemma;
 import com.zettelnet.latin.lemma.FormProvider;
 import com.zettelnet.latin.lemma.Lemma;
 import com.zettelnet.latin.lemma.LemmaFactory;
 import com.zettelnet.latin.lemma.simple.SimpleGerund;
 import com.zettelnet.latin.lemma.simple.SimpleVerb;
-import com.zettelnet.latin.lemma.simple.Verb;
+import com.zettelnet.latin.lemma.simple.declension.DeclinableLemma;
 
-public class WiktionaryConjugationResource implements LemmaFactory<Verb>, FormProvider<Verb> {
+public class WiktionaryConjugationResource implements LemmaFactory<ConjugableLemma>, FormProvider<ConjugableLemma> {
 
 	private static final List<Form> finiteColumns = Arrays.asList(
 			Form.withValues(Person.First, Numerus.Singular),
@@ -68,21 +67,21 @@ public class WiktionaryConjugationResource implements LemmaFactory<Verb>, FormPr
 	private final Map<Form, Collection<String>> participles;
 	private final Map<Form, Collection<String>> supine;
 
-	private final DerivationProvider<Verb> derivationProvider;
+	private final DerivationProvider<ConjugableLemma> derivationProvider;
 
 	private static enum NonFiniteType {
 		Infinitive, Participle, GerundAndSupine;
 	}
 
 	public WiktionaryConjugationResource(final Scanner in) {
-		this.derivationProvider = new DistributingDerivationProvider<Verb>()
-				.addProvider(DerivationType.Infinitive, new DerivationProvider<Verb>() {
+		this.derivationProvider = new DistributingDerivationProvider<ConjugableLemma>()
+				.addProvider(DerivationType.Infinitive, new DerivationProvider<ConjugableLemma>() {
 					private Form retainForm(Form form) {
 						return form.retainAll(Arrays.asList(Tense.class, Voice.class));
 					}
 
 					@Override
-					public Collection<Lemma> getDerivation(Verb lemma, Derivation derivation) {
+					public Collection<Lemma> getDerivation(ConjugableLemma lemma, Derivation derivation) {
 						Form baseForm = retainForm(derivation.getForm());
 						List<Lemma> lemmas = new ArrayList<>();
 						for (String firstForm : infinitives.get(baseForm.derive(Casus.Nominative))) {
@@ -120,12 +119,12 @@ public class WiktionaryConjugationResource implements LemmaFactory<Verb>, FormPr
 					}
 
 					@Override
-					public boolean hasDerivation(Verb lemma, Derivation derivation) {
+					public boolean hasDerivation(ConjugableLemma lemma, Derivation derivation) {
 						return !getDerivation(lemma, derivation).isEmpty();
 					}
 
 					@Override
-					public Map<Derivation, Collection<Lemma>> getDerivations(Verb lemma) {
+					public Map<Derivation, Collection<Lemma>> getDerivations(ConjugableLemma lemma) {
 						Map<Derivation, Collection<Lemma>> derivations = new HashMap<>();
 						for (Form form : infinitives.keySet()) {
 							Derivation derivation = Derivation.withValues(DerivationType.Infinitive, retainForm(form));
@@ -199,7 +198,7 @@ public class WiktionaryConjugationResource implements LemmaFactory<Verb>, FormPr
 				case "participles":
 					nonFiniteType = NonFiniteType.Participle;
 					break;
-				case "verbal nouns":
+				case "ConjugableLemmaal nouns":
 					nonFiniteType = NonFiniteType.GerundAndSupine;
 					break;
 				case "gerund":
@@ -278,7 +277,7 @@ public class WiktionaryConjugationResource implements LemmaFactory<Verb>, FormPr
 	}
 
 	@Override
-	public Verb makeLemma() {
+	public ConjugableLemma makeLemma() {
 		return new SimpleVerb(null, this, derivationProvider);
 	}
 
@@ -287,17 +286,17 @@ public class WiktionaryConjugationResource implements LemmaFactory<Verb>, FormPr
 	}
 
 	@Override
-	public Collection<String> getForm(Verb lemma, Form form) {
+	public Collection<String> getForm(ConjugableLemma lemma, Form form) {
 		return forms.getOrDefault(retainFiniteForm(form), Collections.emptyList());
 	}
 
 	@Override
-	public boolean hasForm(Verb lemma, Form form) {
+	public boolean hasForm(ConjugableLemma lemma, Form form) {
 		return forms.containsKey(retainFiniteForm(form));
 	}
 
 	@Override
-	public Map<Form, Collection<String>> getForms(Verb lemma) {
+	public Map<Form, Collection<String>> getForms(ConjugableLemma lemma) {
 		return forms;
 	}
 }

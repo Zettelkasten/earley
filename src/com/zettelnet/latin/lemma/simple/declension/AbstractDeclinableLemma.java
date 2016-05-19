@@ -1,4 +1,4 @@
-package com.zettelnet.latin.lemma;
+package com.zettelnet.latin.lemma.simple.declension;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -11,6 +11,8 @@ import com.zettelnet.earley.param.property.PropertySet;
 import com.zettelnet.latin.derivation.Derivation;
 import com.zettelnet.latin.form.Form;
 import com.zettelnet.latin.form.Genus;
+import com.zettelnet.latin.lemma.FormProvider;
+import com.zettelnet.latin.lemma.Lemma;
 import com.zettelnet.latin.lemma.property.LemmaProperty;
 
 public abstract class AbstractDeclinableLemma implements DeclinableLemma {

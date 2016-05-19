@@ -9,7 +9,6 @@ import com.zettelnet.latin.form.FormValueProvider;
 import com.zettelnet.latin.form.Genus;
 import com.zettelnet.latin.form.MapFormValueProvider;
 import com.zettelnet.latin.form.Numerus;
-import com.zettelnet.latin.lemma.DeclinableLemma;
 
 /**
  * Represents the <strong>second declension</strong>, also known as

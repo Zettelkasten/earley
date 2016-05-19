@@ -5,15 +5,15 @@ import java.util.Arrays;
 import com.zettelnet.latin.form.MapFormValueProvider;
 import com.zettelnet.latin.form.Tense;
 import com.zettelnet.latin.form.Voice;
-import com.zettelnet.latin.lemma.simple.VerbStem;
+import com.zettelnet.latin.lemma.simple.conjugation.ConjugationStem;
 
-public class InfinitiveStems extends MapFormValueProvider<VerbStem> {
+public class InfinitiveStems extends MapFormValueProvider<ConjugationStem> {
 	
 	public InfinitiveStems() {
 		super(Arrays.asList(Tense.class, Voice.class));
 
-		put(VerbStem.Present, Tense.Present, Voice.Active);
-		put(VerbStem.Present, Tense.Present, Voice.Passive);
-		put(VerbStem.Perfect, Tense.Perfect, Voice.Active);
+		put(ConjugationStem.Present, Tense.Present, Voice.Active);
+		put(ConjugationStem.Present, Tense.Present, Voice.Passive);
+		put(ConjugationStem.Perfect, Tense.Perfect, Voice.Active);
 	}
 }

@@ -15,13 +15,13 @@ import com.zettelnet.latin.form.Comparison;
 import com.zettelnet.latin.form.Form;
 import com.zettelnet.latin.form.Genus;
 import com.zettelnet.latin.form.Numerus;
-import com.zettelnet.latin.lemma.DeclinableLemma;
 import com.zettelnet.latin.lemma.FormProvider;
 import com.zettelnet.latin.lemma.Lemma;
 import com.zettelnet.latin.lemma.LemmaType;
 import com.zettelnet.latin.lemma.property.LemmaProperty;
+import com.zettelnet.latin.lemma.simple.declension.DeclinableLemma;
 
-public class SimpleAdjective implements Adjective {
+public class SimpleAdjective implements DeclinableLemma {
 
 	private final Map<Genus, String> firstForm;
 	private final String stem;

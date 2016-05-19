@@ -22,25 +22,27 @@ import com.zettelnet.latin.lemma.Lemma;
 import com.zettelnet.latin.lemma.LemmaType;
 import com.zettelnet.latin.lemma.property.Finiteness;
 import com.zettelnet.latin.lemma.property.LemmaProperty;
+import com.zettelnet.latin.lemma.simple.conjugation.ConjugableLemma;
+import com.zettelnet.latin.lemma.simple.conjugation.ConjugationStem;
 
-public class SimpleVerb implements Verb {
+public class SimpleVerb implements ConjugableLemma {
 
-	private final Map<VerbStem, String> stems;
+	private final Map<ConjugationStem, String> stems;
 
-	private final FormProvider<Verb> formProvider;
-	private final DerivationProvider<Verb> derivationProvider;
+	private final FormProvider<ConjugableLemma> formProvider;
+	private final DerivationProvider<ConjugableLemma> derivationProvider;
 
 	private final PropertySet<LemmaProperty> properties;
 
-	public SimpleVerb(final String presentStem, final String perfectStem, final String supineStem, final CombinedProvider<Verb> provider, final LemmaProperty... properties) {
-		this(VerbStem.makeMap(presentStem, perfectStem, supineStem), provider, provider, properties);
+	public SimpleVerb(final String presentStem, final String perfectStem, final String supineStem, final CombinedProvider<ConjugableLemma> provider, final LemmaProperty... properties) {
+		this(ConjugationStem.makeMap(presentStem, perfectStem, supineStem), provider, provider, properties);
 	}
 
-	public SimpleVerb(final String presentStem, final String perfectStem, final String supineStem, final FormProvider<Verb> formProvider, final DerivationProvider<Verb> derivationProvider, final LemmaProperty... properties) {
-		this(VerbStem.makeMap(presentStem, perfectStem, supineStem), formProvider, derivationProvider, properties);
+	public SimpleVerb(final String presentStem, final String perfectStem, final String supineStem, final FormProvider<ConjugableLemma> formProvider, final DerivationProvider<ConjugableLemma> derivationProvider, final LemmaProperty... properties) {
+		this(ConjugationStem.makeMap(presentStem, perfectStem, supineStem), formProvider, derivationProvider, properties);
 	}
 
-	public SimpleVerb(final Map<VerbStem, String> stems, final FormProvider<Verb> formProvider, final DerivationProvider<Verb> derivationProvider, final LemmaProperty... properties) {
+	public SimpleVerb(final Map<ConjugationStem, String> stems, final FormProvider<ConjugableLemma> formProvider, final DerivationProvider<ConjugableLemma> derivationProvider, final LemmaProperty... properties) {
 		this.stems = stems;
 
 		this.formProvider = formProvider;
@@ -57,7 +59,7 @@ public class SimpleVerb implements Verb {
 	}
 
 	@Override
-	public String getStem(VerbStem stemType) {
+	public String getStem(ConjugationStem stemType) {
 		return stems.get(stemType);
 	}
 

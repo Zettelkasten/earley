@@ -15,11 +15,9 @@ import com.zettelnet.latin.form.Person;
 import com.zettelnet.latin.form.Tense;
 import com.zettelnet.latin.form.Voice;
 import com.zettelnet.latin.lemma.FormProvider;
-import com.zettelnet.latin.lemma.simple.Verb;
-import com.zettelnet.latin.lemma.simple.VerbStem;
 
 /**
- * Generates a value of a {@link Form} of a {@link Verb}.
+ * Generates a value of a {@link Form} of a {@link ConjugableLemma}.
  * <p>
  * <code>form = stem + linking vowel (including tense sign) + ending</code>
  * 
@@ -27,7 +25,7 @@ import com.zettelnet.latin.lemma.simple.VerbStem;
  * @param form
  * @return
  */
-public abstract class AbstractConjugation implements FormProvider<Verb> {
+public abstract class AbstractConjugation implements FormProvider<ConjugableLemma> {
 
 	private final FormValueProvider<String> linkings;
 	private final FormValueProvider<String> endings;
@@ -50,30 +48,30 @@ public abstract class AbstractConjugation implements FormProvider<Verb> {
 		return variants;
 	}
 
-	public VerbStem getStemType(Form form) {
+	public ConjugationStem getStemType(Form form) {
 		switch (form.getTense()) {
 		case Present:
 		case Imperfect:
 		case Future:
-			return VerbStem.Present;
+			return ConjugationStem.Present;
 		case Perfect:
 		case Pluperfect:
 		case FuturePerfect:
-			return VerbStem.Perfect;
+			return ConjugationStem.Perfect;
 		default:
 			throw new AssertionError("Unknown tense");
 		}
 	}
 
 	@Override
-	public Collection<String> getForm(final Verb verb, final Form form) {
+	public Collection<String> getForm(final ConjugableLemma ConjugableLemma, final Form form) {
 		// form = stem + vowel + ending
 		Collection<String> variants = new ArrayList<>();
 
 		for (String linkingMorph : linkings.getValue(form)) {
 			for (String endingMorph : endings.getValue(form)) {
 				StringBuilder str = new StringBuilder();
-				str.append(verb.getStem(getStemType(form)));
+				str.append(ConjugableLemma.getStem(getStemType(form)));
 				str.append(linkingMorph);
 				str.append(endingMorph);
 				variants.add(str.toString());
@@ -82,42 +80,42 @@ public abstract class AbstractConjugation implements FormProvider<Verb> {
 		return variants;
 	}
 
-	public Set<Person> getPersonSet(final Verb verb) {
+	public Set<Person> getPersonSet(final ConjugableLemma ConjugableLemma) {
 		return EnumSet.allOf(Person.class);
 	}
 
-	public Set<Numerus> getNumerusSet(final Verb verb) {
+	public Set<Numerus> getNumerusSet(final ConjugableLemma ConjugableLemma) {
 		return EnumSet.allOf(Numerus.class);
 	}
 
-	public Set<Tense> getTenseSet(final Verb verb) {
+	public Set<Tense> getTenseSet(final ConjugableLemma ConjugableLemma) {
 		return EnumSet.allOf(Tense.class);
 	}
 
-	public Set<Mood> getMoodSet(final Verb verb) {
+	public Set<Mood> getMoodSet(final ConjugableLemma ConjugableLemma) {
 		return EnumSet.allOf(Mood.class);
 	}
 
-	public Set<Voice> getVoiceSet(final Verb verb) {
+	public Set<Voice> getVoiceSet(final ConjugableLemma ConjugableLemma) {
 		return EnumSet.allOf(Voice.class);
 	}
 
 	@Override
-	public boolean hasForm(final Verb verb, final Form form) {
-		return !getForm(verb, form).isEmpty();
+	public boolean hasForm(final ConjugableLemma ConjugableLemma, final Form form) {
+		return !getForm(ConjugableLemma, form).isEmpty();
 	}
 
 	@Override
-	public Map<Form, Collection<String>> getForms(Verb verb) {
+	public Map<Form, Collection<String>> getForms(ConjugableLemma ConjugableLemma) {
 		Map<Form, Collection<String>> forms = new HashMap<>();
 
-		for (Person person : getPersonSet(verb)) {
-			for (Numerus numerus : getNumerusSet(verb)) {
-				for (Tense tense : getTenseSet(verb)) {
-					for (Mood mood : getMoodSet(verb)) {
-						for (Voice voice : getVoiceSet(verb)) {
+		for (Person person : getPersonSet(ConjugableLemma)) {
+			for (Numerus numerus : getNumerusSet(ConjugableLemma)) {
+				for (Tense tense : getTenseSet(ConjugableLemma)) {
+					for (Mood mood : getMoodSet(ConjugableLemma)) {
+						for (Voice voice : getVoiceSet(ConjugableLemma)) {
 							Form form = Form.withValues(person, numerus, tense, mood, voice);
-							Collection<String> variants = getForm(verb, form);
+							Collection<String> variants = getForm(ConjugableLemma, form);
 							if (!variants.isEmpty()) {
 								forms.put(form, variants);
 							}

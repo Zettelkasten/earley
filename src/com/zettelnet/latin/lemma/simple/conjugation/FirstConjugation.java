@@ -175,7 +175,7 @@ public class FirstConjugation extends AbstractConjugation {
 		}
 	}
 
-	private static class Endings extends VerbEndings {
+	private static class Endings extends ConjugationEndings {
 		public Endings() {
 			super();
 

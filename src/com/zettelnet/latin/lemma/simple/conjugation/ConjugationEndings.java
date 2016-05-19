@@ -9,9 +9,9 @@ import com.zettelnet.latin.form.Person;
 import com.zettelnet.latin.form.Tense;
 import com.zettelnet.latin.form.Voice;
 
-public class VerbEndings extends MapFormValueProvider<String> {
+public class ConjugationEndings extends MapFormValueProvider<String> {
 
-	public VerbEndings() {
+	public ConjugationEndings() {
 		super(Arrays.asList(Person.class, Numerus.class, Tense.class, Mood.class, Voice.class));
 
 		put("_o", Person.First, Numerus.Singular, Tense.Present, Mood.Indicative, Voice.Active);

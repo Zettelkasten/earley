@@ -18,7 +18,6 @@ import com.zettelnet.latin.lemma.CombinedProvider;
 import com.zettelnet.latin.lemma.FormProvider;
 import com.zettelnet.latin.lemma.Lemma;
 import com.zettelnet.latin.lemma.simple.SimpleVerb;
-import com.zettelnet.latin.lemma.simple.Verb;
 
 public class WiktionaryConjugationTest {
 
@@ -42,11 +41,11 @@ public class WiktionaryConjugationTest {
 		collector.checkThat("Provider is missing Forms", missingForms.size(), equalTo(0));
 	}
 
-	public void testWiktionaryVerb(String presentStem, String perfectStem, String supineStem, CombinedProvider<Verb> provider) {
-		Verb verb = new SimpleVerb(presentStem, perfectStem, supineStem, provider);
+	public void testWiktionaryConjugableLemma(String presentStem, String perfectStem, String supineStem, CombinedProvider<ConjugableLemma> provider) {
+		ConjugableLemma verb = new SimpleVerb(presentStem, perfectStem, supineStem, provider);
 
 		try {
-			FormProvider<Verb> expected = new WiktionaryConjugationResource(new Scanner(new File(String.format("E:\\\\wiktionary-tests\\%s.txt", verb.getNominalForm())), "UTF-8"));
+			FormProvider<ConjugableLemma> expected = new WiktionaryConjugationResource(new Scanner(new File(String.format("E:\\\\wiktionary-tests\\%s.txt", verb.getNominalForm())), "UTF-8"));
 
 			testProviders(verb, provider, expected);
 		} catch (FileNotFoundException e) {
@@ -56,13 +55,13 @@ public class WiktionaryConjugationTest {
 
 	@Test
 	public void test() {
-		testWiktionaryVerb("ag", "_eg", "_act", Conjugation.Third);
-		testWiktionaryVerb("aud", "aud_iv", "aud_it", Conjugation.Fourth);
-		testWiktionaryVerb("cant", "cant_av", "cantat", Conjugation.First);
-		testWiktionaryVerb("cap", "c_ep", "capt", Conjugation.ThirdIStem);
-		testWiktionaryVerb("hab", "habu", "habit", Conjugation.Second);
-		testWiktionaryVerb("laud", "laud_av", "laud_at", Conjugation.First);
-		testWiktionaryVerb("r_id", "r_is", "r_is", Conjugation.Second);
-		testWiktionaryVerb("terr", "terru", "territ", Conjugation.Second);
+		testWiktionaryConjugableLemma("ag", "_eg", "_act", Conjugation.Third);
+		testWiktionaryConjugableLemma("aud", "aud_iv", "aud_it", Conjugation.Fourth);
+		testWiktionaryConjugableLemma("cant", "cant_av", "cantat", Conjugation.First);
+		testWiktionaryConjugableLemma("cap", "c_ep", "capt", Conjugation.ThirdIStem);
+		testWiktionaryConjugableLemma("hab", "habu", "habit", Conjugation.Second);
+		testWiktionaryConjugableLemma("laud", "laud_av", "laud_at", Conjugation.First);
+		testWiktionaryConjugableLemma("r_id", "r_is", "r_is", Conjugation.Second);
+		testWiktionaryConjugableLemma("terr", "terru", "territ", Conjugation.Second);
 	}
 }

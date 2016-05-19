@@ -7,9 +7,9 @@ import com.zettelnet.latin.form.Genus;
 import com.zettelnet.latin.form.MapFormValueProvider;
 import com.zettelnet.latin.form.Tense;
 import com.zettelnet.latin.form.Voice;
-import com.zettelnet.latin.lemma.DeclinableLemma;
 import com.zettelnet.latin.lemma.FormProvider;
 import com.zettelnet.latin.lemma.simple.declension.Declension;
+import com.zettelnet.latin.lemma.simple.declension.DeclinableLemma;
 
 public class ParticipleFormProviders extends MapFormValueProvider<Map<Genus, FormProvider<DeclinableLemma>>> {
 	public ParticipleFormProviders() {

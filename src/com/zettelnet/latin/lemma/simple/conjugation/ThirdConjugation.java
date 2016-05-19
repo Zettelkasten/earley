@@ -176,7 +176,7 @@ public class ThirdConjugation extends AbstractConjugation {
 	}
 
 	public static final FormValueProvider<String> LINKINGS = new Linkings();
-	public static final FormValueProvider<String> ENDINGS = new VerbEndings();
+	public static final FormValueProvider<String> ENDINGS = new ConjugationEndings();
 
 	public ThirdConjugation() {
 		super(LINKINGS, ENDINGS);

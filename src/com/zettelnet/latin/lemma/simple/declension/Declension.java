@@ -4,7 +4,6 @@ import java.util.EnumMap;
 import java.util.Map;
 
 import com.zettelnet.latin.form.Genus;
-import com.zettelnet.latin.lemma.DeclinableLemma;
 import com.zettelnet.latin.lemma.FormProvider;
 
 public final class Declension {

@@ -18,18 +18,19 @@ import com.zettelnet.latin.lemma.Lemma;
 import com.zettelnet.latin.lemma.LemmaType;
 import com.zettelnet.latin.lemma.property.Finiteness;
 import com.zettelnet.latin.lemma.property.LemmaProperty;
+import com.zettelnet.latin.lemma.simple.declension.DeclinableLemma;
 
-public class SimpleInfinitive implements Infinitive {
+public class SimpleInfinitive implements DeclinableLemma {
 
 	private final String firstForm;
 	private final Set<Genus> genus;
 
-	private final Verb verb;
+	private final Lemma verb;
 	private final Derivation derivation;
 
 	private final PropertySet<LemmaProperty> properties;
 
-	public SimpleInfinitive(final String firstForm, final Genus genus, final Verb verb, final Derivation derivation, final LemmaProperty... properties) {
+	public SimpleInfinitive(final String firstForm, final Genus genus, final Lemma verb, final Derivation derivation, final LemmaProperty... properties) {
 		this.firstForm = firstForm;
 		this.genus = EnumSet.of(genus);
 		this.verb = verb;
@@ -110,7 +111,7 @@ public class SimpleInfinitive implements Infinitive {
 	}
 
 	@Override
-	public Verb getDerivedFrom() {
+	public Lemma getDerivedFrom() {
 		return verb;
 	}
 

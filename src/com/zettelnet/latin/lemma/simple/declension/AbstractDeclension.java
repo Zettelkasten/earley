@@ -13,9 +13,7 @@ import com.zettelnet.latin.form.Form;
 import com.zettelnet.latin.form.FormValueProvider;
 import com.zettelnet.latin.form.Genus;
 import com.zettelnet.latin.form.Numerus;
-import com.zettelnet.latin.lemma.DeclinableLemma;
 import com.zettelnet.latin.lemma.FormProvider;
-import com.zettelnet.latin.lemma.simple.Noun;
 
 /**
  * Generates a value of a {@link Form} of a {@link Noun}.

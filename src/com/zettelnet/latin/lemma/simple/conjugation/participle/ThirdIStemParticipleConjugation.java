@@ -8,9 +8,9 @@ import com.zettelnet.latin.form.Genus;
 import com.zettelnet.latin.form.MapFormValueProvider;
 import com.zettelnet.latin.form.Tense;
 import com.zettelnet.latin.form.Voice;
-import com.zettelnet.latin.lemma.DeclinableLemma;
 import com.zettelnet.latin.lemma.FormProvider;
-import com.zettelnet.latin.lemma.simple.VerbStem;
+import com.zettelnet.latin.lemma.simple.conjugation.ConjugationStem;
+import com.zettelnet.latin.lemma.simple.declension.DeclinableLemma;
 
 public class ThirdIStemParticipleConjugation extends AbstractParticipleConjugation {
 
@@ -46,7 +46,7 @@ public class ThirdIStemParticipleConjugation extends AbstractParticipleConjugati
 
 	public static final FormValueProvider<String> FIRST_FORM_ENDINGS = new FirstFormEndings();
 	public static final FormValueProvider<String> STEM_ENDINGS = new StemEndings();
-	public static final FormValueProvider<VerbStem> STEM_TYPES = new ParticipleStems();
+	public static final FormValueProvider<ConjugationStem> STEM_TYPES = new ParticipleStems();
 	public static final FormValueProvider<Map<Genus, FormProvider<DeclinableLemma>>> FORM_PROVIDERS = new ParticipleFormProviders();
 
 	public ThirdIStemParticipleConjugation() {

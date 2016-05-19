@@ -5,19 +5,20 @@ import com.zettelnet.latin.form.Casus;
 import com.zettelnet.latin.form.Form;
 import com.zettelnet.latin.form.Genus;
 import com.zettelnet.latin.form.Numerus;
-import com.zettelnet.latin.lemma.AbstractDeclinableLemma;
-import com.zettelnet.latin.lemma.DeclinableLemma;
 import com.zettelnet.latin.lemma.FormProvider;
+import com.zettelnet.latin.lemma.Lemma;
 import com.zettelnet.latin.lemma.LemmaType;
 import com.zettelnet.latin.lemma.property.Finiteness;
 import com.zettelnet.latin.lemma.property.LemmaProperty;
+import com.zettelnet.latin.lemma.simple.declension.AbstractDeclinableLemma;
+import com.zettelnet.latin.lemma.simple.declension.DeclinableLemma;
 
-public class SimpleSupine extends AbstractDeclinableLemma implements Supine {
+public class SimpleSupine extends AbstractDeclinableLemma {
 
-	private final Verb verb;
+	private final Lemma verb;
 	private final Derivation derivation;
 
-	public SimpleSupine(String stem, FormProvider<DeclinableLemma> formProvider, Genus genus, Verb verb, Derivation derivation, LemmaProperty... properties) {
+	public SimpleSupine(String stem, FormProvider<DeclinableLemma> formProvider, Genus genus, Lemma verb, Derivation derivation, LemmaProperty... properties) {
 		super(null, stem, formProvider, genus, properties);
 
 		this.verb = verb;
@@ -42,7 +43,7 @@ public class SimpleSupine extends AbstractDeclinableLemma implements Supine {
 	}
 
 	@Override
-	public Verb getDerivedFrom() {
+	public Lemma getDerivedFrom() {
 		return verb;
 	}
 

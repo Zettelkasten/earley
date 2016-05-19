@@ -11,8 +11,8 @@ import com.zettelnet.latin.form.FormValueProvider;
 import com.zettelnet.latin.form.Genus;
 import com.zettelnet.latin.form.MapFormValueProvider;
 import com.zettelnet.latin.form.Numerus;
-import com.zettelnet.latin.lemma.DeclinableLemma;
 import com.zettelnet.latin.lemma.simple.declension.AbstractDeclension;
+import com.zettelnet.latin.lemma.simple.declension.DeclinableLemma;
 
 public class SupineDeclension extends AbstractDeclension {
 
