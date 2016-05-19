@@ -11,17 +11,17 @@ import com.zettelnet.latin.derivation.Derivation;
 import com.zettelnet.latin.form.Form;
 import com.zettelnet.latin.lemma.property.LemmaProperty;
 
-public class SimpleLemma implements Lemma {
+public class DummyLemma implements Lemma {
 
 	private final String firstForm;
 	private final PropertySet<LemmaProperty> properties;
 	private final LemmaType type;
 
-	public SimpleLemma(final LemmaType type, final LemmaProperty... properties) {
+	public DummyLemma(final LemmaType type, final LemmaProperty... properties) {
 		this(UUID.randomUUID().toString(), type, properties);
 	}
 
-	public SimpleLemma(final String firstForm, final LemmaType type, final LemmaProperty... properties) {
+	public DummyLemma(final String firstForm, final LemmaType type, final LemmaProperty... properties) {
 		this.firstForm = firstForm;
 		this.type = type;
 		this.properties = MapPropertySet.withValues(properties);
