@@ -12,17 +12,17 @@ S(π) → VP(π)
 VP(π : HS) ⇒ VP(π) {~VF ~Args ~AdvP}
 VP(π : NS) ⇒ VP(π) {~Args ~AdvP ~VF}
      VP(π) → VP(kng[π] fin[π]) conj VP(kng[π] fin[π])				VP-Koordination
-           ⇒ VP(π) {~VP⁰ ~conj ~VP¹}						 � Modus-Kongr.
+           ⇒ VP(π) {~VP⁰ ~conj ~VP¹}								 � Modus-Kongr.
            ⇒ VP(π) {~VP⁰ ~conj ~VP¹}
 
  VF(π : Fin) → v(π)
              ⇒ v(ger[π])
  VF(π : Inf) → inf(π)
-             ⇒ zu inf(ger[π])							 � Modalverben
+             ⇒ zu inf(ger[π])										 � Modalverben
 VF(π : Part) → part(π)
 VF(π : Grnd) → grnd(π)
-       VF(π) → VF(π) conj VF(π)							VF-Koordination
-             ⇒ VF(π) {~VF⁰ ~conj ~VF¹}						 � Modus-Kongr.
+       VF(π) → VF(π) conj VF(π)										VF-Koordination
+             ⇒ VF(π) {~VF⁰ ~conj ~VF¹}								 � Modus-Kongr.
 
        Args(π : NullVal) → ε
                          ⇒ ε
@@ -47,24 +47,24 @@ AdvP(π) → adv(π)
         ⇒ adv(ger[π])
 
 
-          NP(π) → NF(π) [AP(π)] [NP(Gen)] [NP(π)]				Attribute
+          NP(π) → NF(π) [AP(π)] [NP(Gen)] [NP(π)]					Attribute
                 ⇒ NP(π) {n(ger[π]) [~AP] [~NP⁰] [~NP¹]}
-NP(π : Nom/Akk) → S(π : Akk Pres/Perf/Fut Inf)					AcI
+NP(π : Nom/Akk) → S(π : Akk Pres/Perf/Fut Inf)						AcI
                 ⇒ NP(π) {conj[dass] ~S[π & NS]}
 
-NP(π : Pl) → NP(kasus[π]) conj NP(kasus[π])					NP-Koordination
+NP(π : Pl) → NP(kasus[π]) conj NP(kasus[π])							NP-Koordination
            ⇒ NP(π) {~NP⁰ ~conj ~NP¹}
 
 NF(π) → n(π)
-										 � NF-Koordination
+																	 � NF-Koordination
 
 AP(π) → adj(π) AdvP(π)∗
       ⇒ AP(π) {adj(π) ~AdvP∗}
-AP(π) → pron(π) AdvP(π)∗							 � Adverbiale
-      ⇒ AP(π) {pron(π) ~AdvP∗}							 � mehrere Pron.
-AP(π) → VP(Part kng[π])								PC
+AP(π) → pron(π) AdvP(π)∗											 � Adverbiale
+      ⇒ AP(π) {pron(π) ~AdvP∗}										 � mehrere Pron.
+AP(π) → VP(Part kng[π])												PC
       ⇒ AP(π) {~VP[π & NS]}
-AP(π) → AP(π) [conj] AP(π)							AP-Koordination
+AP(π) → AP(π) [conj] AP(π)											AP-Koordination
       ⇒ AP(π) {~NP⁰ ~conj ~NP¹}
 
 
