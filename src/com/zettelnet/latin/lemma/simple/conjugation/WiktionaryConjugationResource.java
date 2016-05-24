@@ -34,7 +34,7 @@ import com.zettelnet.latin.lemma.simple.SimpleGerund;
 import com.zettelnet.latin.lemma.simple.SimpleVerb;
 import com.zettelnet.latin.lemma.simple.declension.DeclinableLemma;
 
-public class WiktionaryConjugationResource implements LemmaFactory<ConjugableLemma>, FormProvider<ConjugableLemma> {
+public class WiktionaryConjugationResource implements LemmaFactory, FormProvider<ConjugableLemma> {
 
 	private static final List<Form> finiteColumns = Arrays.asList(
 			Form.withValues(Person.First, Numerus.Singular),
@@ -277,7 +277,7 @@ public class WiktionaryConjugationResource implements LemmaFactory<ConjugableLem
 	}
 
 	@Override
-	public ConjugableLemma makeLemma() {
+	public Lemma makeLemma() {
 		return new SimpleVerb(null, this, derivationProvider);
 	}
 
