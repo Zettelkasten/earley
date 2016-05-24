@@ -17,7 +17,7 @@ public final class MapForm implements Form {
 	}
 
 	// may not be modified
-	private final Map<Class<? extends FormProperty>, FormProperty> data;
+	private final Map<Object, FormProperty> data;
 
 	private MapForm(final Collection<FormProperty> properties) {
 		this.data = new HashMap<>(properties.size());
@@ -28,19 +28,19 @@ public final class MapForm implements Form {
 		}
 	}
 
-	private MapForm(final Map<Class<? extends FormProperty>, FormProperty> data) {
+	private MapForm(final Map<Object, FormProperty> data) {
 		this.data = data;
 	}
 
 	@Override
-	public boolean hasProperty(Class<? extends FormProperty> property) {
-		return data.containsKey(property);
+	public boolean hasProperty(Object propertyType) {
+		return data.containsKey(propertyType);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T extends FormProperty> T getProperty(Class<T> property) {
-		return (T) data.get(property);
+	public <U extends FormProperty> U getProperty(Object propertyType) {
+		return (U) data.get(propertyType);
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public final class MapForm implements Form {
 	public String toString() {
 		StringBuilder str = new StringBuilder();
 
-		for (Class<? extends FormProperty> propertyType : Form.ALL_PROPERTIES_SORTED) {
+		for (Object propertyType : Form.ALL_PROPERTIES_SORTED) {
 			FormProperty property = getProperty(propertyType);
 			if (property != null) {
 				str.append(' ');
@@ -103,8 +103,8 @@ public final class MapForm implements Form {
 	}
 
 	@Override
-	public Form retainAll(Collection<Class<? extends FormProperty>> properties) {
-		Map<Class<? extends FormProperty>, FormProperty> newData = new HashMap<>(this.data);
+	public Form retainAll(Collection<Object> properties) {
+		Map<Object, FormProperty> newData = new HashMap<>(this.data);
 		if (newData.keySet().retainAll(properties)) {
 			return new MapForm(newData);
 		} else {
@@ -124,7 +124,7 @@ public final class MapForm implements Form {
 
 	@Override
 	public Form derive(Collection<? extends FormProperty> properties) {
-		Map<Class<? extends FormProperty>, FormProperty> newData = new HashMap<>(this.data);
+		Map<Object, FormProperty> newData = new HashMap<>(this.data);
 		for (FormProperty property : properties) {
 			newData.put(property.getType(), property);
 		}
@@ -136,9 +136,9 @@ public final class MapForm implements Form {
 		if (this.equals(other)) {
 			return 0;
 		} else {
-			ListIterator<Class<? extends FormProperty>> i = Form.ALL_PROPERTIES_SORTED.listIterator(Form.ALL_PROPERTIES_SORTED.size());
+			ListIterator<?> i = Form.ALL_PROPERTIES_SORTED.listIterator(Form.ALL_PROPERTIES_SORTED.size());
 			while (i.hasPrevious()) {
-				Class<? extends FormProperty> propertyType = i.previous();
+				Object propertyType = i.previous();
 				FormProperty thisProperty = this.getProperty(propertyType);
 				FormProperty otherProperty = other.getProperty(propertyType);
 

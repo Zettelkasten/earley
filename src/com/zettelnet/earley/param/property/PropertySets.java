@@ -9,7 +9,7 @@ public final class PropertySets {
 	}
 
 	public static <A extends Property, B extends Property> PropertySet<?> derive(PropertySet<A> a, PropertySet<B> b) {
-		Map<Class<? extends Property>, Property> newData = new HashMap<>();
+		Map<Object, Property> newData = new HashMap<>();
 		for (A property : a.values()) {
 			newData.put(property.getType(), property);
 		}

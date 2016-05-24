@@ -10,7 +10,7 @@ public interface Property {
 		return name();
 	}
 	
-	default Class<? extends Property> getType() {
+	default Object getType() {
 		return getClass();
 	}
 }

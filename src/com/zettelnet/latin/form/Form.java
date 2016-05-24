@@ -50,10 +50,10 @@ public interface Form extends PropertySet<FormProperty>, Comparable<Form> {
 	}
 
 	@Override
-	boolean hasProperty(Class<? extends FormProperty> property);
+	boolean hasProperty(Object propertyType);
 
 	@Override
-	<T extends FormProperty> T getProperty(Class<T> property);
+	<U extends FormProperty> U getProperty(Object propertyType);
 
 	String toStringShort();
 
@@ -90,9 +90,9 @@ public interface Form extends PropertySet<FormProperty>, Comparable<Form> {
 	}
 
 	@Override
-	Form retainAll(Collection<Class<? extends FormProperty>> properties);
+	Form retainAll(Collection<Object> properties);
 
-	default Form retainAll(@SuppressWarnings("unchecked") Class<? extends FormProperty>... properties) {
+	default Form retainAll(Object... properties) {
 		return retainAll(Arrays.asList(properties));
 	}
 

@@ -23,7 +23,9 @@ public class CopyIndividualPropertyExpression implements IndividualPropertyExpre
 	}
 
 	@Override
-	public String toString(Class<? extends Property> propertyType) {
-		return propertyType.getSimpleName() + "[&pi;]";
+	public String toString(Object propertyType) {
+		// TODO Remove class getSimpleName if FormProperties have seperate type
+		// class
+		return ((propertyType instanceof Class<?>) ? ((Class<?>) propertyType).getSimpleName() : propertyType.toString()) + "[&pi;]";
 	}
 }

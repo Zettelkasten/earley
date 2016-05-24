@@ -12,7 +12,7 @@ public interface IndividualPropertyExpression {
 
 	Set<Property> complete(Set<Property> parameter, Set<Property> childParameter);
 
-	default String toString(Class<? extends Property> propertyType) {
+	default String toString(Object propertyType) {
 		return toString();
 	}
 

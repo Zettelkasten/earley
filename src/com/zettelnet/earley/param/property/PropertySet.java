@@ -5,13 +5,13 @@ import java.util.Collection;
 
 public interface PropertySet<T extends Property> {
 
-	boolean hasProperty(Class<? extends T> property);
+	boolean hasProperty(Object propertyType);
 
-	<U extends T> U getProperty(Class<U> property);
+	<U extends T> U getProperty(Object propertyType);
 
 	Collection<T> values();
 
-	PropertySet<T> retainAll(Collection<Class<? extends T>> properties);
+	PropertySet<T> retainAll(Collection<Object> propertyTypes);
 
 	boolean hasProperties(@SuppressWarnings("unchecked") T... properties);
 

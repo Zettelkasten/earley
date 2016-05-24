@@ -10,7 +10,7 @@ import com.zettelnet.earley.param.SingletonParameterFactory;
 
 public final class PropertyParameterManager<T extends Property> implements ParameterManager<PropertyParameter<T>> {
 
-	final Map<Class<? extends T>, T> DEFAULT_DATA;
+	final Map<Object, T> DEFAULT_DATA;
 
 	public PropertyParameterManager(final Collection<Class<? extends T>> allProperties) {
 		DEFAULT_DATA = new HashMap<>(allProperties.size());
@@ -19,9 +19,9 @@ public final class PropertyParameterManager<T extends Property> implements Param
 		}
 	}
 
-	Map<Class<? extends T>, T> makeDataMap(Map<Class<? extends T>, T> sourceData, Map<Class<? extends T>, T> newData) {
-		Map<Class<? extends T>, T> data = new HashMap<>(sourceData);
-		for (Class<? extends T> propertyType : sourceData.keySet()) {
+	Map<Object, T> makeDataMap(Map<Object, T> sourceData, Map<Object, T> newData) {
+		Map<Object, T> data = new HashMap<>(sourceData);
+		for (Object propertyType : sourceData.keySet()) {
 			T newProperty = newData.get(propertyType);
 			if (newProperty != null) {
 				data.put(propertyType, newProperty);
@@ -30,9 +30,9 @@ public final class PropertyParameterManager<T extends Property> implements Param
 		return data;
 	}
 
-	Map<Class<? extends T>, T> makeDataMap(Map<Class<? extends T>, T> sourceData, PropertySet<T> values) {
-		Map<Class<? extends T>, T> data = new HashMap<>(sourceData);
-		for (Class<? extends T> propertyType : sourceData.keySet()) {
+	Map<Object, T> makeDataMap(Map<Object, T> sourceData, PropertySet<T> values) {
+		Map<Object, T> data = new HashMap<>(sourceData);
+		for (Object propertyType : sourceData.keySet()) {
 			if (values.hasProperty(propertyType)) {
 				data.put(propertyType, values.getProperty(propertyType));
 			}

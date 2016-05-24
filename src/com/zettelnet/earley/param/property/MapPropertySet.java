@@ -16,7 +16,7 @@ public final class MapPropertySet<T extends Property> implements PropertySet<T> 
 	}
 
 	// may not be modified
-	private final Map<Class<? extends Property>, T> data;
+	private final Map<Object, T> data;
 
 	private MapPropertySet(final Collection<? extends T> properties) {
 		this.data = new HashMap<>(properties.size());
@@ -27,19 +27,19 @@ public final class MapPropertySet<T extends Property> implements PropertySet<T> 
 		}
 	}
 
-	private MapPropertySet(final Map<Class<? extends Property>, T> data) {
+	private MapPropertySet(final Map<Object, T> data) {
 		this.data = data;
 	}
 
 	@Override
-	public boolean hasProperty(Class<? extends T> property) {
-		return data.containsKey(property);
+	public boolean hasProperty(Object propertyType) {
+		return data.containsKey(propertyType);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <U extends T> U getProperty(Class<U> property) {
-		return (U) data.get(property);
+	public <U extends T> U getProperty(Object propertyType) {
+		return (U) data.get(propertyType);
 	}
 
 	@Override
@@ -89,9 +89,9 @@ public final class MapPropertySet<T extends Property> implements PropertySet<T> 
 	}
 
 	@Override
-	public PropertySet<T> retainAll(Collection<Class<? extends T>> properties) {
-		Map<Class<? extends Property>, T> newData = new HashMap<>(this.data);
-		if (newData.keySet().retainAll(properties)) {
+	public PropertySet<T> retainAll(Collection<Object> propertyTypes) {
+		Map<Object, T> newData = new HashMap<>(this.data);
+		if (newData.keySet().retainAll(propertyTypes)) {
 			return new MapPropertySet<>(newData);
 		} else {
 			return this;
@@ -102,7 +102,7 @@ public final class MapPropertySet<T extends Property> implements PropertySet<T> 
 	@Override
 	public boolean hasProperties(T... properties) {
 		for (T property : properties) {
-			if (getProperty((Class<? extends T>) property.getType()) != property) {
+			if (getProperty(property.getType()) != property) {
 				return false;
 			}
 		}
@@ -111,7 +111,7 @@ public final class MapPropertySet<T extends Property> implements PropertySet<T> 
 
 	@Override
 	public PropertySet<T> derive(Collection<? extends T> properties) {
-		Map<Class<? extends Property>, T> newData = new HashMap<>(this.data);
+		Map<Object, T> newData = new HashMap<>(this.data);
 		for (T property : properties) {
 			newData.put(property.getType(), property);
 		}

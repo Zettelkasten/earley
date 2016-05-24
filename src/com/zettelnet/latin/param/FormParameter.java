@@ -33,7 +33,7 @@ public final class FormParameter implements Parameter {
 		return !deriveProperties(parentProperties, childProperties).isEmpty();
 	}
 
-	private static final Map<Class<? extends Property>, Set<Property>> DEFAULT_DATA = new HashMap<>();
+	private static final Map<Object, Set<Property>> DEFAULT_DATA = new HashMap<>();
 
 	private static <T> Set<T> singleSet(T value) {
 		Set<T> set = new HashSet<>(1);
@@ -41,10 +41,10 @@ public final class FormParameter implements Parameter {
 		return set;
 	}
 
-	private static Map<Class<? extends Property>, Set<Property>> makeDataMap(Map<Class<? extends Property>, Set<Property>> sourceData, PropertySet<?> form) {
-		final Map<Class<? extends Property>, Set<Property>> data = new HashMap<>(sourceData);
+	private static Map<Object, Set<Property>> makeDataMap(Map<Object, Set<Property>> sourceData, PropertySet<?> form) {
+		final Map<Object, Set<Property>> data = new HashMap<>(sourceData);
 		for (Property property : form.values()) {
-			Class<? extends Property> propertyType = property.getType();
+			Object propertyType = property.getType();
 			if (!data.containsKey(propertyType)) {
 				data.put(propertyType, singleSet(property));
 			} else {
@@ -54,10 +54,10 @@ public final class FormParameter implements Parameter {
 		return data;
 	}
 
-	private static Map<Class<? extends Property>, Set<Property>> makeDataMap(Map<Class<? extends Property>, Set<Property>> sourceData, Map<Class<? extends Property>, Set<Property>> newData) {
-		final Map<Class<? extends Property>, Set<Property>> data = new HashMap<>(sourceData);
-		for (Map.Entry<Class<? extends Property>, Set<Property>> entry : newData.entrySet()) {
-			Class<? extends Property> propertyType = entry.getKey();
+	private static Map<Object, Set<Property>> makeDataMap(Map<Object, Set<Property>> sourceData, Map<Object, Set<Property>> newData) {
+		final Map<Object, Set<Property>> data = new HashMap<>(sourceData);
+		for (Map.Entry<Object, Set<Property>> entry : newData.entrySet()) {
+			Object propertyType = entry.getKey();
 			Set<Property> property = entry.getValue();
 			if (!data.containsKey(propertyType)) {
 				data.put(propertyType, property);
@@ -68,11 +68,11 @@ public final class FormParameter implements Parameter {
 		return data;
 	}
 
-	private static Map<Class<? extends Property>, Set<Property>> makeDataMap(Property... formProperties) {
-		final Map<Class<? extends Property>, Set<Property>> data = new HashMap<>(formProperties.length);
+	private static Map<Object, Set<Property>> makeDataMap(Property... formProperties) {
+		final Map<Object, Set<Property>> data = new HashMap<>(formProperties.length);
 
 		for (Property property : formProperties) {
-			Class<? extends Property> propertyType = property.getType();
+			Object propertyType = property.getType();
 			if (!data.containsKey(propertyType)) {
 				data.put(propertyType, new HashSet<>());
 			}
@@ -86,7 +86,7 @@ public final class FormParameter implements Parameter {
 	// represents all properties by key
 	// property keys not contained in this map allow ANY value; empty value sets
 	// are not allowed
-	private final Map<Class<? extends Property>, Set<Property>> data;
+	private final Map<Object, Set<Property>> data;
 
 	private final Determination cause;
 
@@ -106,18 +106,18 @@ public final class FormParameter implements Parameter {
 		this(makeDataMap(DEFAULT_DATA, cause.getProperties()), cause);
 	}
 
-	public FormParameter(final Map<Class<? extends Property>, Set<Property>> data) {
+	public FormParameter(final Map<Object, Set<Property>> data) {
 		this(data, null);
 	}
 
-	public FormParameter(final Map<Class<? extends Property>, Set<Property>> data, final Determination cause) {
+	public FormParameter(final Map<Object, Set<Property>> data, final Determination cause) {
 		this.data = data;
 		this.cause = cause;
 	}
 
 	public boolean isCompatibleWith(FormParameter other) {
-		for (Map.Entry<Class<? extends Property>, Set<Property>> entry : data.entrySet()) {
-			Class<? extends Property> propertyType = entry.getKey();
+		for (Map.Entry<Object, Set<Property>> entry : data.entrySet()) {
+			Object propertyType = entry.getKey();
 			Set<Property> parentValue = entry.getValue();
 
 			if (other.data.containsKey(propertyType)) {
@@ -156,11 +156,11 @@ public final class FormParameter implements Parameter {
 		return cause;
 	}
 
-	public Set<Property> getProperty(Class<? extends Property> propertyType) {
+	public Set<Property> getProperty(Object propertyType) {
 		return data.get(propertyType);
 	}
 
-	public Map<Class<? extends Property>, Set<Property>> getProperties() {
+	public Map<Object, Set<Property>> getProperties() {
 		return data;
 	}
 

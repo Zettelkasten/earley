@@ -12,11 +12,11 @@ import com.zettelnet.earley.param.property.PropertySet;
 
 public interface GermanForm extends PropertySet<GermanFormProperty>, Comparable<GermanForm> {
 
-	public static final Set<Class<? extends GermanFormProperty>> ALL_PROPERTIES = Collections.unmodifiableSet(new HashSet<>(getAllProperties()));
-	public static final List<Class<? extends GermanFormProperty>> ALL_PROPERTIES_SORTED = Collections.unmodifiableList(getAllProperties());
+	public static final Set<Object> ALL_PROPERTIES = Collections.unmodifiableSet(new HashSet<>(getAllProperties()));
+	public static final List<Object> ALL_PROPERTIES_SORTED = Collections.unmodifiableList(getAllProperties());
 
-	static List<Class<? extends GermanFormProperty>> getAllProperties() {
-		List<Class<? extends GermanFormProperty>> properties = new ArrayList<>();
+	static List<Object> getAllProperties() {
+		List<Object> properties = new ArrayList<>();
 		properties.add(GermanCasus.class);
 		properties.add(GermanPerson.class);
 		properties.add(GermanNumerus.class);
@@ -50,10 +50,10 @@ public interface GermanForm extends PropertySet<GermanFormProperty>, Comparable<
 	}
 
 	@Override
-	boolean hasProperty(Class<? extends GermanFormProperty> property);
+	boolean hasProperty(Object propertyType);
 
 	@Override
-	<T extends GermanFormProperty> T getProperty(Class<T> property);
+	<U extends GermanFormProperty> U getProperty(Object propertyType);
 
 	String toStringShort();
 
@@ -90,10 +90,10 @@ public interface GermanForm extends PropertySet<GermanFormProperty>, Comparable<
 	}
 
 	@Override
-	GermanForm retainAll(Collection<Class<? extends GermanFormProperty>> properties);
+	GermanForm retainAll(Collection<Object> propertyTypes);
 
-	default GermanForm retainAll(@SuppressWarnings("unchecked") Class<? extends GermanFormProperty>... properties) {
-		return retainAll(Arrays.asList(properties));
+	default GermanForm retainAll(Object... propertyTypes) {
+		return retainAll(Arrays.asList(propertyTypes));
 	}
 
 	default GermanForm derive(GermanForm withForm) {

@@ -12,7 +12,7 @@ import com.zettelnet.latin.token.Determination;
 
 public class FormParameterBuilder {
 
-	private final Map<Class<? extends Property>, Set<Property>> data;
+	private final Map<Object, Set<Property>> data;
 	private Determination cause;
 
 	public FormParameterBuilder() {
@@ -28,7 +28,7 @@ public class FormParameterBuilder {
 	}
 
 	public FormParameterBuilder with(Property property) {
-		Class<? extends Property> propertyType = property.getType();
+		Object propertyType = property.getType();
 		if (!data.containsKey(propertyType)) {
 			data.put(propertyType, new HashSet<>());
 		}

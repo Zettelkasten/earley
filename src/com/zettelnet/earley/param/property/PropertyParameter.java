@@ -9,7 +9,7 @@ public class PropertyParameter<T extends Property> implements Parameter {
 	private final PropertyParameterManager<T> manager;
 
 	// may not be modified
-	private final Map<Class<? extends T>, T> data;
+	private final Map<Object, T> data;
 
 	public PropertyParameter(final PropertyParameterManager<T> manager) {
 		this(manager, manager.DEFAULT_DATA);
@@ -19,14 +19,14 @@ public class PropertyParameter<T extends Property> implements Parameter {
 		this(manager, manager.makeDataMap(manager.DEFAULT_DATA, values));
 	}
 
-	private PropertyParameter(final PropertyParameterManager<T> manager, Map<Class<? extends T>, T> data) {
+	private PropertyParameter(final PropertyParameterManager<T> manager, Map<Object, T> data) {
 		this.manager = manager;
 		this.data = data;
 	}
 
 	public boolean isCompatibleWith(PropertyParameter<T> other) {
-		for (Map.Entry<Class<? extends T>, T> entry : data.entrySet()) {
-			Class<? extends T> propertyType = entry.getKey();
+		for (Map.Entry<Object, T> entry : data.entrySet()) {
+			Object propertyType = entry.getKey();
 			T parentValue = entry.getValue();
 			T childValue = other.data.get(propertyType);
 
