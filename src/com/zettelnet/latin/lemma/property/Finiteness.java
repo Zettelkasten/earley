@@ -21,4 +21,9 @@ public enum Finiteness implements LemmaProperty {
 	public String toString() {
 		return shortName();
 	}
+	
+	@Override
+	public Class<? extends Finiteness> getType() {
+		return TYPE;
+	}
 }

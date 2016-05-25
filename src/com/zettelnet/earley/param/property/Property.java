@@ -10,7 +10,5 @@ public interface Property {
 		return name();
 	}
 	
-	default Object getType() {
-		return getClass();
-	}
+	Object getType();
 }

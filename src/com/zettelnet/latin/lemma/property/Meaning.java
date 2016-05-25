@@ -15,4 +15,9 @@ public class Meaning implements LemmaProperty {
 	public Lemma getLemma() {
 		return lemma;
 	}
+	
+	@Override
+	public Class<? extends Meaning> getType() {
+		return TYPE;
+	}
 }

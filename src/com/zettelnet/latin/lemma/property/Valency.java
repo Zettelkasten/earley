@@ -27,4 +27,9 @@ public enum Valency implements LemmaProperty {
 	public String toString() {
 		return shortName();
 	}
+	
+	@Override
+	public Class<? extends Valency> getType() {
+		return TYPE;
+	}
 }
