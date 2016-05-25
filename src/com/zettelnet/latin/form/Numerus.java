@@ -4,6 +4,8 @@ public enum Numerus implements FormProperty {
 
 	Singular("Sg"), Plural("Pl");
 
+	public static final FormPropertyType<Numerus> TYPE = new FormPropertyType<>("Numerus", values());
+	
 	private final String shortName;
 
 	private Numerus(String shortName) {
@@ -18,5 +20,10 @@ public enum Numerus implements FormProperty {
 	@Override
 	public String toString() {
 		return shortName();
+	}
+	
+	@Override
+	public FormPropertyType<Numerus> getType() {
+		return TYPE;
 	}
 }

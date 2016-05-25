@@ -4,6 +4,8 @@ public enum Voice implements FormProperty {
 
 	Active("Act"), Passive("Pas");
 
+	public static final FormPropertyType<Voice> TYPE = new FormPropertyType<>("Voice", values());
+	
 	private final String shortName;
 
 	private Voice(String shortName) {
@@ -18,5 +20,10 @@ public enum Voice implements FormProperty {
 	@Override
 	public String toString() {
 		return shortName();
+	}
+	
+	@Override
+	public FormPropertyType<Voice> getType() {
+		return TYPE;
 	}
 }

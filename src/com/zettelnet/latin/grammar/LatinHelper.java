@@ -21,9 +21,9 @@ final class LatinHelper {
 	}
 
 	@SafeVarargs
-	static ParameterExpression<Token, FormParameter> copy(TokenParameterizer<Token, FormParameter> parameterizer, Class<? extends Property>... propertyTypes) {
+	static ParameterExpression<Token, FormParameter> copy(TokenParameterizer<Token, FormParameter> parameterizer, Object... propertyTypes) {
 		IndividualFormParameterExpression<Token> expression = new IndividualFormParameterExpression<>(parameterizer);
-		for (Class<? extends Property> propertyType : propertyTypes) {
+		for (Object propertyType : propertyTypes) {
 			expression.copy(propertyType);
 		}
 		return expression;

@@ -12,7 +12,7 @@ import com.zettelnet.latin.form.Voice;
 public class ConjugationEndings extends MapFormValueProvider<String> {
 
 	public ConjugationEndings() {
-		super(Arrays.asList(Person.class, Numerus.class, Tense.class, Mood.class, Voice.class));
+		super(Arrays.asList(Person.TYPE, Numerus.TYPE, Tense.TYPE, Mood.TYPE, Voice.TYPE));
 
 		put("_o", Person.First, Numerus.Singular, Tense.Present, Mood.Indicative, Voice.Active);
 		put("s", Person.Second, Numerus.Singular, Tense.Present, Mood.Indicative, Voice.Active);

@@ -77,7 +77,7 @@ public class WiktionaryConjugationResource implements LemmaFactory, FormProvider
 		this.derivationProvider = new DistributingDerivationProvider<ConjugableLemma>()
 				.addProvider(DerivationType.Infinitive, new DerivationProvider<ConjugableLemma>() {
 					private Form retainForm(Form form) {
-						return form.retainAll(Arrays.asList(Tense.class, Voice.class));
+						return form.retainAll(Arrays.asList(Tense.TYPE, Voice.TYPE));
 					}
 
 					@Override
@@ -282,7 +282,7 @@ public class WiktionaryConjugationResource implements LemmaFactory, FormProvider
 	}
 
 	private Form retainFiniteForm(Form form) {
-		return form.retainAll(Arrays.asList(Person.class, Numerus.class, Tense.class, Mood.class, Voice.class));
+		return form.retainAll(Arrays.asList(Person.TYPE, Numerus.TYPE, Tense.TYPE, Mood.TYPE, Voice.TYPE));
 	}
 
 	@Override

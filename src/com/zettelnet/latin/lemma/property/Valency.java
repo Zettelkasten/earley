@@ -10,6 +10,8 @@ public enum Valency implements LemmaProperty {
 	Genitive("GenVal"),
 	AccusativeDative("AccDatVal");
 
+	public static final Class<? extends Valency> TYPE = Valency.class;
+
 	private final String shortName;
 
 	private Valency(String shortName) {

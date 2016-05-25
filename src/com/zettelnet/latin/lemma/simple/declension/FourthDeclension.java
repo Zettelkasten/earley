@@ -19,7 +19,7 @@ public class FourthDeclension extends AbstractDeclension {
 
 	private static class Endings extends MapFormValueProvider<String> {
 		public Endings() {
-			super(Arrays.asList(Casus.class, Numerus.class));
+			super(Arrays.asList(Casus.TYPE, Numerus.TYPE));
 
 			put("_us", Casus.Genitive, Numerus.Singular);
 			put("u_i", Casus.Dative, Numerus.Singular);

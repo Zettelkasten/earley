@@ -7,6 +7,8 @@ public enum Genus implements FormProperty {
 
 	Masculine("m"), Feminine("f"), Neuter("n");
 
+	public static final FormPropertyType<Genus> TYPE = new FormPropertyType<>("Genus", values());
+	
 	private final String shortName;
 
 	private Genus(final String shortName) {
@@ -21,6 +23,11 @@ public enum Genus implements FormProperty {
 	@Override
 	public String toString() {
 		return shortName();
+	}
+	
+	@Override
+	public FormPropertyType<Genus> getType() {
+		return TYPE;
 	}
 
 	public static <T> Map<Genus, T> makeMap(T masculine, T feminine, T neuter) {

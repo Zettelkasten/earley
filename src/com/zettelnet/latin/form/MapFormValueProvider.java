@@ -9,13 +9,13 @@ import java.util.Map;
 public class MapFormValueProvider<T> implements FormValueProvider<T> {
 
 	private final Map<Form, Collection<T>> data;
-	private final Collection<Class<? extends FormProperty>> retainedProperties;
+	private final Collection<FormPropertyType<?>> retainedProperties;
 
-	protected MapFormValueProvider(Collection<Class<? extends FormProperty>> retainedProperties) {
+	protected MapFormValueProvider(Collection<FormPropertyType<?>> retainedProperties) {
 		this(new HashMap<>(), retainedProperties);
 	}
 
-	public MapFormValueProvider(final Map<Form, Collection<T>> data, final Collection<Class<? extends FormProperty>> retainedProperties) {
+	public MapFormValueProvider(final Map<Form, Collection<T>> data, final Collection<FormPropertyType<?>> retainedProperties) {
 		this.data = data;
 		this.retainedProperties = retainedProperties;
 	}

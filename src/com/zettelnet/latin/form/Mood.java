@@ -3,7 +3,9 @@ package com.zettelnet.latin.form;
 public enum Mood implements FormProperty {
 
 	Indicative("Ind"), Subjunctive("Sub"), Imperative("Imp");
-
+	
+	public static final FormPropertyType<Mood> TYPE = new FormPropertyType<>("Mood", values());
+	
 	private final String shortName;
 
 	private Mood(String shortName) {
@@ -18,5 +20,10 @@ public enum Mood implements FormProperty {
 	@Override
 	public String toString() {
 		return shortName();
+	}
+	
+	@Override
+	public FormPropertyType<Mood> getType() {
+		return TYPE;
 	}
 }

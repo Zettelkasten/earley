@@ -12,19 +12,19 @@ import com.zettelnet.earley.param.property.PropertySet;
 
 public interface Form extends PropertySet<FormProperty>, Comparable<Form> {
 
-	public static final Set<Class<? extends FormProperty>> ALL_PROPERTIES = Collections.unmodifiableSet(new HashSet<>(getAllProperties()));
-	public static final List<Class<? extends FormProperty>> ALL_PROPERTIES_SORTED = Collections.unmodifiableList(getAllProperties());
+	public static final Set<FormPropertyType<?>> ALL_PROPERTIES = Collections.unmodifiableSet(new HashSet<>(getAllProperties()));
+	public static final List<FormPropertyType<?>> ALL_PROPERTIES_SORTED = Collections.unmodifiableList(getAllProperties());
 
-	static List<Class<? extends FormProperty>> getAllProperties() {
-		List<Class<? extends FormProperty>> properties = new ArrayList<>();
-		properties.add(Casus.class);
-		properties.add(Person.class);
-		properties.add(Numerus.class);
-		properties.add(Genus.class);
-		properties.add(Mood.class);
-		properties.add(Tense.class);
-		properties.add(Voice.class);
-		properties.add(Comparison.class);
+	static List<FormPropertyType<?>> getAllProperties() {
+		List<FormPropertyType<?>> properties = new ArrayList<>();
+		properties.add(Casus.TYPE);
+		properties.add(Person.TYPE);
+		properties.add(Numerus.TYPE);
+		properties.add(Genus.TYPE);
+		properties.add(Mood.TYPE);
+		properties.add(Tense.TYPE);
+		properties.add(Voice.TYPE);
+		properties.add(Comparison.TYPE);
 
 		return properties;
 	}
@@ -58,35 +58,35 @@ public interface Form extends PropertySet<FormProperty>, Comparable<Form> {
 	String toStringShort();
 
 	public default Casus getCasus() {
-		return getProperty(Casus.class);
+		return getProperty(Casus.TYPE);
 	}
 
 	public default Numerus getNumerus() {
-		return getProperty(Numerus.class);
+		return getProperty(Numerus.TYPE);
 	}
 
 	public default Genus getGenus() {
-		return getProperty(Genus.class);
+		return getProperty(Genus.TYPE);
 	}
 
 	public default Person getPerson() {
-		return getProperty(Person.class);
+		return getProperty(Person.TYPE);
 	}
 
 	public default Mood getMood() {
-		return getProperty(Mood.class);
+		return getProperty(Mood.TYPE);
 	}
 
 	public default Tense getTense() {
-		return getProperty(Tense.class);
+		return getProperty(Tense.TYPE);
 	}
 
 	public default Voice getVoice() {
-		return getProperty(Voice.class);
+		return getProperty(Voice.TYPE);
 	}
 
 	public default Comparison getComparison() {
-		return getProperty(Comparison.class);
+		return getProperty(Comparison.TYPE);
 	}
 
 	@Override

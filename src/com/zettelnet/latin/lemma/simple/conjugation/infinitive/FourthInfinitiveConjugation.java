@@ -12,7 +12,7 @@ public class FourthInfinitiveConjugation extends AbstractInfinitiveConjugation {
 
 	private static class FirstFormEndings extends MapFormValueProvider<String> {
 		public FirstFormEndings() {
-			super(Arrays.asList(Tense.class, Voice.class));
+			super(Arrays.asList(Tense.TYPE, Voice.TYPE));
 
 			put("_ire", Tense.Present, Voice.Active);
 			put("_ir_i", Tense.Present, Voice.Passive);
@@ -22,7 +22,7 @@ public class FourthInfinitiveConjugation extends AbstractInfinitiveConjugation {
 
 	private static class StemEndings extends MapFormValueProvider<String> {
 		public StemEndings() {
-			super(Arrays.asList(Tense.class, Voice.class));
+			super(Arrays.asList(Tense.TYPE, Voice.TYPE));
 
 			put("iend", Tense.Present, Voice.Active);
 		}

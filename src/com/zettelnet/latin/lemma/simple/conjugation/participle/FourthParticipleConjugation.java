@@ -16,7 +16,7 @@ public class FourthParticipleConjugation extends AbstractParticipleConjugation {
 
 	private static class FirstFormEndings extends MapFormValueProvider<String> {
 		public FirstFormEndings() {
-			super(Arrays.asList(Tense.class, Voice.class, Genus.class));
+			super(Arrays.asList(Tense.TYPE, Voice.TYPE, Genus.TYPE));
 
 			put("i_ens", Tense.Present, Voice.Active, Genus.Masculine);
 			put("i_ens", Tense.Present, Voice.Active, Genus.Feminine);
@@ -35,7 +35,7 @@ public class FourthParticipleConjugation extends AbstractParticipleConjugation {
 
 	private static class StemEndings extends MapFormValueProvider<String> {
 		public StemEndings() {
-			super(Arrays.asList(Tense.class, Voice.class));
+			super(Arrays.asList(Tense.TYPE, Voice.TYPE));
 
 			put("i_ent", Tense.Present, Voice.Active);
 			put("", Tense.Perfect, Voice.Passive);

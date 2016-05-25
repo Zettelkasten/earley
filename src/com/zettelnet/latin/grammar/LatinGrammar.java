@@ -190,7 +190,7 @@ public final class LatinGrammar {
 		// AP(pi) -> VP(Participle)
 		grammar.addProduction(
 				AdjectivePhrase,
-				new ParameterizedSymbol<>(VerbPhrase, new IndividualFormParameterExpression<>(parameterizer).specify(Finiteness.Participle).copy(Casus.class, Numerus.class, Genus.class)));
+				new ParameterizedSymbol<>(VerbPhrase, new IndividualFormParameterExpression<>(parameterizer).specify(Finiteness.Participle).copy(Casus.TYPE, Numerus.TYPE, Genus.TYPE)));
 
 		// coordinations
 
@@ -198,9 +198,9 @@ public final class LatinGrammar {
 		grammar.addProduction(
 				NounPhrase,
 				key(Numerus.Plural),
-				new ParameterizedSymbol<>(NounPhrase, copy(parameterizer, Casus.class)),
+				new ParameterizedSymbol<>(NounPhrase, copy(parameterizer, Casus.TYPE)),
 				new ParameterizedSymbol<>(Conjunction, any),
-				new ParameterizedSymbol<>(NounPhrase, copy(parameterizer, Casus.class)));
+				new ParameterizedSymbol<>(NounPhrase, copy(parameterizer, Casus.TYPE)));
 
 		// AP(pi) -> AP(?) conj AP(?)
 		grammar.addProduction(
@@ -216,9 +216,9 @@ public final class LatinGrammar {
 		// VP(pi) -> VP(pi) conj VP(pi)
 		grammar.addProduction(
 				VerbPhrase,
-				new ParameterizedSymbol<>(VerbPhrase, copy(parameterizer, Casus.class, Numerus.class, Genus.class, Finiteness.class)),
+				new ParameterizedSymbol<>(VerbPhrase, copy(parameterizer, Casus.TYPE, Numerus.TYPE, Genus.TYPE, Finiteness.TYPE)),
 				new ParameterizedSymbol<>(Conjunction, any),
-				new ParameterizedSymbol<>(VerbPhrase, copy(parameterizer, Casus.class, Numerus.class, Genus.class, Finiteness.class)));
+				new ParameterizedSymbol<>(VerbPhrase, copy(parameterizer, Casus.TYPE, Numerus.TYPE, Genus.TYPE, Finiteness.TYPE)));
 
 		// VF(pi) -> VF(pi) conj VF(pi)
 		grammar.addProduction(

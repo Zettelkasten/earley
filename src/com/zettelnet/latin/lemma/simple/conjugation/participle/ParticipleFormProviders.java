@@ -13,7 +13,7 @@ import com.zettelnet.latin.lemma.simple.declension.DeclinableLemma;
 
 public class ParticipleFormProviders extends MapFormValueProvider<Map<Genus, FormProvider<DeclinableLemma>>> {
 	public ParticipleFormProviders() {
-		super(Arrays.asList(Tense.class, Voice.class));
+		super(Arrays.asList(Tense.TYPE, Voice.TYPE));
 
 		put(Genus.makeMap(Declension.Third, Declension.Third, Declension.Third), Tense.Present, Voice.Active);
 		put(Declension.FirstAndSecond, Tense.Perfect, Voice.Passive);

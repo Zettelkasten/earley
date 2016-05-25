@@ -10,7 +10,7 @@ import com.zettelnet.latin.lemma.simple.conjugation.ConjugationStem;
 public class ParticipleStems extends MapFormValueProvider<ConjugationStem> {
 	
 	public ParticipleStems() {
-		super(Arrays.asList(Tense.class, Voice.class));
+		super(Arrays.asList(Tense.TYPE, Voice.TYPE));
 
 		put(ConjugationStem.Present, Tense.Present, Voice.Active);
 		put(ConjugationStem.Supine, Tense.Perfect, Voice.Passive);

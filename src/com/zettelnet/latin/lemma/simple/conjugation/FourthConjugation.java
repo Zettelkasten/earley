@@ -21,7 +21,7 @@ public class FourthConjugation extends AbstractConjugation {
 
 	private static class Linkings extends MapFormValueProvider<String> {
 		public Linkings() {
-			super(Arrays.asList(Person.class, Numerus.class, Tense.class, Mood.class, Voice.class));
+			super(Arrays.asList(Person.TYPE, Numerus.TYPE, Tense.TYPE, Mood.TYPE, Voice.TYPE));
 
 			// Present Indicative Active
 

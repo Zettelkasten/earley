@@ -4,6 +4,8 @@ public enum Finiteness implements LemmaProperty {
 
 	Finite("Fin"), Infinitive("Inf"), Participle("Part"), Gerund("Gerund"), Gerundive("Gerundiv"), Supine("Sup");
 
+	public static final Class<? extends Finiteness> TYPE = Finiteness.class;
+	
 	private final String shortName;
 
 	private Finiteness(String shortName) {

@@ -20,7 +20,7 @@ public class FirstDeclension extends AbstractDeclension {
 
 	private static class Endings extends MapFormValueProvider<String> {
 		public Endings() {
-			super(Arrays.asList(Casus.class, Numerus.class));
+			super(Arrays.asList(Casus.TYPE, Numerus.TYPE));
 
 			put("ae", Casus.Genitive, Numerus.Singular);
 			put("ae", Casus.Dative, Numerus.Singular);

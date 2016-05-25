@@ -48,9 +48,9 @@ public class FormParser implements PropertySetParser<Form> {
 		registeredProperties.put(property.shortName(), property);
 	}
 
-	public void registerPropertyTypes(Collection<Class<? extends FormProperty>> propertyTypes) {
-		for (Class<? extends FormProperty> propertyType : propertyTypes) {
-			for (FormProperty property : propertyType.getEnumConstants()) {
+	public void registerPropertyTypes(Collection<FormPropertyType<?>> propertyTypes) {
+		for (FormPropertyType<?> propertyType : propertyTypes) {
+			for (FormProperty property : propertyType.getValues()) {
 				registerProperty(property);
 			}
 		}

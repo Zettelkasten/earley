@@ -11,7 +11,5 @@ public interface FormProperty extends Property {
 	String shortName();
 	
 	@Override
-	default Class<? extends FormProperty> getType() {
-		return getClass();
-	}
+	FormPropertyType<? extends FormProperty> getType();
 }
