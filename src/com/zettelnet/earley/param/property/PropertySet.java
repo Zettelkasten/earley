@@ -11,7 +11,7 @@ public interface PropertySet<T extends Property> {
 
 	Collection<T> values();
 
-	PropertySet<T> retainAll(Collection<Object> propertyTypes);
+	PropertySet<T> retainAll(Collection<?> propertyTypes);
 
 	boolean hasProperties(@SuppressWarnings("unchecked") T... properties);
 

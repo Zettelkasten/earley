@@ -103,7 +103,7 @@ public final class MapGermanForm implements GermanForm {
 	}
 
 	@Override
-	public GermanForm retainAll(Collection<Object> properties) {
+	public GermanForm retainAll(Collection<?> properties) {
 		Map<Object, GermanFormProperty> newData = new HashMap<>(this.data);
 		if (newData.keySet().retainAll(properties)) {
 			return new MapGermanForm(newData);

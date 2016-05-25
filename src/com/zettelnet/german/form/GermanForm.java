@@ -90,7 +90,7 @@ public interface GermanForm extends PropertySet<GermanFormProperty>, Comparable<
 	}
 
 	@Override
-	GermanForm retainAll(Collection<Object> propertyTypes);
+	GermanForm retainAll(Collection<?> propertyTypes);
 
 	default GermanForm retainAll(Object... propertyTypes) {
 		return retainAll(Arrays.asList(propertyTypes));

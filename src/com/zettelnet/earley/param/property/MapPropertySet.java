@@ -89,7 +89,7 @@ public final class MapPropertySet<T extends Property> implements PropertySet<T> 
 	}
 
 	@Override
-	public PropertySet<T> retainAll(Collection<Object> propertyTypes) {
+	public PropertySet<T> retainAll(Collection<?> propertyTypes) {
 		Map<Object, T> newData = new HashMap<>(this.data);
 		if (newData.keySet().retainAll(propertyTypes)) {
 			return new MapPropertySet<>(newData);

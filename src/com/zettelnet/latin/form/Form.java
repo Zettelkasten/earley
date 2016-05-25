@@ -90,7 +90,7 @@ public interface Form extends PropertySet<FormProperty>, Comparable<Form> {
 	}
 
 	@Override
-	Form retainAll(Collection<Object> properties);
+	Form retainAll(Collection<?> properties);
 
 	default Form retainAll(Object... properties) {
 		return retainAll(Arrays.asList(properties));
