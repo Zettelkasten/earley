@@ -56,7 +56,7 @@ public class IndividualFormParameterExpression<T> implements ParameterExpression
 		}
 
 		for (Map.Entry<Object, Set<Property>> entry : specified.entrySet()) {
-			handlers.put(entry.getKey(), new SpecificIndividualPropertyExpression(entry.getValue()));
+			handlers.put(entry.getKey(), new SpecificIndividualPropertyExpression<>(entry.getValue()));
 		}
 
 		return this;
