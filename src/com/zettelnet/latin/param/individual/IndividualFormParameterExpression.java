@@ -60,6 +60,12 @@ public class IndividualFormParameterExpression<T> implements ParameterExpression
 
 		return this;
 	}
+	
+	public IndividualFormParameterExpression<T> with(Object propertyType, IndividualPropertyExpression expression) {
+		handlers.put(propertyType, expression);
+		
+		return this;
+	}
 
 	@Override
 	public Collection<FormParameter> predict(FormParameter parameter, FormParameter childParameter) {
