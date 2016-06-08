@@ -5,20 +5,20 @@ import java.util.Set;
 import com.zettelnet.earley.param.property.Property;
 import com.zettelnet.latin.param.FormParameter;
 
-public class CopyIndividualPropertyExpression implements IndividualPropertyExpression {
+public class CopyIndividualPropertyExpression<T extends Property> implements IndividualPropertyExpression<T> {
 
 	@Override
-	public Set<Property> predict(Set<Property> parameter, Set<Property> childParameter) {
+	public Set<T> predict(Set<T> parameter, Set<T> childParameter) {
 		return FormParameter.deriveProperties(parameter, childParameter);
 	}
 
 	@Override
-	public Set<Property> scan(Set<Property> parameter, Set<Property> tokenParameter) {
+	public Set<T> scan(Set<T> parameter, Set<T> tokenParameter) {
 		return FormParameter.deriveProperties(parameter, tokenParameter);
 	}
 
 	@Override
-	public Set<Property> complete(Set<Property> parameter, Set<Property> childParameter) {
+	public Set<T> complete(Set<T> parameter, Set<T> childParameter) {
 		return FormParameter.deriveProperties(parameter, childParameter);
 	}
 

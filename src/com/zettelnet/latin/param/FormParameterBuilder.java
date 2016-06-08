@@ -10,9 +10,11 @@ import com.zettelnet.earley.param.SingletonParameterFactory;
 import com.zettelnet.earley.param.property.Property;
 import com.zettelnet.latin.token.Determination;
 
+import static com.zettelnet.latin.param.FormParameter.unsafeCast;
+
 public class FormParameterBuilder {
 
-	private final Map<Object, Set<Property>> data;
+	private final Map<Object, Set<? extends Property>> data;
 	private Determination cause;
 
 	public FormParameterBuilder() {
@@ -32,7 +34,7 @@ public class FormParameterBuilder {
 		if (!data.containsKey(propertyType)) {
 			data.put(propertyType, new HashSet<>());
 		}
-		data.get(propertyType).add(property);
+		unsafeCast(data.get(propertyType)).add(property);
 		return this;
 	}
 

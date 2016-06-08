@@ -4,13 +4,13 @@ import java.util.Set;
 
 import com.zettelnet.earley.param.property.Property;
 
-public interface IndividualPropertyExpression {
+public interface IndividualPropertyExpression<T extends Property> {
 
-	Set<Property> predict(Set<Property> parameter, Set<Property> childParameter);
+	Set<T> predict(Set<T> parameter, Set<T> childParameter);
 
-	Set<Property> scan(Set<Property> parameter, Set<Property> tokenParameter);
+	Set<T> scan(Set<T> parameter, Set<T> tokenParameter);
 
-	Set<Property> complete(Set<Property> parameter, Set<Property> childParameter);
+	Set<T> complete(Set<T> parameter, Set<T> childParameter);
 
 	default String toString(Object propertyType) {
 		return toString();

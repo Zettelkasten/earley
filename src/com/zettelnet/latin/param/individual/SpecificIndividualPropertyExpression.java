@@ -7,26 +7,26 @@ import java.util.Set;
 import com.zettelnet.earley.param.property.Property;
 import com.zettelnet.latin.param.FormParameter;
 
-public class SpecificIndividualPropertyExpression implements IndividualPropertyExpression {
+public class SpecificIndividualPropertyExpression<T extends Property> implements IndividualPropertyExpression<T> {
 
-	private final Set<Property> specifiedParameter;
+	private final Set<T> specifiedParameter;
 
-	public SpecificIndividualPropertyExpression(final Set<Property> parameter) {
+	public SpecificIndividualPropertyExpression(final Set<T> parameter) {
 		this.specifiedParameter = parameter;
 	}
 
 	@Override
-	public Set<Property> predict(Set<Property> parameter, Set<Property> childParameter) {
+	public Set<T> predict(Set<T> parameter, Set<T> childParameter) {
 		return FormParameter.deriveProperties(specifiedParameter, childParameter);
 	}
 
 	@Override
-	public Set<Property> scan(Set<Property> parameter, Set<Property> tokenParameter) {
+	public Set<T> scan(Set<T> parameter, Set<T> tokenParameter) {
 		return FormParameter.deriveProperties(specifiedParameter, tokenParameter);
 	}
 
 	@Override
-	public Set<Property> complete(Set<Property> parameter, Set<Property> childParameter) {
+	public Set<T> complete(Set<T> parameter, Set<T> childParameter) {
 		if (FormParameter.isCompatable(specifiedParameter, childParameter)) {
 			return parameter;
 		} else {
@@ -37,7 +37,7 @@ public class SpecificIndividualPropertyExpression implements IndividualPropertyE
 	@Override
 	public String toString() {
 		StringBuilder str = new StringBuilder();
-		for (Iterator<Property> i = specifiedParameter.iterator(); i.hasNext();) {
+		for (Iterator<T> i = specifiedParameter.iterator(); i.hasNext();) {
 			str.append(i.next().shortName());
 			if (i.hasNext()) {
 				str.append('/');
