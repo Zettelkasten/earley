@@ -16,6 +16,27 @@ import com.zettelnet.earley.param.property.Property;
 import com.zettelnet.earley.symbol.Terminal;
 import com.zettelnet.latin.param.FormParameter;
 
+/**
+ * Represents a {@link ParameterExpression} that allows parameter properties of
+ * multiple individual types to be handled differently in parallel. This is
+ * established by using {@link IndividualPropertyExpression}s that each handle
+ * properties of one certain type. Any parameter of a type not handled
+ * explicitly by a property expression will be ignored.
+ * <p>
+ * To construct this expression, multiple builder methods are provided:
+ * <ul>
+ * <li><strong>{@link #with(Object, IndividualPropertyExpression)}</strong></li>
+ * <li>{@link {@link #copy(Object...)} as short form for
+ * {@link CopyIndividualParameterExpression}s</li>
+ * <li>{@link #specify(Property...)} as short form for
+ * {@link SpecificIndividualPropertyExpression}s</li>
+ * </ul>
+ * 
+ * @author Zettelkasten
+ *
+ * @param <T>
+ *            The type of Tokens to be used
+ */
 public class IndividualFormParameterExpression<T> implements ParameterExpression<T, FormParameter> {
 
 	private static final IndividualPropertyExpression<?> COPY = new CopyIndividualPropertyExpression<>();
@@ -47,6 +68,8 @@ public class IndividualFormParameterExpression<T> implements ParameterExpression
 	public IndividualFormParameterExpression<T> specify(Property... properties) {
 		Map<Object, Set<Property>> specified = new HashMap<>();
 
+		// first collect all values as multiple properties of one type could be
+		// provided
 		for (Property property : properties) {
 			Object propertyType = property.getType();
 			if (!specified.containsKey(propertyType)) {

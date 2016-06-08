@@ -2,9 +2,22 @@ package com.zettelnet.latin.param.individual;
 
 import java.util.Set;
 
+import com.zettelnet.earley.param.CopyParameterExpression;
 import com.zettelnet.earley.param.property.Property;
 import com.zettelnet.latin.param.FormParameter;
 
+/**
+ * Represents an {@link IndividualPropertyExpression} that copies all parameters
+ * of a certain type from parent to child. Similar to
+ * {@link CopyParameterExpression}.
+ * 
+ * @author Zettelkasten
+ * 
+ * @param <T>
+ *            The class of the property this expression handles (not to be
+ *            confused with the property type returned by
+ *            {@link Property#getType()})
+ */
 public class CopyIndividualPropertyExpression<T extends Property> implements IndividualPropertyExpression<T> {
 
 	@Override
