@@ -38,6 +38,7 @@ import com.zettelnet.earley.param.ParameterManager;
 import com.zettelnet.earley.param.TokenParameterizer;
 import com.zettelnet.latin.form.Casus;
 import com.zettelnet.latin.form.Genus;
+import com.zettelnet.latin.form.Mood;
 import com.zettelnet.latin.form.Numerus;
 import com.zettelnet.latin.form.Tense;
 import com.zettelnet.latin.form.Voice;
@@ -150,6 +151,11 @@ public final class LatinGrammar {
 				Arguments,
 				key(Valency.AccusativeDative, Voice.Passive),
 				new ParameterizedSymbol<>(NounPhrase, specify(parameterManager, parameterizer, Casus.Dative)));
+		// Args(pi : InfVal) -> VP(Inf Ind)
+		grammar.addProduction(
+				Arguments,
+				key(Valency.Infinitive),
+				new ParameterizedSymbol<>(VerbPhrase, specify(parameterManager, parameterizer, Finiteness.Infinitive, Mood.Indicative)));
 
 		// AdvP var
 		grammar.addProduction(
