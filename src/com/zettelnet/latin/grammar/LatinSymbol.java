@@ -30,6 +30,7 @@ public final class LatinSymbol {
 	public static final Terminal<Token> Adverb = new LemmaTerminal(LemmaType.Adverb);
 	public static final Terminal<Token> Adjective = new LemmaTerminal(LemmaType.Adjective);
 	public static final Terminal<Token> Conjunction = new LemmaTerminal(LemmaType.Conjunction);
+	public static final Terminal<Token> Subjunction = new LemmaTerminal(LemmaType.Subjunction);
 	public static final Terminal<Token> Infinitive = new LemmaTerminal(LemmaType.Infinitive);
 	public static final Terminal<Token> Participle = new LemmaTerminal(LemmaType.Participle);
 	public static final Terminal<Token> Gerund = new LemmaTerminal(LemmaType.Gerund);

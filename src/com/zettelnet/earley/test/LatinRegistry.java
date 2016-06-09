@@ -11,11 +11,13 @@ import com.zettelnet.latin.form.Tense;
 import com.zettelnet.latin.form.Voice;
 import com.zettelnet.latin.lemma.Lemma;
 import com.zettelnet.latin.lemma.property.Finiteness;
+import com.zettelnet.latin.lemma.property.SubjunctionType;
 import com.zettelnet.latin.lemma.property.Valency;
 import com.zettelnet.latin.lemma.simple.SimpleAdjective;
 import com.zettelnet.latin.lemma.simple.SimpleAdverb;
 import com.zettelnet.latin.lemma.simple.SimpleConjunction;
 import com.zettelnet.latin.lemma.simple.SimpleNoun;
+import com.zettelnet.latin.lemma.simple.SimpleSubjunction;
 import com.zettelnet.latin.lemma.simple.SimpleVerb;
 import com.zettelnet.latin.lemma.simple.conjugation.Conjugation;
 import com.zettelnet.latin.lemma.simple.declension.Declension;
@@ -145,6 +147,28 @@ public final class LatinRegistry {
 	static {
 		register(new SimpleNoun("carmen", "carmin", Declension.Third, Genus.Neuter), "song");
 		register(new SimpleVerb("d", "ded", "dat", Conjugation.First, Valency.AccusativeDative), "give");
+	}
+	
+	// subjunctions
+	static {
+		register(new SimpleSubjunction("an", SubjunctionType.Question), "ob");
+		register(new SimpleSubjunction("antequam", SubjunctionType.Indicative), "bevor");
+		register(new SimpleSubjunction("antequam", SubjunctionType.Subjunctive), "bevor");
+		register(new SimpleSubjunction("atque", SubjunctionType.Indicative), "wie");
+		register(new SimpleSubjunction("ac", SubjunctionType.Indicative), "wie");
+		register(new SimpleSubjunction("cum", SubjunctionType.Indicative), "als");
+		register(new SimpleSubjunction("cum", SubjunctionType.Subjunctive), "weil");
+		register(new SimpleSubjunction("cur", SubjunctionType.Question), "warum");
+		register(new SimpleSubjunction("donec", SubjunctionType.Indicative), "bis dann");
+		register(new SimpleSubjunction("dum", SubjunctionType.Indicative), "solange");
+		register(new SimpleSubjunction("dum", SubjunctionType.Subjunctive), "solange");
+		register(new SimpleSubjunction("etiamsi", SubjunctionType.Indicative), "obwohl");
+		register(new SimpleSubjunction("etiamsi", SubjunctionType.Subjunctive), "obwohl");
+		register(new SimpleSubjunction("etsi", SubjunctionType.Indicative), "obwohl");
+		register(new SimpleSubjunction("etsi", SubjunctionType.Subjunctive), "obwohl");
+		register(new SimpleSubjunction("ne", SubjunctionType.Subjunctive), "dass nicht");
+		register(new SimpleSubjunction("nisi", SubjunctionType.Indicative), "wenn nicht");
+		register(new SimpleSubjunction("nisi", SubjunctionType.Subjunctive), "wenn nicht");
 	}
 	
 	static {

@@ -19,13 +19,14 @@ import static com.zettelnet.latin.grammar.LatinSymbol.NounForm;
 import static com.zettelnet.latin.grammar.LatinSymbol.NounPhrase;
 import static com.zettelnet.latin.grammar.LatinSymbol.NounPhraseOpt;
 import static com.zettelnet.latin.grammar.LatinSymbol.Participle;
+import static com.zettelnet.latin.grammar.LatinSymbol.Pronoun;
+import static com.zettelnet.latin.grammar.LatinSymbol.PronounOpt;
 import static com.zettelnet.latin.grammar.LatinSymbol.Sentence;
+import static com.zettelnet.latin.grammar.LatinSymbol.Subjunction;
 import static com.zettelnet.latin.grammar.LatinSymbol.Supine;
 import static com.zettelnet.latin.grammar.LatinSymbol.Verb;
 import static com.zettelnet.latin.grammar.LatinSymbol.VerbForm;
 import static com.zettelnet.latin.grammar.LatinSymbol.VerbPhrase;
-import static com.zettelnet.latin.grammar.LatinSymbol.Pronoun;
-import static com.zettelnet.latin.grammar.LatinSymbol.PronounOpt;
 
 import com.zettelnet.earley.Grammar;
 import com.zettelnet.earley.ParameterizedSymbol;
@@ -45,6 +46,8 @@ import com.zettelnet.latin.lemma.property.Valency;
 import com.zettelnet.latin.param.FormParameter;
 import com.zettelnet.latin.param.FormParameterManager;
 import com.zettelnet.latin.param.FormParameterizer;
+import com.zettelnet.latin.param.coordinative.CoordinativeFormParameterExpression;
+import com.zettelnet.latin.param.coordinative.SubjunctionMoodPropertyExpression;
 import com.zettelnet.latin.param.individual.IndividualFormParameterExpression;
 import com.zettelnet.latin.token.Token;
 
@@ -159,6 +162,10 @@ public final class LatinGrammar {
 		// AdvP -> Adv
 		grammar.addProduction(AdverbalPhrase,
 				Adverb);
+		// AdvP(pi) -> subj(pi) S(pi)
+		grammar.addProduction(AdverbalPhrase,
+				new ParameterizedSymbol<>(Subjunction, copy),
+				new ParameterizedSymbol<>(Sentence, new CoordinativeFormParameterExpression<>(parameterizer).with(new SubjunctionMoodPropertyExpression())));
 
 		// NP(pi : Fin) -> NF(pi) [AP(pi)] [NP(Gen)] [NP(pi)]
 		grammar.addProduction(
