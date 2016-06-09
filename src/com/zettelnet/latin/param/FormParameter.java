@@ -15,8 +15,51 @@ import com.zettelnet.latin.form.Form;
 import com.zettelnet.latin.form.FormProperty;
 import com.zettelnet.latin.token.Determination;
 
+/**
+ * Represents an immutable {@link Parameter} that consists out of multiple
+ * {@link Property} s. These properties are grouped by property type, each
+ * representing a set of possible properties. During the <i>prediction</i>- and
+ * <i>scanning</i> -operations, these property sets are reduced further and
+ * further.
+ * <p>
+ * A property set needs to contain one element at any time. If a property set is
+ * not contained in this FormParameter, any property is allowed until it is
+ * further specified.
+ * <p>
+ * This FormParameter is immutable. All methods deriving this parameter will
+ * create a new instance.
+ * 
+ * @author Zettelkasten
+ *
+ */
 public final class FormParameter implements Parameter {
 
+	/**
+	 * Derives a set of properties of one type (<code>parentProperties</code>)
+	 * using another set of properties of the same type (
+	 * <code>childProperties</code>). This is done by creating
+	 * <strong>intersection set of both parameter sets</strong>.
+	 * <p>
+	 * Either of these sets may be <code>null</code> if any property of the type
+	 * is allowed.
+	 * 
+	 * @param <T>
+	 *            The class of the properties that are derived (not to be
+	 *            confused with the property type returned by
+	 *            {@link Property#getType()})
+	 * 
+	 * @param parentProperties
+	 *            A set of parent properties, or <code>null</code> if any
+	 *            property of the type is allowed
+	 * @param childProperties
+	 *            A set of child properties, or <code>null</code> if any
+	 *            property of the type is allowed
+	 * @return A set of properties that are contained in both the parent and the
+	 *         child set, may be empty but never <code>null</code>
+	 * 
+	 * @see #deriveWith(FormParameter)
+	 * @see #isCompatable(Set, Set)
+	 */
 	public static <T extends Property> Set<T> deriveProperties(Set<T> parentProperties, Set<T> childProperties) {
 		if (parentProperties == null) {
 			return childProperties;
@@ -29,6 +72,28 @@ public final class FormParameter implements Parameter {
 		}
 	}
 
+	/**
+	 * Checks whether deriving a set of properties of one type (
+	 * <code>parentProperties</code>) using another set of properties of the
+	 * same type (<code>childProperties</code>) would yield a set that is not
+	 * empty, i.e. allows for a valid {@link FormParameter}.
+	 * 
+	 * @param <T>
+	 *            The class of the properties that are derived (not to be
+	 *            confused with the property type returned by
+	 *            {@link Property#getType()})
+	 * 
+	 * @param parentProperties
+	 *            A set of parent properties, or <code>null</code> if any
+	 *            property of the type is allowed
+	 * @param childProperties
+	 *            A set of child properties, or <code>null</code> if any
+	 *            property of the type is allowed
+	 * @return <code>true</code> if the property sets are compatible
+	 * 
+	 * @see #isCompatibleWith(FormParameter)
+	 * @see #deriveProperties(Set, Set)
+	 */
 	public static <T extends Property> boolean isCompatable(Set<T> parentProperties, Set<T> childProperties) {
 		return !deriveProperties(parentProperties, childProperties).isEmpty();
 	}
@@ -98,10 +163,6 @@ public final class FormParameter implements Parameter {
 		return data;
 	}
 
-	// neither the map itself nor it value sets may be modified;
-	// represents all properties by key
-	// property keys not contained in this map allow ANY value; empty value sets
-	// are not allowed
 	/**
 	 * This map represents the actual data of this property set. Every property
 	 * type ( <code>Object</code>) is mapped to a set of properties (
