@@ -26,7 +26,7 @@ import com.zettelnet.latin.param.FormParameter;
  * To construct this expression, multiple builder methods are provided:
  * <ul>
  * <li><strong>{@link #with(Object, IndividualPropertyExpression)}</strong></li>
- * <li>{@link {@link #copy(Object...)} as short form for
+ * <li>{@link #copy(Object...)} as short form for
  * {@link CopyIndividualParameterExpression}s</li>
  * <li>{@link #specify(Property...)} as short form for
  * {@link SpecificIndividualPropertyExpression}s</li>
@@ -97,7 +97,7 @@ public class IndividualFormParameterExpression<T> implements ParameterExpression
 		for (Map.Entry<Object, IndividualPropertyExpression<?>> entry : handlers.entrySet()) {
 			Object propertyType = entry.getKey();
 			IndividualPropertyExpression<?> expression = entry.getValue();
-			Set<? extends Property> properties = expression.predict(parameter.getProperty(propertyType), childParameter.getProperty(propertyType));
+			Set<? extends Property> properties = toCall.apply(propertyType, expression);
 			if (properties != null) {
 				if (properties.isEmpty()) {
 					return Collections.emptyList();
