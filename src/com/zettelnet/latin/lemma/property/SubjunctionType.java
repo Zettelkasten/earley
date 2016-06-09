@@ -1,5 +1,6 @@
 package com.zettelnet.latin.lemma.property;
 
+import com.zettelnet.earley.param.property.SimplePropertyType;
 import com.zettelnet.latin.form.Mood;
 
 public enum SubjunctionType implements LemmaProperty {
@@ -8,7 +9,7 @@ public enum SubjunctionType implements LemmaProperty {
 	Indicative(Mood.Indicative, "SubInd"),
 	Subjunctive(Mood.Subjunctive, "SubSub");
 
-	public static final Class<? extends SubjunctionType> TYPE = SubjunctionType.class;
+	public static final Object TYPE = new SimplePropertyType("SubjunctionType");
 
 	private final Mood mood;
 
@@ -34,7 +35,7 @@ public enum SubjunctionType implements LemmaProperty {
 	}
 
 	@Override
-	public Class<? extends SubjunctionType> getType() {
+	public Object getType() {
 		return TYPE;
 	}
 }

@@ -1,10 +1,12 @@
 package com.zettelnet.latin.lemma.property;
 
+import com.zettelnet.earley.param.property.SimplePropertyType;
+
 public enum Finiteness implements LemmaProperty {
 
 	Finite("Fin"), Infinitive("Inf"), Participle("Part"), Gerund("Gerund"), Gerundive("Gerundiv"), Supine("Sup");
 
-	public static final Class<? extends Finiteness> TYPE = Finiteness.class;
+	public static final Object TYPE = new SimplePropertyType("Finiteness");
 	
 	private final String shortName;
 
@@ -23,7 +25,7 @@ public enum Finiteness implements LemmaProperty {
 	}
 	
 	@Override
-	public Class<? extends Finiteness> getType() {
+	public Object getType() {
 		return TYPE;
 	}
 }
