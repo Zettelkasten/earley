@@ -72,6 +72,41 @@ public final class FormParameter implements Parameter {
 		}
 	}
 
+	public static Map<Object, Set<? extends Property>> deriveProperties(Map<Object, Set<? extends Property>> parentProperties, Map<Object, Set<? extends Property>> childProperties) {
+		final Map<Object, Set<? extends Property>> data = new HashMap<>(parentProperties);
+		for (Map.Entry<Object, Set<? extends Property>> entry : childProperties.entrySet()) {
+			Object propertyType = entry.getKey();
+			Set<? extends Property> property = entry.getValue();
+			if (!data.containsKey(propertyType)) {
+				data.put(propertyType, property);
+			} else {
+				data.get(propertyType).retainAll(property);
+			}
+		}
+		return data;
+	}
+
+	public static Map<Object, Set<? extends Property>> deriveProperties(Map<Object, Set<? extends Property>> parentProperties, Map<Object, Set<? extends Property>> childProperties, Set<Object> typeFilter) {
+		assert typeFilter == null || !typeFilter.isEmpty() : "Copied types filter has to contain types or be null (i.e. disabled)";
+		
+		if (typeFilter == null) {
+			return deriveProperties(parentProperties, childProperties);
+		}
+		final Map<Object, Set<? extends Property>> data = new HashMap<>(parentProperties);
+		for (Map.Entry<Object, Set<? extends Property>> entry : childProperties.entrySet()) {
+			Object propertyType = entry.getKey();
+			if (typeFilter.contains(propertyType)) {
+				Set<? extends Property> property = entry.getValue();
+				if (!data.containsKey(propertyType)) {
+					data.put(propertyType, property);
+				} else {
+					data.get(propertyType).retainAll(property);
+				}
+			}
+		}
+		return data;
+	}
+
 	/**
 	 * Checks whether deriving a set of properties of one type (
 	 * <code>parentProperties</code>) using another set of properties of the
@@ -135,20 +170,6 @@ public final class FormParameter implements Parameter {
 		return data;
 	}
 
-	private static Map<Object, Set<? extends Property>> makeDataMap(Map<Object, Set<? extends Property>> sourceData, Map<Object, Set<? extends Property>> newData) {
-		final Map<Object, Set<? extends Property>> data = new HashMap<>(sourceData);
-		for (Map.Entry<Object, Set<? extends Property>> entry : newData.entrySet()) {
-			Object propertyType = entry.getKey();
-			Set<? extends Property> property = entry.getValue();
-			if (!data.containsKey(propertyType)) {
-				data.put(propertyType, property);
-			} else {
-				data.get(propertyType).retainAll(property);
-			}
-		}
-		return data;
-	}
-
 	private static Map<Object, Set<? extends Property>> makeDataMap(Property... formProperties) {
 		final Map<Object, Set<? extends Property>> data = new HashMap<>(formProperties.length);
 
@@ -184,7 +205,7 @@ public final class FormParameter implements Parameter {
 	}
 
 	public FormParameter(final Property... formProperties) {
-		this(makeDataMap(DEFAULT_DATA, makeDataMap(formProperties)));
+		this(deriveProperties(DEFAULT_DATA, makeDataMap(formProperties)));
 	}
 
 	public FormParameter(final PropertySet<?> properties) {
@@ -222,7 +243,7 @@ public final class FormParameter implements Parameter {
 	}
 
 	public FormParameter deriveWith(FormParameter with) {
-		return new FormParameter(makeDataMap(this.data, with.data), with.cause);
+		return new FormParameter(deriveProperties(this.data, with.data), with.cause);
 	}
 
 	public FormParameter scanWith(FormParameter tokenParameter) {
@@ -303,5 +324,4 @@ public final class FormParameter implements Parameter {
 		}
 		return true;
 	}
-
 }
