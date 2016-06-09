@@ -20,9 +20,12 @@ VF(π : Grnd) → grnd(π)
    Args(π : AkkVal Pass) → ε
  Args(π : AkkDatVal Akt) → NP(Akk) NP(Dat)
 Args(π : AkkDatVal Pass) → NP(Dat)
+        Args(π : InfVal) → VP(Inf Ind)							 � Modus
 
    AdvP → adv
 AdvP(π) → subj(π) S(smood[π])
+   AdvP → NP(Abl)												AblAbs
+   AdvP → NP(Vok)
 
           NP(π) → NF(π) [AP(π)] [NP(Gen)] [NP(π)]				Attribute
 NP(π : Nom/Akk) → S(π : Akk Pres/Perf/Fut Inf)					AcI
@@ -33,7 +36,7 @@ NF(π) → n(π)
 																 � NF-Koordination
 
 AP(π) → AdvP∗ adj(π) AdvP(π)∗
-      | pron(π) AdvP∗										 � von AdvP modifiziert
+      | pron(π) AdvP∗											 � von AdvP modifiziert
       | VP(Part kng[π])											PC
 AP(π) → AP(π) [conj] AP(π)										AP-Koordination
 
