@@ -142,16 +142,14 @@ public class IndividualFormParameterExpression<T> implements ParameterExpression
 
 	@Override
 	public String toString() {
-		StringBuilder str = new StringBuilder();
-
-		for (Map.Entry<Object, IndividualPropertyExpression<?>> entry : handlers.entrySet()) {
-			str.append(' ');
-			str.append(entry.getValue().toString(entry.getKey()));
-		}
-
-		if (str.length() == 0) {
+		if (handlers.isEmpty()) {
 			return "?";
 		} else {
+			StringBuilder str = new StringBuilder();
+			for (Map.Entry<Object, IndividualPropertyExpression<?>> entry : handlers.entrySet()) {
+				str.append(' ');
+				str.append(entry.getValue().toString(entry.getKey()));
+			}
 			return str.substring(1);
 		}
 	}
