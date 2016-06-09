@@ -166,10 +166,13 @@ public final class LatinGrammar {
 		grammar.addProduction(AdverbalPhrase,
 				new ParameterizedSymbol<>(Subjunction, copy),
 				new ParameterizedSymbol<>(Sentence, new CoordinativeFormParameterExpression<>(parameterizer).with(new SubjunctionMoodPropertyExpression())));
+		// AdvP -> NP(Abl)
+		grammar.addProduction(AdverbalPhrase,
+				new ParameterizedSymbol<>(NounPhrase, specify(parameterManager, parameterizer, Casus.Ablative)));
 		// AdvP -> NP(Voc)
 		grammar.addProduction(AdverbalPhrase,
 				new ParameterizedSymbol<>(NounPhrase, specify(parameterManager, parameterizer, Casus.Vocative)));
-		
+
 		// NP(pi : Fin) -> NF(pi) [AP(pi)] [NP(Gen)] [NP(pi)]
 		grammar.addProduction(
 				NounPhrase,
@@ -236,7 +239,7 @@ public final class LatinGrammar {
 				new ParameterizedSymbol<>(VerbForm, copy),
 				new ParameterizedSymbol<>(Conjunction, any),
 				new ParameterizedSymbol<>(VerbForm, copy));
-		
+
 		makeOptional(grammar, NounPhraseOpt, NounPhrase, copy);
 		makeOptional(grammar, AdjectivePhraseOpt, AdjectivePhrase, copy);
 		makeOptional(grammar, PronounOpt, Pronoun, copy);
