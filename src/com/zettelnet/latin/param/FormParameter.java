@@ -11,6 +11,7 @@ import java.util.Set;
 import com.zettelnet.earley.param.Parameter;
 import com.zettelnet.earley.param.property.Property;
 import com.zettelnet.earley.param.property.PropertySet;
+import com.zettelnet.earley.symbol.Terminal;
 import com.zettelnet.latin.form.Form;
 import com.zettelnet.latin.form.FormProperty;
 import com.zettelnet.latin.token.Determination;
@@ -25,6 +26,9 @@ import com.zettelnet.latin.token.Determination;
  * A property set needs to contain one element at any time. If a property set is
  * not contained in this FormParameter, any property is allowed until it is
  * further specified.
+ * <p>
+ * Every FormParameter created from scanning a {@link Terminal} also store a
+ * {@link Determination} as cause ({@link #getCause()}) for it.
  * <p>
  * This FormParameter is immutable. All methods deriving this parameter will
  * create a new instance.
@@ -88,7 +92,7 @@ public final class FormParameter implements Parameter {
 
 	public static Map<Object, Set<? extends Property>> deriveProperties(Map<Object, Set<? extends Property>> parentProperties, Map<Object, Set<? extends Property>> childProperties, Set<Object> typeFilter) {
 		assert typeFilter == null || !typeFilter.isEmpty() : "Copied types filter has to contain types or be null (i.e. disabled)";
-		
+
 		if (typeFilter == null) {
 			return deriveProperties(parentProperties, childProperties);
 		}
