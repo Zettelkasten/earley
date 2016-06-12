@@ -60,7 +60,7 @@ public final class LatinGrammar {
 	public static Grammar<Token, FormParameter> makeGrammar() {
 		// Management
 
-		ParameterManager<FormParameter> parameterManager = new FormParameterManager();
+		ParameterManager<Token, FormParameter> parameterManager = new FormParameterManager<>();
 		TokenParameterizer<Token, FormParameter> parameterizer = new FormParameterizer();
 
 		SimpleGrammar<Token, FormParameter> grammar = new SimpleGrammar<>(Sentence, parameterManager);

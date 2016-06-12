@@ -44,7 +44,7 @@ public class TranslatableLatinGrammar {
 		Terminal<Token> verb = new LemmaTerminal(LemmaType.Verb);
 		Terminal<Token> infinitive = new LemmaTerminal(LemmaType.Infinitive);
 
-		ParameterManager<FormParameter> parameterManager = new FormParameterManager();
+		ParameterManager<Token, FormParameter> parameterManager = new FormParameterManager<>();
 		ProcessableGrammar<Token, FormParameter, String> grammar = new ProcessableGrammar<>(sentence, parameterManager);
 		grammar.setStartSymbolParameter(new SingletonParameterFactory<>(new FormParameter(Casus.Nominative, Finiteness.Finite)));
 

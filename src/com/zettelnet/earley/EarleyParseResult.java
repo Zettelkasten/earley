@@ -58,7 +58,11 @@ public final class EarleyParseResult<T, P extends Parameter> implements ParseRes
 	private void seed() {
 		currentChart = charts.get(charts.firstKey());
 
-		predict(new SeedState<T, P>(currentChart, grammar.getStartSymbol(), grammar.getStartSymbolParameter().makeParameter(), grammar.getStartSymbolParameterExpression()), grammar.getStartSymbol());
+		predict(new SeedState<T, P>(currentChart,
+				grammar.getStartSymbol(),
+				grammar.getStartSymbolParameter().makeParameter(grammar.getStartSymbol()),
+				grammar.getStartSymbolParameterExpression()),
+				grammar.getStartSymbol());
 	}
 
 	private void parse() {
@@ -101,7 +105,7 @@ public final class EarleyParseResult<T, P extends Parameter> implements ParseRes
 		for (Production<T, P> production : productions) {
 			// get new parameter; for seed (state = null) this is the start
 			// parameter
-			Collection<P> newParameters = parameterExpression.predict(sourceParameter, production.keyParameter());
+			Collection<P> newParameters = parameterExpression.predict(sourceParameter, production.keyParameter(), nonTerminal);
 
 			for (P newParameter : newParameters) {
 				if (production.isEpsilon() && state.getProduction() != null) {
@@ -123,6 +127,7 @@ public final class EarleyParseResult<T, P extends Parameter> implements ParseRes
 
 	private void scan(State<T, P> state, Terminal<T> terminal) {
 		InputPosition<T> chartPosition = currentChart.getInputPosition();
+		NonTerminal<T> parentSymbol = state.getProduction().key();
 
 		for (Map.Entry<InputPosition<T>, T> entry : chartPosition.getAvailableTokens().entrySet()) {
 			Chart<T, P> nextChart = charts.get(entry.getKey());
@@ -132,7 +137,7 @@ public final class EarleyParseResult<T, P extends Parameter> implements ParseRes
 				ParameterExpression<T, P> parameterExpression = state.nextParameterExpression();
 				P parameter = state.getParameter();
 
-				for (P newParameter : parameterExpression.scan(parameter, toResolve, terminal)) {
+				for (P newParameter : parameterExpression.scan(parameter, parentSymbol, toResolve, terminal)) {
 					StateCause<T, P> origin = new StateCause.Scan<>(state, toResolve, newParameter);
 
 					State<T, P> newState = new SimpleState<>(nextChart, state.getProduction(), state.getCurrentPosition() + 1, state.getOriginPosition(), newParameter);
@@ -172,7 +177,7 @@ public final class EarleyParseResult<T, P extends Parameter> implements ParseRes
 					ParameterExpression<T, P> parameterExpression = searchState.nextParameterExpression();
 					P searchParameter = searchState.getParameter();
 
-					for (P newParameter : parameterExpression.complete(searchParameter, childParameter)) {
+					for (P newParameter : parameterExpression.complete(searchParameter, searchProduction.key(), childParameter)) {
 						State<T, P> newState = new SimpleState<>(currentChart, searchProduction, newPosition, searchState.getOriginPosition(), newParameter);
 						currentChart.add(newState, origin);
 					}

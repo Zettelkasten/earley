@@ -1,6 +1,9 @@
 package com.zettelnet.earley.param;
 
-public interface ParameterFactory<P extends Parameter> {
+import com.zettelnet.earley.symbol.Symbol;
 
-	P makeParameter();
+@FunctionalInterface
+public interface ParameterFactory<T, P extends Parameter> {
+
+	P makeParameter(Symbol<T> symbol);
 }

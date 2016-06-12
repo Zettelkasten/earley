@@ -13,6 +13,7 @@ import java.util.function.BiFunction;
 import com.zettelnet.earley.param.ParameterExpression;
 import com.zettelnet.earley.param.TokenParameterizer;
 import com.zettelnet.earley.param.property.Property;
+import com.zettelnet.earley.symbol.NonTerminal;
 import com.zettelnet.earley.symbol.Terminal;
 import com.zettelnet.latin.param.FormParameter;
 
@@ -92,7 +93,7 @@ public class IndividualFormParameterExpression<T> implements ParameterExpression
 		return this;
 	}
 
-	private Collection<FormParameter> call(FormParameter parameter, FormParameter childParameter, BiFunction<Object, IndividualPropertyExpression<?>, Set<? extends Property>> toCall) {
+	private Collection<FormParameter> call(FormParameter parameter, FormParameter childParameter, NonTerminal<T> parameterSymbol, BiFunction<Object, IndividualPropertyExpression<?>, Set<? extends Property>> toCall) {
 		Map<Object, Set<? extends Property>> newData = new HashMap<>(childParameter.getProperties());
 		for (Map.Entry<Object, IndividualPropertyExpression<?>> entry : handlers.entrySet()) {
 			Object propertyType = entry.getKey();
@@ -110,17 +111,17 @@ public class IndividualFormParameterExpression<T> implements ParameterExpression
 	}
 
 	@Override
-	public Collection<FormParameter> predict(FormParameter parameter, FormParameter childParameter) {
-		return call(parameter, childParameter, (Object propertyType, IndividualPropertyExpression<?> expression) -> {
+	public Collection<FormParameter> predict(FormParameter parameter, FormParameter childParameter, NonTerminal<T> childSymbol) {
+		return call(parameter, childParameter, childSymbol, (Object propertyType, IndividualPropertyExpression<?> expression) -> {
 			return expression.predict(parameter.getProperty(propertyType), childParameter.getProperty(propertyType));
 		});
 	}
 
 	@Override
-	public Collection<FormParameter> scan(FormParameter parameter, T token, Terminal<T> terminal) {
+	public Collection<FormParameter> scan(FormParameter parameter, NonTerminal<T> parentSymbol, T token, Terminal<T> terminal) {
 		Collection<FormParameter> results = new ArrayList<>();
 		for (FormParameter tokenParameter : parameterizer.getTokenParameters(token, terminal)) {
-			Collection<FormParameter> parameterResult = call(parameter, tokenParameter, (Object propertyType, IndividualPropertyExpression<?> expression) -> {
+			Collection<FormParameter> parameterResult = call(parameter, tokenParameter, parentSymbol, (Object propertyType, IndividualPropertyExpression<?> expression) -> {
 				return expression.scan(parameter.getProperty(propertyType), tokenParameter.getProperty(propertyType));
 			});
 
@@ -134,8 +135,8 @@ public class IndividualFormParameterExpression<T> implements ParameterExpression
 	}
 
 	@Override
-	public Collection<FormParameter> complete(FormParameter parameter, FormParameter childParameter) {
-		return call(parameter, childParameter, (Object propertyType, IndividualPropertyExpression<?> expression) -> {
+	public Collection<FormParameter> complete(FormParameter parameter, NonTerminal<T> parentSymbol, FormParameter childParameter) {
+		return call(parameter, childParameter, parentSymbol, (Object propertyType, IndividualPropertyExpression<?> expression) -> {
 			return expression.complete(parameter.getProperty(propertyType), childParameter.getProperty(propertyType));
 		});
 	}

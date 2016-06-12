@@ -1,6 +1,8 @@
 package com.zettelnet.earley.param;
 
-public class SingletonParameterFactory<P extends Parameter> implements ParameterFactory<P> {
+import com.zettelnet.earley.symbol.Symbol;
+
+public class SingletonParameterFactory<T, P extends Parameter> implements ParameterFactory<T, P> {
 
 	private final P value;
 
@@ -9,7 +11,7 @@ public class SingletonParameterFactory<P extends Parameter> implements Parameter
 	}
 
 	@Override
-	public P makeParameter() {
+	public P makeParameter(Symbol<T> symbol) {
 		return value;
 	}
 

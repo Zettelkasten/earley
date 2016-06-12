@@ -29,12 +29,12 @@ final class LatinHelper {
 		return expression;
 	}
 
-	static ParameterExpression<Token, FormParameter> specify(ParameterManager<FormParameter> parameterManager, TokenParameterizer<Token, FormParameter> parameterizer, Property... formProperties) {
-		return new SpecificParameterExpression<Token, FormParameter>(parameterManager, parameterizer, new FormParameter(formProperties));
+	static ParameterExpression<Token, FormParameter> specify(ParameterManager<Token, FormParameter> parameterManager, TokenParameterizer<Token, FormParameter> parameterizer, Property... formProperties) {
+		return new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(formProperties));
 	}
 
-	static ParameterFactory<FormParameter> key(Property... formProperties) {
-		return new SingletonParameterFactory<FormParameter>(new FormParameter(formProperties));
+	static ParameterFactory<Token, FormParameter> key(Property... formProperties) {
+		return new SingletonParameterFactory<>(new FormParameter(formProperties));
 	}
 	
 	static void makeOptional(SimpleGrammar<Token, FormParameter> grammar, NonTerminal<Token> optionalSymbol, Symbol<Token> symbol, ParameterExpression<Token, FormParameter> expression) {

@@ -1,22 +1,24 @@
 package com.zettelnet.earley.param;
 
-public class DefaultParameterManager implements ParameterManager<DefaultParameter> {
+import com.zettelnet.earley.symbol.Symbol;
+
+public class DefaultParameterManager<T> implements ParameterManager<T, DefaultParameter> {
 
 	@Override
-	public DefaultParameter makeParameter() {
+	public DefaultParameter makeParameter(Symbol<T> symbol) {
 		return DefaultParameter.INSTANCE;
 	}
 
 	@Override
-	public DefaultParameter copyParameter(DefaultParameter origin) {
+	public DefaultParameter copyParameter(DefaultParameter origin, Symbol<T> symbol) {
 		return DefaultParameter.INSTANCE;
 	}
 
 	@Override
-	public DefaultParameter copyParameter(DefaultParameter origin, DefaultParameter with) {
+	public DefaultParameter copyParameter(DefaultParameter origin, DefaultParameter with, Symbol<T> symbol) {
 		return DefaultParameter.INSTANCE;
 	}
-	
+
 	@Override
 	public DefaultParameter scanParameter(DefaultParameter parameter, DefaultParameter tokenParameter) {
 		return DefaultParameter.INSTANCE;

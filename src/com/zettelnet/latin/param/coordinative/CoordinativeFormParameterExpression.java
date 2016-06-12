@@ -13,6 +13,7 @@ import java.util.function.Function;
 import com.zettelnet.earley.param.ParameterExpression;
 import com.zettelnet.earley.param.TokenParameterizer;
 import com.zettelnet.earley.param.property.Property;
+import com.zettelnet.earley.symbol.NonTerminal;
 import com.zettelnet.earley.symbol.Terminal;
 import com.zettelnet.latin.param.FormParameter;
 
@@ -49,7 +50,7 @@ public class CoordinativeFormParameterExpression<T> implements ParameterExpressi
 	}
 
 	@SuppressWarnings("unchecked")
-	private Collection<FormParameter> call(FormParameter parameter, FormParameter childParameter, Function<SubParameterExpression, Map<Object, Set<? extends Property>>> toCall) {
+	private Collection<FormParameter> call(FormParameter parameter, FormParameter childParameter, NonTerminal<T> parameterSymbol, Function<SubParameterExpression, Map<Object, Set<? extends Property>>> toCall) {
 		Map<Object, Set<? extends Property>> data = new HashMap<>();
 
 		for (SubParameterExpression subExpression : handlers) {
@@ -67,17 +68,17 @@ public class CoordinativeFormParameterExpression<T> implements ParameterExpressi
 	}
 
 	@Override
-	public Collection<FormParameter> predict(FormParameter parameter, FormParameter childParameter) {
-		return call(parameter, childParameter, (SubParameterExpression subExpression) -> {
+	public Collection<FormParameter> predict(FormParameter parameter, FormParameter childParameter, NonTerminal<T> childSymbol) {
+		return call(parameter, childParameter, childSymbol, (SubParameterExpression subExpression) -> {
 			return subExpression.predict(parameter, childParameter);
 		});
 	}
 
 	@Override
-	public Collection<FormParameter> scan(FormParameter parameter, T token, Terminal<T> terminal) {
+	public Collection<FormParameter> scan(FormParameter parameter, NonTerminal<T> parentSymbol, T token, Terminal<T> terminal) {
 		Collection<FormParameter> results = new ArrayList<>();
 		for (FormParameter tokenParameter : parameterizer.getTokenParameters(token, terminal)) {
-			Collection<FormParameter> parameterResult = call(parameter, tokenParameter, (SubParameterExpression subExpression) -> {
+			Collection<FormParameter> parameterResult = call(parameter, tokenParameter, parentSymbol, (SubParameterExpression subExpression) -> {
 				return subExpression.predict(parameter, tokenParameter);
 			});
 
@@ -91,8 +92,8 @@ public class CoordinativeFormParameterExpression<T> implements ParameterExpressi
 	}
 
 	@Override
-	public Collection<FormParameter> complete(FormParameter parameter, FormParameter childParameter) {
-		return call(parameter, childParameter, (SubParameterExpression subExpression) -> {
+	public Collection<FormParameter> complete(FormParameter parameter, NonTerminal<T> parentSymbol, FormParameter childParameter) {
+		return call(parameter, childParameter, parentSymbol, (SubParameterExpression subExpression) -> {
 			return subExpression.predict(parameter, childParameter);
 		});
 	}

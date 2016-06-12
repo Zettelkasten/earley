@@ -1,7 +1,7 @@
 package com.zettelnet.earley.param;
 
 /**
- * <strong>Implementations must provide proper {@link #equals(Object)}
+ * <strong>Implementations must provide proper {@link Object#equals(Object)}
  * implementations!</strong>
  * 
  * @author Zettelkasten

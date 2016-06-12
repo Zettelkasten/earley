@@ -12,7 +12,7 @@ import com.zettelnet.latin.token.Determination;
 
 import static com.zettelnet.latin.param.FormParameter.unsafeCast;
 
-public class FormParameterBuilder {
+public class FormParameterBuilder<T> {
 
 	private final Map<Object, Set<? extends Property>> data;
 	private Determination cause;
@@ -22,14 +22,14 @@ public class FormParameterBuilder {
 		this.cause = null;
 	}
 
-	public FormParameterBuilder with(Property... properties) {
+	public FormParameterBuilder<T> with(Property... properties) {
 		for (Property property : properties) {
 			with(property);
 		}
 		return this;
 	}
 
-	public FormParameterBuilder with(Property property) {
+	public FormParameterBuilder<T> with(Property property) {
 		Object propertyType = property.getType();
 		if (!data.containsKey(propertyType)) {
 			data.put(propertyType, new HashSet<>());
@@ -42,7 +42,7 @@ public class FormParameterBuilder {
 		return new FormParameter(data, cause);
 	}
 
-	public ParameterFactory<FormParameter> buildFactory() {
-		return new SingletonParameterFactory<FormParameter>(build());
+	public ParameterFactory<T, FormParameter> buildFactory() {
+		return new SingletonParameterFactory<T, FormParameter>(build());
 	}
 }
