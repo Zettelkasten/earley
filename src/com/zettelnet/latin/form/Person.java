@@ -4,7 +4,7 @@ public enum Person implements FormProperty {
 
 	First("1"), Second("2"), Third("3");
 	
-	public static final FormPropertyType<Person> TYPE = new FormPropertyType<>("Person", values());
+	public static final FormPropertyType<Person> TYPE = new FormPropertyType<>("p", values());
 	
 	private final String shortName;
 

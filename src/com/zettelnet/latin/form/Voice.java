@@ -4,7 +4,7 @@ public enum Voice implements FormProperty {
 
 	Active("Act"), Passive("Pas");
 
-	public static final FormPropertyType<Voice> TYPE = new FormPropertyType<>("Voice", values());
+	public static final FormPropertyType<Voice> TYPE = new FormPropertyType<>("v", values());
 	
 	private final String shortName;
 

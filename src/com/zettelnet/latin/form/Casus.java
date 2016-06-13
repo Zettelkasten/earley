@@ -4,7 +4,7 @@ public enum Casus implements FormProperty {
 
 	Nominative("Nom"), Genitive("Gen"), Dative("Dat"), Accusative("Acc"), Ablative("Abl"), Vocative("Voc"), Locative("Loc");
 
-	public static final FormPropertyType<Casus> TYPE = new FormPropertyType<>("Casus", values());
+	public static final FormPropertyType<Casus> TYPE = new FormPropertyType<>("k", values());
 	
 	private final String shortName;
 

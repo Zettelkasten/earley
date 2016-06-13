@@ -9,7 +9,7 @@ public enum SubjunctionType implements LemmaProperty {
 	Indicative(Mood.Indicative, "SubInd"),
 	Subjunctive(Mood.Subjunctive, "SubSub");
 
-	public static final Object TYPE = new SimplePropertyType("SubjunctionType");
+	public static final Object TYPE = new SimplePropertyType("subj");
 
 	private final Mood mood;
 

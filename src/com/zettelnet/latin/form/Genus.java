@@ -7,7 +7,7 @@ public enum Genus implements FormProperty {
 
 	Masculine("m"), Feminine("f"), Neuter("n");
 
-	public static final FormPropertyType<Genus> TYPE = new FormPropertyType<>("Genus", values());
+	public static final FormPropertyType<Genus> TYPE = new FormPropertyType<>("g", values());
 	
 	private final String shortName;
 

@@ -4,7 +4,7 @@ public enum Comparison implements FormProperty {
 
 	Positive("Pos"), Comparative("Comp"), Superlative("Super");
 
-	public static final FormPropertyType<Comparison> TYPE = new FormPropertyType<>("Comparison", values());
+	public static final FormPropertyType<Comparison> TYPE = new FormPropertyType<>("comp", values());
 	
 	private final String shortName;
 

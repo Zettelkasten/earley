@@ -13,7 +13,7 @@ public enum Valency implements LemmaProperty {
 	AccusativeDative("AccDatVal"),
 	Infinitive("InfVal");
 
-	public static final Object TYPE = new SimplePropertyType("Valency");
+	public static final Object TYPE = new SimplePropertyType("val");
 
 	private final String shortName;
 

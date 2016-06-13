@@ -6,7 +6,7 @@ public enum Finiteness implements LemmaProperty {
 
 	Finite("Fin"), Infinitive("Inf"), Participle("Part"), Gerund("Gerund"), Gerundive("Gerundiv"), Supine("Sup");
 
-	public static final Object TYPE = new SimplePropertyType("Finiteness");
+	public static final Object TYPE = new SimplePropertyType("fin");
 	
 	private final String shortName;
 

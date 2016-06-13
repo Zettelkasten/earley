@@ -5,7 +5,7 @@ import com.zettelnet.latin.lemma.Lemma;
 
 public class Meaning implements LemmaProperty {
 
-	public static final Object TYPE = new SimplePropertyType("Meaning");
+	public static final Object TYPE = new SimplePropertyType("mean");
 	
 	private final Lemma lemma;
 
