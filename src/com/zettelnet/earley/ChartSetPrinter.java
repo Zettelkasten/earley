@@ -1,6 +1,7 @@
 package com.zettelnet.earley;
 
 import java.io.PrintStream;
+import java.util.Date;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -143,7 +144,12 @@ public class ChartSetPrinter<T, P extends Parameter> {
 			}
 		}
 
+		out.print("<div class='container footer'>");
+		out.printf("<span class='generated'>Automatically generated on %s</span>", new Date());
 		out.print("</div>");
+		
+		out.print("</div>");
+		
 		out.print("</body>");
 		out.print("</html>");
 	}
