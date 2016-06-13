@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.function.BiFunction;
 
 import com.zettelnet.earley.param.ParameterExpression;
+import com.zettelnet.earley.param.ParameterManager;
 import com.zettelnet.earley.param.TokenParameterizer;
 import com.zettelnet.earley.param.property.Property;
 import com.zettelnet.earley.symbol.NonTerminal;
@@ -42,11 +43,13 @@ public class IndividualFormParameterExpression<T> implements ParameterExpression
 
 	private static final IndividualPropertyExpression<?> COPY = new CopyIndividualPropertyExpression<>();
 
+	private final ParameterManager<T, FormParameter> parameterManager;
 	private final TokenParameterizer<T, FormParameter> parameterizer;
 
 	private final Map<Object, IndividualPropertyExpression<?>> handlers;
 
-	public IndividualFormParameterExpression(final TokenParameterizer<T, FormParameter> parameterizer) {
+	public IndividualFormParameterExpression(final ParameterManager<T, FormParameter> parameterManager, final TokenParameterizer<T, FormParameter> parameterizer) {
+		this.parameterManager = parameterManager;
 		this.parameterizer = parameterizer;
 		this.handlers = new HashMap<>();
 	}
@@ -107,7 +110,7 @@ public class IndividualFormParameterExpression<T> implements ParameterExpression
 				}
 			}
 		}
-		return Arrays.asList(new FormParameter(newData));
+		return Arrays.asList(parameterManager.copyParameter(new FormParameter(newData), parameterSymbol));
 	}
 
 	@Override

@@ -111,6 +111,17 @@ public final class FormParameter implements Parameter {
 		return data;
 	}
 
+	public static Map<Object, Set<? extends Property>> retainProperties(Map<Object, Set<? extends Property>> properties, Set<Object> typeFilter) {
+		assert typeFilter == null || !typeFilter.isEmpty() : "Type filter has to contain types or be null (i.e. disabled)";
+
+		if (typeFilter == null) {
+			return properties;
+		}
+		final Map<Object, Set<? extends Property>> data = new HashMap<>(properties);
+		data.keySet().retainAll(typeFilter);
+		return data;
+	}
+
 	/**
 	 * Checks whether deriving a set of properties of one type (
 	 * <code>parentProperties</code>) using another set of properties of the
@@ -229,6 +240,10 @@ public final class FormParameter implements Parameter {
 		this.cause = cause;
 	}
 
+	public FormParameter retainTypes(Set<Object> typeFilter) {
+		return new FormParameter(retainProperties(this.data, typeFilter), this.cause);
+	}
+
 	public boolean isCompatibleWith(FormParameter other) {
 		for (Map.Entry<Object, Set<? extends Property>> entry : data.entrySet()) {
 			Object propertyType = entry.getKey();
@@ -246,8 +261,8 @@ public final class FormParameter implements Parameter {
 		return true;
 	}
 
-	public FormParameter deriveWith(FormParameter with) {
-		return new FormParameter(deriveProperties(this.data, with.data), with.cause);
+	public FormParameter deriveWith(FormParameter with, Set<Object> typeFilter) {
+		return new FormParameter(deriveProperties(this.data, with.data, typeFilter), with.cause);
 	}
 
 	public FormParameter scanWith(FormParameter tokenParameter) {

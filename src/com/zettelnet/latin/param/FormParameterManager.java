@@ -5,6 +5,12 @@ import com.zettelnet.earley.symbol.Symbol;
 
 public class FormParameterManager<T> implements ParameterManager<T, FormParameter> {
 
+	private final PropertyTypeRegistry<T> symbolPropertyTypes;
+
+	public FormParameterManager(final PropertyTypeRegistry<T> symbolPropertyTypes) {
+		this.symbolPropertyTypes = symbolPropertyTypes;
+	}
+
 	@Override
 	public FormParameter makeParameter(Symbol<T> symbol) {
 		return new FormParameter();
@@ -12,12 +18,12 @@ public class FormParameterManager<T> implements ParameterManager<T, FormParamete
 
 	@Override
 	public FormParameter copyParameter(FormParameter source, Symbol<T> symbol) {
-		return source;
+		return source.retainTypes(symbolPropertyTypes.getPropertyTypes(symbol));
 	}
 
 	@Override
 	public FormParameter copyParameter(FormParameter source, FormParameter with, Symbol<T> symbol) {
-		return source.deriveWith(with);
+		return source.deriveWith(with, symbolPropertyTypes.getPropertyTypes(symbol));
 	}
 
 	@Override

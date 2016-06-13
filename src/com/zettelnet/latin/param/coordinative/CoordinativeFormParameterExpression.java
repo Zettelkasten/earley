@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.function.Function;
 
 import com.zettelnet.earley.param.ParameterExpression;
+import com.zettelnet.earley.param.ParameterManager;
 import com.zettelnet.earley.param.TokenParameterizer;
 import com.zettelnet.earley.param.property.Property;
 import com.zettelnet.earley.symbol.NonTerminal;
@@ -25,11 +26,13 @@ public class CoordinativeFormParameterExpression<T> implements ParameterExpressi
 
 	private static final SubParameterExpression COPY_ALL = new CopySubParameterExpression();
 
+	private final ParameterManager<T, FormParameter> parameterManager;
 	private final TokenParameterizer<T, FormParameter> parameterizer;
 
 	private final Set<SubParameterExpression> handlers;
 
-	public CoordinativeFormParameterExpression(final TokenParameterizer<T, FormParameter> parameterizer) {
+	public CoordinativeFormParameterExpression(final ParameterManager<T, FormParameter> parameterManager, final TokenParameterizer<T, FormParameter> parameterizer) {
+		this.parameterManager = parameterManager;
 		this.parameterizer = parameterizer;
 		this.handlers = new HashSet<>();
 	}
@@ -64,7 +67,7 @@ public class CoordinativeFormParameterExpression<T> implements ParameterExpressi
 			}
 		}
 
-		return Arrays.asList(new FormParameter(data));
+		return Arrays.asList(parameterManager.copyParameter(new FormParameter(data), parameterSymbol));
 	}
 
 	@Override

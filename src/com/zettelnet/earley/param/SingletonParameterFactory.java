@@ -14,5 +14,4 @@ public class SingletonParameterFactory<T, P extends Parameter> implements Parame
 	public P makeParameter(Symbol<T> symbol) {
 		return value;
 	}
-
 }
