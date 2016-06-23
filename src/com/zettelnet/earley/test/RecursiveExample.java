@@ -26,7 +26,7 @@ public class RecursiveExample {
 		NonTerminal<String> delta = new SimpleNonTerminal<>("&Delta;");
 		Terminal<String> term = new AnyTokenTerminal<>("a");
 
-		ParameterManager<DefaultParameter> parameterManager = new DefaultParameterManager();
+		ParameterManager<String, DefaultParameter> parameterManager = new DefaultParameterManager<>();
 
 		SimpleGrammar<String, DefaultParameter> grammar = new SimpleGrammar<>(delta, parameterManager);
 

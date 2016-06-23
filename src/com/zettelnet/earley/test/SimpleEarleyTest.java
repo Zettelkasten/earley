@@ -34,7 +34,7 @@ public class SimpleEarleyTest {
 		NonTerminal<String> term = new SimpleNonTerminal<>("T");
 		NonTerminal<String> sum = new SimpleNonTerminal<>("S");
 
-		SimpleGrammar<String, DefaultParameter> grammar = new SimpleGrammar<>(term, new DefaultParameterManager());
+		SimpleGrammar<String, DefaultParameter> grammar = new SimpleGrammar<>(term, new DefaultParameterManager<>());
 
 		grammar.addProduction(term, sum);
 		grammar.addProduction(sum, term, operator, term);

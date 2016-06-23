@@ -42,7 +42,7 @@ public class MultipleVariantTest {
 
 		// 2. Initialize Grammar
 
-		SimpleGrammar<String, DefaultParameter> grammar = new SimpleGrammar<>(start, new DefaultParameterManager());
+		SimpleGrammar<String, DefaultParameter> grammar = new SimpleGrammar<>(start, new DefaultParameterManager<>());
 
 		// 3. Add Productions
 

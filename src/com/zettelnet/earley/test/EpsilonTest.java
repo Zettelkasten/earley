@@ -25,7 +25,7 @@ public class EpsilonTest {
 		NonTerminal<String> b = new SimpleNonTerminal<>("B");
 		Terminal<String> t = new AnyTokenTerminal<>("t");
 
-		SimpleGrammar<String, DefaultParameter> grammar = new SimpleGrammar<>(a, new DefaultParameterManager());
+		SimpleGrammar<String, DefaultParameter> grammar = new SimpleGrammar<>(a, new DefaultParameterManager<>());
 
 		grammar.addProduction(new Production<>(grammar, a, b, b, b));
 		grammar.addProduction(new Production<>(grammar, b));

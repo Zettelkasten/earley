@@ -54,7 +54,7 @@ public class NearleyPostprocessingExample {
 			return Character.isDigit(c);
 		});
 
-		SimpleGrammar<Character, DefaultParameter> grammar = new SimpleGrammar<>(main, new DefaultParameterManager());
+		SimpleGrammar<Character, DefaultParameter> grammar = new SimpleGrammar<>(main, new DefaultParameterManager<>());
 
 		Collection<ProcessableProduction<Character, DefaultParameter, Double>> productions = new HashSet<>();
 
