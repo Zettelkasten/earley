@@ -27,19 +27,19 @@ public class ProcessableGrammar<T, P extends Parameter, R> implements Grammar<T,
 	private final Map<Production<T, P>, Processor<T, P, R>> productions;
 
 	private NonTerminal<T> startSymbol;
-	private ParameterFactory<P> startSymbolParameter;
+	private ParameterFactory<T, P> startSymbolParameter;
 
-	private final ParameterManager<P> parameterManager;
+	private final ParameterManager<T, P> parameterManager;
 
-	public ProcessableGrammar(final NonTerminal<T> startSymbol, final ParameterManager<P> parameterManager) {
+	public ProcessableGrammar(final NonTerminal<T> startSymbol, final ParameterManager<T, P> parameterManager) {
 		this(startSymbol, parameterManager, parameterManager);
 	}
 
-	public ProcessableGrammar(final NonTerminal<T> startSymbol, final ParameterFactory<P> startSymbolParameter, final ParameterManager<P> parameterManager) {
+	public ProcessableGrammar(final NonTerminal<T> startSymbol, final ParameterFactory<T, P> startSymbolParameter, final ParameterManager<T, P> parameterManager) {
 		this(startSymbol, startSymbolParameter, parameterManager, new HashSet<>());
 	}
 
-	public ProcessableGrammar(final NonTerminal<T> startSymbol, final ParameterFactory<P> startSymbolParameter, final ParameterManager<P> parameterManager, final Set<ProcessableProduction<T, P, R>> productions) {
+	public ProcessableGrammar(final NonTerminal<T> startSymbol, final ParameterFactory<T, P> startSymbolParameter, final ParameterManager<T, P> parameterManager, final Set<ProcessableProduction<T, P, R>> productions) {
 		this.startSymbol = startSymbol;
 		this.startSymbolParameter = startSymbolParameter;
 
@@ -113,16 +113,16 @@ public class ProcessableGrammar<T, P extends Parameter, R> implements Grammar<T,
 	}
 
 	@Override
-	public ParameterFactory<P> getStartSymbolParameter() {
+	public ParameterFactory<T, P> getStartSymbolParameter() {
 		return startSymbolParameter;
 	}
 
-	public void setStartSymbolParameter(ParameterFactory<P> startSymbolParameter) {
+	public void setStartSymbolParameter(ParameterFactory<T, P> startSymbolParameter) {
 		this.startSymbolParameter = startSymbolParameter;
 	}
 
 	@Override
-	public ParameterManager<P> getParameterManager() {
+	public ParameterManager<T, P> getParameterManager() {
 		return parameterManager;
 	}
 

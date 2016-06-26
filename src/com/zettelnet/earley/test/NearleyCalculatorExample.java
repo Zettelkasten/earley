@@ -48,7 +48,7 @@ public class NearleyCalculatorExample {
 			return Character.isDigit(c);
 		});
 
-		SimpleGrammar<Character, DefaultParameter> grammar = new SimpleGrammar<>(main, new DefaultParameterManager());
+		SimpleGrammar<Character, DefaultParameter> grammar = new SimpleGrammar<>(main, new DefaultParameterManager<>());
 
 		grammar.addProduction(main,
 				whitespace, addition, whitespace);

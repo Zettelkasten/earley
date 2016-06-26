@@ -4,7 +4,7 @@ public enum Numerus implements FormProperty {
 
 	Singular("Sg"), Plural("Pl");
 
-	public static final FormPropertyType<Numerus> TYPE = new FormPropertyType<>("Numerus", values());
+	public static final FormPropertyType<Numerus> TYPE = new FormPropertyType<>("n", values());
 	
 	private final String shortName;
 

@@ -4,7 +4,7 @@ public enum Mood implements FormProperty {
 
 	Indicative("Ind"), Subjunctive("Sub"), Imperative("Imp");
 	
-	public static final FormPropertyType<Mood> TYPE = new FormPropertyType<>("Mood", values());
+	public static final FormPropertyType<Mood> TYPE = new FormPropertyType<>("m", values());
 	
 	private final String shortName;
 

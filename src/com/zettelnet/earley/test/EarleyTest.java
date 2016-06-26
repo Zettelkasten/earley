@@ -59,7 +59,7 @@ public class EarleyTest {
 		NonTerminal<String> start = new SimpleNonTerminal<>("S");
 		NonTerminal<String> term = new SimpleNonTerminal<>("T");
 
-		SimpleGrammar<String, DefaultParameter> grammar = new SimpleGrammar<>(start, new DefaultParameterManager());
+		SimpleGrammar<String, DefaultParameter> grammar = new SimpleGrammar<>(start, new DefaultParameterManager<>());
 
 		grammar.addProduction(new Production<>(grammar, start, term));
 		grammar.addProduction(new Production<>(grammar, start, term, equals, term));

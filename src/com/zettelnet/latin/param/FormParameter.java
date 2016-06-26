@@ -11,38 +11,169 @@ import java.util.Set;
 import com.zettelnet.earley.param.Parameter;
 import com.zettelnet.earley.param.property.Property;
 import com.zettelnet.earley.param.property.PropertySet;
+import com.zettelnet.earley.symbol.Terminal;
 import com.zettelnet.latin.form.Form;
 import com.zettelnet.latin.form.FormProperty;
 import com.zettelnet.latin.token.Determination;
 
+/**
+ * Represents an immutable {@link Parameter} that consists out of multiple
+ * {@link Property} s. These properties are grouped by property type, each
+ * representing a set of possible properties. During the <i>prediction</i>- and
+ * <i>scanning</i> -operations, these property sets are reduced further and
+ * further.
+ * <p>
+ * A property set needs to contain one element at any time. If a property set is
+ * not contained in this FormParameter, any property is allowed until it is
+ * further specified.
+ * <p>
+ * Every FormParameter created from scanning a {@link Terminal} also store a
+ * {@link Determination} as cause ({@link #getCause()}) for it.
+ * <p>
+ * This FormParameter is immutable. All methods deriving this parameter will
+ * create a new instance.
+ * 
+ * @author Zettelkasten
+ *
+ */
 public final class FormParameter implements Parameter {
 
-	public static Set<Property> deriveProperties(Set<Property> parentProperties, Set<Property> childProperties) {
+	/**
+	 * Derives a set of properties of one type (<code>parentProperties</code>)
+	 * using another set of properties of the same type (
+	 * <code>childProperties</code>). This is done by creating
+	 * <strong>intersection set of both parameter sets</strong>.
+	 * <p>
+	 * Either of these sets may be <code>null</code> if any property of the type
+	 * is allowed.
+	 * 
+	 * @param <T>
+	 *            The class of the properties that are derived (not to be
+	 *            confused with the property type returned by
+	 *            {@link Property#getType()})
+	 * 
+	 * @param parentProperties
+	 *            A set of parent properties, or <code>null</code> if any
+	 *            property of the type is allowed
+	 * @param childProperties
+	 *            A set of child properties, or <code>null</code> if any
+	 *            property of the type is allowed
+	 * @return A set of properties that are contained in both the parent and the
+	 *         child set, may be empty but never <code>null</code>
+	 * 
+	 * @see #deriveWith(FormParameter)
+	 * @see #isCompatable(Set, Set)
+	 */
+	public static <T extends Property> Set<T> deriveProperties(Set<T> parentProperties, Set<T> childProperties) {
 		if (parentProperties == null) {
 			return childProperties;
 		} else if (childProperties == null) {
 			return parentProperties;
 		} else {
-			Set<Property> set = new HashSet<>(parentProperties);
+			Set<T> set = new HashSet<>(parentProperties);
 			set.retainAll(childProperties);
 			return set;
 		}
 	}
 
-	public static boolean isCompatable(Set<Property> parentProperties, Set<Property> childProperties) {
+	public static Map<Object, Set<? extends Property>> deriveProperties(Map<Object, Set<? extends Property>> parentProperties, Map<Object, Set<? extends Property>> childProperties) {
+		final Map<Object, Set<? extends Property>> data = new HashMap<>(parentProperties);
+		for (Map.Entry<Object, Set<? extends Property>> entry : childProperties.entrySet()) {
+			Object propertyType = entry.getKey();
+			Set<? extends Property> property = entry.getValue();
+			if (!data.containsKey(propertyType)) {
+				data.put(propertyType, property);
+			} else {
+				data.get(propertyType).retainAll(property);
+			}
+		}
+		return data;
+	}
+
+	public static Map<Object, Set<? extends Property>> deriveProperties(Map<Object, Set<? extends Property>> parentProperties, Map<Object, Set<? extends Property>> childProperties, Set<Object> typeFilter) {
+		assert typeFilter == null || !typeFilter.isEmpty() : "Copied types filter has to contain types or be null (i.e. disabled)";
+
+		if (typeFilter == null) {
+			return deriveProperties(parentProperties, childProperties);
+		}
+		final Map<Object, Set<? extends Property>> data = new HashMap<>(parentProperties);
+		for (Map.Entry<Object, Set<? extends Property>> entry : childProperties.entrySet()) {
+			Object propertyType = entry.getKey();
+			if (typeFilter.contains(propertyType)) {
+				Set<? extends Property> property = entry.getValue();
+				if (!data.containsKey(propertyType)) {
+					data.put(propertyType, property);
+				} else {
+					data.get(propertyType).retainAll(property);
+				}
+			}
+		}
+		return data;
+	}
+
+	public static Map<Object, Set<? extends Property>> retainProperties(Map<Object, Set<? extends Property>> properties, Set<Object> typeFilter) {
+		assert typeFilter == null || !typeFilter.isEmpty() : "Type filter has to contain types or be null (i.e. disabled)";
+
+		if (typeFilter == null) {
+			return properties;
+		}
+		final Map<Object, Set<? extends Property>> data = new HashMap<>(properties);
+		data.keySet().retainAll(typeFilter);
+		return data;
+	}
+
+	/**
+	 * Checks whether deriving a set of properties of one type (
+	 * <code>parentProperties</code>) using another set of properties of the
+	 * same type (<code>childProperties</code>) would yield a set that is not
+	 * empty, i.e. allows for a valid {@link FormParameter}.
+	 * 
+	 * @param <T>
+	 *            The class of the properties that are derived (not to be
+	 *            confused with the property type returned by
+	 *            {@link Property#getType()})
+	 * 
+	 * @param parentProperties
+	 *            A set of parent properties, or <code>null</code> if any
+	 *            property of the type is allowed
+	 * @param childProperties
+	 *            A set of child properties, or <code>null</code> if any
+	 *            property of the type is allowed
+	 * @return <code>true</code> if the property sets are compatible
+	 * 
+	 * @see #isCompatibleWith(FormParameter)
+	 * @see #deriveProperties(Set, Set)
+	 */
+	public static <T extends Property> boolean isCompatable(Set<T> parentProperties, Set<T> childProperties) {
 		return !deriveProperties(parentProperties, childProperties).isEmpty();
 	}
 
-	private static final Map<Object, Set<Property>> DEFAULT_DATA = new HashMap<>();
+	private static final Map<Object, Set<? extends Property>> DEFAULT_DATA = new HashMap<>();
 
-	private static <T> Set<T> singleSet(T value) {
+	static <T> Set<T> singleSet(T value) {
 		Set<T> set = new HashSet<>(1);
 		set.add(value);
 		return set;
 	}
 
-	private static Map<Object, Set<Property>> makeDataMap(Map<Object, Set<Property>> sourceData, PropertySet<?> form) {
-		final Map<Object, Set<Property>> data = new HashMap<>(sourceData);
+	@SuppressWarnings("unchecked")
+	/**
+	 * Casts a <code>Set&lt;? extends Property&gt;</code> into a
+	 * <code>Set&lt;Property&gt;</code> so that values can be added to the set.
+	 * <p>
+	 * <strong>It is the caller's job to ensure that the entries inserted into
+	 * the returned Set are actually of the corresponding map type.
+	 * 
+	 * @param set
+	 *            a set with wildcard parameter
+	 * @return a casted set
+	 */
+	static <T extends Property> Set<T> unsafeCast(Set<? extends Property> set) {
+		return (Set<T>) set;
+	}
+
+	private static Map<Object, Set<? extends Property>> makeDataMap(Map<Object, Set<? extends Property>> sourceData, PropertySet<?> form) {
+		final Map<Object, Set<? extends Property>> data = new HashMap<>(sourceData);
 		for (Property property : form.values()) {
 			Object propertyType = property.getType();
 			if (!data.containsKey(propertyType)) {
@@ -54,39 +185,33 @@ public final class FormParameter implements Parameter {
 		return data;
 	}
 
-	private static Map<Object, Set<Property>> makeDataMap(Map<Object, Set<Property>> sourceData, Map<Object, Set<Property>> newData) {
-		final Map<Object, Set<Property>> data = new HashMap<>(sourceData);
-		for (Map.Entry<Object, Set<Property>> entry : newData.entrySet()) {
-			Object propertyType = entry.getKey();
-			Set<Property> property = entry.getValue();
-			if (!data.containsKey(propertyType)) {
-				data.put(propertyType, property);
-			} else {
-				data.get(propertyType).retainAll(property);
-			}
-		}
-		return data;
-	}
-
-	private static Map<Object, Set<Property>> makeDataMap(Property... formProperties) {
-		final Map<Object, Set<Property>> data = new HashMap<>(formProperties.length);
+	private static Map<Object, Set<? extends Property>> makeDataMap(Property... formProperties) {
+		final Map<Object, Set<? extends Property>> data = new HashMap<>(formProperties.length);
 
 		for (Property property : formProperties) {
 			Object propertyType = property.getType();
 			if (!data.containsKey(propertyType)) {
 				data.put(propertyType, new HashSet<>());
 			}
-			data.get(propertyType).add(property);
+			unsafeCast(data.get(propertyType)).add(property);
 		}
 
 		return data;
 	}
 
-	// neither the map itself nor it value sets may be modified;
-	// represents all properties by key
-	// property keys not contained in this map allow ANY value; empty value sets
-	// are not allowed
-	private final Map<Object, Set<Property>> data;
+	/**
+	 * This map represents the actual data of this property set. Every property
+	 * type ( <code>Object</code>) is mapped to a set of properties (
+	 * <code>Set&lt;? extends
+	 * Property&gt;</code>). If a property type is not represented in this map,
+	 * <i>any</i> value of that type is contained in this FormParameter. Empty
+	 * value sets are not allowed, i.e. there must at least by one property per
+	 * type in any FormParameter.
+	 * <p>
+	 * <strong>Neither the map itself nor its value sets may be modified, as
+	 * FormParameters are immutable.</strong>
+	 */
+	private final Map<Object, Set<? extends Property>> data;
 
 	private final Determination cause;
 
@@ -95,7 +220,7 @@ public final class FormParameter implements Parameter {
 	}
 
 	public FormParameter(final Property... formProperties) {
-		this(makeDataMap(DEFAULT_DATA, makeDataMap(formProperties)));
+		this(deriveProperties(DEFAULT_DATA, makeDataMap(formProperties)));
 	}
 
 	public FormParameter(final PropertySet<?> properties) {
@@ -106,22 +231,26 @@ public final class FormParameter implements Parameter {
 		this(makeDataMap(DEFAULT_DATA, cause.getProperties()), cause);
 	}
 
-	public FormParameter(final Map<Object, Set<Property>> data) {
+	public FormParameter(final Map<Object, Set<? extends Property>> data) {
 		this(data, null);
 	}
 
-	public FormParameter(final Map<Object, Set<Property>> data, final Determination cause) {
+	public FormParameter(final Map<Object, Set<? extends Property>> data, final Determination cause) {
 		this.data = data;
 		this.cause = cause;
 	}
 
+	public FormParameter retainTypes(Set<Object> typeFilter) {
+		return new FormParameter(retainProperties(this.data, typeFilter), this.cause);
+	}
+
 	public boolean isCompatibleWith(FormParameter other) {
-		for (Map.Entry<Object, Set<Property>> entry : data.entrySet()) {
+		for (Map.Entry<Object, Set<? extends Property>> entry : data.entrySet()) {
 			Object propertyType = entry.getKey();
-			Set<Property> parentValue = entry.getValue();
+			Set<Property> parentValue = unsafeCast(entry.getValue());
 
 			if (other.data.containsKey(propertyType)) {
-				Set<Property> childValue = other.data.get(propertyType);
+				Set<Property> childValue = unsafeCast(other.data.get(propertyType));
 
 				if (!isCompatable(parentValue, childValue)) {
 					return false;
@@ -132,8 +261,8 @@ public final class FormParameter implements Parameter {
 		return true;
 	}
 
-	public FormParameter deriveWith(FormParameter with) {
-		return new FormParameter(makeDataMap(this.data, with.data), with.cause);
+	public FormParameter deriveWith(FormParameter with, Set<Object> typeFilter) {
+		return new FormParameter(deriveProperties(this.data, with.data, typeFilter), with.cause);
 	}
 
 	public FormParameter scanWith(FormParameter tokenParameter) {
@@ -143,7 +272,7 @@ public final class FormParameter implements Parameter {
 	// warning: ignores duplicate parameters & non form properties
 	public Form toForm() {
 		Collection<FormProperty> properties = new HashSet<>();
-		for (Set<Property> propertySet : data.values()) {
+		for (Set<? extends Property> propertySet : data.values()) {
 			Property first = propertySet.iterator().next();
 			if (first instanceof FormProperty) {
 				properties.add((FormProperty) first);
@@ -156,11 +285,11 @@ public final class FormParameter implements Parameter {
 		return cause;
 	}
 
-	public Set<Property> getProperty(Object propertyType) {
-		return data.get(propertyType);
+	public <T extends Property> Set<T> getProperty(Object propertyType) {
+		return unsafeCast(data.get(propertyType));
 	}
 
-	public Map<Object, Set<Property>> getProperties() {
+	public Map<Object, Set<? extends Property>> getProperties() {
 		return data;
 	}
 
@@ -168,9 +297,9 @@ public final class FormParameter implements Parameter {
 	public String toString() {
 		StringBuilder str = new StringBuilder();
 
-		for (Set<Property> propertySet : data.values()) {
+		for (Set<? extends Property> propertySet : data.values()) {
 			str.append(' ');
-			for (Iterator<Property> i = propertySet.iterator(); i.hasNext();) {
+			for (Iterator<? extends Property> i = propertySet.iterator(); i.hasNext();) {
 				str.append(i.next().shortName());
 				if (i.hasNext()) {
 					str.append('/');
@@ -214,5 +343,4 @@ public final class FormParameter implements Parameter {
 		}
 		return true;
 	}
-
 }

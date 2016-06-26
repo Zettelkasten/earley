@@ -1,10 +1,11 @@
 package com.zettelnet.latin.lemma.property;
 
+import com.zettelnet.earley.param.property.SimplePropertyType;
 import com.zettelnet.latin.lemma.Lemma;
 
 public class Meaning implements LemmaProperty {
 
-	public static final Class<? extends Meaning> TYPE = Meaning.class;
+	public static final Object TYPE = new SimplePropertyType("mean");
 	
 	private final Lemma lemma;
 
@@ -17,7 +18,7 @@ public class Meaning implements LemmaProperty {
 	}
 	
 	@Override
-	public Class<? extends Meaning> getType() {
+	public Object getType() {
 		return TYPE;
 	}
 }

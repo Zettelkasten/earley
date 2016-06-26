@@ -21,9 +21,9 @@ public interface Grammar<T, P extends Parameter> {
 
 	NonTerminal<T> getStartSymbol();
 
-	ParameterFactory<P> getStartSymbolParameter();
+	ParameterFactory<T, P> getStartSymbolParameter();
 
-	ParameterManager<P> getParameterManager();
+	ParameterManager<T, P> getParameterManager();
 
 	ParameterExpression<T, P> getStartSymbolParameterExpression();
 }

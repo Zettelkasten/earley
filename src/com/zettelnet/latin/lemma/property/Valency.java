@@ -1,5 +1,7 @@
 package com.zettelnet.latin.lemma.property;
 
+import com.zettelnet.earley.param.property.SimplePropertyType;
+
 public enum Valency implements LemmaProperty {
 
 	Copula("Copula"),
@@ -8,9 +10,10 @@ public enum Valency implements LemmaProperty {
 	Accusative("AccVal"),
 	Dative("DatVal"),
 	Genitive("GenVal"),
-	AccusativeDative("AccDatVal");
+	AccusativeDative("AccDatVal"),
+	Infinitive("InfVal");
 
-	public static final Class<? extends Valency> TYPE = Valency.class;
+	public static final Object TYPE = new SimplePropertyType("val");
 
 	private final String shortName;
 
@@ -29,7 +32,7 @@ public enum Valency implements LemmaProperty {
 	}
 	
 	@Override
-	public Class<? extends Valency> getType() {
+	public Object getType() {
 		return TYPE;
 	}
 }

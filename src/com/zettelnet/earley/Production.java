@@ -16,13 +16,13 @@ import com.zettelnet.earley.symbol.Symbol;
 public class Production<T, P extends Parameter> {
 
 	private final NonTerminal<T> key;
-	private final ParameterFactory<P> keyParameter;
+	private final ParameterFactory<T, P> keyParameter;
 
 	private final List<ParameterizedSymbol<T, P>> values;
 	private final List<Symbol<T>> symbolValues; // values, but without parameter
 												// expressions
 
-	private static <T, P extends Parameter> List<ParameterizedSymbol<T, P>> makeProductionSymbols(ParameterManager<P> manager, Symbol<T>[] symbols) {
+	private static <T, P extends Parameter> List<ParameterizedSymbol<T, P>> makeProductionSymbols(ParameterManager<T, P> manager, Symbol<T>[] symbols) {
 		List<ParameterizedSymbol<T, P>> list = new ArrayList<>(symbols.length);
 		for (Symbol<T> symbol : symbols) {
 			list.add(new ParameterizedSymbol<T, P>(symbol, new AnyParameterExpression<T, P>(manager)));
@@ -53,11 +53,11 @@ public class Production<T, P extends Parameter> {
 	}
 
 	@SafeVarargs
-	public Production(final NonTerminal<T> left, final ParameterFactory<P> keyParameter, final ParameterizedSymbol<T, P>... right) {
+	public Production(final NonTerminal<T> left, final ParameterFactory<T, P> keyParameter, final ParameterizedSymbol<T, P>... right) {
 		this(left, keyParameter, Arrays.asList(right));
 	}
 
-	private Production(final NonTerminal<T> left, final ParameterFactory<P> keyParameter, final List<ParameterizedSymbol<T, P>> right) {
+	private Production(final NonTerminal<T> left, final ParameterFactory<T, P> keyParameter, final List<ParameterizedSymbol<T, P>> right) {
 		this.key = left;
 		this.keyParameter = keyParameter;
 		this.values = right;
@@ -69,7 +69,7 @@ public class Production<T, P extends Parameter> {
 	}
 
 	public P keyParameter() {
-		return keyParameter.makeParameter();
+		return keyParameter.makeParameter(key);
 	}
 
 	public List<Symbol<T>> values() {
@@ -95,9 +95,9 @@ public class Production<T, P extends Parameter> {
 	@Override
 	public String toString() {
 		StringBuilder str = new StringBuilder();
-		str.append(key);
+		str.append(key());
 		str.append("(pi : ");
-		str.append(keyParameter.makeParameter());
+		str.append(keyParameter());
 		str.append(")");
 		str.append(" ->");
 

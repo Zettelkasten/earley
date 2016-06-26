@@ -4,7 +4,7 @@ public enum Tense implements FormProperty {
 
 	Present("Pre"), Imperfect("Imp"), Future("Fut"), Perfect("Per"), Pluperfect("Plu"), FuturePerfect("FuP");
 	
-	public static final FormPropertyType<Tense> TYPE = new FormPropertyType<>("Tense", values());
+	public static final FormPropertyType<Tense> TYPE = new FormPropertyType<>("t", values());
 	
 	private final String shortName;
 

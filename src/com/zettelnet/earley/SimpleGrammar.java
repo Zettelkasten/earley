@@ -23,19 +23,19 @@ public class SimpleGrammar<T, P extends Parameter> implements Grammar<T, P> {
 	private final Set<Production<T, P>> productions;
 
 	private NonTerminal<T> startSymbol;
-	private ParameterFactory<P> startSymbolParameter;
+	private ParameterFactory<T, P> startSymbolParameter;
 
-	private final ParameterManager<P> parameterManager;
+	private final ParameterManager<T, P> parameterManager;
 
-	public SimpleGrammar(final NonTerminal<T> startSymbol, final ParameterManager<P> parameterManager) {
+	public SimpleGrammar(final NonTerminal<T> startSymbol, final ParameterManager<T, P> parameterManager) {
 		this(startSymbol, parameterManager, parameterManager);
 	}
 
-	public SimpleGrammar(final NonTerminal<T> startSymbol, final ParameterFactory<P> startSymbolParameter, final ParameterManager<P> parameterManager) {
+	public SimpleGrammar(final NonTerminal<T> startSymbol, final ParameterFactory<T, P> startSymbolParameter, final ParameterManager<T, P> parameterManager) {
 		this(startSymbol, startSymbolParameter, parameterManager, new HashSet<>());
 	}
 
-	public SimpleGrammar(final NonTerminal<T> startSymbol, final ParameterFactory<P> startSymbolParameter, final ParameterManager<P> parameterManager, final Set<Production<T, P>> productions) {
+	public SimpleGrammar(final NonTerminal<T> startSymbol, final ParameterFactory<T, P> startSymbolParameter, final ParameterManager<T, P> parameterManager, final Set<Production<T, P>> productions) {
 		this.startSymbol = startSymbol;
 		this.startSymbolParameter = startSymbolParameter;
 
@@ -85,7 +85,7 @@ public class SimpleGrammar<T, P extends Parameter> implements Grammar<T, P> {
 	}
 
 	@SafeVarargs
-	public final Production<T, P> addProduction(NonTerminal<T> left, ParameterFactory<P> keyParameter, ParameterizedSymbol<T, P>... right) {
+	public final Production<T, P> addProduction(NonTerminal<T> left, ParameterFactory<T, P> keyParameter, ParameterizedSymbol<T, P>... right) {
 		Production<T, P> production = new Production<>(left, keyParameter, right);
 		addProduction(production);
 		return production;
@@ -126,16 +126,16 @@ public class SimpleGrammar<T, P extends Parameter> implements Grammar<T, P> {
 	}
 
 	@Override
-	public ParameterFactory<P> getStartSymbolParameter() {
+	public ParameterFactory<T, P> getStartSymbolParameter() {
 		return startSymbolParameter;
 	}
 
-	public void setStartSymbolParameter(ParameterFactory<P> startSymbolParameter) {
+	public void setStartSymbolParameter(ParameterFactory<T, P> startSymbolParameter) {
 		this.startSymbolParameter = startSymbolParameter;
 	}
 
 	@Override
-	public ParameterManager<P> getParameterManager() {
+	public ParameterManager<T, P> getParameterManager() {
 		return parameterManager;
 	}
 
