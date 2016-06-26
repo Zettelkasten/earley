@@ -34,23 +34,8 @@ public class UnbinaryNonTerminalSyntaxTree<T, P extends Parameter> implements Sy
 	}
 
 	@Override
-	public Set<Production<T, P>> getProductions() {
-		Set<Production<T, P>> set = new HashSet<>();
-		for (BinarySyntaxTreeVariant<T, P> variant : node.getVariants()) {
-			set.add(variant.getProduction());
-		}
-		return set;
-	}
-
-	@Override
 	public Iterable<SyntaxTreeVariant<T, P>> getVariants() {
 		return getVariantsSet();
-	}
-
-	@Override
-	public Iterable<SyntaxTreeVariant<T, P>> getVariants(Production<T, P> production) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	// Implemented using Depth-First-Search
