@@ -34,11 +34,6 @@ public class UnbinaryNonTerminalSyntaxTree<T, P extends Parameter> implements Sy
 	}
 
 	@Override
-	public T getToken() {
-		return null;
-	}
-
-	@Override
 	public Set<Production<T, P>> getProductions() {
 		Set<Production<T, P>> set = new HashSet<>();
 		for (BinarySyntaxTreeVariant<T, P> variant : node.getVariants()) {

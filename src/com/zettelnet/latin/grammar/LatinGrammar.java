@@ -19,13 +19,13 @@ import static com.zettelnet.latin.grammar.LatinSymbol.NounForm;
 import static com.zettelnet.latin.grammar.LatinSymbol.NounPhrase;
 import static com.zettelnet.latin.grammar.LatinSymbol.NounPhraseOpt;
 import static com.zettelnet.latin.grammar.LatinSymbol.Participle;
+import static com.zettelnet.latin.grammar.LatinSymbol.Pronoun;
+import static com.zettelnet.latin.grammar.LatinSymbol.PronounOpt;
 import static com.zettelnet.latin.grammar.LatinSymbol.Sentence;
 import static com.zettelnet.latin.grammar.LatinSymbol.Supine;
 import static com.zettelnet.latin.grammar.LatinSymbol.Verb;
 import static com.zettelnet.latin.grammar.LatinSymbol.VerbForm;
 import static com.zettelnet.latin.grammar.LatinSymbol.VerbPhrase;
-import static com.zettelnet.latin.grammar.LatinSymbol.Pronoun;
-import static com.zettelnet.latin.grammar.LatinSymbol.PronounOpt;
 
 import com.zettelnet.earley.Grammar;
 import com.zettelnet.earley.ParameterizedSymbol;
@@ -35,6 +35,10 @@ import com.zettelnet.earley.param.CopyParameterExpression;
 import com.zettelnet.earley.param.ParameterExpression;
 import com.zettelnet.earley.param.ParameterManager;
 import com.zettelnet.earley.param.TokenParameterizer;
+import com.zettelnet.earley.translate.AbstractTranslationTree;
+import com.zettelnet.earley.translate.ConcreteTranslationTree;
+import com.zettelnet.earley.translate.Translation;
+import com.zettelnet.german.grammar.GermanSymbol;
 import com.zettelnet.latin.form.Casus;
 import com.zettelnet.latin.form.Genus;
 import com.zettelnet.latin.form.Numerus;
@@ -71,6 +75,10 @@ public final class LatinGrammar {
 		grammar.addProduction(Sentence,
 				new ParameterizedSymbol<>(NounPhrase, copy),
 				new ParameterizedSymbol<>(VerbPhrase, copy));
+		new Translation<>(production, parameterManager, new ConcreteTranslationTree<>(GermanSymbol.Sentence,
+				new AbstractTranslationTree<>(new PositionReference(production, 0)),
+				new AbstractTranslationTree<>(new PositionReference(production, 1)));
+		
 		// S(pi) -> VP(pi)
 		grammar.addProduction(Sentence,
 				new ParameterizedSymbol<>(VerbPhrase, copy));

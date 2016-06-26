@@ -37,6 +37,11 @@ public class NonTerminalSyntaxTreeVariant<T, P extends Parameter> implements Syn
 	}
 
 	@Override
+	public T getToken() {
+		return null;
+	}
+
+	@Override
 	public List<SyntaxTree<T, P>> getChildren() {
 		return children;
 	}

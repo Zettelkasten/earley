@@ -13,5 +13,7 @@ public interface SyntaxTreeVariant<T, P extends Parameter> {
 	
 	P getParameter();
 
+	T getToken();
+
 	List<SyntaxTree<T, P>> getChildren();
 }

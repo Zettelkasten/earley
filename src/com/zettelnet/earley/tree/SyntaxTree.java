@@ -14,8 +14,6 @@ public interface SyntaxTree<T, P extends Parameter> {
 
 	boolean isTerminal();
 
-	T getToken();
-
 	Set<Production<T, P>> getProductions();
 
 	Iterable<SyntaxTreeVariant<T, P>> getVariants();

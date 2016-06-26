@@ -11,10 +11,12 @@ public class TerminalSyntaxTreeVariant<T, P extends Parameter> implements Syntax
 	private final SyntaxTree<T, P> mainTree;
 	
 	private final P parameter;
+	private final T token;
 
-	public TerminalSyntaxTreeVariant(final SyntaxTree<T, P> mainTree, final P parameter) {
+	public TerminalSyntaxTreeVariant(final SyntaxTree<T, P> mainTree, final P parameter, final T token) {
 		this.mainTree = mainTree;
 		this.parameter = parameter;
+		this.token = token;
 	}
 	
 	@Override
@@ -33,6 +35,11 @@ public class TerminalSyntaxTreeVariant<T, P extends Parameter> implements Syntax
 	}
 
 	@Override
+	public T getToken() {
+		return token;
+	}
+
+	@Override
 	public List<SyntaxTree<T, P>> getChildren() {
 		return Collections.emptyList();
 	}
@@ -41,6 +48,8 @@ public class TerminalSyntaxTreeVariant<T, P extends Parameter> implements Syntax
 	public String toString() {
 		StringBuilder str = new StringBuilder();
 		str.append("[var ");
+		str.append(getToken());
+		str.append(" ");
 		str.append(getParameter().toString().replace(' ', '_'));
 		str.append("]");
 		return str.toString();

@@ -29,17 +29,12 @@ public class UnbinaryTerminalSyntaxTree<T, P extends Parameter> implements Synta
 	}
 
 	@Override
-	public T getToken() {
-		return node.getToken();
-	}
-
-	@Override
 	public Set<Production<T, P>> getProductions() {
 		return Collections.emptySet();
 	}
 
 	private SyntaxTreeVariant<T, P> getVariant() {
-		return new TerminalSyntaxTreeVariant<>(this, node.getTokenParameter());
+		return new TerminalSyntaxTreeVariant<>(this, node.getTokenParameter(), node.getToken());
 	}
 
 	@Override
@@ -62,8 +57,6 @@ public class UnbinaryTerminalSyntaxTree<T, P extends Parameter> implements Synta
 		StringBuilder str = new StringBuilder();
 		str.append("[");
 		str.append(getRootSymbol());
-		str.append(" ");
-		str.append(getToken());
 		Iterable<SyntaxTreeVariant<T, P>> variants = getVariants();
 		for (SyntaxTreeVariant<T, P> variant : variants) {
 			str.append(" ");
