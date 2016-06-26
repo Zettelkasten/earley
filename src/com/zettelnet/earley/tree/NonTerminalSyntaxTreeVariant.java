@@ -4,33 +4,38 @@ import java.util.List;
 
 import com.zettelnet.earley.Production;
 import com.zettelnet.earley.param.Parameter;
+import com.zettelnet.earley.symbol.NonTerminal;
 
 public class NonTerminalSyntaxTreeVariant<T, P extends Parameter> implements SyntaxTreeVariant<T, P> {
 
-	private final SyntaxTree<T, P> mainTree;
-	
+	private final NonTerminal<T> symbol;
 	private final Production<T, P> production;
 	private final P parameter;
-	
+
 	private final List<SyntaxTree<T, P>> children;
 
-	public NonTerminalSyntaxTreeVariant(final SyntaxTree<T, P> mainTree, final Production<T, P> production, final P parameter, final List<SyntaxTree<T, P>> children) {
-		this.mainTree = mainTree;
+	public NonTerminalSyntaxTreeVariant(final NonTerminal<T> symbol, final Production<T, P> production, final P parameter, final List<SyntaxTree<T, P>> children) {
+		this.symbol = symbol;
 		this.production = production;
 		this.parameter = parameter;
 		this.children = children;
 	}
-	
+
 	@Override
-	public SyntaxTree<T, P> getMainTree() {
-		return mainTree;
+	public NonTerminal<T> getRootSymbol() {
+		return symbol;
+	}
+
+	@Override
+	public boolean isTerminal() {
+		return false;
 	}
 
 	@Override
 	public Production<T, P> getProduction() {
 		return production;
 	}
-	
+
 	@Override
 	public P getParameter() {
 		return parameter;
@@ -50,7 +55,7 @@ public class NonTerminalSyntaxTreeVariant<T, P extends Parameter> implements Syn
 	public String toString() {
 		StringBuilder str = new StringBuilder();
 		str.append("[var ");
-//		str.append(getParameter().toString().replace(' ', '_'));
+		str.append(getRootSymbol());
 		str.append(" ");
 		for (SyntaxTree<T, P> child : children) {
 			str.append(child);

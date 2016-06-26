@@ -30,11 +30,12 @@ public class JufoHelper {
 	}
 
 	public static <T, P extends Parameter> String toString(SyntaxTree<T, P> tree) {
+		SyntaxTreeVariant<T, P> variant = tree.getVariant(Collections.<Integer> emptyList().iterator());
+
 		StringBuilder str = new StringBuilder();
 		str.append("[");
-		str.append(tree.getRootSymbol());
-		if (!tree.isTerminal()) {
-			SyntaxTreeVariant<T, P> variant = tree.getVariant(Collections.<Integer> emptyList().iterator());
+		str.append(variant.getRootSymbol());
+		if (!variant.isTerminal()) {
 			for (SyntaxTree<T, P> child : variant.getChildren()) {
 				str.append(" ");
 				str.append(toString(child));
@@ -46,21 +47,23 @@ public class JufoHelper {
 	}
 
 	public static <T, P extends Parameter> String toStringBold(SyntaxTree<T, P> tree) {
+		SyntaxTreeVariant<T, P> variant = tree.getVariant(Collections.<Integer> emptyList().iterator());
+
 		StringBuilder str = new StringBuilder();
 		str.append("[");
-		str.append(tree.getRootSymbol());
-		if (!tree.isTerminal()) {
-			SyntaxTreeVariant<T, P> variant = tree.getVariant(Collections.<Integer> emptyList().iterator());
-			 str.append("(");
-			 str.append(variant.getParameter().toString().replace(' ', '_'));
-			 str.append(")");
+		str.append(variant.getRootSymbol());
+		
+		if (!variant.isTerminal()) {
+			str.append("(");
+			str.append(variant.getParameter().toString().replace(' ', '_'));
+			str.append(")");
 			for (SyntaxTree<T, P> child : variant.getChildren()) {
 				str.append(" ");
 				str.append(toStringBold(child));
 			}
 		} else {
 			str.append(" #b_");
-			str.append(tree.getToken());
+			str.append(variant.getToken());
 		}
 		str.append("]");
 

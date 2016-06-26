@@ -24,16 +24,6 @@ public class UnbinaryNonTerminalSyntaxTree<T, P extends Parameter> implements Sy
 	}
 
 	@Override
-	public NonTerminal<T> getRootSymbol() {
-		return (NonTerminal<T>) node.getRootSymbol();
-	}
-
-	@Override
-	public boolean isTerminal() {
-		return false;
-	}
-
-	@Override
 	public Iterable<SyntaxTreeVariant<T, P>> getVariants() {
 		return getVariantsSet();
 	}
@@ -64,7 +54,7 @@ public class UnbinaryNonTerminalSyntaxTree<T, P extends Parameter> implements Sy
 
 				BinarySyntaxTree<T, P> preNode = variant.getPreNode();
 				if (preNode == null) {
-					output.add(new NonTerminalSyntaxTreeVariant<>(this, firstVariant.getProduction(), firstVariant.getParameter(), createStrippedCopy(list)));
+					output.add(new NonTerminalSyntaxTreeVariant<>((NonTerminal<T>) node.getRootSymbol(), firstVariant.getProduction(), firstVariant.getParameter(), createStrippedCopy(list)));
 					list.removeFirst();
 				} else {
 					iterators.addFirst(preNode.getVariants().iterator());
@@ -134,18 +124,17 @@ public class UnbinaryNonTerminalSyntaxTree<T, P extends Parameter> implements Sy
 			binaryNode = binaryVariant.getPreNode();
 		} while (binaryNode != null);
 
-		return new NonTerminalSyntaxTreeVariant<>(this, production, parameter, createStrippedCopy(children));
+		return new NonTerminalSyntaxTreeVariant<>((NonTerminal<T>) node.getRootSymbol(), production, parameter, createStrippedCopy(children));
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder str = new StringBuilder();
 		str.append("[");
-		str.append(getRootSymbol());
 		Iterable<SyntaxTreeVariant<T, P>> variants = getVariants();
 		for (SyntaxTreeVariant<T, P> variant : variants) {
-			str.append(" ");
 			str.append(variant);
+			str.append(" ");
 		}
 		str.append("]");
 		return str.toString();

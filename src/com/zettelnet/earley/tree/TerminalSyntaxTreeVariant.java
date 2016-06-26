@@ -5,23 +5,28 @@ import java.util.List;
 
 import com.zettelnet.earley.Production;
 import com.zettelnet.earley.param.Parameter;
+import com.zettelnet.earley.symbol.Terminal;
 
 public class TerminalSyntaxTreeVariant<T, P extends Parameter> implements SyntaxTreeVariant<T, P> {
 
-	private final SyntaxTree<T, P> mainTree;
-	
+	private final Terminal<T> symbol;
 	private final P parameter;
 	private final T token;
 
-	public TerminalSyntaxTreeVariant(final SyntaxTree<T, P> mainTree, final P parameter, final T token) {
-		this.mainTree = mainTree;
+	public TerminalSyntaxTreeVariant(final Terminal<T> symbol, final P parameter, final T token) {
+		this.symbol = symbol;
 		this.parameter = parameter;
 		this.token = token;
 	}
-	
+
 	@Override
-	public SyntaxTree<T, P> getMainTree() {
-		return mainTree;
+	public Terminal<T> getRootSymbol() {
+		return symbol;
+	}
+
+	@Override
+	public boolean isTerminal() {
+		return true;
 	}
 
 	@Override
@@ -48,6 +53,8 @@ public class TerminalSyntaxTreeVariant<T, P extends Parameter> implements Syntax
 	public String toString() {
 		StringBuilder str = new StringBuilder();
 		str.append("[var ");
+		str.append(getRootSymbol());
+		str.append(" ");
 		str.append(getToken());
 		str.append(" ");
 		str.append(getParameter().toString().replace(' ', '_'));

@@ -21,8 +21,6 @@ import com.zettelnet.latin.token.Token;
 public class LatinRegistryTest {
 
 	public static void main(String[] args) throws IOException {
-		System.in.read();
-		
 		Grammar<Token, FormParameter> grammar = LatinGrammar.makeGrammar();
 		Tokenizer<Token> tokenizer = new WhitespaceTokenizer<>(LatinRegistry.INSTANCE);
 

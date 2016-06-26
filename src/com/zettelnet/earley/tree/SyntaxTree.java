@@ -5,13 +5,8 @@ import java.util.Iterator;
 import java.util.Set;
 
 import com.zettelnet.earley.param.Parameter;
-import com.zettelnet.earley.symbol.Symbol;
 
 public interface SyntaxTree<T, P extends Parameter> {
-
-	Symbol<T> getRootSymbol();
-
-	boolean isTerminal();
 
 	Iterable<SyntaxTreeVariant<T, P>> getVariants();
 

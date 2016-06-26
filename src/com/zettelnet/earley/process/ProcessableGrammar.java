@@ -136,8 +136,8 @@ public class ProcessableGrammar<T, P extends Parameter, R> implements Grammar<T,
 		// choose variant: currently just use the first one
 		SyntaxTreeVariant<T, P> variant = tree.getVariants().iterator().next();
 
-		if (tree.isTerminal()) {
-			return terminals.get(tree.getRootSymbol()).process(this, variant);
+		if (variant.isTerminal()) {
+			return terminals.get(variant.getRootSymbol()).process(this, variant);
 		} else {
 			Production<T, P> production = variant.getProduction();
 			Processor<T, P, R> processor = productions.get(production);
