@@ -1,19 +1,35 @@
 package com.zettelnet.earley.translate;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.zettelnet.earley.param.Parameter;
-import com.zettelnet.earley.symbol.Symbol;
 
 public interface TranslationTree<T, P extends Parameter, U, Q extends Parameter> {
 
-	Symbol<U> getRootSymbol();
-	
-	boolean isAbstract();
-	
-	AbstractReference<T, P> getAbstractReference();
+	Iterable<TranslationTreeVariant<T, P, U, Q>> getVariants();
 
-	ParameterTranslator<P, Q> getParameterTranslator();
+	default Set<TranslationTreeVariant<T, P, U, Q>> getVariantsSet() {
+		Iterable<TranslationTreeVariant<T, P, U, Q>> iterable = getVariants();
+		if (iterable instanceof Set) {
+			return (Set<TranslationTreeVariant<T, P, U, Q>>) iterable;
+		} else {
+			Set<TranslationTreeVariant<T, P, U, Q>> set = new HashSet<>();
+			for (TranslationTreeVariant<T, P, U, Q> element : getVariants()) {
+				set.add(element);
+			}
+			return set;
+		}
+	}
 
-	List<TranslationTree<T, P, U, Q>> getChildren();
+	default Set<TranslationTreeVariant<T, P, U, Q>> getVariantsSet(int maxAmount) {
+		Set<TranslationTreeVariant<T, P, U, Q>> set = new HashSet<>();
+		for (TranslationTreeVariant<T, P, U, Q> element : getVariants()) {
+			if (--maxAmount < 0) {
+				break;
+			}
+			set.add(element);
+		}
+		return set;
+	}
 }

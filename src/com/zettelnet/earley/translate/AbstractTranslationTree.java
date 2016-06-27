@@ -5,17 +5,22 @@ import java.util.List;
 import com.zettelnet.earley.param.Parameter;
 import com.zettelnet.earley.symbol.Symbol;
 
-public class AbstractTranslationTree<T, P extends Parameter, U, Q extends Parameter> implements TranslationTree<T, P, U, Q> {
+public class AbstractTranslationTree<T, P extends Parameter, U, Q extends Parameter> implements TranslationTreeVariant<T, P, U, Q> {
 
 	private final AbstractReference<T, P> reference;
-	
+
 	public AbstractTranslationTree(final AbstractReference<T, P> reference) {
 		this.reference = reference;
 	}
-	
+
 	@Override
 	public Symbol<U> getRootSymbol() {
 		return null;
+	}
+
+	@Override
+	public boolean isTerminal() {
+		return false; // actually we don't know this
 	}
 
 	@Override
@@ -34,7 +39,7 @@ public class AbstractTranslationTree<T, P extends Parameter, U, Q extends Parame
 	}
 
 	@Override
-	public List<TranslationTree<T, P, U, Q>> getChildren() {
+	public List<TranslationTreeVariant<T, P, U, Q>> getChildren() {
 		return null;
 	}
 

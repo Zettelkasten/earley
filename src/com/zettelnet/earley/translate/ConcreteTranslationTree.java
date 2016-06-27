@@ -9,16 +9,19 @@ import com.zettelnet.earley.symbol.NonTerminal;
 import com.zettelnet.earley.symbol.Symbol;
 import com.zettelnet.earley.symbol.Terminal;
 
-public class ConcreteTranslationTree<T, P extends Parameter, U, Q extends Parameter> implements TranslationTree<T, P, U, Q> {
+public class ConcreteTranslationTree<T, P extends Parameter, U, Q extends Parameter> implements TranslationTreeVariant<T, P, U, Q> {
 
 	private final Symbol<U> symbol;
+	private final boolean terminal;
+	
 	private final ParameterTranslator<P, Q> parameterTranslator;
 	
-	private final List<TranslationTree<T, P, U, Q>> children;
+	private final List<TranslationTreeVariant<T, P, U, Q>> children;
 
 	@SafeVarargs
-	public ConcreteTranslationTree(final NonTerminal<U> symbol, final ParameterTranslator<P, Q> parameterTranslator, TranslationTree<T, P, U, Q>... children) {
+	public ConcreteTranslationTree(final NonTerminal<U> symbol, final ParameterTranslator<P, Q> parameterTranslator, TranslationTreeVariant<T, P, U, Q>... children) {
 		this.symbol = symbol;
+		this.terminal = false;
 		this.parameterTranslator = parameterTranslator;
 		
 		this.children = Arrays.asList(children);
@@ -26,6 +29,7 @@ public class ConcreteTranslationTree<T, P extends Parameter, U, Q extends Parame
 	
 	public ConcreteTranslationTree(final Terminal<U> symbol, final ParameterTranslator<P, Q> parameterTranslator) {
 		this.symbol = symbol;
+		this.terminal = true;
 		this.parameterTranslator = parameterTranslator;
 		
 		this.children = Collections.emptyList();
@@ -36,6 +40,11 @@ public class ConcreteTranslationTree<T, P extends Parameter, U, Q extends Parame
 		return symbol;
 	}
 
+	@Override
+	public boolean isTerminal() {
+		return terminal;
+	}
+	
 	@Override
 	public boolean isAbstract() {
 		return false;
@@ -52,7 +61,7 @@ public class ConcreteTranslationTree<T, P extends Parameter, U, Q extends Parame
 	}
 
 	@Override
-	public List<TranslationTree<T, P, U, Q>> getChildren() {
+	public List<TranslationTreeVariant<T, P, U, Q>> getChildren() {
 		return children;
 	}
 }
