@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.zettelnet.earley.Grammar;
 import com.zettelnet.earley.Production;
 import com.zettelnet.earley.param.Parameter;
 import com.zettelnet.earley.param.ParameterManager;
@@ -19,8 +20,8 @@ public class SimpleTranslator<T, P extends Parameter, U, Q extends Parameter> im
 
 	private final TranslationSet<T, P, U, Q> translations;
 
-	public SimpleTranslator(final ParameterManager<T, P> parameterManager, final TokenFactory<U, Q> tokenFactory, final TranslationSet<T, P, U, Q> translations) {
-		this.parameterManager = parameterManager;
+	public SimpleTranslator(final Grammar<T, P> sourceGrammar, final TokenFactory<U, Q> tokenFactory, final TranslationSet<T, P, U, Q> translations) {
+		this.parameterManager = sourceGrammar.getParameterManager();
 		this.tokenFactory = tokenFactory;
 		this.translations = translations;
 	}
