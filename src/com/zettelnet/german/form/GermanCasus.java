@@ -2,7 +2,7 @@ package com.zettelnet.german.form;
 
 public enum GermanCasus implements GermanFormProperty {
 
-	Nominative("Nom"), Genitive("Gen"), Dative("Dat"), Accusative("Acc"), Ablative("Abl"), Vocative("Voc");
+	Nominative("Nom"), Genitive("Gen"), Dative("Dat"), Accusative("Acc");
 
 	private final String shortName;
 
