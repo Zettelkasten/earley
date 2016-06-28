@@ -1,5 +1,6 @@
 package com.zettelnet.earley.translate;
 
+import java.util.Collections;
 import java.util.List;
 
 import com.zettelnet.earley.param.Parameter;
@@ -39,8 +40,8 @@ public class AbstractTranslationTree<T, P extends Parameter, U, Q extends Parame
 	}
 
 	@Override
-	public List<TranslationTreeVariant<T, P, U, Q>> getChildren() {
-		return null;
+	public List<TranslationTree<T, P, U, Q>> getChildren() {
+		return Collections.emptyList();
 	}
 
 }

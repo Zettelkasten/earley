@@ -14,12 +14,16 @@ import com.zettelnet.earley.tree.SyntaxTreeVariant;
 public class NonTerminalTranslatedSyntaxTreeVariant<T, P extends Parameter, U, Q extends Parameter> implements SyntaxTreeVariant<U, Q> {
 
 	private final Translator<T, P, U, Q> translator;
+	
+	private final SyntaxTreeVariant<T, P> sourceVariant;
 	private final TranslationTreeVariant<T, P, U, Q> translation;
 
 	private final Q parameter;
 
-	public NonTerminalTranslatedSyntaxTreeVariant(final Translator<T, P, U, Q> translator, final TranslationTreeVariant<T, P, U, Q> translation, final Q parameter) {
+	public NonTerminalTranslatedSyntaxTreeVariant(final Translator<T, P, U, Q> translator, final SyntaxTreeVariant<T, P> sourceVariant, final TranslationTreeVariant<T, P, U, Q> translation, final Q parameter) {
 		this.translator = translator;
+		
+		this.sourceVariant = sourceVariant;
 		this.translation = translation;
 
 		this.parameter = parameter;
@@ -53,11 +57,11 @@ public class NonTerminalTranslatedSyntaxTreeVariant<T, P extends Parameter, U, Q
 	@Override
 	public List<SyntaxTree<U, Q>> getChildren() {
 		if (!isTerminal()) {
-			List<TranslationTreeVariant<T, P, U, Q>> translationChildren = translation.getChildren();
+			List<TranslationTree<T, P, U, Q>> translationChildren = translation.getChildren();
 			List<SyntaxTree<U, Q>> children = new ArrayList<>(translationChildren.size());
 
-			for (TranslationTreeVariant<T, P, U, Q> translationChild : translationChildren) {
-				new TranslatedSyntaxTree<>(translator, translationChild.getAbstractReference().getSourceTree());
+			for (TranslationTree<T, P, U, Q> translationChild : translationChildren) {
+				new TranslatedVariantSyntaxTree<>(translator, translationChild, sourceVariant);
 			}
 			return children;
 		} else {

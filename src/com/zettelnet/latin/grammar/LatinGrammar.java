@@ -30,6 +30,7 @@ import static com.zettelnet.latin.grammar.LatinSymbol.VerbPhrase;
 
 import com.zettelnet.earley.Grammar;
 import com.zettelnet.earley.ParameterizedSymbol;
+import com.zettelnet.earley.Production;
 import com.zettelnet.earley.SimpleGrammar;
 import com.zettelnet.earley.param.AnyParameterExpression;
 import com.zettelnet.earley.param.CopyParameterExpression;
@@ -38,8 +39,14 @@ import com.zettelnet.earley.param.ParameterManager;
 import com.zettelnet.earley.param.TokenParameterizer;
 import com.zettelnet.earley.translate.AbstractTranslationTree;
 import com.zettelnet.earley.translate.ConcreteTranslationTree;
+import com.zettelnet.earley.translate.ParameterTranslator;
+import com.zettelnet.earley.translate.PositionReference;
+import com.zettelnet.earley.translate.SimpleTranslationSet;
+import com.zettelnet.earley.translate.SimpleTranslationTree;
 import com.zettelnet.earley.translate.Translation;
+import com.zettelnet.earley.translate.TranslationSet;
 import com.zettelnet.german.grammar.GermanSymbol;
+import com.zettelnet.german.token.GermanToken;
 import com.zettelnet.latin.form.Casus;
 import com.zettelnet.latin.form.Genus;
 import com.zettelnet.latin.form.Mood;
@@ -58,31 +65,40 @@ import com.zettelnet.latin.token.Token;
 
 public final class LatinGrammar {
 
+	private static final SimpleGrammar<Token, FormParameter> grammar;
+	private static final SimpleTranslationSet<Token, FormParameter, GermanToken, FormParameter> toGerman;
+
 	private LatinGrammar() {
 	}
 
-	public static Grammar<Token, FormParameter> makeGrammar() {
+	static {
 		// Management
 
 		ParameterManager<Token, FormParameter> parameterManager = new FormParameterManager<>(LatinSymbol.DEFAULT_PROPERTY_TYPES);
 		TokenParameterizer<Token, FormParameter> parameterizer = new FormParameterizer();
 
-		SimpleGrammar<Token, FormParameter> grammar = new SimpleGrammar<>(Sentence, parameterManager);
+		grammar = new SimpleGrammar<>(Sentence, parameterManager);
 		grammar.setStartSymbolParameter(key(Casus.Nominative, Finiteness.Finite));
 
 		ParameterExpression<Token, FormParameter> copy = new CopyParameterExpression<>(grammar, parameterizer);
 		ParameterExpression<Token, FormParameter> any = new AnyParameterExpression<>(parameterManager);
 
+		toGerman = new SimpleTranslationSet<>();
+		ParameterTranslator<FormParameter, FormParameter> germanize = null;
+
 		// Productions
+		Production<Token, FormParameter> prod = null;
 
 		// S(pi : !NullVal !Imp) -> NP(pi) VP(pi) -> TODO
-		grammar.addProduction(Sentence,
+		prod = grammar.addProduction(Sentence,
 				new ParameterizedSymbol<>(NounPhrase, copy),
 				new ParameterizedSymbol<>(VerbPhrase, copy));
-		new Translation<>(production, parameterManager, new ConcreteTranslationTree<>(GermanSymbol.Sentence,
-				new AbstractTranslationTree<>(new PositionReference(production, 0)),
-				new AbstractTranslationTree<>(new PositionReference(production, 1)));
-		
+		// S(pi) => S { ~NP ~VP }
+		toGerman.addTranslation(new Translation<>(prod, parameterManager, new SimpleTranslationTree<>(
+				new ConcreteTranslationTree<Token, FormParameter, GermanToken, FormParameter>(GermanSymbol.Sentence, germanize, new SimpleTranslationTree<>(
+						new AbstractTranslationTree<>(new PositionReference<>(0)),
+						new AbstractTranslationTree<>(new PositionReference<>(1)))))));
+
 		// S(pi) -> VP(pi)
 		grammar.addProduction(Sentence,
 				new ParameterizedSymbol<>(VerbPhrase, copy));
@@ -257,7 +273,13 @@ public final class LatinGrammar {
 		makeOptional(grammar, NounPhraseOpt, NounPhrase, copy);
 		makeOptional(grammar, AdjectivePhraseOpt, AdjectivePhrase, copy);
 		makeOptional(grammar, PronounOpt, Pronoun, copy);
+	}
 
+	public static Grammar<Token, FormParameter> makeGrammar() {
 		return grammar;
+	}
+
+	public static TranslationSet<Token, FormParameter, GermanToken, FormParameter> makeGermanTranslations() {
+		return toGerman;
 	}
 }

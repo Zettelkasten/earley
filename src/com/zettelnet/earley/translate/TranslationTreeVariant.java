@@ -17,5 +17,5 @@ public interface TranslationTreeVariant<T, P extends Parameter, U, Q extends Par
 
 	ParameterTranslator<P, Q> getParameterTranslator();
 
-	List<TranslationTreeVariant<T, P, U, Q>> getChildren();
+	List<TranslationTree<T, P, U, Q>> getChildren();
 }

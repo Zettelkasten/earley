@@ -16,10 +16,10 @@ public class ConcreteTranslationTree<T, P extends Parameter, U, Q extends Parame
 	
 	private final ParameterTranslator<P, Q> parameterTranslator;
 	
-	private final List<TranslationTreeVariant<T, P, U, Q>> children;
+	private final List<TranslationTree<T, P, U, Q>> children;
 
 	@SafeVarargs
-	public ConcreteTranslationTree(final NonTerminal<U> symbol, final ParameterTranslator<P, Q> parameterTranslator, TranslationTreeVariant<T, P, U, Q>... children) {
+	public ConcreteTranslationTree(final NonTerminal<U> symbol, final ParameterTranslator<P, Q> parameterTranslator, TranslationTree<T, P, U, Q>... children) {
 		this.symbol = symbol;
 		this.terminal = false;
 		this.parameterTranslator = parameterTranslator;
@@ -61,7 +61,7 @@ public class ConcreteTranslationTree<T, P extends Parameter, U, Q extends Parame
 	}
 
 	@Override
-	public List<TranslationTreeVariant<T, P, U, Q>> getChildren() {
+	public List<TranslationTree<T, P, U, Q>> getChildren() {
 		return children;
 	}
 }
