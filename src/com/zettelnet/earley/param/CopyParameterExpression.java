@@ -7,9 +7,10 @@ import java.util.Collections;
 
 import com.zettelnet.earley.Grammar;
 import com.zettelnet.earley.symbol.NonTerminal;
+import com.zettelnet.earley.symbol.Symbol;
 import com.zettelnet.earley.symbol.Terminal;
 
-public class CopyParameterExpression<T, P extends Parameter> implements ParameterExpression<T, P> {
+public class CopyParameterExpression<T, P extends Parameter> implements ParameterExpression<T, P>, ParameterFunction<T, P> {
 
 	private final ParameterManager<T, P> manager;
 	private final TokenParameterizer<T, P> parameterizer;
@@ -59,5 +60,10 @@ public class CopyParameterExpression<T, P extends Parameter> implements Paramete
 	@Override
 	public String toString() {
 		return "&pi;";
+	}
+
+	@Override
+	public P passParameter(P parameter, Symbol<T> symbol) {
+		return manager.copyParameter(parameter, symbol);
 	}
 }

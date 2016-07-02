@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 import com.zettelnet.earley.param.Parameter;
+import com.zettelnet.earley.symbol.Symbol;
 import com.zettelnet.earley.symbol.Terminal;
 import com.zettelnet.earley.tree.NoSuchSyntaxTreeException;
 import com.zettelnet.earley.tree.SyntaxTree;
@@ -28,12 +29,13 @@ public class TranslatedVariantSyntaxTree<T, P extends Parameter, U, Q extends Pa
 	@Override
 	public Iterable<SyntaxTreeVariant<U, Q>> getVariants() {
 		Set<SyntaxTreeVariant<U, Q>> variants = new HashSet<>();
+		Symbol<T> sourceSymbol = sourceVariant.getRootSymbol();
 		P sourceParameter = sourceVariant.getParameter();
 			for (TranslationTreeVariant<T, P, U, Q> translationVariant : translation.getVariants()) {
 				if (translationVariant.isAbstract()) {
 					variants.addAll(translator.translate(translationVariant.getAbstractReference().getSourceTree(sourceVariant)).getVariantsSet());
 				} else {
-					Q parameter = translationVariant.getParameterTranslator().translateParameter(sourceParameter);
+					Q parameter = translationVariant.getParameterTranslator().translateParameter(sourceParameter, sourceSymbol);
 					if (translationVariant.isTerminal()) {
 						Terminal<U> symbol = (Terminal<U>) translationVariant.getRootSymbol();
 						for (U token : translator.makeToken(symbol, parameter)) {
