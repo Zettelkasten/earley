@@ -1,44 +1,86 @@
+// Lateinische Produktionen mit Translationen ins Deutsche
+// ~π = ger[π]
+
 S(π) → NP(π) VP(π)
-     | VP(π)
+     ⇒ S(~π) {~NP ~VP}
+S(π) → VP(π)
+     ⇒ S(~π) {pron(~kngp[π]) ~VP}
 
+     VP(π) → VF(π) Args(π) AdvP∗
+VP(π : HS) ⇒ VP(~π) {~VF ~Args ~AdvP∗}
+VP(π : NS) ⇒ VP(~π) {~Args ~AdvP∗ ~VF}
+     VP(π) → VP(kng[π] fin[π]) conj VP(kng[π] fin[π])			VP-Koordination
+           ⇒ VP(~π) {~VP⁰ ~conj ~VP¹}
 
-VP(π) → VF(π) Args(π) AdvP∗
-VP(π) → VP(kng[π] fin[π]) conj VP(kng[π] fin[π])				VP-Koordination
+       VF(π : Fin) → v(π)
+                   ⇒ VF(~π) {~v}								 � Zeitformen Hilfsverbien
+       VF(π : Inf) → inf(π)
+VF(π : Inf ¬Modal) ⇒ VF(~π) {zu ~inf}
+ VF(π : Inf Modal) ⇒ VF(~π) {~inf}
+      VF(π : Part) → part(π)
+                   ⇒ VF(~π) {~part}
+      VF(π : Grnd) → grnd(π)									 � Translation
+             VF(π) → VF(π) conj VF(π)							VF-Koordination
+                   ⇒ VF(~π) {~VF⁰ ~conj ~VF¹}
 
- VF(π : Fin) → v(π)
- VF(π : Inf) → inf(π)
-VF(π : Part) → part(π)
-VF(π : Grnd) → grnd(π)
-       VF(π) → VF(π) conj VF(π)									VF-Koordination
 
        Args(π : NullVal) → ε
+                         ⇒ Args(~π) {ε}
      Args(π : EinzelVal) → ε
+                         ⇒ Args(~π) {ε}
         Args(π : Kopula) → NP(π)
+                         ⇒ Args(~π) {~NP}
         Args(π : GenVal) → NP(Gen)
+                         ⇒ Args(~π) {~NP}
         Args(π : DatVal) → NP(Dat)
+                         ⇒ Args(~π) {~NP}
     Args(π : AkkVal Akt) → NP(Akk)
+                         ⇒ Args(~π) {~NP}
    Args(π : AkkVal Pass) → ε
+                         ⇒ Args(~π) {ε}
  Args(π : AkkDatVal Akt) → NP(Akk) NP(Dat)
+                         ⇒ Args(~π) {~NP⁰ ~NP¹}
 Args(π : AkkDatVal Pass) → NP(Dat)
+                         ⇒ Args(~π) {~NP}
         Args(π : InfVal) → VP(Inf Ind)							 � Modus
+                         ⇒ Args(~π) {~VP}
 
    AdvP → adv
-AdvP(π) → subj(π) S(smood[π])
-   AdvP → NP(Abl)												AblAbs
+        ⇒ AdvP {~adv}
+AdvP(π) → subj(π) S(smood[π])									Nebensatz
+        ⇒ AdvP(~π) {~subj ~S}									 � Modus
+   AdvP → S(Abl)												AblAbs
+   AdvP → NP(Abl)												 � Translation
    AdvP → NP(Vok)
 
           NP(π) → NF(π) [AP(π)] [NP(Gen)] [NP(π)]				Attribute
+                ⇒ NP(~π) {det(~π) [~AP] ~NF [~NP¹] [~NP⁰]}
 NP(π : Nom/Akk) → S(π : Akk Pres/Perf/Fut Inf)					AcI
+                ⇒ NP(~π) {conj[dass] ~S}
 
 NP(π : Pl) → NP(kasus[π]) conj NP(kasus[π])						NP-Koordination
+           ⇒ NP(~π) {~NP⁰ ~conj ~NP¹}
 
 NF(π) → n(π)
-																 � NF-Koordination
+      ⇒ NF(~π) {~n}
 
-AP(π) → AdvP∗ adj(π) AdvP(π)∗
-      | pron(π) AdvP∗											 � von AdvP modifiziert
-      | VP(Part kng[π])											PC
+AP(π) → adj(π) AdvP(π)∗
+      ⇒ AP(~π) {~AdvP ~adj}
+AP(π) → pron(π) AdvP∗											 � von AdvP modifiziert
+      ⇒ AP(~π) {~AdP ~pron}
+AP(π) → VP(Part kng[π])											PC
+      ⇒ AP(~π) {~VP}
 AP(π) → AP(π) [conj] AP(π)										AP-Koordination
+      ⇒ AP(~π) {~AP⁰ [~conj] ~AP¹}
 
 AdvP∗ → ε
       | AdvP AdvP∗
+
+
+   v(π) ⇒ v(~π)
+ inf(π) ⇒ inf(~π)
+part(π) ⇒ part(~π)
+
+   n(π) ⇒ n(~π)
+
+conj(π) ⇒ conj(~π)
