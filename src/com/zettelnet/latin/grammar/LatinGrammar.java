@@ -43,7 +43,6 @@ import com.zettelnet.earley.translate.ParameterTranslator;
 import com.zettelnet.earley.translate.PositionReference;
 import com.zettelnet.earley.translate.SimpleTranslationSet;
 import com.zettelnet.earley.translate.SimpleTranslationTree;
-import com.zettelnet.earley.translate.Translation;
 import com.zettelnet.earley.translate.TranslationSet;
 import com.zettelnet.german.grammar.GermanSymbol;
 import com.zettelnet.german.token.GermanToken;
@@ -84,7 +83,7 @@ public final class LatinGrammar {
 		ParameterExpression<Token, FormParameter> any = new AnyParameterExpression<>(parameterManager);
 
 		toGerman = new SimpleTranslationSet<>();
-		ParameterTranslator<FormParameter, FormParameter> germanize = null;
+		ParameterTranslator<Token, FormParameter, FormParameter> germanize = null;
 
 		// Productions
 		Production<Token, FormParameter> prod = null;
@@ -94,10 +93,10 @@ public final class LatinGrammar {
 				new ParameterizedSymbol<>(NounPhrase, copy),
 				new ParameterizedSymbol<>(VerbPhrase, copy));
 		// S(pi) => S { ~NP ~VP }
-		toGerman.addTranslation(new Translation<>(prod, parameterManager, new SimpleTranslationTree<>(
+		toGerman.addTranslation(prod, parameterManager, new SimpleTranslationTree<>(
 				new ConcreteTranslationTree<Token, FormParameter, GermanToken, FormParameter>(GermanSymbol.Sentence, germanize, new SimpleTranslationTree<>(
 						new AbstractTranslationTree<>(new PositionReference<>(0)),
-						new AbstractTranslationTree<>(new PositionReference<>(1)))))));
+						new AbstractTranslationTree<>(new PositionReference<>(1))))));
 
 		// S(pi) -> VP(pi)
 		grammar.addProduction(Sentence,

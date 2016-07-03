@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.zettelnet.earley.Grammar;
-import com.zettelnet.earley.Production;
 import com.zettelnet.earley.param.Parameter;
 import com.zettelnet.earley.param.ParameterManager;
 import com.zettelnet.earley.symbol.Terminal;
@@ -33,16 +32,22 @@ public class SimpleTranslator<T, P extends Parameter, U, Q extends Parameter> im
 
 	@Override
 	public Set<TranslationTree<T, P, U, Q>> getTranslationTrees(SyntaxTreeVariant<T, P> sourceVariant) {
-		Production<T, P> production = sourceVariant.getProduction();
 		P parameter = sourceVariant.getParameter();
-		
 		Set<TranslationTree<T, P, U, Q>> variantTranslations = new HashSet<>();
-		for (Translation<T, P, U, Q> translation : translations.getTranslations(production)) {
+		for (Translation<T, P, U, Q> translation : getTranslations(sourceVariant)) {
 			if (parameterManager.isCompatible(translation.keyParameter(), parameter)) {
 				variantTranslations.add(translation.value());
 			}
 		}
 		return variantTranslations;
+	}
+
+	private final Set<Translation<T, P, U, Q>> getTranslations(SyntaxTreeVariant<T, P> sourceVariant) {
+		if (sourceVariant.isTerminal()) {
+			return translations.getTranslations((Terminal<T>) sourceVariant.getRootSymbol());
+		} else {
+			return translations.getTranslations(sourceVariant.getProduction());
+		}
 	}
 
 	@Override
