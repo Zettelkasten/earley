@@ -7,7 +7,7 @@ S(π) → VP(π)
      ⇒ S(~π) {pron(~kngp[π]) ~VP}
 
      VP(π) → VF(π) Args(π) AdvP∗
-VP(π : HS) ⇒ VP(~π) {~VF ~Args ~AdvP∗}
+VP(π : HS) ⇒ VP(~π) {~VF ~AdvP∗ ~Args}
 VP(π : NS) ⇒ VP(~π) {~Args ~AdvP∗ ~VF}
      VP(π) → VP(kng[π] fin[π]) conj VP(kng[π] fin[π])			VP-Koordination
            ⇒ VP(~π) {~VP⁰ ~conj ~VP¹}
@@ -82,5 +82,6 @@ AdvP∗ → ε
 part(π) ⇒ part(~π)
 
    n(π) ⇒ n(~π)
+ adj(π) ⇒ adj(~π)
 
 conj(π) ⇒ conj(~π)

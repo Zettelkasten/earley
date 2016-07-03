@@ -27,12 +27,13 @@ public final class GermanSymbol {
 
 	public static final Terminal<GermanToken> Verb = new GermanLemmaTerminal(GermanLemmaType.Verb);
 	public static final Terminal<GermanToken> Noun = new GermanLemmaTerminal(GermanLemmaType.Noun);
+	public static final Terminal<GermanToken> Article = new GermanLemmaTerminal(GermanLemmaType.Article);
 	public static final Terminal<GermanToken> Adverb = new GermanLemmaTerminal(GermanLemmaType.Adverb);
 	public static final Terminal<GermanToken> Adjective = new GermanLemmaTerminal(GermanLemmaType.Adjective);
 	public static final Terminal<GermanToken> Conjunction = new GermanLemmaTerminal(GermanLemmaType.Conjunction);
+	public static final Terminal<GermanToken> Subjunction = new GermanLemmaTerminal(GermanLemmaType.Subjunction);
 	public static final Terminal<GermanToken> Infinitive = new GermanLemmaTerminal(GermanLemmaType.Infinitive);
 	public static final Terminal<GermanToken> Participle = new GermanLemmaTerminal(GermanLemmaType.Participle);
-	public static final Terminal<GermanToken> Gerund = new GermanLemmaTerminal(GermanLemmaType.Gerund);
 	public static final Terminal<GermanToken> Supine = new GermanLemmaTerminal(GermanLemmaType.Supine);
 	public static final Terminal<GermanToken> Preposition = new GermanLemmaTerminal(GermanLemmaType.Preposition);
 	public static final Terminal<GermanToken> Interjection = new GermanLemmaTerminal(GermanLemmaType.Interjection);
