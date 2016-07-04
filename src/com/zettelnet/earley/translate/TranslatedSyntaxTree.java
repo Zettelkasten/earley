@@ -36,4 +36,16 @@ public class TranslatedSyntaxTree<T, P extends Parameter, U, Q extends Parameter
 		throw new NoSuchSyntaxTreeException();
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder str = new StringBuilder();
+		str.append("[");
+		Iterable<SyntaxTreeVariant<U, Q>> variants = getVariants();
+		for (SyntaxTreeVariant<U, Q> variant : variants) {
+			str.append(variant);
+			str.append(" ");
+		}
+		str.append("]");
+		return str.toString();
+	}
 }

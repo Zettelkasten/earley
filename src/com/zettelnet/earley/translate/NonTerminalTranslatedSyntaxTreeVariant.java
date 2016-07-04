@@ -68,4 +68,18 @@ public class NonTerminalTranslatedSyntaxTreeVariant<T, P extends Parameter, U, Q
 			return Collections.emptyList();
 		}
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder str = new StringBuilder();
+		str.append("[var ");
+		str.append(getRootSymbol());
+		str.append(" ");
+		for (SyntaxTree<U, Q> child : getChildren()) {
+			str.append(child);
+			str.append(" ");
+		}
+		str.append("]");
+		return str.toString();
+	}
 }
