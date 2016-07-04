@@ -11,7 +11,7 @@ import com.zettelnet.earley.tree.SyntaxTree;
 import com.zettelnet.earley.tree.SyntaxTreeVariant;
 
 // ALWAYS CONCRETE!
-public class NonTerminalTranslatedSyntaxTreeVariant<T, P extends Parameter, U, Q extends Parameter> implements SyntaxTreeVariant<U, Q> {
+public class TranslatedSyntaxTreeVariant<T, P extends Parameter, U, Q extends Parameter> implements SyntaxTreeVariant<U, Q> {
 
 	private final Translator<T, P, U, Q> translator;
 	
@@ -20,7 +20,7 @@ public class NonTerminalTranslatedSyntaxTreeVariant<T, P extends Parameter, U, Q
 
 	private final Q parameter;
 
-	public NonTerminalTranslatedSyntaxTreeVariant(final Translator<T, P, U, Q> translator, final SyntaxTreeVariant<T, P> sourceVariant, final TranslationTreeVariant<T, P, U, Q> translation, final Q parameter) {
+	public TranslatedSyntaxTreeVariant(final Translator<T, P, U, Q> translator, final SyntaxTreeVariant<T, P> sourceVariant, final TranslationTreeVariant<T, P, U, Q> translation, final Q parameter) {
 		this.translator = translator;
 		
 		this.sourceVariant = sourceVariant;

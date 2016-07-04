@@ -42,7 +42,7 @@ public class TranslatedVariantSyntaxTree<T, P extends Parameter, U, Q extends Pa
 							variants.add(new TerminalSyntaxTreeVariant<>(symbol, parameter, token));
 						}
 					} else {
-						variants.add(new NonTerminalTranslatedSyntaxTreeVariant<>(translator, sourceVariant, translationVariant, parameter));
+						variants.add(new TranslatedSyntaxTreeVariant<>(translator, sourceVariant, translationVariant, parameter));
 					}
 				}
 			}
