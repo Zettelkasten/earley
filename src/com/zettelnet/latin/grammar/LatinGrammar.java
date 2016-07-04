@@ -63,6 +63,7 @@ import com.zettelnet.latin.param.coordinative.CoordinativeFormParameterExpressio
 import com.zettelnet.latin.param.coordinative.SubjunctionMoodPropertyExpression;
 import com.zettelnet.latin.param.individual.IndividualFormParameterExpression;
 import com.zettelnet.latin.token.Token;
+import com.zettelnet.translate.latger.LatinGermanParameterTranslator;
 
 public final class LatinGrammar {
 
@@ -85,7 +86,7 @@ public final class LatinGrammar {
 		ParameterExpression<Token, FormParameter> any = new AnyParameterExpression<>(parameterManager);
 
 		toGerman = new SimpleTranslationSet<>();
-		ParameterTranslator<Token, FormParameter, FormParameter> germanize = null;
+		ParameterTranslator<Token, FormParameter, FormParameter> germanize = LatinGermanParameterTranslator.getInstance();
 
 		// Productions
 		Production<Token, FormParameter> prod = null;
