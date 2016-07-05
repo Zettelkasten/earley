@@ -96,7 +96,10 @@ public final class FormParameter implements Parameter {
 		if (typeFilter == null) {
 			return deriveProperties(parentProperties, childProperties);
 		}
+
 		final Map<Object, Set<? extends Property>> data = new HashMap<>(parentProperties);
+		data.keySet().retainAll(typeFilter);
+		
 		for (Map.Entry<Object, Set<? extends Property>> entry : childProperties.entrySet()) {
 			Object propertyType = entry.getKey();
 			if (typeFilter.contains(propertyType)) {
@@ -108,6 +111,7 @@ public final class FormParameter implements Parameter {
 				}
 			}
 		}
+		
 		return data;
 	}
 
