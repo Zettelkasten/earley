@@ -52,7 +52,7 @@ public class LatinGermanParameterTranslator {
 		translator.registerMapping(Genus.Neuter, GermanGenus.Neuter);
 		
 		translator.registerMapping(Mood.Indicative, GermanMood.Indicative);
-		translator.registerMapping(Mood.Subjunctive, GermanMood.Subjunctive);
+		translator.registerMapping(Mood.Subjunctive, GermanMood.Subjunctive1);
 		translator.registerMapping(Mood.Imperative, GermanMood.Imperative);
 
 		translator.registerMapping(Tense.Present, GermanTense.Present);

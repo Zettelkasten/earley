@@ -2,7 +2,7 @@ package com.zettelnet.german.form;
 
 public enum GermanMood implements GermanFormProperty {
 
-	Indicative("Ind"), Subjunctive("Sub"), Imperative("Imp");
+	Indicative("Ind"), Subjunctive1("Sub1"), Subjunctive2("Sub2"), Imperative("Imp");
 
 	private final String shortName;
 
