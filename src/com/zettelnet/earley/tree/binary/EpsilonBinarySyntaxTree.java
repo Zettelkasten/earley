@@ -5,17 +5,20 @@ import java.util.List;
 
 import com.zettelnet.earley.Production;
 import com.zettelnet.earley.param.Parameter;
-import com.zettelnet.earley.symbol.NonTerminal;
 import com.zettelnet.earley.symbol.Symbol;
 import com.zettelnet.earley.tree.SyntaxTree;
 import com.zettelnet.earley.tree.UnbinaryNonTerminalSyntaxTree;
 
 public class EpsilonBinarySyntaxTree<T, P extends Parameter> implements BinarySyntaxTree<T, P> {
 
-	private final NonTerminal<T> symbol;
+	private final Production<T, P> epsilonProduction;
+	private final P epsilonParameter;
 	
-	public EpsilonBinarySyntaxTree(final NonTerminal<T> symbol) {
-		this.symbol = symbol;
+	public EpsilonBinarySyntaxTree(final Production<T, P> epsilonProduction, final P epsilonParameter) {
+		assert epsilonProduction.isEpsilon();
+		
+		this.epsilonProduction = epsilonProduction;
+		this.epsilonParameter = epsilonParameter;
 	}
 	
 	@Override
@@ -39,12 +42,12 @@ public class EpsilonBinarySyntaxTree<T, P extends Parameter> implements BinarySy
 
 			@Override
 			public Production<T, P> getProduction() {
-				return null;
+				return epsilonProduction;
 			}
 
 			@Override
 			public P getParameter() {
-				return null;
+				return epsilonParameter;
 			}
 
 			@Override
@@ -56,7 +59,7 @@ public class EpsilonBinarySyntaxTree<T, P extends Parameter> implements BinarySy
 
 	@Override
 	public Symbol<T> getRootSymbol() {
-		return symbol;
+		return epsilonProduction.key();
 	}
 
 	@Override
