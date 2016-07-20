@@ -48,19 +48,19 @@ final class LatinHelper {
 	}
 
 	@SafeVarargs
-	static TranslationTree<Token, FormParameter, GermanToken, FormParameter> translate(TranslationTreeVariant<Token, FormParameter, GermanToken, FormParameter>... variants) {
+	static TranslationTree<Token, FormParameter, GermanToken, FormParameter> vars(TranslationTreeVariant<Token, FormParameter, GermanToken, FormParameter>... variants) {
 		return new SimpleTranslationTree<>(variants);
 	}
 
 	static void makeOptional(SimpleGrammar<Token, FormParameter> grammar, NonTerminal<Token> optionalSymbol, Symbol<Token> symbol, ParameterExpression<Token, FormParameter> expression, NonTerminal<GermanToken> translatedOptional, Symbol<GermanToken> translatedSymbol, SimpleTranslationSet<Token, FormParameter, GermanToken, FormParameter> translations, ParameterTranslator<Token, FormParameter, FormParameter> parameterTranslator) {
 		Production<Token, FormParameter> prod;
-		
+
 		prod = grammar.addProduction(optionalSymbol);
-		translations.addTranslation(prod, grammar.getParameterManager(), translate(
-				new ConcreteTranslationTree<>(translatedOptional, parameterTranslator)));
+		translations.addTranslation(prod, grammar.getParameterManager(),
+				vars(new ConcreteTranslationTree<>(translatedOptional, parameterTranslator)));
 		prod = grammar.addProduction(optionalSymbol, new ParameterizedSymbol<>(symbol, expression));
-		translations.addTranslation(prod, grammar.getParameterManager(), translate(
-				new ConcreteTranslationTree<>(translatedOptional, parameterTranslator, translate(
-						new AbstractTranslationTree<>(new PositionReference<>(0))))));
+		translations.addTranslation(prod, grammar.getParameterManager(),
+				vars(new ConcreteTranslationTree<>(translatedOptional, parameterTranslator,
+						vars(new AbstractTranslationTree<>(new PositionReference<>(0))))));
 	}
 }

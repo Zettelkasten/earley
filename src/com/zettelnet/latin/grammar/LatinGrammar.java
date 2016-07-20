@@ -4,7 +4,7 @@ import static com.zettelnet.latin.grammar.LatinHelper.copy;
 import static com.zettelnet.latin.grammar.LatinHelper.key;
 import static com.zettelnet.latin.grammar.LatinHelper.makeOptional;
 import static com.zettelnet.latin.grammar.LatinHelper.specify;
-import static com.zettelnet.latin.grammar.LatinHelper.translate;
+import static com.zettelnet.latin.grammar.LatinHelper.vars;
 import static com.zettelnet.latin.grammar.LatinSymbol.Adjective;
 import static com.zettelnet.latin.grammar.LatinSymbol.AdjectivePhrase;
 import static com.zettelnet.latin.grammar.LatinSymbol.AdjectivePhraseOpt;
@@ -96,10 +96,10 @@ public final class LatinGrammar {
 				new ParameterizedSymbol<>(NounPhrase, copy),
 				new ParameterizedSymbol<>(VerbPhrase, copy));
 		// S(pi) => S(~pi) { ~NP ~VP }
-		toGerman.addTranslation(prod, parameterManager, translate(
-				new ConcreteTranslationTree<>(GermanSymbol.Sentence, germanize, translate(
-						new AbstractTranslationTree<>(new PositionReference<>(0)),
-						new AbstractTranslationTree<>(new PositionReference<>(1))))));
+		toGerman.addTranslation(prod, parameterManager,
+				vars(new ConcreteTranslationTree<>(GermanSymbol.Sentence, germanize,
+						vars(new AbstractTranslationTree<>(new PositionReference<>(0))),
+						vars(new AbstractTranslationTree<>(new PositionReference<>(1))))));
 
 		// S(pi) -> VP(pi)
 		prod = grammar.addProduction(Sentence,
@@ -112,34 +112,34 @@ public final class LatinGrammar {
 				new ParameterizedSymbol<>(Arguments, copy),
 				new ParameterizedSymbol<>(AdverbalPhraseVar, any));
 		// VP(pi) => VP(~pi) { ~VF ~AdvP* ~Args }
-		toGerman.addTranslation(prod, parameterManager, translate(
-				new ConcreteTranslationTree<>(GermanSymbol.VerbPhrase, germanize, translate(
-						new AbstractTranslationTree<>(new PositionReference<>(0)),
-						new AbstractTranslationTree<>(new PositionReference<>(2)),
-						new AbstractTranslationTree<>(new PositionReference<>(1))))));
+		toGerman.addTranslation(prod, parameterManager,
+				vars(new ConcreteTranslationTree<>(GermanSymbol.VerbPhrase, germanize,
+						vars(new AbstractTranslationTree<>(new PositionReference<>(0))),
+						vars(new AbstractTranslationTree<>(new PositionReference<>(2))),
+						vars(new AbstractTranslationTree<>(new PositionReference<>(1))))));
 
 		// VF(pi) -> v(pi)
 		prod = grammar.addProduction(
 				VerbForm,
 				key(Finiteness.Finite),
 				new ParameterizedSymbol<>(Verb, copy));
-		toGerman.addTranslation(prod, parameterManager, translate(
-				new ConcreteTranslationTree<>(GermanSymbol.VerbForm, germanize, translate(
-						new AbstractTranslationTree<>(new PositionReference<>(0))))));
+		toGerman.addTranslation(prod, parameterManager,
+				vars(new ConcreteTranslationTree<>(GermanSymbol.VerbForm, germanize,
+						vars(new AbstractTranslationTree<>(new PositionReference<>(0))))));
 		prod = grammar.addProduction(
 				VerbForm,
 				key(Finiteness.Infinitive),
 				new ParameterizedSymbol<>(Infinitive, copy));
-		toGerman.addTranslation(prod, parameterManager, translate(
-				new ConcreteTranslationTree<>(GermanSymbol.VerbForm, germanize, translate(
-						new AbstractTranslationTree<>(new PositionReference<>(0))))));
+		toGerman.addTranslation(prod, parameterManager,
+				vars(new ConcreteTranslationTree<>(GermanSymbol.VerbForm, germanize,
+						vars(new AbstractTranslationTree<>(new PositionReference<>(0))))));
 		prod = grammar.addProduction(
 				VerbForm,
 				key(Finiteness.Participle),
 				new ParameterizedSymbol<>(Participle, copy));
-		toGerman.addTranslation(prod, parameterManager, translate(
-				new ConcreteTranslationTree<>(GermanSymbol.VerbForm, germanize, translate(
-						new AbstractTranslationTree<>(new PositionReference<>(0))))));
+		toGerman.addTranslation(prod, parameterManager,
+				vars(new ConcreteTranslationTree<>(GermanSymbol.VerbForm, germanize,
+						vars(new AbstractTranslationTree<>(new PositionReference<>(0))))));
 		prod = grammar.addProduction(
 				VerbForm,
 				key(Finiteness.Gerund),
@@ -153,110 +153,110 @@ public final class LatinGrammar {
 		prod = grammar.addProduction(
 				Arguments,
 				key(Valency.Null));
-		toGerman.addTranslation(prod, parameterManager, translate(
-				new ConcreteTranslationTree<>(GermanSymbol.Arguments, germanize)));
+		toGerman.addTranslation(prod, parameterManager,
+				vars(new ConcreteTranslationTree<>(GermanSymbol.Arguments, germanize)));
 		// Args(pi : SingleVal) -> epsilon
 		prod = grammar.addProduction(
 				Arguments,
 				key(Valency.Single));
-		toGerman.addTranslation(prod, parameterManager, translate(
-				new ConcreteTranslationTree<>(GermanSymbol.Arguments, germanize)));
+		toGerman.addTranslation(prod, parameterManager,
+				vars(new ConcreteTranslationTree<>(GermanSymbol.Arguments, germanize)));
 		// Args(pi : Kopula) -> NP(pi)
 		prod = grammar.addProduction(
 				Arguments,
 				key(Valency.Copula),
 				new ParameterizedSymbol<>(NounPhrase, copy));
-		toGerman.addTranslation(prod, parameterManager, translate(
-				new ConcreteTranslationTree<>(GermanSymbol.Arguments, germanize, translate(
-						new AbstractTranslationTree<>(new PositionReference<>(0))))));
+		toGerman.addTranslation(prod, parameterManager,
+				vars(new ConcreteTranslationTree<>(GermanSymbol.Arguments, germanize,
+						vars(new AbstractTranslationTree<>(new PositionReference<>(0))))));
 		// Args(pi : GenVal) -> NP(Gen)
 		prod = grammar.addProduction(
 				Arguments,
 				key(Valency.Genitive),
 				new ParameterizedSymbol<>(NounPhrase, specify(parameterManager, parameterizer, Casus.Genitive)));
-		toGerman.addTranslation(prod, parameterManager, translate(
-				new ConcreteTranslationTree<>(GermanSymbol.Arguments, germanize, translate(
-						new AbstractTranslationTree<>(new PositionReference<>(0))))));
+		toGerman.addTranslation(prod, parameterManager,
+				vars(new ConcreteTranslationTree<>(GermanSymbol.Arguments, germanize,
+						vars(new AbstractTranslationTree<>(new PositionReference<>(0))))));
 		// Args(pi : DatVal) -> NP(Dat)
 		prod = grammar.addProduction(
 				Arguments,
 				key(Valency.Dative),
 				new ParameterizedSymbol<>(NounPhrase, specify(parameterManager, parameterizer, Casus.Dative)));
-		toGerman.addTranslation(prod, parameterManager, translate(
-				new ConcreteTranslationTree<>(GermanSymbol.Arguments, germanize, translate(
-						new AbstractTranslationTree<>(new PositionReference<>(0))))));
+		toGerman.addTranslation(prod, parameterManager,
+				vars(new ConcreteTranslationTree<>(GermanSymbol.Arguments, germanize,
+						vars(new AbstractTranslationTree<>(new PositionReference<>(0))))));
 		// Args(pi : AkkVal Akt) -> NP(Akk)
 		prod = grammar.addProduction(
 				Arguments,
 				key(Valency.Accusative, Voice.Active),
 				new ParameterizedSymbol<>(NounPhrase, specify(parameterManager, parameterizer, Casus.Accusative)));
-		toGerman.addTranslation(prod, parameterManager, translate(
-				new ConcreteTranslationTree<>(GermanSymbol.Arguments, germanize, translate(
-						new AbstractTranslationTree<>(new PositionReference<>(0))))));
+		toGerman.addTranslation(prod, parameterManager,
+				vars(new ConcreteTranslationTree<>(GermanSymbol.Arguments, germanize,
+						vars(new AbstractTranslationTree<>(new PositionReference<>(0))))));
 		// Args(pi : AkkVal Pass) -> epsilon
 		prod = grammar.addProduction(
 				Arguments,
 				key(Valency.Accusative, Voice.Passive));
-		toGerman.addTranslation(prod, parameterManager, translate(
-				new ConcreteTranslationTree<>(GermanSymbol.Arguments, germanize)));
+		toGerman.addTranslation(prod, parameterManager,
+				vars(new ConcreteTranslationTree<>(GermanSymbol.Arguments, germanize)));
 		// Args(pi : AkkDatVal Akt) -> NP(Akk) NP(Dat)
 		prod = grammar.addProduction(
 				Arguments,
 				key(Valency.AccusativeDative, Voice.Active),
 				new ParameterizedSymbol<>(NounPhrase, specify(parameterManager, parameterizer, Casus.Accusative)),
 				new ParameterizedSymbol<>(NounPhrase, specify(parameterManager, parameterizer, Casus.Dative)));
-		toGerman.addTranslation(prod, parameterManager, translate(
-				new ConcreteTranslationTree<>(GermanSymbol.Arguments, germanize, translate(
-						new AbstractTranslationTree<>(new PositionReference<>(0)),
-						new AbstractTranslationTree<>(new PositionReference<>(1))))));
+		toGerman.addTranslation(prod, parameterManager,
+				vars(new ConcreteTranslationTree<>(GermanSymbol.Arguments, germanize,
+						vars(new AbstractTranslationTree<>(new PositionReference<>(0))),
+						vars(new AbstractTranslationTree<>(new PositionReference<>(1))))));
 		// Args(pi : AkkDatVal Pass) -> NP(Dat)
 		prod = grammar.addProduction(
 				Arguments,
 				key(Valency.AccusativeDative, Voice.Passive),
 				new ParameterizedSymbol<>(NounPhrase, specify(parameterManager, parameterizer, Casus.Dative)));
-		toGerman.addTranslation(prod, parameterManager, translate(
-				new ConcreteTranslationTree<>(GermanSymbol.Arguments, germanize, translate(
-						new AbstractTranslationTree<>(new PositionReference<>(0))))));
+		toGerman.addTranslation(prod, parameterManager,
+				vars(new ConcreteTranslationTree<>(GermanSymbol.Arguments, germanize,
+						vars(new AbstractTranslationTree<>(new PositionReference<>(0))))));
 		// Args(pi : InfVal) -> VP(Inf Ind)
 		prod = grammar.addProduction(
 				Arguments,
 				key(Valency.Infinitive),
 				new ParameterizedSymbol<>(VerbPhrase, specify(parameterManager, parameterizer, Finiteness.Infinitive, Mood.Indicative)));
-		toGerman.addTranslation(prod, parameterManager, translate(
-				new ConcreteTranslationTree<>(GermanSymbol.Arguments, germanize, translate(
-						new AbstractTranslationTree<>(new PositionReference<>(0))))));
+		toGerman.addTranslation(prod, parameterManager,
+				vars(new ConcreteTranslationTree<>(GermanSymbol.Arguments, germanize,
+						vars(new AbstractTranslationTree<>(new PositionReference<>(0))))));
 
 		// AdvP var
 		prod = grammar.addProduction(
 				AdverbalPhraseVar);
-		toGerman.addTranslation(prod, parameterManager, translate(
-				new ConcreteTranslationTree<>(GermanSymbol.AdverbalPhraseVar, germanize)));
+		toGerman.addTranslation(prod, parameterManager,
+				vars(new ConcreteTranslationTree<>(GermanSymbol.AdverbalPhraseVar, germanize)));
 		prod = grammar.addProduction(
 				AdverbalPhraseVar,
 				AdverbalPhrase,
 				AdverbalPhraseVar);
-		toGerman.addTranslation(prod, parameterManager, translate(
-				new ConcreteTranslationTree<>(GermanSymbol.AdverbalPhraseVar, germanize, translate(
-						new AbstractTranslationTree<>(new PositionReference<>(0)),
-						new AbstractTranslationTree<>(new PositionReference<>(1)),
-						new AbstractTranslationTree<>(new PositionReference<>(2))))));
+		toGerman.addTranslation(prod, parameterManager,
+				vars(new ConcreteTranslationTree<>(GermanSymbol.AdverbalPhraseVar, germanize,
+						vars(new AbstractTranslationTree<>(new PositionReference<>(0))),
+						vars(new AbstractTranslationTree<>(new PositionReference<>(1))),
+						vars(new AbstractTranslationTree<>(new PositionReference<>(2))))));
 
 		// AdvP -> Adv
 		prod = grammar.addProduction(
 				AdverbalPhrase,
 				Adverb);
-		toGerman.addTranslation(prod, parameterManager, translate(
-				new ConcreteTranslationTree<>(GermanSymbol.AdverbalPhrase, germanize, translate(
-						new AbstractTranslationTree<>(new PositionReference<>(0))))));
+		toGerman.addTranslation(prod, parameterManager,
+				vars(new ConcreteTranslationTree<>(GermanSymbol.AdverbalPhrase, germanize,
+						vars(new AbstractTranslationTree<>(new PositionReference<>(0))))));
 		// AdvP(pi) -> subj(pi) S(pi)
 		prod = grammar.addProduction(
 				AdverbalPhrase,
 				new ParameterizedSymbol<>(Subjunction, copy),
 				new ParameterizedSymbol<>(Sentence, new CoordinativeFormParameterExpression<>(parameterManager, parameterizer).with(new SubjunctionMoodPropertyExpression())));
-		toGerman.addTranslation(prod, parameterManager, translate(
-				new ConcreteTranslationTree<>(GermanSymbol.AdverbalPhrase, germanize, translate(
-						new AbstractTranslationTree<>(new PositionReference<>(0)),
-						new AbstractTranslationTree<>(new PositionReference<>(1))))));
+		toGerman.addTranslation(prod, parameterManager,
+				vars(new ConcreteTranslationTree<>(GermanSymbol.AdverbalPhrase, germanize,
+						vars(new AbstractTranslationTree<>(new PositionReference<>(0))),
+						vars(new AbstractTranslationTree<>(new PositionReference<>(1))))));
 		// AdvP -> NP(Abl)
 		prod = grammar.addProduction(
 				AdverbalPhrase,
@@ -273,57 +273,57 @@ public final class LatinGrammar {
 				new ParameterizedSymbol<>(AdjectivePhraseOpt, copy),
 				new ParameterizedSymbol<>(NounPhraseOpt, specify(parameterManager, parameterizer, Casus.Genitive)),
 				new ParameterizedSymbol<>(NounPhraseOpt, copy));
-		toGerman.addTranslation(prod, parameterManager, translate(
-				new ConcreteTranslationTree<>(GermanSymbol.NounPhrase, germanize, translate(
-						new ConcreteTranslationTree<>(GermanSymbol.Article, germanize),
-						new AbstractTranslationTree<>(new PositionReference<>(1)),
-						new AbstractTranslationTree<>(new PositionReference<>(0)),
-						new AbstractTranslationTree<>(new PositionReference<>(3)),
-						new AbstractTranslationTree<>(new PositionReference<>(2))))));
+		toGerman.addTranslation(prod, parameterManager,
+				vars(new ConcreteTranslationTree<>(GermanSymbol.NounPhrase, germanize,
+						vars(new ConcreteTranslationTree<>(GermanSymbol.Article, germanize)),
+						vars(new AbstractTranslationTree<>(new PositionReference<>(1))),
+						vars(new AbstractTranslationTree<>(new PositionReference<>(0))),
+						vars(new AbstractTranslationTree<>(new PositionReference<>(3))),
+						vars(new AbstractTranslationTree<>(new PositionReference<>(2))))));
 
 		// NF(pi) -> n(pi)
 		prod = grammar.addProduction(
 				NounForm,
 				new ParameterizedSymbol<>(Noun, copy));
-		toGerman.addTranslation(prod, parameterManager, translate(
-				new ConcreteTranslationTree<>(GermanSymbol.NounForm, germanize, translate(
-						new AbstractTranslationTree<>(new PositionReference<>(0))))));
+		toGerman.addTranslation(prod, parameterManager,
+				vars(new ConcreteTranslationTree<>(GermanSymbol.NounForm, germanize,
+						vars(new AbstractTranslationTree<>(new PositionReference<>(0))))));
 		// NP(pi : Nom / Akk) -> S(pi : Inf Pr�s/Perf/Fut Akk)
 		prod = grammar.addProduction(
 				NounPhrase,
 				key(Casus.Nominative, Casus.Accusative),
 				new ParameterizedSymbol<>(Sentence, specify(parameterManager, parameterizer, Casus.Accusative, Tense.Present, Tense.Perfect, Tense.Future, Finiteness.Infinitive)));
 		// TODO
-		toGerman.addTranslation(prod, parameterManager, translate(
-				new ConcreteTranslationTree<>(GermanSymbol.NounPhrase, germanize, translate(
-						new ConcreteTranslationTree<>(GermanSymbol.Conjunction, germanize),
-						new AbstractTranslationTree<>(new PositionReference<>(0))))));
+		toGerman.addTranslation(prod, parameterManager,
+				vars(new ConcreteTranslationTree<>(GermanSymbol.NounPhrase, germanize,
+						vars(new ConcreteTranslationTree<>(GermanSymbol.Conjunction, germanize)),
+						vars(new AbstractTranslationTree<>(new PositionReference<>(0))))));
 
 		// AP(pi) -> adj(pi) AdvP(pi)*
 		prod = grammar.addProduction(
 				AdjectivePhrase,
 				new ParameterizedSymbol<>(Adjective, copy),
 				new ParameterizedSymbol<>(AdverbalPhraseVar, copy));
-		toGerman.addTranslation(prod, parameterManager, translate(
-				new ConcreteTranslationTree<>(GermanSymbol.AdjectivePhrase, germanize, translate(
-						new AbstractTranslationTree<>(new PositionReference<>(0)),
-						new AbstractTranslationTree<>(new PositionReference<>(1))))));
+		toGerman.addTranslation(prod, parameterManager, vars(
+				new ConcreteTranslationTree<>(GermanSymbol.AdjectivePhrase, germanize,
+						vars(new AbstractTranslationTree<>(new PositionReference<>(0))),
+						vars(new AbstractTranslationTree<>(new PositionReference<>(1))))));
 		// AP(pi) -> pron(pi) AdvP(pi)*
 		prod = grammar.addProduction(
 				AdjectivePhrase,
 				new ParameterizedSymbol<>(Pronoun, copy),
 				new ParameterizedSymbol<>(AdverbalPhraseVar, copy));
-		toGerman.addTranslation(prod, parameterManager, translate(
-				new ConcreteTranslationTree<>(GermanSymbol.AdjectivePhrase, germanize, translate(
-						new AbstractTranslationTree<>(new PositionReference<>(0)),
-						new AbstractTranslationTree<>(new PositionReference<>(1))))));
+		toGerman.addTranslation(prod, parameterManager,
+				vars(new ConcreteTranslationTree<>(GermanSymbol.AdjectivePhrase, germanize,
+						vars(new AbstractTranslationTree<>(new PositionReference<>(0))),
+						vars(new AbstractTranslationTree<>(new PositionReference<>(1))))));
 		// AP(pi) -> VP(Participle)
 		prod = grammar.addProduction(
 				AdjectivePhrase,
 				new ParameterizedSymbol<>(VerbPhrase, new IndividualFormParameterExpression<>(parameterManager, parameterizer).specify(Finiteness.Participle).copy(Casus.TYPE, Numerus.TYPE, Genus.TYPE)));
-		toGerman.addTranslation(prod, parameterManager, translate(
-				new ConcreteTranslationTree<>(GermanSymbol.AdjectivePhrase, germanize, translate(
-						new AbstractTranslationTree<>(new PositionReference<>(0))))));
+		toGerman.addTranslation(prod, parameterManager,
+				vars(new ConcreteTranslationTree<>(GermanSymbol.AdjectivePhrase, germanize,
+						vars(new AbstractTranslationTree<>(new PositionReference<>(0))))));
 
 		// coordinations
 
@@ -334,11 +334,11 @@ public final class LatinGrammar {
 				new ParameterizedSymbol<>(NounPhrase, copy(parameterManager, parameterizer, Casus.TYPE)),
 				new ParameterizedSymbol<>(Conjunction, any),
 				new ParameterizedSymbol<>(NounPhrase, copy(parameterManager, parameterizer, Casus.TYPE)));
-		toGerman.addTranslation(prod, parameterManager, translate(
-				new ConcreteTranslationTree<>(GermanSymbol.NounPhrase, germanize, translate(
-						new AbstractTranslationTree<>(new PositionReference<>(0)),
-						new AbstractTranslationTree<>(new PositionReference<>(1)),
-						new AbstractTranslationTree<>(new PositionReference<>(2))))));
+		toGerman.addTranslation(prod, parameterManager,
+				vars(new ConcreteTranslationTree<>(GermanSymbol.NounPhrase, germanize,
+						vars(new AbstractTranslationTree<>(new PositionReference<>(0))),
+						vars(new AbstractTranslationTree<>(new PositionReference<>(1))),
+						vars(new AbstractTranslationTree<>(new PositionReference<>(2))))));
 
 		// AP(pi) -> AP(?) [conj] AP(?)
 		prod = grammar.addProduction(
@@ -346,19 +346,19 @@ public final class LatinGrammar {
 				new ParameterizedSymbol<>(AdjectivePhrase, copy),
 				new ParameterizedSymbol<>(Conjunction, any),
 				new ParameterizedSymbol<>(AdjectivePhrase, copy));
-		toGerman.addTranslation(prod, parameterManager, translate(
-				new ConcreteTranslationTree<>(GermanSymbol.AdjectivePhrase, germanize, translate(
-						new AbstractTranslationTree<>(new PositionReference<>(0)),
-						new AbstractTranslationTree<>(new PositionReference<>(1)),
-						new AbstractTranslationTree<>(new PositionReference<>(2))))));
+		toGerman.addTranslation(prod, parameterManager,
+				vars(new ConcreteTranslationTree<>(GermanSymbol.AdjectivePhrase, germanize,
+						vars(new AbstractTranslationTree<>(new PositionReference<>(0))),
+						vars(new AbstractTranslationTree<>(new PositionReference<>(1))),
+						vars(new AbstractTranslationTree<>(new PositionReference<>(2))))));
 		prod = grammar.addProduction(
 				AdjectivePhrase,
 				new ParameterizedSymbol<>(AdjectivePhrase, copy),
 				new ParameterizedSymbol<>(AdjectivePhrase, copy));
-		toGerman.addTranslation(prod, parameterManager, translate(
-				new ConcreteTranslationTree<>(GermanSymbol.AdjectivePhrase, germanize, translate(
-						new AbstractTranslationTree<>(new PositionReference<>(0)),
-						new AbstractTranslationTree<>(new PositionReference<>(1))))));
+		toGerman.addTranslation(prod, parameterManager,
+				vars(new ConcreteTranslationTree<>(GermanSymbol.AdjectivePhrase, germanize,
+						vars(new AbstractTranslationTree<>(new PositionReference<>(0))),
+						vars(new AbstractTranslationTree<>(new PositionReference<>(1))))));
 
 		// VP(pi) -> VP(pi) conj VP(pi)
 		prod = grammar.addProduction(
@@ -366,11 +366,11 @@ public final class LatinGrammar {
 				new ParameterizedSymbol<>(VerbPhrase, copy(parameterManager, parameterizer, Casus.TYPE, Numerus.TYPE, Genus.TYPE, Finiteness.TYPE)),
 				new ParameterizedSymbol<>(Conjunction, any),
 				new ParameterizedSymbol<>(VerbPhrase, copy(parameterManager, parameterizer, Casus.TYPE, Numerus.TYPE, Genus.TYPE, Finiteness.TYPE)));
-		toGerman.addTranslation(prod, parameterManager, translate(
-				new ConcreteTranslationTree<>(GermanSymbol.VerbPhrase, germanize, translate(
-						new AbstractTranslationTree<>(new PositionReference<>(0)),
-						new AbstractTranslationTree<>(new PositionReference<>(1)),
-						new AbstractTranslationTree<>(new PositionReference<>(2))))));
+		toGerman.addTranslation(prod, parameterManager,
+				vars(new ConcreteTranslationTree<>(GermanSymbol.VerbPhrase, germanize,
+						vars(new AbstractTranslationTree<>(new PositionReference<>(0))),
+						vars(new AbstractTranslationTree<>(new PositionReference<>(1))),
+						vars(new AbstractTranslationTree<>(new PositionReference<>(2))))));
 
 		// VF(pi) -> VF(pi) conj VF(pi)
 		prod = grammar.addProduction(
@@ -378,39 +378,39 @@ public final class LatinGrammar {
 				new ParameterizedSymbol<>(VerbForm, copy),
 				new ParameterizedSymbol<>(Conjunction, any),
 				new ParameterizedSymbol<>(VerbForm, copy));
-		toGerman.addTranslation(prod, parameterManager, translate(
-				new ConcreteTranslationTree<>(GermanSymbol.VerbForm, germanize, translate(
-						new AbstractTranslationTree<>(new PositionReference<>(0)),
-						new AbstractTranslationTree<>(new PositionReference<>(1)),
-						new AbstractTranslationTree<>(new PositionReference<>(2))))));
-		
+		toGerman.addTranslation(prod, parameterManager,
+				vars(new ConcreteTranslationTree<>(GermanSymbol.VerbForm, germanize,
+						vars(new AbstractTranslationTree<>(new PositionReference<>(0))),
+						vars(new AbstractTranslationTree<>(new PositionReference<>(1))),
+						vars(new AbstractTranslationTree<>(new PositionReference<>(2))))));
+
 		makeOptional(grammar, NounPhraseOpt, NounPhrase, copy, GermanSymbol.NounPhraseOpt, GermanSymbol.NounPhrase, toGerman, germanize);
 		makeOptional(grammar, AdjectivePhraseOpt, AdjectivePhrase, copy, GermanSymbol.AdjectivePhraseOpt, GermanSymbol.AdjectivePhrase, toGerman, germanize);
 		makeOptional(grammar, PronounOpt, Pronoun, copy, GermanSymbol.PronounOpt, GermanSymbol.Pronoun, toGerman, germanize);
-		
+
 		// Terminal translations
-		toGerman.addTranslation(Verb, parameterManager, translate(
-				new ConcreteTranslationTree<>(GermanSymbol.Verb, germanize)));
-		toGerman.addTranslation(Noun, parameterManager, translate(
-				new ConcreteTranslationTree<>(GermanSymbol.Noun, germanize)));
-		toGerman.addTranslation(Adverb, parameterManager, translate(
-				new ConcreteTranslationTree<>(GermanSymbol.Adverb, germanize)));
-		toGerman.addTranslation(Adjective, parameterManager, translate(
-				new ConcreteTranslationTree<>(GermanSymbol.Adjective, germanize)));
-		toGerman.addTranslation(Conjunction, parameterManager, translate(
-				new ConcreteTranslationTree<>(GermanSymbol.Conjunction, germanize)));
-		toGerman.addTranslation(Subjunction, parameterManager, translate(
-				new ConcreteTranslationTree<>(GermanSymbol.Subjunction, germanize)));
-		toGerman.addTranslation(Infinitive, parameterManager, translate(
-				new ConcreteTranslationTree<>(GermanSymbol.Infinitive, germanize)));
-		toGerman.addTranslation(Participle, parameterManager, translate(
-				new ConcreteTranslationTree<>(GermanSymbol.Participle, germanize)));
-		toGerman.addTranslation(Preposition, parameterManager, translate(
-				new ConcreteTranslationTree<>(GermanSymbol.Preposition, germanize)));
-		toGerman.addTranslation(Interjection, parameterManager, translate(
-				new ConcreteTranslationTree<>(GermanSymbol.Interjection, germanize)));
-		toGerman.addTranslation(Pronoun, parameterManager, translate(
-				new ConcreteTranslationTree<>(GermanSymbol.Pronoun, germanize)));
+		toGerman.addTranslation(Verb, parameterManager,
+				vars(new ConcreteTranslationTree<>(GermanSymbol.Verb, germanize)));
+		toGerman.addTranslation(Noun, parameterManager,
+				vars(new ConcreteTranslationTree<>(GermanSymbol.Noun, germanize)));
+		toGerman.addTranslation(Adverb, parameterManager,
+				vars(new ConcreteTranslationTree<>(GermanSymbol.Adverb, germanize)));
+		toGerman.addTranslation(Adjective, parameterManager,
+				vars(new ConcreteTranslationTree<>(GermanSymbol.Adjective, germanize)));
+		toGerman.addTranslation(Conjunction, parameterManager,
+				vars(new ConcreteTranslationTree<>(GermanSymbol.Conjunction, germanize)));
+		toGerman.addTranslation(Subjunction, parameterManager,
+				vars(new ConcreteTranslationTree<>(GermanSymbol.Subjunction, germanize)));
+		toGerman.addTranslation(Infinitive, parameterManager,
+				vars(new ConcreteTranslationTree<>(GermanSymbol.Infinitive, germanize)));
+		toGerman.addTranslation(Participle, parameterManager,
+				vars(new ConcreteTranslationTree<>(GermanSymbol.Participle, germanize)));
+		toGerman.addTranslation(Preposition, parameterManager,
+				vars(new ConcreteTranslationTree<>(GermanSymbol.Preposition, germanize)));
+		toGerman.addTranslation(Interjection, parameterManager,
+				vars(new ConcreteTranslationTree<>(GermanSymbol.Interjection, germanize)));
+		toGerman.addTranslation(Pronoun, parameterManager,
+				vars(new ConcreteTranslationTree<>(GermanSymbol.Pronoun, germanize)));
 	}
 
 	public static Grammar<Token, FormParameter> makeGrammar() {
