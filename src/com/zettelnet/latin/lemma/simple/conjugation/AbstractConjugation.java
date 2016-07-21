@@ -20,10 +20,6 @@ import com.zettelnet.latin.lemma.FormProvider;
  * Generates a value of a {@link Form} of a {@link ConjugableLemma}.
  * <p>
  * <code>form = stem + linking vowel (including tense sign) + ending</code>
- * 
- * @param noun
- * @param form
- * @return
  */
 public abstract class AbstractConjugation implements FormProvider<ConjugableLemma> {
 

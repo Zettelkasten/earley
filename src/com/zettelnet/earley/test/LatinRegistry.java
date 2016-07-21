@@ -70,7 +70,6 @@ public final class LatinRegistry {
 		// TODO impersonal in the passive
 		register(new SimpleVerb("ven", "v_en", "vent", Conjugation.Fourth, Valency.Single), "come");
 		// TODO irregular short imperative
-		register(new SimpleVerb("d_ic", "d_ix", "dict", Conjugation.Third, Valency.Single), "say");
 		register(new SimpleVerb("d_ic", "d_ix", "dict", Conjugation.Third, Valency.Accusative), "say");
 		// TODO quis?
 		register(new SimpleConjunction("sed"), "but");
@@ -147,6 +146,7 @@ public final class LatinRegistry {
 	static {
 		register(new SimpleNoun("carmen", "carmin", Declension.Third, Genus.Neuter), "song");
 		register(new SimpleVerb("d", "ded", "dat", Conjugation.First, Valency.AccusativeDative), "give");
+		register(new SimpleVerb("am", "amav", "amat", Conjugation.First, Valency.Accusative), "love");
 	}
 	
 	// subjunctions

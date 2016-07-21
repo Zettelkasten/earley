@@ -16,14 +16,15 @@ import com.zettelnet.latin.form.Numerus;
 import com.zettelnet.latin.lemma.FormProvider;
 
 /**
- * Generates a value of a {@link Form} of a {@link Noun}.
+ * Generates a value of a {@link Form} of a
+ * <strong>{@link DeclinableLemma}</strong>.
  * <p>
  * <code>form = base + ending</code>
  * <p>
  * The following extra rules apply:
  * <ul>
- * <li>the Nominative Singular is the special {@link Noun#getNominalForm()} form
- * </li>
+ * <li>the Nominative Singular is the special
+ * {@link DeclinableLemma#getNominalForm()} form</li>
  * <li>for Accusative Neuter forms, the Nominative form is used</li>
  * <li>Nominative Plural Neuter ends on <code>-a</code></li>
  * <li>the Vocative forms equal the Nominative forms</li>

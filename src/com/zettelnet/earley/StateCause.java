@@ -41,6 +41,7 @@ public interface StateCause<T, P extends Parameter> {
 			this.parameter = scannedTokenParameter;
 		}
 
+		@Override
 		public State<T, P> getPreState() {
 			return pre;
 		}
@@ -68,6 +69,7 @@ public interface StateCause<T, P extends Parameter> {
 			return child;
 		}
 
+		@Override
 		public State<T, P> getPreState() {
 			return pre;
 		}
@@ -76,13 +78,28 @@ public interface StateCause<T, P extends Parameter> {
 	public class Epsilon<T, P extends Parameter> implements StateCause<T, P> {
 
 		private final State<T, P> pre;
-
-		public Epsilon(final State<T, P> preState) {
+		
+		private final Production<T, P> epsilonProduction;
+		private final P epsilonParameter;
+		
+		public Epsilon(final State<T, P> preState, final Production<T, P> epsilonProduction, final P epsilonParameter) {
 			this.pre = preState;
+			
+			this.epsilonProduction = epsilonProduction;
+			this.epsilonParameter = epsilonParameter;
 		}
 
+		@Override
 		public State<T, P> getPreState() {
 			return pre;
+		}
+		
+		public Production<T, P> getEpsilonProduction() {
+			return epsilonProduction;
+		}
+		
+		public P getEpsilonParameter() {
+			return epsilonParameter;
 		}
 	}
 }
