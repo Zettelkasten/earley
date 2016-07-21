@@ -14,12 +14,14 @@ import com.zettelnet.earley.tree.SyntaxTreeVariant;
 
 public class SimpleTranslator<T, P extends Parameter, U, Q extends Parameter> implements Translator<T, P, U, Q> {
 
+	private final Grammar<T, P> sourceGrammar;
 	private final ParameterManager<T, P> parameterManager;
 	private final TokenFactory<U, Q> tokenFactory;
 
 	private final TranslationSet<T, P, U, Q> translations;
 
 	public SimpleTranslator(final Grammar<T, P> sourceGrammar, final TokenFactory<U, Q> tokenFactory, final TranslationSet<T, P, U, Q> translations) {
+		this.sourceGrammar = sourceGrammar;
 		this.parameterManager = sourceGrammar.getParameterManager();
 		this.tokenFactory = tokenFactory;
 		this.translations = translations;
@@ -53,5 +55,15 @@ public class SimpleTranslator<T, P extends Parameter, U, Q extends Parameter> im
 	@Override
 	public Collection<U> makeToken(Terminal<U> symbol, Q parameter) {
 		return tokenFactory.makeToken(parameter);
+	}
+	
+	@Override
+	public Grammar<T, P> getSourceGrammar() {
+		return sourceGrammar;
+	}
+	
+	@Override
+	public TranslationSet<T, P, U, Q> getTranslations() {
+		return translations;
 	}
 }
