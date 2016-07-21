@@ -104,6 +104,10 @@ public final class LatinGrammar {
 		// S(pi) -> VP(pi)
 		prod = grammar.addProduction(Sentence,
 				new ParameterizedSymbol<>(VerbPhrase, copy));
+		toGerman.addTranslation(prod, parameterManager,
+				vars(new ConcreteTranslationTree<>(GermanSymbol.Sentence, germanize,
+						vars(new ConcreteTranslationTree<>(GermanSymbol.Pronoun, germanize)),
+						vars(new AbstractTranslationTree<>(new PositionReference<>(0))))));
 
 		// VP(pi) -> VF(pi) Args(pi) AdvP*
 		prod = grammar.addProduction(
