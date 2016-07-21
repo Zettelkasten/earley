@@ -1,15 +1,17 @@
 package com.zettelnet.earley.translate;
 
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import com.zettelnet.earley.Grammar;
+import com.zettelnet.earley.Production;
 import com.zettelnet.earley.param.Parameter;
 import com.zettelnet.earley.symbol.Symbol;
 import com.zettelnet.earley.symbol.Terminal;
@@ -40,6 +42,7 @@ public class TranslationPrinter<T, P extends Parameter, U, Q extends Parameter> 
 		out.print("<body>");
 		out.print("<div class='container'>");
 
+		printTranslationSet(out, translator.getSourceGrammar(), translator.getTranslations());
 		printTree(out, source);
 
 		out.print("<div class='container footer'>");
@@ -52,22 +55,62 @@ public class TranslationPrinter<T, P extends Parameter, U, Q extends Parameter> 
 		out.print("</html>");
 	}
 
+	public void printTranslationSet(PrintStream out, Grammar<T, P> sourceGrammar, TranslationSet<T, P, U, Q> translations) {
+		out.print("<table>");
+
+		for (Production<T, P> production : sourceGrammar.getProductions()) {
+			for (Translation<T, P, U, Q> translation : translations.getTranslations(production)) {
+				out.print("<tr>");
+				out.printf("<td>%s</td>", production);
+				out.print("<td>");
+				printTranslation(out, translation);
+				out.print("</td>");
+				out.print("</tr>");
+			}
+		}
+		out.print("</table>");
+	}
+
+	public void printTranslation(PrintStream out, Translation<T, P, U, Q> translation) {
+		out.printf("%s &#8658; ", translation.key());
+		out.print(translation);
+	}
+
 	public void printTree(PrintStream out, SyntaxTree<T, P> source) {
 		out.print("<div class='tree-translation'>");
 
-		for (SyntaxTreeVariant<T, P> sourceVariant : source.getVariants()) {
+		Set<SyntaxTreeVariant<T, P>> variants = source.getVariantsSet();
+		boolean useList = variants.size() > 1;
+
+		if (useList) {
+			out.print("<ol class='source-variants'>");
+		}
+
+		for (SyntaxTreeVariant<T, P> sourceVariant : variants) {
+			if (useList) {
+				out.print("<li>");
+			}
+
 			out.printf("%s &#8658; ", sourceVariant.getRootSymbol());
-			Collection<SyntaxTree<T, P>> subCalls = printTranslationTree(out, sourceVariant);
+			List<SyntaxTree<T, P>> subCalls = printTranslationTree(out, sourceVariant);
 			for (SyntaxTree<T, P> subCall : subCalls) {
 				printTree(out, subCall);
 			}
+
+			if (useList) {
+				out.print("</li>");
+			}
+		}
+
+		if (useList) {
+			out.print("</ol>");
 		}
 
 		out.print("</div>");
 	}
 
-	public Collection<SyntaxTree<T, P>> printTranslationTree(PrintStream out, SyntaxTreeVariant<T, P> source, TranslationTree<T, P, U, Q> translation) {
-		Set<SyntaxTree<T, P>> subCalls = new HashSet<>();
+	public List<SyntaxTree<T, P>> printTranslationTree(PrintStream out, SyntaxTreeVariant<T, P> source, TranslationTree<T, P, U, Q> translation) {
+		List<SyntaxTree<T, P>> subCalls = new ArrayList<>();
 
 		Iterator<TranslationTreeVariant<T, P, U, Q>> i = translation.getVariants().iterator();
 		while (i.hasNext()) {
@@ -80,7 +123,7 @@ public class TranslationPrinter<T, P extends Parameter, U, Q extends Parameter> 
 		return subCalls;
 	}
 
-	public Collection<SyntaxTree<T, P>> printTranslationTreeVariant(PrintStream out, SyntaxTreeVariant<T, P> sourceVariant, TranslationTreeVariant<T, P, U, Q> translationVariant) {
+	public List<SyntaxTree<T, P>> printTranslationTreeVariant(PrintStream out, SyntaxTreeVariant<T, P> sourceVariant, TranslationTreeVariant<T, P, U, Q> translationVariant) {
 		Symbol<T> sourceSymbol = sourceVariant.getRootSymbol();
 		P sourceParameter = sourceVariant.getParameter();
 
@@ -88,7 +131,8 @@ public class TranslationPrinter<T, P extends Parameter, U, Q extends Parameter> 
 			SyntaxTree<T, P> referenced = translationVariant.getAbstractReference().getSourceTree(sourceVariant);
 
 			Iterator<SyntaxTreeVariant<T, P>> referencedVariants = referenced.getVariants().iterator();
-			out.printf("~%s", referencedVariants.next().getRootSymbol());
+			out.print("~");
+			printSourceSymbol(out, referencedVariants.next().getRootSymbol());
 			if (referencedVariants.hasNext()) {
 				out.print("...");
 			}
@@ -104,18 +148,20 @@ public class TranslationPrinter<T, P extends Parameter, U, Q extends Parameter> 
 				} else {
 					Iterator<U> i = tokens.iterator();
 					while (i.hasNext()) {
-						out.printf("%s = <em>%s</em>", translationVariant.getRootSymbol(), i.next());
+						printTargetSymbol(out, translationVariant.getRootSymbol());
+						out.printf(" = <em>%s</em>", i.next());
 						if (i.hasNext()) {
 							out.print(" / ");
 						}
 					}
 				}
 
-				return Collections.emptySet();
+				return Collections.emptyList();
 			} else {
-				Set<SyntaxTree<T, P>> subCalls = new HashSet<>();
+				List<SyntaxTree<T, P>> subCalls = new ArrayList<>();
 
-				out.printf("%s { ", sourceVariant.getRootSymbol(), translationVariant.getRootSymbol());
+				printTargetSymbol(out, translationVariant.getRootSymbol());
+				out.print(" { ");
 				List<TranslationTree<T, P, U, Q>> children = translationVariant.getChildren();
 
 				if (children.isEmpty()) {
@@ -133,14 +179,31 @@ public class TranslationPrinter<T, P extends Parameter, U, Q extends Parameter> 
 		}
 	}
 
-	public Collection<SyntaxTree<T, P>> printTranslationTree(PrintStream out, SyntaxTreeVariant<T, P> sourceVariant) {
-		Set<SyntaxTree<T, P>> subCalls = new HashSet<>();
-		
-		for (TranslationTree<T, P, U, Q> translation : translator.getTranslationTrees(sourceVariant)) {
-			for (TranslationTreeVariant<T, P, U, Q> translationVariant : translation.getVariants()) {
-				subCalls.addAll(printTranslationTreeVariant(out, sourceVariant, translationVariant));
+	public List<SyntaxTree<T, P>> printTranslationTree(PrintStream out, SyntaxTreeVariant<T, P> sourceVariant) {
+		List<SyntaxTree<T, P>> subCalls = new ArrayList<>();
+
+		Set<TranslationTree<T, P, U, Q>> translations = translator.getTranslationTrees(sourceVariant);
+		if (translations.isEmpty()) {
+			out.printf("[no translation found for %s]", sourceVariant.getProduction());
+		} else {
+			for (TranslationTree<T, P, U, Q> translation : translations) {
+				for (TranslationTreeVariant<T, P, U, Q> translationVariant : translation.getVariants()) {
+					subCalls.addAll(printTranslationTreeVariant(out, sourceVariant, translationVariant));
+				}
 			}
 		}
 		return subCalls;
+	}
+
+	public void printSourceSymbol(PrintStream out, Symbol<T> symbol) {
+		out.printf("<span class='source-symbol %s'>%s</span>", getSymbolClass(symbol), symbol);
+	}
+
+	public void printTargetSymbol(PrintStream out, Symbol<U> symbol) {
+		out.printf("<span class='target-symbol %s'>%s</span>", getSymbolClass(symbol), symbol);
+	}
+
+	private String getSymbolClass(Symbol<?> symbol) {
+		return symbol instanceof Terminal<?> ? "terminal-symbol" : "non-terminal-symbol";
 	}
 }
