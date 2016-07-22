@@ -62,7 +62,7 @@ public class TranslatedSyntaxTreeVariant<T, P extends Parameter, U, Q extends Pa
 			List<SyntaxTree<U, Q>> children = new ArrayList<>(translationChildren.size());
 
 			for (TranslationTree<T, P, U, Q> translationChild : translationChildren) {
-				new TranslatedVariantSyntaxTree<>(translator, translationChild, sourceVariant);
+				children.add(new TranslatedVariantSyntaxTree<>(translator, translationChild, sourceVariant));
 			}
 			return children;
 		} else {
