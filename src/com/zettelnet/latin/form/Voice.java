@@ -1,10 +1,12 @@
 package com.zettelnet.latin.form;
 
+import com.zettelnet.earley.param.property.ValuesPropertyType;
+
 public enum Voice implements FormProperty {
 
 	Active("Act"), Passive("Pas");
 
-	public static final FormPropertyType<Voice> TYPE = new FormPropertyType<>("v", values());
+	public static final ValuesPropertyType<Voice> TYPE = new ValuesPropertyType<>("v", values());
 	
 	private final String shortName;
 
@@ -23,7 +25,7 @@ public enum Voice implements FormProperty {
 	}
 	
 	@Override
-	public FormPropertyType<Voice> getType() {
+	public ValuesPropertyType<Voice> getType() {
 		return TYPE;
 	}
 }

@@ -1,10 +1,12 @@
 package com.zettelnet.latin.form;
 
+import com.zettelnet.earley.param.property.ValuesPropertyType;
+
 public enum Casus implements FormProperty {
 
 	Nominative("Nom"), Genitive("Gen"), Dative("Dat"), Accusative("Acc"), Ablative("Abl"), Vocative("Voc"), Locative("Loc");
 
-	public static final FormPropertyType<Casus> TYPE = new FormPropertyType<>("k", values());
+	public static final ValuesPropertyType<Casus> TYPE = new ValuesPropertyType<>("k", values());
 	
 	private final String shortName;
 
@@ -23,7 +25,7 @@ public enum Casus implements FormProperty {
 	}
 	
 	@Override
-	public FormPropertyType<? extends FormProperty> getType() {
+	public ValuesPropertyType<Casus> getType() {
 		return TYPE;
 	}
 }

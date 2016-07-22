@@ -1,6 +1,7 @@
 package com.zettelnet.latin.form;
 
 import com.zettelnet.earley.param.property.Property;
+import com.zettelnet.earley.param.property.ValuesPropertyType;
 
 public interface FormProperty extends Property {
 
@@ -11,5 +12,5 @@ public interface FormProperty extends Property {
 	String shortName();
 	
 	@Override
-	FormPropertyType<? extends FormProperty> getType();
+	ValuesPropertyType<? extends FormProperty> getType();
 }

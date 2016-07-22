@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.zettelnet.earley.param.property.PropertySetParser;
+import com.zettelnet.earley.param.property.ValuesPropertyType;
 
 public class FormParser implements PropertySetParser<Form> {
 
@@ -48,8 +49,8 @@ public class FormParser implements PropertySetParser<Form> {
 		registeredProperties.put(property.shortName(), property);
 	}
 
-	public void registerPropertyTypes(Collection<FormPropertyType<?>> propertyTypes) {
-		for (FormPropertyType<?> propertyType : propertyTypes) {
+	public void registerPropertyTypes(Collection<ValuesPropertyType<? extends FormProperty>> propertyTypes) {
+		for (ValuesPropertyType<? extends FormProperty> propertyType : propertyTypes) {
 			for (FormProperty property : propertyType.getValues()) {
 				registerProperty(property);
 			}

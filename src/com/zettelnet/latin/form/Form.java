@@ -9,14 +9,15 @@ import java.util.List;
 import java.util.Set;
 
 import com.zettelnet.earley.param.property.PropertySet;
+import com.zettelnet.earley.param.property.ValuesPropertyType;
 
 public interface Form extends PropertySet<FormProperty>, Comparable<Form> {
 
-	public static final Set<FormPropertyType<?>> ALL_PROPERTIES = Collections.unmodifiableSet(new HashSet<>(getAllProperties()));
-	public static final List<FormPropertyType<?>> ALL_PROPERTIES_SORTED = Collections.unmodifiableList(getAllProperties());
+	public static final Set<ValuesPropertyType<? extends FormProperty>> ALL_PROPERTIES = Collections.unmodifiableSet(new HashSet<>(getAllProperties()));
+	public static final List<ValuesPropertyType<? extends FormProperty>> ALL_PROPERTIES_SORTED = Collections.unmodifiableList(getAllProperties());
 
-	static List<FormPropertyType<?>> getAllProperties() {
-		List<FormPropertyType<?>> properties = new ArrayList<>();
+	static List<ValuesPropertyType<? extends FormProperty>> getAllProperties() {
+		List<ValuesPropertyType<? extends FormProperty>> properties = new ArrayList<>();
 		properties.add(Casus.TYPE);
 		properties.add(Person.TYPE);
 		properties.add(Numerus.TYPE);

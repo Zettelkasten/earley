@@ -1,10 +1,12 @@
 package com.zettelnet.latin.form;
 
+import com.zettelnet.earley.param.property.ValuesPropertyType;
+
 public enum Person implements FormProperty {
 
 	First("1"), Second("2"), Third("3");
 	
-	public static final FormPropertyType<Person> TYPE = new FormPropertyType<>("p", values());
+	public static final ValuesPropertyType<Person> TYPE = new ValuesPropertyType<>("p", values());
 	
 	private final String shortName;
 
@@ -23,7 +25,7 @@ public enum Person implements FormProperty {
 	}
 	
 	@Override
-	public FormPropertyType<Person> getType() {
+	public ValuesPropertyType<Person> getType() {
 		return TYPE;
 	}
 }

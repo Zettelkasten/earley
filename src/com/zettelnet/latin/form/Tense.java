@@ -1,10 +1,12 @@
 package com.zettelnet.latin.form;
 
+import com.zettelnet.earley.param.property.ValuesPropertyType;
+
 public enum Tense implements FormProperty {
 
 	Present("Pre"), Imperfect("Imp"), Future("Fut"), Perfect("Per"), Pluperfect("Plu"), FuturePerfect("FuP");
 	
-	public static final FormPropertyType<Tense> TYPE = new FormPropertyType<>("t", values());
+	public static final ValuesPropertyType<Tense> TYPE = new ValuesPropertyType<>("t", values());
 	
 	private final String shortName;
 
@@ -23,7 +25,7 @@ public enum Tense implements FormProperty {
 	}
 	
 	@Override
-	public FormPropertyType<Tense> getType() {
+	public ValuesPropertyType<Tense> getType() {
 		return TYPE;
 	}
 }

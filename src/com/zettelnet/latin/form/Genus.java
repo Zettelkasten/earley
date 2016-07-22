@@ -3,12 +3,14 @@ package com.zettelnet.latin.form;
 import java.util.EnumMap;
 import java.util.Map;
 
+import com.zettelnet.earley.param.property.ValuesPropertyType;
+
 public enum Genus implements FormProperty {
 
 	Masculine("m"), Feminine("f"), Neuter("n");
 
-	public static final FormPropertyType<Genus> TYPE = new FormPropertyType<>("g", values());
-	
+	public static final ValuesPropertyType<Genus> TYPE = new ValuesPropertyType<>("g", values());
+
 	private final String shortName;
 
 	private Genus(final String shortName) {
@@ -24,9 +26,9 @@ public enum Genus implements FormProperty {
 	public String toString() {
 		return shortName();
 	}
-	
+
 	@Override
-	public FormPropertyType<Genus> getType() {
+	public ValuesPropertyType<Genus> getType() {
 		return TYPE;
 	}
 

@@ -6,16 +6,18 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.zettelnet.earley.param.property.ValuesPropertyType;
+
 public class MapFormValueProvider<T> implements FormValueProvider<T> {
 
 	private final Map<Form, Collection<T>> data;
-	private final Collection<FormPropertyType<?>> retainedProperties;
+	private final Collection<ValuesPropertyType<?>> retainedProperties;
 
-	protected MapFormValueProvider(Collection<FormPropertyType<?>> retainedProperties) {
+	protected MapFormValueProvider(Collection<ValuesPropertyType<?>> retainedProperties) {
 		this(new HashMap<>(), retainedProperties);
 	}
 
-	public MapFormValueProvider(final Map<Form, Collection<T>> data, final Collection<FormPropertyType<?>> retainedProperties) {
+	public MapFormValueProvider(final Map<Form, Collection<T>> data, final Collection<ValuesPropertyType<?>> retainedProperties) {
 		this.data = data;
 		this.retainedProperties = retainedProperties;
 	}

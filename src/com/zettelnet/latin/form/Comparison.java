@@ -1,10 +1,12 @@
 package com.zettelnet.latin.form;
 
+import com.zettelnet.earley.param.property.ValuesPropertyType;
+
 public enum Comparison implements FormProperty {
 
 	Positive("Pos"), Comparative("Comp"), Superlative("Super");
 
-	public static final FormPropertyType<Comparison> TYPE = new FormPropertyType<>("comp", values());
+	public static final ValuesPropertyType<Comparison> TYPE = new ValuesPropertyType<>("comp", values());
 	
 	private final String shortName;
 
@@ -23,7 +25,7 @@ public enum Comparison implements FormProperty {
 	}
 	
 	@Override
-	public FormPropertyType<Comparison> getType() {
+	public ValuesPropertyType<Comparison> getType() {
 		return TYPE;
 	}
 }

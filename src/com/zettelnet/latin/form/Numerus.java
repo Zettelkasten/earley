@@ -1,10 +1,12 @@
 package com.zettelnet.latin.form;
 
+import com.zettelnet.earley.param.property.ValuesPropertyType;
+
 public enum Numerus implements FormProperty {
 
 	Singular("Sg"), Plural("Pl");
 
-	public static final FormPropertyType<Numerus> TYPE = new FormPropertyType<>("n", values());
+	public static final ValuesPropertyType<Numerus> TYPE = new ValuesPropertyType<>("n", values());
 	
 	private final String shortName;
 
@@ -23,7 +25,7 @@ public enum Numerus implements FormProperty {
 	}
 	
 	@Override
-	public FormPropertyType<Numerus> getType() {
+	public ValuesPropertyType<Numerus> getType() {
 		return TYPE;
 	}
 }
