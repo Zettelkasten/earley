@@ -1,6 +1,7 @@
 package com.zettelnet.german.form;
 
 import com.zettelnet.earley.param.property.Property;
+import com.zettelnet.earley.param.property.ValuesPropertyType;
 
 public interface GermanFormProperty extends Property {
 
@@ -9,9 +10,7 @@ public interface GermanFormProperty extends Property {
 	String name();
 
 	String shortName();
-	
+
 	@Override
-	default Class<? extends GermanFormProperty> getType() {
-		return getClass();
-	}
+	ValuesPropertyType<? extends GermanFormProperty> getType();
 }

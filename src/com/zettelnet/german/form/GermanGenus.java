@@ -3,11 +3,15 @@ package com.zettelnet.german.form;
 import java.util.EnumMap;
 import java.util.Map;
 
+import com.zettelnet.earley.param.property.ValuesPropertyType;
+
 public enum GermanGenus implements GermanFormProperty {
 
 	Masculine("m"), Feminine("f"), Neuter("n");
 
 	private final String shortName;
+
+	public static final ValuesPropertyType<GermanGenus> TYPE = new ValuesPropertyType<>("g", values());
 
 	private GermanGenus(final String shortName) {
 		this.shortName = shortName;
@@ -21,6 +25,11 @@ public enum GermanGenus implements GermanFormProperty {
 	@Override
 	public String toString() {
 		return shortName();
+	}
+
+	@Override
+	public ValuesPropertyType<GermanGenus> getType() {
+		return TYPE;
 	}
 
 	public static <T> Map<GermanGenus, T> makeMap(T masculine, T feminine, T neuter) {
