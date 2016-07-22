@@ -14,12 +14,12 @@ public class ConcreteTranslationTree<T, P extends Parameter, U, Q extends Parame
 	private final Symbol<U> symbol;
 	private final boolean terminal;
 	
-	private final ParameterTranslator<T, P, Q> parameterTranslator;
+	private final ParameterTranslator<T, P, U, Q> parameterTranslator;
 	
 	private final List<TranslationTree<T, P, U, Q>> children;
 
 	@SafeVarargs
-	public ConcreteTranslationTree(final NonTerminal<U> symbol, final ParameterTranslator<T, P, Q> parameterTranslator, TranslationTree<T, P, U, Q>... children) {
+	public ConcreteTranslationTree(final NonTerminal<U> symbol, final ParameterTranslator<T, P, U, Q> parameterTranslator, TranslationTree<T, P, U, Q>... children) {
 		this.symbol = symbol;
 		this.terminal = false;
 		this.parameterTranslator = parameterTranslator;
@@ -27,7 +27,7 @@ public class ConcreteTranslationTree<T, P extends Parameter, U, Q extends Parame
 		this.children = Arrays.asList(children);
 	}
 	
-	public ConcreteTranslationTree(final Terminal<U> symbol, final ParameterTranslator<T, P, Q> parameterTranslator) {
+	public ConcreteTranslationTree(final Terminal<U> symbol, final ParameterTranslator<T, P, U, Q> parameterTranslator) {
 		this.symbol = symbol;
 		this.terminal = true;
 		this.parameterTranslator = parameterTranslator;
@@ -56,7 +56,7 @@ public class ConcreteTranslationTree<T, P extends Parameter, U, Q extends Parame
 	}
 
 	@Override
-	public ParameterTranslator<T, P, Q> getParameterTranslator() {
+	public ParameterTranslator<T, P, U, Q> getParameterTranslator() {
 		return parameterTranslator;
 	}
 

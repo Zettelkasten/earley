@@ -138,7 +138,7 @@ public class TranslationPrinter<T, P extends Parameter, U, Q extends Parameter> 
 
 			return Arrays.asList(referenced);
 		} else {
-			Q parameter = translationVariant.getParameterTranslator().translateParameter(sourceParameter, sourceSymbol);
+			Q parameter = translationVariant.getParameterTranslator().translateParameter(sourceParameter, sourceSymbol, translationVariant.getRootSymbol());
 			if (translationVariant.isTerminal()) {
 				Terminal<U> symbol = (Terminal<U>) translationVariant.getRootSymbol();
 				Collection<U> tokens = translator.makeToken(symbol, parameter);

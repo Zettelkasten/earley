@@ -2,9 +2,9 @@ package com.zettelnet.latin.grammar;
 
 import static com.zettelnet.latin.grammar.LatinHelper.copy;
 import static com.zettelnet.latin.grammar.LatinHelper.key;
-import static com.zettelnet.latin.grammar.LatinHelper.makeOptional;
 import static com.zettelnet.latin.grammar.LatinHelper.specify;
 import static com.zettelnet.latin.grammar.LatinHelper.vars;
+import static com.zettelnet.latin.grammar.LatinHelper.makeOptional;
 import static com.zettelnet.latin.grammar.LatinSymbol.Adjective;
 import static com.zettelnet.latin.grammar.LatinSymbol.AdjectivePhrase;
 import static com.zettelnet.latin.grammar.LatinSymbol.AdjectivePhraseOpt;
@@ -38,7 +38,6 @@ import com.zettelnet.earley.SimpleGrammar;
 import com.zettelnet.earley.param.AnyParameterExpression;
 import com.zettelnet.earley.param.CopyParameterExpression;
 import com.zettelnet.earley.param.ParameterExpression;
-import com.zettelnet.earley.param.ParameterManager;
 import com.zettelnet.earley.param.TokenParameterizer;
 import com.zettelnet.earley.translate.AbstractTranslationTree;
 import com.zettelnet.earley.translate.ConcreteTranslationTree;
@@ -76,7 +75,7 @@ public final class LatinGrammar {
 	static {
 		// Management
 
-		ParameterManager<Token, FormParameter> parameterManager = new FormParameterManager<>(LatinSymbol.DEFAULT_PROPERTY_TYPES);
+		FormParameterManager<Token> parameterManager = new FormParameterManager<>(LatinSymbol.DEFAULT_PROPERTY_TYPES);
 		TokenParameterizer<Token, FormParameter> parameterizer = new FormParameterizer();
 
 		grammar = new SimpleGrammar<>(Sentence, parameterManager);
@@ -86,7 +85,8 @@ public final class LatinGrammar {
 		ParameterExpression<Token, FormParameter> any = new AnyParameterExpression<>(parameterManager);
 
 		toGerman = new SimpleTranslationSet<>();
-		ParameterTranslator<Token, FormParameter, FormParameter> germanize = LatinGermanParameterTranslator.getInstance();
+		FormParameterManager<GermanToken> germanParameterManager = new FormParameterManager<>(GermanSymbol.DEFAULT_PROPERTY_TYPES);
+		ParameterTranslator<Token, FormParameter, GermanToken, FormParameter> germanize = LatinGermanParameterTranslator.makeInstance(germanParameterManager);
 
 		// Productions
 		Production<Token, FormParameter> prod = null;

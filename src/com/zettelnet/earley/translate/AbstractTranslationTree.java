@@ -35,7 +35,7 @@ public class AbstractTranslationTree<T, P extends Parameter, U, Q extends Parame
 	}
 
 	@Override
-	public ParameterTranslator<T, P, Q> getParameterTranslator() {
+	public ParameterTranslator<T, P, U, Q> getParameterTranslator() {
 		return null;
 	}
 

@@ -52,7 +52,7 @@ final class LatinHelper {
 		return new SimpleTranslationTree<>(variants);
 	}
 
-	static void makeOptional(SimpleGrammar<Token, FormParameter> grammar, NonTerminal<Token> optionalSymbol, Symbol<Token> symbol, ParameterExpression<Token, FormParameter> expression, NonTerminal<GermanToken> translatedOptional, Symbol<GermanToken> translatedSymbol, SimpleTranslationSet<Token, FormParameter, GermanToken, FormParameter> translations, ParameterTranslator<Token, FormParameter, FormParameter> parameterTranslator) {
+	static void makeOptional(SimpleGrammar<Token, FormParameter> grammar, NonTerminal<Token> optionalSymbol, Symbol<Token> symbol, ParameterExpression<Token, FormParameter> expression, NonTerminal<GermanToken> translatedOptional, Symbol<GermanToken> translatedSymbol, SimpleTranslationSet<Token, FormParameter, GermanToken, FormParameter> translations, ParameterTranslator<Token, FormParameter, GermanToken, FormParameter> parameterTranslator) {
 		Production<Token, FormParameter> prod;
 
 		prod = grammar.addProduction(optionalSymbol);

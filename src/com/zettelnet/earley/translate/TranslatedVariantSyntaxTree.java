@@ -36,7 +36,7 @@ public class TranslatedVariantSyntaxTree<T, P extends Parameter, U, Q extends Pa
 				if (translationVariant.isAbstract()) {
 					variants.addAll(translator.translate(translationVariant.getAbstractReference().getSourceTree(sourceVariant)).getVariantsSet());
 				} else {
-					Q parameter = translationVariant.getParameterTranslator().translateParameter(sourceParameter, sourceSymbol);
+					Q parameter = translationVariant.getParameterTranslator().translateParameter(sourceParameter, sourceSymbol, translationVariant.getRootSymbol());
 					if (translationVariant.isTerminal()) {
 						Terminal<U> symbol = (Terminal<U>) translationVariant.getRootSymbol();
 						for (U token : translator.makeToken(symbol, parameter)) {
