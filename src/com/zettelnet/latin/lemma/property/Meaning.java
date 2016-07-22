@@ -21,4 +21,9 @@ public class Meaning implements LemmaProperty {
 	public Object getType() {
 		return TYPE;
 	}
+	
+	@Override
+	public String toString() {
+		return lemma.toString();
+	}
 }

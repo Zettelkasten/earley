@@ -7,11 +7,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.zettelnet.earley.param.property.MapPropertySet;
 import com.zettelnet.earley.param.property.PropertySet;
 import com.zettelnet.earley.param.property.PropertySets;
 import com.zettelnet.earley.token.TokenScanner;
 import com.zettelnet.latin.form.Form;
 import com.zettelnet.latin.lemma.Lemma;
+import com.zettelnet.latin.lemma.property.Meaning;
 
 public class DeterminationRegistry implements TokenScanner<Token> {
 
@@ -42,12 +44,13 @@ public class DeterminationRegistry implements TokenScanner<Token> {
 
 	private static PropertySet<?> makeFinalPropertySet(Lemma lemma, Form finiteForm) {
 		// properties = lemmaProperties + derivationProperties +
-		// finiteFormProperties
+		// finiteFormProperties (+ meaningProperty)
 		PropertySet<?> properties = lemma.getProperties();
 		if (lemma.isDerivation()) {
 			properties = PropertySets.derive(properties, lemma.getDerivationKind().getForm());
 		}
 		properties = PropertySets.derive(properties, finiteForm);
+		properties = PropertySets.derive(properties, MapPropertySet.withValues(new Meaning(lemma)));
 		return properties;
 	}
 
