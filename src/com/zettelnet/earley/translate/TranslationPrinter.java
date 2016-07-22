@@ -34,10 +34,9 @@ public class TranslationPrinter<T, P extends Parameter, U, Q extends Parameter> 
 		out.print("<meta charset='utf-8'>");
 		out.print("<meta name='viewport' content='width=device-width, initial-scale=1'>");
 		out.print("<link href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css' rel='stylesheet'>");
-		out.print("<link href='src/translate.css' rel='stylesheet'>");
-		// out.print("<script
-		// src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>");
-		// out.print("<script src='src/charts.js'></script>");
+		out.print("<link href='src/main.css' rel='stylesheet'>");
+		out.print("<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>");
+		out.print("<script src='src/main.js'></script>");
 		out.print("</head>");
 		out.print("<body>");
 		out.print("<div class='container'>");

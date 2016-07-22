@@ -1,11 +1,14 @@
-.highlight {
-	background-color: b4aab5;
-}
 .container {
 	padding-bottom: 60px;
 }
 .footer {
 	padding-top: 20px;
+}
+
+/* Parsing */
+
+.highlight {
+	background-color: b4aab5;
 }
 .chart-states {
 	margin-left: auto;
@@ -40,4 +43,29 @@
 }
 .state-origin {
 	color: gray;
+}
+
+/* Translating */
+
+.tree-translation {
+	margin-left: 10px;
+	margin-right: 10px;
+	background-color: rgba(1, 1, 1, 0.1);
+}
+.source-variants {
+	list-style-type: lower-alpha;
+}
+
+.source-symbol {
+	
+}
+.target-symbol {
+	border-top: 1px solid black;
+}
+
+.non-terminal-symbol {
+	
+}
+.terminal-symbol {
+	font-weight: bold;
 }
