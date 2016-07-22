@@ -1,5 +1,9 @@
 package com.zettelnet.earley.tree;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import com.zettelnet.earley.param.Parameter;
 
 public class SyntaxTrees {
@@ -38,6 +42,19 @@ public class SyntaxTrees {
 			}
 			str.append("]");
 			return str.toString();
+		}
+	}
+	
+	public static <T, P extends Parameter> List<T> traverse(SyntaxTree<T, P> tree) {
+		SyntaxTreeVariant<T, P> variant = tree.getVariants().iterator().next();
+		if (variant.isTerminal()) {
+			return Arrays.asList(variant.getToken());
+		} else {
+			List<T> childrenTokens = new ArrayList<>();
+			for (SyntaxTree<T, P> child : variant.getChildren()) {
+				childrenTokens.addAll(traverse(child));
+			}
+			return childrenTokens;
 		}
 	}
 }
