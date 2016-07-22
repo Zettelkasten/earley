@@ -2,6 +2,7 @@ package com.zettelnet.latin.param;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -290,7 +291,7 @@ public final class FormParameter implements Parameter {
 	}
 
 	public <T extends Property> Set<T> getProperty(Object propertyType) {
-		return unsafeCast(data.get(propertyType));
+		return unsafeCast(data.getOrDefault(propertyType, Collections.emptySet()));
 	}
 
 	public Map<Object, Set<? extends Property>> getProperties() {
