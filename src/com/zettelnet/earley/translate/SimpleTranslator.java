@@ -54,7 +54,7 @@ public class SimpleTranslator<T, P extends Parameter, U, Q extends Parameter> im
 
 	@Override
 	public Collection<U> makeToken(Terminal<U> symbol, Q parameter) {
-		return tokenFactory.makeToken(parameter);
+		return tokenFactory.makeToken(symbol, parameter);
 	}
 	
 	@Override

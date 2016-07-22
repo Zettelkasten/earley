@@ -12,6 +12,7 @@ import com.zettelnet.earley.Grammar;
 import com.zettelnet.earley.GrammarParser;
 import com.zettelnet.earley.ParseResult;
 import com.zettelnet.earley.input.DynamicInputPositionInitializer;
+import com.zettelnet.earley.symbol.Terminal;
 import com.zettelnet.earley.token.TokenFactory;
 import com.zettelnet.earley.token.TokenSetPrinter;
 import com.zettelnet.earley.token.Tokenizer;
@@ -57,8 +58,8 @@ public class LatinRegistryTest {
 		TranslationSet<Token, FormParameter, GermanToken, FormParameter> germanTranslations = LatinGrammar.makeGermanTranslations();
 		TokenFactory<GermanToken, FormParameter> germanTokenFactory = new TokenFactory<GermanToken, FormParameter>() {
 			@Override
-			public Collection<GermanToken> makeToken(FormParameter parameter) {
-				return Arrays.asList(new GermanToken("DE_{" + parameter + "}", new GermanDetermination(null, parameter.toForm())));
+			public Collection<GermanToken> makeToken(Terminal<GermanToken> terminal, FormParameter parameter) {
+				return Arrays.asList(new GermanToken("DE_{" + terminal + ":" + parameter + "}", new GermanDetermination(null, parameter.toForm())));
 			}
 		};
 		Translator<Token, FormParameter, GermanToken, FormParameter> germanTranslator = new SimpleTranslator<>(grammar, germanTokenFactory, germanTranslations);
