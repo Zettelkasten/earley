@@ -1,12 +1,7 @@
 package com.zettelnet.earley.test;
 
-import java.io.FileNotFoundException;
-import java.io.PrintStream;
 import java.util.Collections;
-import java.util.List;
 
-import com.zettelnet.earley.ChartSetPrinter;
-import com.zettelnet.earley.ParseResult;
 import com.zettelnet.earley.param.Parameter;
 import com.zettelnet.earley.tree.SyntaxTree;
 import com.zettelnet.earley.tree.SyntaxTreeVariant;
@@ -14,19 +9,8 @@ import com.zettelnet.latin.demo.string.DrawTree;
 
 public class JufoHelper {
 
-	public static <T, P extends Parameter> void present(ParseResult<T, P> result, List<T> tokens) {
-		try {
-			new ChartSetPrinter<T, P>(result.getCharts(), tokens).print(new PrintStream("E:\\temp.html"));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-
-		// System.out.println(result.getBinarySyntaxTree());
-		//
-		// System.out.println(result.getSyntaxTree());
-		// System.out.println(toStringBold(result.getSyntaxTree()));
-
-		DrawTree.draw(new String[0], toStringBold(result.getSyntaxTree()));
+	public static <T, P extends Parameter> void present(SyntaxTree<T, P> tree) {
+		DrawTree.draw(new String[0], toStringBold(tree));
 	}
 
 	public static <T, P extends Parameter> String toString(SyntaxTree<T, P> tree) {
@@ -47,7 +31,7 @@ public class JufoHelper {
 	}
 
 	public static <T, P extends Parameter> String toStringBold(SyntaxTree<T, P> tree) {
-		SyntaxTreeVariant<T, P> variant = tree.getVariant(Collections.<Integer> emptyList().iterator());
+		SyntaxTreeVariant<T, P> variant = tree.getVariants().iterator().next();
 
 		StringBuilder str = new StringBuilder();
 		str.append("[");
