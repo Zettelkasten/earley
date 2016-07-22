@@ -1,0 +1,11 @@
+syntax: glob
+
+*.html
+output*.emf
+output*.png
+output*.svg
+
+# Eclipse files
+.settings/*
+.classpath
+.project
