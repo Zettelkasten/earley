@@ -10,6 +10,7 @@ import com.zettelnet.earley.symbol.Terminal;
 import com.zettelnet.earley.tree.NoSuchSyntaxTreeException;
 import com.zettelnet.earley.tree.SyntaxTree;
 import com.zettelnet.earley.tree.SyntaxTreeVariant;
+import com.zettelnet.earley.tree.SyntaxTrees;
 import com.zettelnet.earley.tree.TerminalSyntaxTreeVariant;
 
 public class TranslatedVariantSyntaxTree<T, P extends Parameter, U, Q extends Parameter> implements SyntaxTree<U, Q> {
@@ -54,4 +55,8 @@ public class TranslatedVariantSyntaxTree<T, P extends Parameter, U, Q extends Pa
 		throw new NoSuchSyntaxTreeException();
 	}
 
+	@Override
+	public String toString() {
+		return SyntaxTrees.toString(this);
+	}
 }

@@ -8,6 +8,7 @@ import com.zettelnet.earley.param.Parameter;
 import com.zettelnet.earley.tree.NoSuchSyntaxTreeException;
 import com.zettelnet.earley.tree.SyntaxTree;
 import com.zettelnet.earley.tree.SyntaxTreeVariant;
+import com.zettelnet.earley.tree.SyntaxTrees;
 
 public class TranslatedSyntaxTree<T, P extends Parameter, U, Q extends Parameter> implements SyntaxTree<U, Q> {
 
@@ -38,14 +39,6 @@ public class TranslatedSyntaxTree<T, P extends Parameter, U, Q extends Parameter
 
 	@Override
 	public String toString() {
-		StringBuilder str = new StringBuilder();
-		str.append("[");
-		Iterable<SyntaxTreeVariant<U, Q>> variants = getVariants();
-		for (SyntaxTreeVariant<U, Q> variant : variants) {
-			str.append(variant);
-			str.append(" ");
-		}
-		str.append("]");
-		return str.toString();
+		return SyntaxTrees.toString(this);
 	}
 }

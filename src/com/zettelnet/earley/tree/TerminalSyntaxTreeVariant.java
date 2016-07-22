@@ -51,14 +51,6 @@ public class TerminalSyntaxTreeVariant<T, P extends Parameter> implements Syntax
 
 	@Override
 	public String toString() {
-		StringBuilder str = new StringBuilder();
-		str.append("[var ");
-		str.append(getRootSymbol());
-		str.append(" ");
-		str.append(getToken());
-		str.append(" ");
-		str.append(getParameter().toString().replace(' ', '_'));
-		str.append("]");
-		return str.toString();
+		return SyntaxTrees.toString(this);
 	}
 }

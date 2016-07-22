@@ -53,15 +53,6 @@ public class NonTerminalSyntaxTreeVariant<T, P extends Parameter> implements Syn
 
 	@Override
 	public String toString() {
-		StringBuilder str = new StringBuilder();
-		str.append("[var ");
-		str.append(getRootSymbol());
-		str.append(" ");
-		for (SyntaxTree<T, P> child : children) {
-			str.append(child);
-			str.append(" ");
-		}
-		str.append("]");
-		return str.toString();
+		return SyntaxTrees.toString(this);
 	}
 }

@@ -31,14 +31,6 @@ public class UnbinaryTerminalSyntaxTree<T, P extends Parameter> implements Synta
 
 	@Override
 	public String toString() {
-		StringBuilder str = new StringBuilder();
-		str.append("[");
-		Iterable<SyntaxTreeVariant<T, P>> variants = getVariants();
-		for (SyntaxTreeVariant<T, P> variant : variants) {
-			str.append(variant);
-			str.append(" ");
-		}
-		str.append("]");
-		return str.toString();
+		return SyntaxTrees.toString(this);
 	}
 }

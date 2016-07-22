@@ -9,6 +9,7 @@ import com.zettelnet.earley.param.Parameter;
 import com.zettelnet.earley.symbol.Symbol;
 import com.zettelnet.earley.tree.SyntaxTree;
 import com.zettelnet.earley.tree.SyntaxTreeVariant;
+import com.zettelnet.earley.tree.SyntaxTrees;
 
 // ALWAYS CONCRETE!
 public class TranslatedSyntaxTreeVariant<T, P extends Parameter, U, Q extends Parameter> implements SyntaxTreeVariant<U, Q> {
@@ -71,15 +72,6 @@ public class TranslatedSyntaxTreeVariant<T, P extends Parameter, U, Q extends Pa
 
 	@Override
 	public String toString() {
-		StringBuilder str = new StringBuilder();
-		str.append("[var ");
-		str.append(getRootSymbol());
-		str.append(" ");
-		for (SyntaxTree<U, Q> child : getChildren()) {
-			str.append(child);
-			str.append(" ");
-		}
-		str.append("]");
-		return str.toString();
+		return SyntaxTrees.toString(this);
 	}
 }
