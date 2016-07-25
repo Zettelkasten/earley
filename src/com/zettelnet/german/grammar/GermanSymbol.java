@@ -13,6 +13,7 @@ import com.zettelnet.german.form.GermanTense;
 import com.zettelnet.german.form.GermanVoice;
 import com.zettelnet.german.lemma.GermanLemmaTerminal;
 import com.zettelnet.german.lemma.GermanLemmaType;
+import com.zettelnet.german.lemma.property.GermanDefiniteness;
 import com.zettelnet.german.lemma.property.GermanFiniteness;
 import com.zettelnet.german.token.GermanToken;
 import com.zettelnet.latin.lemma.property.Meaning;
@@ -57,11 +58,11 @@ public final class GermanSymbol {
 		SimplePropertyTypeRegistry<GermanToken> registry = new SimplePropertyTypeRegistry<>();
 
 		registry.register(Sentence, GermanCasus.TYPE, GermanPerson.TYPE, GermanNumerus.TYPE, GermanGenus.TYPE, GermanTense.TYPE, GermanFiniteness.TYPE);
-		registry.register(NounPhrase, GermanCasus.TYPE, GermanPerson.TYPE, GermanNumerus.TYPE, GermanGenus.TYPE, Meaning.TYPE);
-		registry.register(NounPhraseOpt, GermanCasus.TYPE, GermanPerson.TYPE, GermanNumerus.TYPE, GermanGenus.TYPE, Meaning.TYPE);
+		registry.register(NounPhrase, GermanCasus.TYPE, GermanPerson.TYPE, GermanNumerus.TYPE, GermanGenus.TYPE, Meaning.TYPE, GermanDefiniteness.TYPE);
+		registry.register(NounPhraseOpt, GermanCasus.TYPE, GermanPerson.TYPE, GermanNumerus.TYPE, GermanGenus.TYPE, Meaning.TYPE, GermanDefiniteness.TYPE);
 		registry.register(NounForm, GermanCasus.TYPE, GermanPerson.TYPE, GermanNumerus.TYPE, GermanGenus.TYPE, Meaning.TYPE);
-		registry.register(AdjectivePhrase, GermanCasus.TYPE, GermanNumerus.TYPE, GermanGenus.TYPE);
-		registry.register(AdjectivePhraseOpt, GermanCasus.TYPE, GermanNumerus.TYPE, GermanGenus.TYPE);
+		registry.register(AdjectivePhrase, GermanCasus.TYPE, GermanNumerus.TYPE, GermanGenus.TYPE, GermanDefiniteness.TYPE);
+		registry.register(AdjectivePhraseOpt, GermanCasus.TYPE, GermanNumerus.TYPE, GermanGenus.TYPE, GermanDefiniteness.TYPE);
 		registry.register(VerbPhrase, GermanCasus.TYPE, GermanPerson.TYPE, GermanNumerus.TYPE, GermanGenus.TYPE, GermanMood.TYPE, GermanTense.TYPE, GermanVoice.TYPE, GermanFiniteness.TYPE, Meaning.TYPE);
 		registry.register(VerbForm, GermanCasus.TYPE, GermanPerson.TYPE, GermanNumerus.TYPE, GermanGenus.TYPE, GermanMood.TYPE, GermanTense.TYPE, GermanVoice.TYPE, GermanFiniteness.TYPE, Meaning.TYPE);
 		registry.register(Arguments);
