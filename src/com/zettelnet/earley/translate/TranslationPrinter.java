@@ -90,7 +90,8 @@ public class TranslationPrinter<T, P extends Parameter, U, Q extends Parameter> 
 				out.print("<li>");
 			}
 
-			out.printf("%s &#8658; ", sourceVariant.getRootSymbol());
+			printSourceSymbol(out, sourceVariant.getRootSymbol(), sourceVariant.getParameter());
+			out.print(" &#8658; ");
 			List<SyntaxTree<T, P>> subCalls = printTranslationTree(out, sourceVariant);
 			for (SyntaxTree<T, P> subCall : subCalls) {
 				printTree(out, subCall);
@@ -130,8 +131,9 @@ public class TranslationPrinter<T, P extends Parameter, U, Q extends Parameter> 
 			SyntaxTree<T, P> referenced = translationVariant.getAbstractReference().getSourceTree(sourceVariant);
 
 			Iterator<SyntaxTreeVariant<T, P>> referencedVariants = referenced.getVariants().iterator();
+			SyntaxTreeVariant<T, P> firstVariant = referencedVariants.next();
 			out.print("~");
-			printSourceSymbol(out, referencedVariants.next().getRootSymbol());
+			printSourceSymbol(out, firstVariant.getRootSymbol());
 			if (referencedVariants.hasNext()) {
 				out.print("...");
 			}
@@ -141,13 +143,14 @@ public class TranslationPrinter<T, P extends Parameter, U, Q extends Parameter> 
 			Q parameter = translationVariant.getParameterTranslator().translateParameter(sourceParameter, sourceSymbol, translationVariant.getRootSymbol());
 			if (translationVariant.isTerminal()) {
 				Terminal<U> symbol = (Terminal<U>) translationVariant.getRootSymbol();
+				Q translatedParameter = translationVariant.getParameterTranslator().translateParameter(sourceVariant.getParameter(), sourceSymbol, symbol);
 				Collection<U> tokens = translator.makeToken(symbol, parameter);
 				if (tokens.isEmpty()) {
 					out.print("[no token]");
 				} else {
 					Iterator<U> i = tokens.iterator();
 					while (i.hasNext()) {
-						printTargetSymbol(out, translationVariant.getRootSymbol());
+						printTargetSymbol(out, translationVariant.getRootSymbol(), translatedParameter);
 						out.printf(" = <em>%s</em>", i.next());
 						if (i.hasNext()) {
 							out.print(" / ");
@@ -159,7 +162,8 @@ public class TranslationPrinter<T, P extends Parameter, U, Q extends Parameter> 
 			} else {
 				List<SyntaxTree<T, P>> subCalls = new ArrayList<>();
 
-				printTargetSymbol(out, translationVariant.getRootSymbol());
+				Q translatedParameter = translationVariant.getParameterTranslator().translateParameter(sourceVariant.getParameter(), sourceSymbol, translationVariant.getRootSymbol());
+				printTargetSymbol(out, translationVariant.getRootSymbol(), translatedParameter);
 				out.print(" { ");
 				List<TranslationTree<T, P, U, Q>> children = translationVariant.getChildren();
 
@@ -198,8 +202,16 @@ public class TranslationPrinter<T, P extends Parameter, U, Q extends Parameter> 
 		out.printf("<span class='source-symbol %s'>%s</span>", getSymbolClass(symbol), symbol);
 	}
 
+	public void printSourceSymbol(PrintStream out, Symbol<T> symbol, P parameter) {
+		out.printf("<span class='source-symbol %s'>%s(%s)</span>", getSymbolClass(symbol), symbol, parameter);
+	}
+
 	public void printTargetSymbol(PrintStream out, Symbol<U> symbol) {
 		out.printf("<span class='target-symbol %s'>%s</span>", getSymbolClass(symbol), symbol);
+	}
+
+	public void printTargetSymbol(PrintStream out, Symbol<U> symbol, Q parameter) {
+		out.printf("<span class='target-symbol %s'>%s(%s)</span>", getSymbolClass(symbol), symbol, parameter);
 	}
 
 	private String getSymbolClass(Symbol<?> symbol) {
