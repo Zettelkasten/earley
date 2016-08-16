@@ -31,9 +31,9 @@ public class RecursiveExample {
 		SimpleGrammar<String, DefaultParameter> grammar = new SimpleGrammar<>(delta, parameterManager);
 
 		grammar.addProduction(
-				delta);
+				delta, 1);
 		grammar.addProduction(
-				delta, delta, term);
+				delta, 1, delta, term);
 
 		GrammarParser<String, DefaultParameter> parser = new EarleyParser<>(grammar, new LinearInputPositionInitializer<>());
 

@@ -1,5 +1,6 @@
 package com.zettelnet.earley;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -22,6 +23,14 @@ public class Production<T, P extends Parameter> {
 	private final List<Symbol<T>> symbolValues; // values, but without parameter
 												// expressions
 
+	private final double probability;
+	
+	private final static NumberFormat percentFormat;
+	static {
+		percentFormat = NumberFormat.getPercentInstance();
+		percentFormat.setMaximumFractionDigits(1);
+	}
+
 	private static <T, P extends Parameter> List<ParameterizedSymbol<T, P>> makeProductionSymbols(ParameterManager<T, P> manager, Symbol<T>[] symbols) {
 		List<ParameterizedSymbol<T, P>> list = new ArrayList<>(symbols.length);
 		for (Symbol<T> symbol : symbols) {
@@ -38,30 +47,31 @@ public class Production<T, P extends Parameter> {
 		return list;
 	}
 
-	public Production(final Grammar<T, P> grammar, final NonTerminal<T> left) {
-		this(left, grammar.getParameterManager(), Collections.emptyList());
+	public Production(final Grammar<T, P> grammar, final NonTerminal<T> left, final double probability) {
+		this(left, grammar.getParameterManager(), probability, Collections.emptyList());
 	}
 
 	@SafeVarargs
-	public Production(final Grammar<T, P> grammar, final NonTerminal<T> left, final Symbol<T>... right) {
-		this(left, grammar.getParameterManager(), makeProductionSymbols(grammar.getParameterManager(), right));
+	public Production(final Grammar<T, P> grammar, final NonTerminal<T> left, final double probability, final Symbol<T>... right) {
+		this(left, grammar.getParameterManager(), probability, makeProductionSymbols(grammar.getParameterManager(), right));
 	}
 
 	@SafeVarargs
-	public Production(final Grammar<T, P> grammar, final NonTerminal<T> left, final ParameterizedSymbol<T, P>... right) {
-		this(left, grammar.getParameterManager(), right);
+	public Production(final Grammar<T, P> grammar, final NonTerminal<T> left, final double probability, final ParameterizedSymbol<T, P>... right) {
+		this(left, grammar.getParameterManager(), probability, right);
 	}
 
 	@SafeVarargs
-	public Production(final NonTerminal<T> left, final ParameterFactory<T, P> keyParameter, final ParameterizedSymbol<T, P>... right) {
-		this(left, keyParameter, Arrays.asList(right));
+	public Production(final NonTerminal<T> left, final ParameterFactory<T, P> keyParameter, final double probability, final ParameterizedSymbol<T, P>... right) {
+		this(left, keyParameter, probability, Arrays.asList(right));
 	}
 
-	private Production(final NonTerminal<T> left, final ParameterFactory<T, P> keyParameter, final List<ParameterizedSymbol<T, P>> right) {
+	private Production(final NonTerminal<T> left, final ParameterFactory<T, P> keyParameter, final double probability, final List<ParameterizedSymbol<T, P>> right) {
 		this.key = left;
 		this.keyParameter = keyParameter;
 		this.values = right;
 		this.symbolValues = makeUnparameterizedSymbols(values);
+		this.probability = probability;
 	}
 
 	public NonTerminal<T> key() {
@@ -92,6 +102,10 @@ public class Production<T, P extends Parameter> {
 		return values.get(position).getParameterExpression();
 	}
 
+	public double getProbability() {
+		return probability;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder str = new StringBuilder();
@@ -112,6 +126,9 @@ public class Production<T, P extends Parameter> {
 				str.append(")");
 			}
 		}
+		
+		str.append(", ");
+		str.append(percentFormat.format(probability));
 
 		return str.toString();
 	}

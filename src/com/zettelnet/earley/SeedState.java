@@ -12,16 +12,18 @@ import com.zettelnet.earley.symbol.Symbol;
 public class SeedState<T, P extends Parameter> implements State<T, P> {
 
 	private final Chart<T, P> chart;
-	
+
 	private final NonTerminal<T> symbol;
 	private final P parameter;
 	private final ParameterExpression<T, P> parameterExpression;
-	
-	public SeedState(Chart<T, P> chart, NonTerminal<T> startSymbol, P startSymbolParameter, ParameterExpression<T, P> startSymbolParameterExpression) {
+	private final double probability;
+
+	public SeedState(Chart<T, P> chart, NonTerminal<T> startSymbol, P startSymbolParameter, ParameterExpression<T, P> startSymbolParameterExpression, double probability) {
 		this.chart = chart;
 		this.symbol = startSymbol;
 		this.parameter = startSymbolParameter;
 		this.parameterExpression = startSymbolParameterExpression;
+		this.probability = probability;
 	}
 
 	@Override
@@ -58,7 +60,7 @@ public class SeedState<T, P extends Parameter> implements State<T, P> {
 	public Symbol<T> next() {
 		return symbol;
 	}
-	
+
 	@Override
 	public Symbol<T> last() {
 		return null;
@@ -74,4 +76,8 @@ public class SeedState<T, P extends Parameter> implements State<T, P> {
 		return parameter;
 	}
 
+	@Override
+	public double getProbability() {
+		return probability;
+	}
 }

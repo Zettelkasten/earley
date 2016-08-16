@@ -50,80 +50,80 @@ public class NearleyCalculatorExample {
 
 		SimpleGrammar<Character, DefaultParameter> grammar = new SimpleGrammar<>(main, new DefaultParameterManager<>());
 
-		grammar.addProduction(main,
+		grammar.addProduction(main, 1,
 				whitespace, addition, whitespace);
 
 		// Parentheses
-		grammar.addProduction(parentheses,
+		grammar.addProduction(parentheses, 1,
 				lit('('), addition, whitespace, lit(')'), whitespace);
-		grammar.addProduction(parentheses,
+		grammar.addProduction(parentheses, 1,
 				number);
 
 		// Exponents
-		grammar.addProduction(exponent,
+		grammar.addProduction(exponent, 1,
 				parentheses, whitespace, lit('^'), whitespace, exponent);
-		grammar.addProduction(exponent,
+		grammar.addProduction(exponent, 1,
 				parentheses);
 
 		// Multiplication and devision
-		grammar.addProduction(multiplication,
+		grammar.addProduction(multiplication, 1,
 				multiplication, whitespace, lit('*'), whitespace, exponent);
-		grammar.addProduction(multiplication,
+		grammar.addProduction(multiplication, 1,
 				multiplication, whitespace, lit('/'), whitespace, exponent);
-		grammar.addProduction(multiplication,
+		grammar.addProduction(multiplication, 1,
 				exponent);
 
 		// Addition and subtraction
-		grammar.addProduction(addition,
+		grammar.addProduction(addition, 1,
 				addition, whitespace, lit('+'), whitespace, multiplication);
-		grammar.addProduction(addition,
+		grammar.addProduction(addition, 1,
 				addition, whitespace, lit('-'), whitespace, multiplication);
-		grammar.addProduction(addition,
+		grammar.addProduction(addition, 1,
 				multiplication);
 
 		// A number or a function of a number
-		grammar.addProduction(number,
+		grammar.addProduction(number, 1,
 				floatNumber);
-		grammar.addProduction(number,
+		grammar.addProduction(number, 1,
 				lit('s'), lit('i'), lit('n'), whitespace, parentheses);
-		grammar.addProduction(number,
+		grammar.addProduction(number, 1,
 				lit('c'), lit('o'), lit('s'), whitespace, parentheses);
-		grammar.addProduction(number,
+		grammar.addProduction(number, 1,
 				lit('t'), lit('a'), lit('n'), whitespace, parentheses);
 
-		grammar.addProduction(number,
+		grammar.addProduction(number, 1,
 				lit('a'), lit('s'), lit('i'), lit('n'), whitespace, parentheses);
-		grammar.addProduction(number,
+		grammar.addProduction(number, 1,
 				lit('a'), lit('c'), lit('o'), lit('s'), whitespace, parentheses);
-		grammar.addProduction(number,
+		grammar.addProduction(number, 1,
 				lit('a'), lit('t'), lit('a'), lit('n'), whitespace, parentheses);
-		
-		grammar.addProduction(number,
+
+		grammar.addProduction(number, 1,
 				lit('p'), lit('i'));
-		grammar.addProduction(number,
+		grammar.addProduction(number, 1,
 				lit('e'));
-		grammar.addProduction(number,
+		grammar.addProduction(number, 1,
 				lit('s'), lit('q'), lit('r'), lit('t'), whitespace, parentheses);
-		grammar.addProduction(number,
+		grammar.addProduction(number, 1,
 				lit('l'), lit('n'), whitespace, parentheses);
-		
+
 		// Number with a decimal point in it
-		grammar.addProduction(floatNumber,
+		grammar.addProduction(floatNumber, 1,
 				intNumber, lit('.'), intNumber);
-		grammar.addProduction(floatNumber,
+		grammar.addProduction(floatNumber, 1,
 				intNumber);
 
 		// Number without a decimal point
-		grammar.addProduction(intNumber,
+		grammar.addProduction(intNumber, 1,
 				digit, intNumberNull);
-		grammar.addProduction(intNumberNull);
-		grammar.addProduction(intNumberNull,
+		grammar.addProduction(intNumberNull, 1);
+		grammar.addProduction(intNumberNull, 1,
 				digit, intNumberNull);
 
 		// None, one or more whitespaces
-		grammar.addProduction(whitespace,
+		grammar.addProduction(whitespace, 1,
 				lit(' '), whitespace);
-		grammar.addProduction(whitespace);
+		grammar.addProduction(whitespace, 1);
 
 		GrammarParser<Character, DefaultParameter> parser = new EarleyParser<>(grammar);
 

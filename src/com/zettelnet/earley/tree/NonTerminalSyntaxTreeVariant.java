@@ -50,6 +50,11 @@ public class NonTerminalSyntaxTreeVariant<T, P extends Parameter> implements Syn
 	public List<SyntaxTree<T, P>> getChildren() {
 		return children;
 	}
+	
+	@Override
+	public double getLocalProbability() {
+		return production.getProbability();
+	}
 
 	@Override
 	public String toString() {

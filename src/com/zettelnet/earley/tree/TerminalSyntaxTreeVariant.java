@@ -12,11 +12,13 @@ public class TerminalSyntaxTreeVariant<T, P extends Parameter> implements Syntax
 	private final Terminal<T> symbol;
 	private final P parameter;
 	private final T token;
+	private final double probability;
 
-	public TerminalSyntaxTreeVariant(final Terminal<T> symbol, final P parameter, final T token) {
+	public TerminalSyntaxTreeVariant(final Terminal<T> symbol, final P parameter, final T token, final double probability) {
 		this.symbol = symbol;
 		this.parameter = parameter;
 		this.token = token;
+		this.probability = probability;
 	}
 
 	@Override
@@ -52,5 +54,10 @@ public class TerminalSyntaxTreeVariant<T, P extends Parameter> implements Syntax
 	@Override
 	public String toString() {
 		return SyntaxTrees.toString(this);
+	}
+
+	@Override
+	public double getLocalProbability() {
+		return probability;
 	}
 }

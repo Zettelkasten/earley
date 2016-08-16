@@ -36,13 +36,15 @@ public class JufoHelper {
 		StringBuilder str = new StringBuilder();
 		str.append("[");
 		str.append(variant.getRootSymbol());
-		
+
 		if (!variant.isTerminal()) {
-			str.append("(");
-			str.append(variant.getParameter().toString().replace(' ', '_'));
-			str.append(")");
+
+			// str.append("(");
+			// str.append(variant.getParameter().toString().replace(' ', '_'));
+			// str.append(")");
 			for (SyntaxTree<T, P> child : variant.getChildren()) {
 				str.append(" ");
+
 				str.append(toStringBold(child));
 			}
 		} else {

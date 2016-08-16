@@ -7,6 +7,10 @@ import com.zettelnet.earley.param.Parameter;
 import com.zettelnet.earley.symbol.Terminal;
 import com.zettelnet.earley.tree.binary.BinarySyntaxTree;
 
+/*
+ * This is actually a DESIGN FLAW. Right now, there are no BinarySyntaxTreeVariants for terminal symbols,
+ * but these are necessary, for instance because they hold information about the state probability.
+ */
 public class UnbinaryTerminalSyntaxTree<T, P extends Parameter> implements SyntaxTree<T, P> {
 
 	private final BinarySyntaxTree<T, P> node;
@@ -16,7 +20,7 @@ public class UnbinaryTerminalSyntaxTree<T, P extends Parameter> implements Synta
 	}
 
 	private SyntaxTreeVariant<T, P> getVariant() {
-		return new TerminalSyntaxTreeVariant<>((Terminal<T>) node.getRootSymbol(), node.getTokenParameter(), node.getToken());
+		return new TerminalSyntaxTreeVariant<>((Terminal<T>) node.getRootSymbol(), node.getTokenParameter(), node.getToken(), 1);
 	}
 
 	@Override

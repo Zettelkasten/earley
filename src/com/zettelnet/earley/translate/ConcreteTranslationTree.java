@@ -16,21 +16,25 @@ public class ConcreteTranslationTree<T, P extends Parameter, U, Q extends Parame
 	
 	private final ParameterTranslator<T, P, U, Q> parameterTranslator;
 	
+	private final double probability;
+	
 	private final List<TranslationTree<T, P, U, Q>> children;
 
 	@SafeVarargs
-	public ConcreteTranslationTree(final NonTerminal<U> symbol, final ParameterTranslator<T, P, U, Q> parameterTranslator, TranslationTree<T, P, U, Q>... children) {
+	public ConcreteTranslationTree(final NonTerminal<U> symbol, final ParameterTranslator<T, P, U, Q> parameterTranslator, final double probability, TranslationTree<T, P, U, Q>... children) {
 		this.symbol = symbol;
 		this.terminal = false;
 		this.parameterTranslator = parameterTranslator;
+		this.probability = probability;
 		
 		this.children = Arrays.asList(children);
 	}
 	
-	public ConcreteTranslationTree(final Terminal<U> symbol, final ParameterTranslator<T, P, U, Q> parameterTranslator) {
+	public ConcreteTranslationTree(final Terminal<U> symbol, final ParameterTranslator<T, P, U, Q> parameterTranslator, final double probability) {
 		this.symbol = symbol;
 		this.terminal = true;
 		this.parameterTranslator = parameterTranslator;
+		this.probability = probability;
 		
 		this.children = Collections.emptyList();
 	}
@@ -63,5 +67,10 @@ public class ConcreteTranslationTree<T, P extends Parameter, U, Q extends Parame
 	@Override
 	public List<TranslationTree<T, P, U, Q>> getChildren() {
 		return children;
+	}
+	
+	@Override
+	public double getLocalProbability() {
+		return probability;
 	}
 }

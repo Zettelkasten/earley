@@ -69,6 +69,11 @@ public class TranslatedSyntaxTreeVariant<T, P extends Parameter, U, Q extends Pa
 			return Collections.emptyList();
 		}
 	}
+	
+	@Override
+	public double getLocalProbability() {
+		return sourceVariant.getLocalProbability() * translation.getLocalProbability();
+	}
 
 	@Override
 	public String toString() {

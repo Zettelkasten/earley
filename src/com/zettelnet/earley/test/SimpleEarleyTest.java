@@ -36,9 +36,9 @@ public class SimpleEarleyTest {
 
 		SimpleGrammar<String, DefaultParameter> grammar = new SimpleGrammar<>(term, new DefaultParameterManager<>());
 
-		grammar.addProduction(term, sum);
-		grammar.addProduction(sum, term, operator, term);
-		grammar.addProduction(term, number);
+		grammar.addProduction(term, 1, sum);
+		grammar.addProduction(sum, 1, term, operator, term);
+		grammar.addProduction(term, 1, number);
 
 		EarleyParser<String, DefaultParameter> parser = new EarleyParser<>(grammar);
 

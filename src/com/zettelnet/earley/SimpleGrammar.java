@@ -52,7 +52,7 @@ public class SimpleGrammar<T, P extends Parameter> implements Grammar<T, P> {
 
 	public void addProduction(Production<T, P> production) {
 		this.productions.add(production);
-		
+
 		NonTerminal<T> key = production.key();
 		if (!nonTerminals.containsKey(key)) {
 			nonTerminals.put(key, new HashSet<>());
@@ -66,27 +66,32 @@ public class SimpleGrammar<T, P extends Parameter> implements Grammar<T, P> {
 		}
 	}
 
-	public final Production<T, P> addProduction(NonTerminal<T> left) {
-		Production<T, P> production = new Production<>(this, left);
+	public final Production<T, P> addProduction(NonTerminal<T> left, double probability) {
+		Production<T, P> production = new Production<>(this, left, probability);
 		addProduction(production);
 		return production;
 	}
 
 	@SafeVarargs
-	public final Production<T, P> addProduction(NonTerminal<T> left, Symbol<T>... right) {
-		Production<T, P> production = new Production<>(this, left, right);
+	public final Production<T, P> addProduction(NonTerminal<T> left, double probability, Symbol<T>... right) {
+		Production<T, P> production = new Production<>(this, left, probability, right);
 		addProduction(production);
 		return production;
 	}
 
 	@SafeVarargs
-	public final Production<T, P> addProduction(NonTerminal<T> left, ParameterizedSymbol<T, P>... right) {
-		return addProduction(left, parameterManager, right);
+	public final Production<T, P> addProduction(NonTerminal<T> left, double probability, ParameterizedSymbol<T, P>... right) {
+		return addProduction(left, parameterManager, probability, right);
 	}
 
 	@SafeVarargs
 	public final Production<T, P> addProduction(NonTerminal<T> left, ParameterFactory<T, P> keyParameter, ParameterizedSymbol<T, P>... right) {
-		Production<T, P> production = new Production<>(left, keyParameter, right);
+		return addProduction(left, keyParameter, 1, right);
+	}
+
+	@SafeVarargs
+	public final Production<T, P> addProduction(NonTerminal<T> left, ParameterFactory<T, P> keyParameter, double probability, ParameterizedSymbol<T, P>... right) {
+		Production<T, P> production = new Production<>(left, keyParameter, probability, right);
 		addProduction(production);
 		return production;
 	}

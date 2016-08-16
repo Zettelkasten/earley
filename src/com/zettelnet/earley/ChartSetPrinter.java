@@ -1,6 +1,7 @@
 package com.zettelnet.earley;
 
 import java.io.PrintStream;
+import java.text.NumberFormat;
 import java.util.Date;
 import java.util.Deque;
 import java.util.HashMap;
@@ -28,6 +29,12 @@ public class ChartSetPrinter<T, P extends Parameter> {
 
 	private final Set<Chart<T, P>> aliveCharts;
 	private final Set<State<T, P>> aliveStates;
+	
+	private final static NumberFormat percentFormat;
+	static {
+		percentFormat = NumberFormat.getPercentInstance();
+		percentFormat.setMaximumFractionDigits(1);
+	}
 
 	public ChartSetPrinter(final SortedMap<InputPosition<T>, Chart<T, P>> charts, final List<T> tokens) {
 		this(charts, tokens, true);
@@ -147,9 +154,9 @@ public class ChartSetPrinter<T, P extends Parameter> {
 		out.print("<div class='container footer'>");
 		out.printf("<span class='generated'>Automatically generated on %s</span>", new Date());
 		out.print("</div>");
-		
+
 		out.print("</div>");
-		
+
 		out.print("</body>");
 		out.print("</html>");
 	}
@@ -268,6 +275,12 @@ public class ChartSetPrinter<T, P extends Parameter> {
 		out.printf(", <span class='state-originpos'>%s</span>", state.getOriginPosition());
 		if (tableMode) {
 			out.print("</td>");
+		}
+		
+		if (tableMode) {
+			out.printf("<td class='state-probability'>%s</td>", percentFormat.format(state.getProbability()));
+		} else {
+			out.printf(" (%s)", percentFormat.format(state.getProbability()));
 		}
 
 		if (tableMode) {

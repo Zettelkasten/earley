@@ -1,5 +1,6 @@
 package com.zettelnet.earley;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +20,12 @@ public class SimpleState<T, P extends Parameter> implements State<T, P> {
 	private final P parameter;
 
 	private final List<StateCause<T, P>> cause = new ArrayList<>(2);
+
+	private final static NumberFormat percentFormat;
+	static {
+		percentFormat = NumberFormat.getPercentInstance();
+		percentFormat.setMaximumFractionDigits(1);
+	}
 
 	public SimpleState(final Chart<T, P> chart, final Production<T, P> production, final int currentPosition, final InputPosition<T> originPosition, final P parameter) {
 		assert originPosition != null : "Origin Position cannot be null";
@@ -93,6 +100,11 @@ public class SimpleState<T, P extends Parameter> implements State<T, P> {
 	}
 
 	@Override
+	public double getProbability() {
+		return production.getProbability();
+	}
+
+	@Override
 	public String toString() {
 		StringBuilder str = new StringBuilder();
 		str.append(production.key());
@@ -123,6 +135,10 @@ public class SimpleState<T, P extends Parameter> implements State<T, P> {
 
 		str.append(", ");
 		str.append(originPosition);
+		
+		str.append(" (");
+		str.append(percentFormat.format(getProbability()));
+		str.append(")");
 
 		return str.toString();
 	}

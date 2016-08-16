@@ -55,12 +55,12 @@ final class LatinHelper {
 	static void makeOptional(SimpleGrammar<Token, FormParameter> grammar, NonTerminal<Token> optionalSymbol, Symbol<Token> symbol, ParameterExpression<Token, FormParameter> expression, NonTerminal<GermanToken> translatedOptional, Symbol<GermanToken> translatedSymbol, SimpleTranslationSet<Token, FormParameter, GermanToken, FormParameter> translations, ParameterTranslator<Token, FormParameter, GermanToken, FormParameter> parameterTranslator) {
 		Production<Token, FormParameter> prod;
 
-		prod = grammar.addProduction(optionalSymbol);
+		prod = grammar.addProduction(optionalSymbol, 1);
 		translations.addTranslation(prod, grammar.getParameterManager(),
-				vars(new ConcreteTranslationTree<>(translatedOptional, parameterTranslator)));
-		prod = grammar.addProduction(optionalSymbol, new ParameterizedSymbol<>(symbol, expression));
+				vars(new ConcreteTranslationTree<>(translatedOptional, parameterTranslator, 1)));
+		prod = grammar.addProduction(optionalSymbol, 1, new ParameterizedSymbol<>(symbol, expression));
 		translations.addTranslation(prod, grammar.getParameterManager(),
-				vars(new ConcreteTranslationTree<>(translatedOptional, parameterTranslator,
-						vars(new AbstractTranslationTree<>(new PositionReference<>(0))))));
+				vars(new ConcreteTranslationTree<>(translatedOptional, parameterTranslator, 1,
+						vars(new AbstractTranslationTree<>(new PositionReference<>(0), 1)))));
 	}
 }

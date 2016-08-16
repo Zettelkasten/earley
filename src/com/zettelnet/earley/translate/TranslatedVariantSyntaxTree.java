@@ -33,6 +33,8 @@ public class TranslatedVariantSyntaxTree<T, P extends Parameter, U, Q extends Pa
 		Symbol<T> sourceSymbol = sourceVariant.getRootSymbol();
 		P sourceParameter = sourceVariant.getParameter();
 			for (TranslationTreeVariant<T, P, U, Q> translationVariant : translation.getVariants()) {
+				double probability = sourceVariant.getLocalProbability() * translationVariant.getLocalProbability();
+				
 				if (translationVariant.isAbstract()) {
 					variants.addAll(translator.translate(translationVariant.getAbstractReference().getSourceTree(sourceVariant)).getVariantsSet());
 				} else {
@@ -40,7 +42,7 @@ public class TranslatedVariantSyntaxTree<T, P extends Parameter, U, Q extends Pa
 					if (translationVariant.isTerminal()) {
 						Terminal<U> symbol = (Terminal<U>) translationVariant.getRootSymbol();
 						for (U token : translator.makeToken(symbol, parameter)) {
-							variants.add(new TerminalSyntaxTreeVariant<>(symbol, parameter, token));
+							variants.add(new TerminalSyntaxTreeVariant<>(symbol, parameter, token, probability));
 						}
 					} else {
 						variants.add(new TranslatedSyntaxTreeVariant<>(translator, sourceVariant, translationVariant, parameter));

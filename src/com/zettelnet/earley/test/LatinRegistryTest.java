@@ -39,7 +39,7 @@ public class LatinRegistryTest {
 		Grammar<Token, FormParameter> grammar = LatinGrammar.makeGrammar();
 		Tokenizer<Token> tokenizer = new WhitespaceTokenizer<>(LatinRegistry.INSTANCE);
 
-		String input = "servus cantat";
+		String input = "servus cantat dominum ridere";
 
 		System.out.printf("(S) Processing \"%s\" %n", input);
 
@@ -83,10 +83,11 @@ public class LatinRegistryTest {
 		System.out.println("(3) Translated:");
 		System.out.println(translated);
 
-		System.out.println("(4) Tokenized:");
+		System.out.println("(4) Traversed:");
 		System.out.println(SyntaxTrees.traverse(translated));
 
 		new TranslationPrinter<>(result.getSyntaxTree(), germanTranslator).print(new PrintStream("translate.html"));
-
+		
+		JufoHelper.present(translated);
 	}
 }

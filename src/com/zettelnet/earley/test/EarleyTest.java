@@ -61,15 +61,15 @@ public class EarleyTest {
 
 		SimpleGrammar<String, DefaultParameter> grammar = new SimpleGrammar<>(start, new DefaultParameterManager<>());
 
-		grammar.addProduction(new Production<>(grammar, start, term));
-		grammar.addProduction(new Production<>(grammar, start, term, equals, term));
-		grammar.addProduction(new Production<>(grammar, term, term, operator, term));
-		grammar.addProduction(new Production<>(grammar, term, term, faktorial));
-		grammar.addProduction(new Production<>(grammar, term, number));
-		grammar.addProduction(new Production<>(grammar, term, constant));
-		grammar.addProduction(new Production<>(grammar, term, negation, term));
-		grammar.addProduction(new Production<>(grammar, term, bracketOpen, term, bracketClose));
-		grammar.addProduction(new Production<>(grammar, term, function, term));
+		grammar.addProduction(new Production<>(grammar, start, 1, term));
+		grammar.addProduction(new Production<>(grammar, start, 1, term, equals, term));
+		grammar.addProduction(new Production<>(grammar, term, 1, term, operator, term));
+		grammar.addProduction(new Production<>(grammar, term, 1, term, faktorial));
+		grammar.addProduction(new Production<>(grammar, term, 1, number));
+		grammar.addProduction(new Production<>(grammar, term, 1, constant));
+		grammar.addProduction(new Production<>(grammar, term, 1, negation, term));
+		grammar.addProduction(new Production<>(grammar, term, 1, bracketOpen, term, bracketClose));
+		grammar.addProduction(new Production<>(grammar, term, 1, function, term));
 		EarleyParser<String, DefaultParameter> parser = new EarleyParser<>(grammar, new LinearInputPositionInitializer<>());
 		EarleyParseResult<String, DefaultParameter> result = parser.parse(Arrays.asList("sqrt 23 + ( 7 / 2 * - 23 * cos pi / 2 ) / 3 ! - sin 1 / 2 = 23".split(" ")));
 

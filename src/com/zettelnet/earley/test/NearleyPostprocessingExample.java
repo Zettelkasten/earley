@@ -59,7 +59,7 @@ public class NearleyPostprocessingExample {
 		Collection<ProcessableProduction<Character, DefaultParameter, Double>> productions = new HashSet<>();
 
 		productions.add(new ProcessableProduction<Character, DefaultParameter, Double>(new Production<>(grammar,
-				main,
+				main, 1,
 				whitespace, addition, whitespace),
 				(ProcessingManager<Character, DefaultParameter, Double> manager, SyntaxTreeVariant<Character, DefaultParameter> tree) -> {
 					return manager.process(tree.getChildren().get(1));
@@ -67,13 +67,13 @@ public class NearleyPostprocessingExample {
 
 		// Parentheses
 		productions.add(new ProcessableProduction<Character, DefaultParameter, Double>(new Production<>(grammar,
-				parentheses,
+				parentheses, 1,
 				lit('('), addition, whitespace, lit(')'), whitespace),
 				(ProcessingManager<Character, DefaultParameter, Double> manager, SyntaxTreeVariant<Character, DefaultParameter> tree) -> {
 					return manager.process(tree.getChildren().get(1));
 				}));
 		productions.add(new ProcessableProduction<Character, DefaultParameter, Double>(new Production<>(grammar,
-				parentheses,
+				parentheses, 1,
 				number),
 				(ProcessingManager<Character, DefaultParameter, Double> manager, SyntaxTreeVariant<Character, DefaultParameter> tree) -> {
 					return manager.process(tree.getChildren().get(0));
@@ -81,13 +81,13 @@ public class NearleyPostprocessingExample {
 
 		// Exponents
 		productions.add(new ProcessableProduction<Character, DefaultParameter, Double>(new Production<>(grammar,
-				exponent,
+				exponent, 1,
 				parentheses, whitespace, lit('^'), whitespace, exponent),
 				(ProcessingManager<Character, DefaultParameter, Double> manager, SyntaxTreeVariant<Character, DefaultParameter> tree) -> {
 					return Math.pow(manager.process(tree.getChildren().get(1)), manager.process(tree.getChildren().get(4)));
 				}));
 		productions.add(new ProcessableProduction<Character, DefaultParameter, Double>(new Production<>(grammar,
-				exponent,
+				exponent, 1,
 				parentheses),
 				(ProcessingManager<Character, DefaultParameter, Double> manager, SyntaxTreeVariant<Character, DefaultParameter> tree) -> {
 					return manager.process(tree.getChildren().get(0));
@@ -95,19 +95,19 @@ public class NearleyPostprocessingExample {
 
 		// Multiplication and devision
 		productions.add(new ProcessableProduction<Character, DefaultParameter, Double>(new Production<>(grammar,
-				multiplication,
+				multiplication, 1,
 				multiplication, whitespace, lit('*'), whitespace, exponent),
 				(ProcessingManager<Character, DefaultParameter, Double> manager, SyntaxTreeVariant<Character, DefaultParameter> tree) -> {
 					return manager.process(tree.getChildren().get(1)) * manager.process(tree.getChildren().get(4));
 				}));
 		productions.add(new ProcessableProduction<Character, DefaultParameter, Double>(new Production<>(grammar,
-				multiplication,
+				multiplication, 1,
 				multiplication, whitespace, lit('/'), whitespace, exponent),
 				(ProcessingManager<Character, DefaultParameter, Double> manager, SyntaxTreeVariant<Character, DefaultParameter> tree) -> {
 					return manager.process(tree.getChildren().get(1)) / manager.process(tree.getChildren().get(4));
 				}));
 		productions.add(new ProcessableProduction<Character, DefaultParameter, Double>(new Production<>(grammar,
-				multiplication,
+				multiplication, 1,
 				exponent),
 				(ProcessingManager<Character, DefaultParameter, Double> manager, SyntaxTreeVariant<Character, DefaultParameter> tree) -> {
 					return manager.process(tree.getChildren().get(0));
@@ -115,19 +115,19 @@ public class NearleyPostprocessingExample {
 
 		// Addition and subtraction
 		productions.add(new ProcessableProduction<Character, DefaultParameter, Double>(new Production<>(grammar,
-				addition,
+				addition, 1,
 				addition, whitespace, lit('+'), whitespace, multiplication),
 				(ProcessingManager<Character, DefaultParameter, Double> manager, SyntaxTreeVariant<Character, DefaultParameter> tree) -> {
 					return manager.process(tree.getChildren().get(1)) + manager.process(tree.getChildren().get(4));
 				}));
 		productions.add(new ProcessableProduction<Character, DefaultParameter, Double>(new Production<>(grammar,
-				addition,
+				addition, 1,
 				addition, whitespace, lit('-'), whitespace, multiplication),
 				(ProcessingManager<Character, DefaultParameter, Double> manager, SyntaxTreeVariant<Character, DefaultParameter> tree) -> {
 					return manager.process(tree.getChildren().get(1)) - manager.process(tree.getChildren().get(4));
 				}));
 		productions.add(new ProcessableProduction<Character, DefaultParameter, Double>(new Production<>(grammar,
-				addition,
+				addition, 1,
 				multiplication),
 				(ProcessingManager<Character, DefaultParameter, Double> manager, SyntaxTreeVariant<Character, DefaultParameter> tree) -> {
 					return manager.process(tree.getChildren().get(0));
@@ -135,59 +135,59 @@ public class NearleyPostprocessingExample {
 
 		// A number or a function of a number
 		productions.add(new ProcessableProduction<Character, DefaultParameter, Double>(new Production<>(grammar,
-				number,
+				number, 1,
 				floatNumber),
 				(ProcessingManager<Character, DefaultParameter, Double> manager, SyntaxTreeVariant<Character, DefaultParameter> tree) -> {
 					return manager.process(tree.getChildren().get(0));
 				}));
 
 		// TODO
-		grammar.addProduction(number,
+		grammar.addProduction(number, 1,
 				lit('s'), lit('i'), lit('n'), whitespace, parentheses);
-		grammar.addProduction(number,
+		grammar.addProduction(number, 1,
 				lit('c'), lit('o'), lit('s'), whitespace, parentheses);
-		grammar.addProduction(number,
+		grammar.addProduction(number, 1,
 				lit('t'), lit('a'), lit('n'), whitespace, parentheses);
 
-		grammar.addProduction(number,
+		grammar.addProduction(number, 1,
 				lit('a'), lit('s'), lit('i'), lit('n'), whitespace, parentheses);
-		grammar.addProduction(number,
+		grammar.addProduction(number, 1,
 				lit('a'), lit('c'), lit('o'), lit('s'), whitespace, parentheses);
-		grammar.addProduction(number,
+		grammar.addProduction(number, 1,
 				lit('a'), lit('t'), lit('a'), lit('n'), whitespace, parentheses);
 
-		grammar.addProduction(number,
+		grammar.addProduction(number, 1,
 				lit('p'), lit('i'));
-		grammar.addProduction(number,
+		grammar.addProduction(number, 1,
 				lit('e'));
-		grammar.addProduction(number,
+		grammar.addProduction(number, 1,
 				lit('s'), lit('q'), lit('r'), lit('t'), whitespace, parentheses);
-		grammar.addProduction(number,
+		grammar.addProduction(number, 1,
 				lit('l'), lit('n'), whitespace, parentheses);
 
 		// Number with a decimal point in it
 		productions.add(new ProcessableProduction<Character, DefaultParameter, Double>(new Production<>(grammar,
-				floatNumber,
+				floatNumber, 1,
 				intNumber, lit('.'), intNumber),
 				(ProcessingManager<Character, DefaultParameter, Double> manager, SyntaxTreeVariant<Character, DefaultParameter> tree) -> {
 					return manager.process(tree.getChildren().get(0));
 				}));
-		grammar.addProduction(floatNumber,
+		grammar.addProduction(floatNumber, 1,
 				intNumber, lit('.'), intNumber);
-		grammar.addProduction(floatNumber,
+		grammar.addProduction(floatNumber, 1,
 				intNumber);
 
 		// Number without a decimal point
-		grammar.addProduction(intNumber,
+		grammar.addProduction(intNumber, 1,
 				digit, intNumberNull);
-		grammar.addProduction(intNumberNull);
-		grammar.addProduction(intNumberNull,
+		grammar.addProduction(intNumberNull, 1);
+		grammar.addProduction(intNumberNull, 1,
 				digit, intNumberNull);
 
 		// None, one or more whitespaces
-		grammar.addProduction(whitespace,
+		grammar.addProduction(whitespace, 1,
 				lit(' '), whitespace);
-		grammar.addProduction(whitespace);
+		grammar.addProduction(whitespace, 1);
 
 		GrammarParser<Character, DefaultParameter> parser = new EarleyParser<>(grammar);
 

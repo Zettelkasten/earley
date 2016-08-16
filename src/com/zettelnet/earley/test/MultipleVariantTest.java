@@ -46,11 +46,11 @@ public class MultipleVariantTest {
 
 		// 3. Add Productions
 
-		grammar.addProduction(start, left, middle, right);
-		grammar.addProduction(left, a);
-		grammar.addProduction(middle, b);
-		grammar.addProduction(middle, c);
-		grammar.addProduction(right, d);
+		grammar.addProduction(start, 1, left, middle, right);
+		grammar.addProduction(left, 1, a);
+		grammar.addProduction(middle, 1, b);
+		grammar.addProduction(middle, 1, c);
+		grammar.addProduction(right, 1, d);
 
 		// 4. Create Parser
 

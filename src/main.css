@@ -44,16 +44,20 @@
 .state-origin {
 	color: gray;
 }
+.state-probability {
+	text-align: right;
+}
 
 /* Translating */
 
 .tree-translation {
 	margin-left: 10px;
 	margin-right: 10px;
-	background-color: rgba(1, 1, 1, 0.1);
+	/* background-color: rgba(1, 1, 1, 0.1); */
 }
 .source-variants {
 	list-style-type: lower-alpha;
+	padding-left: 20px;
 }
 
 .source-symbol {

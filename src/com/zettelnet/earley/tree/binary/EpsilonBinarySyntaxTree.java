@@ -54,6 +54,11 @@ public class EpsilonBinarySyntaxTree<T, P extends Parameter> implements BinarySy
 			public BinarySyntaxTree<T, P> getChildNode() {
 				return null;
 			}
+			
+			@Override
+			public double getLocalProbability() {
+				return epsilonProduction.getProbability();
+			}
 		});
 	}
 

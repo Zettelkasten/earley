@@ -61,7 +61,8 @@ public final class EarleyParseResult<T, P extends Parameter> implements ParseRes
 		predict(new SeedState<T, P>(currentChart,
 				grammar.getStartSymbol(),
 				grammar.getStartSymbolParameter().makeParameter(grammar.getStartSymbol()),
-				grammar.getStartSymbolParameterExpression()),
+				grammar.getStartSymbolParameterExpression(),
+				1),
 				grammar.getStartSymbol());
 	}
 

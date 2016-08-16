@@ -19,4 +19,6 @@ public interface SyntaxTreeVariant<T, P extends Parameter> {
 	T getToken();
 
 	List<SyntaxTree<T, P>> getChildren();
+	
+	double getLocalProbability();
 }

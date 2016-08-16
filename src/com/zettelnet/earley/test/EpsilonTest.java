@@ -27,9 +27,9 @@ public class EpsilonTest {
 
 		SimpleGrammar<String, DefaultParameter> grammar = new SimpleGrammar<>(a, new DefaultParameterManager<>());
 
-		grammar.addProduction(new Production<>(grammar, a, b, b, b));
-		grammar.addProduction(new Production<>(grammar, b));
-		grammar.addProduction(new Production<>(grammar, b, t));
+		grammar.addProduction(new Production<>(grammar, a, 1, b, b, b));
+		grammar.addProduction(new Production<>(grammar, b, 1));
+		grammar.addProduction(new Production<>(grammar, b, 1, t));
 
 		EarleyParser<String, DefaultParameter> parser = new EarleyParser<>(grammar, new LinearInputPositionInitializer<>());
 		EarleyParseResult<String, DefaultParameter> result = parser.parse(Arrays.asList("lol", "rofl", "xd"));

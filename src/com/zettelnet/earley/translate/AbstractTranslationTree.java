@@ -9,9 +9,11 @@ import com.zettelnet.earley.symbol.Symbol;
 public class AbstractTranslationTree<T, P extends Parameter, U, Q extends Parameter> implements TranslationTreeVariant<T, P, U, Q> {
 
 	private final AbstractReference<T, P> reference;
+	private final double probability;
 
-	public AbstractTranslationTree(final AbstractReference<T, P> reference) {
+	public AbstractTranslationTree(final AbstractReference<T, P> reference, final double probability) {
 		this.reference = reference;
+		this.probability = probability;
 	}
 
 	@Override
@@ -44,4 +46,8 @@ public class AbstractTranslationTree<T, P extends Parameter, U, Q extends Parame
 		return Collections.emptyList();
 	}
 
+	@Override
+	public double getLocalProbability() {
+		return probability;
+	}
 }
