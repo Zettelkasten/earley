@@ -19,5 +19,5 @@ public interface TranslationTreeVariant<T, P extends Parameter, U, Q extends Par
 
 	List<TranslationTree<T, P, U, Q>> getChildren();
 
-	double getLocalProbability();
+	double getProbability();
 }

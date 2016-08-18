@@ -11,14 +11,16 @@ public class NonTerminalSyntaxTreeVariant<T, P extends Parameter> implements Syn
 	private final NonTerminal<T> symbol;
 	private final Production<T, P> production;
 	private final P parameter;
-
+	private final double probability;
+	
 	private final List<SyntaxTree<T, P>> children;
 
-	public NonTerminalSyntaxTreeVariant(final NonTerminal<T> symbol, final Production<T, P> production, final P parameter, final List<SyntaxTree<T, P>> children) {
+	public NonTerminalSyntaxTreeVariant(final NonTerminal<T> symbol, final Production<T, P> production, final P parameter, final List<SyntaxTree<T, P>> children, final double probability) {
 		this.symbol = symbol;
 		this.production = production;
 		this.parameter = parameter;
 		this.children = children;
+		this.probability = probability;
 	}
 
 	@Override
@@ -52,8 +54,8 @@ public class NonTerminalSyntaxTreeVariant<T, P extends Parameter> implements Syn
 	}
 	
 	@Override
-	public double getLocalProbability() {
-		return production.getProbability();
+	public double getProbability() {
+		return probability;
 	}
 
 	@Override

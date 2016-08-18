@@ -371,9 +371,9 @@ public final class LatinGrammar {
 						vars(new AbstractTranslationTree<>(new PositionReference<>(1), 1)),
 						vars(new AbstractTranslationTree<>(new PositionReference<>(2), 1)))));
 
-		makeOptional(grammar, NounPhraseOpt, NounPhrase, copy, GermanSymbol.NounPhraseOpt, GermanSymbol.NounPhrase, toGerman, germanize);
-		makeOptional(grammar, AdjectivePhraseOpt, AdjectivePhrase, copy, GermanSymbol.AdjectivePhraseOpt, GermanSymbol.AdjectivePhrase, toGerman, germanize);
-		makeOptional(grammar, PronounOpt, Pronoun, copy, GermanSymbol.PronounOpt, GermanSymbol.Pronoun, toGerman, germanize);
+		makeOptional(grammar, NounPhraseOpt, NounPhrase, copy, GermanSymbol.NounPhraseOpt, GermanSymbol.NounPhrase, toGerman, germanize, 0.2);
+		makeOptional(grammar, AdjectivePhraseOpt, AdjectivePhrase, copy, GermanSymbol.AdjectivePhraseOpt, GermanSymbol.AdjectivePhrase, toGerman, germanize, 0.2);
+		makeOptional(grammar, PronounOpt, Pronoun, copy, GermanSymbol.PronounOpt, GermanSymbol.Pronoun, toGerman, germanize, 0.2);
 
 		// Terminal translations
 		toGerman.addTranslation(Verb, parameterManager,

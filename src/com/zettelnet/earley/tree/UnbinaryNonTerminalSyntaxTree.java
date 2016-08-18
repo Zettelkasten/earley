@@ -54,7 +54,7 @@ public class UnbinaryNonTerminalSyntaxTree<T, P extends Parameter> implements Sy
 
 				BinarySyntaxTree<T, P> preNode = variant.getPreNode();
 				if (preNode == null) {
-					output.add(new NonTerminalSyntaxTreeVariant<>((NonTerminal<T>) node.getRootSymbol(), firstVariant.getProduction(), firstVariant.getParameter(), createStrippedCopy(list)));
+					output.add(new NonTerminalSyntaxTreeVariant<>((NonTerminal<T>) node.getRootSymbol(), firstVariant.getProduction(), firstVariant.getParameter(), createStrippedCopy(list), variant.getProbability()));
 					list.removeFirst();
 				} else {
 					iterators.addFirst(preNode.getVariants().iterator());
@@ -98,6 +98,7 @@ public class UnbinaryNonTerminalSyntaxTree<T, P extends Parameter> implements Sy
 
 		Production<T, P> production = null;
 		P parameter = null;
+		double probability = -1;
 
 		BinarySyntaxTree<T, P> binaryNode = node;
 		do {
@@ -117,6 +118,9 @@ public class UnbinaryNonTerminalSyntaxTree<T, P extends Parameter> implements Sy
 			if (parameter == null) {
 				parameter = binaryVariant.getParameter();
 			}
+			if (probability == -1) {
+				probability = binaryVariant.getProbability();
+			}
 
 			SyntaxTree<T, P> child = toNaturalChildTree(binaryVariant.getChildNode());
 			children.add(0, child);
@@ -124,7 +128,8 @@ public class UnbinaryNonTerminalSyntaxTree<T, P extends Parameter> implements Sy
 			binaryNode = binaryVariant.getPreNode();
 		} while (binaryNode != null);
 
-		return new NonTerminalSyntaxTreeVariant<>((NonTerminal<T>) node.getRootSymbol(), production, parameter, createStrippedCopy(children));
+		assert probability >= 0 && probability <= 1;
+		return new NonTerminalSyntaxTreeVariant<>((NonTerminal<T>) node.getRootSymbol(), production, parameter, createStrippedCopy(children), probability);
 	}
 
 	@Override

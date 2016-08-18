@@ -19,6 +19,7 @@ public class SimpleState<T, P extends Parameter> implements State<T, P> {
 
 	private final P parameter;
 
+	private final double probability;
 	private final List<StateCause<T, P>> cause = new ArrayList<>(2);
 
 	private final static NumberFormat percentFormat;
@@ -27,7 +28,7 @@ public class SimpleState<T, P extends Parameter> implements State<T, P> {
 		percentFormat.setMaximumFractionDigits(1);
 	}
 
-	public SimpleState(final Chart<T, P> chart, final Production<T, P> production, final int currentPosition, final InputPosition<T> originPosition, final P parameter) {
+	public SimpleState(final Chart<T, P> chart, final Production<T, P> production, final int currentPosition, final InputPosition<T> originPosition, final P parameter, final double probability) {
 		assert originPosition != null : "Origin Position cannot be null";
 
 		this.chart = chart;
@@ -35,6 +36,7 @@ public class SimpleState<T, P extends Parameter> implements State<T, P> {
 		this.currentPosition = currentPosition;
 		this.originPosition = originPosition;
 		this.parameter = parameter;
+		this.probability = probability;
 	}
 
 	@Override
@@ -101,7 +103,7 @@ public class SimpleState<T, P extends Parameter> implements State<T, P> {
 
 	@Override
 	public double getProbability() {
-		return production.getProbability();
+		return probability;
 	}
 
 	@Override

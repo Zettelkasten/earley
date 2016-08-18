@@ -1,7 +1,9 @@
 package com.zettelnet.earley.tree;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.PriorityQueue;
 import java.util.Set;
 
 import com.zettelnet.earley.param.Parameter;
@@ -32,6 +34,12 @@ public interface SyntaxTree<T, P extends Parameter> {
 			set.add(element);
 		}
 		return set;
+	}
+	
+	default Iterable<SyntaxTreeVariant<T, P>> getVariantsByPriority() {
+		Collection<SyntaxTreeVariant<T, P>> collection = new PriorityQueue<>(SyntaxTrees.PROBABILITY_COMPARATOR);
+		collection.addAll(getVariantsSet());
+		return collection;
 	}
 
 	SyntaxTreeVariant<T, P> getVariant(Iterator<Integer> variantDirections) throws NoSuchSyntaxTreeException;

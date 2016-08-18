@@ -33,7 +33,7 @@ public class TranslatedVariantSyntaxTree<T, P extends Parameter, U, Q extends Pa
 		Symbol<T> sourceSymbol = sourceVariant.getRootSymbol();
 		P sourceParameter = sourceVariant.getParameter();
 			for (TranslationTreeVariant<T, P, U, Q> translationVariant : translation.getVariants()) {
-				double probability = sourceVariant.getLocalProbability() * translationVariant.getLocalProbability();
+				double probability = sourceVariant.getProbability() * translationVariant.getProbability();
 				
 				if (translationVariant.isAbstract()) {
 					variants.addAll(translator.translate(translationVariant.getAbstractReference().getSourceTree(sourceVariant)).getVariantsSet());

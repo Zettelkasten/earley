@@ -13,12 +13,14 @@ public class EpsilonBinarySyntaxTree<T, P extends Parameter> implements BinarySy
 
 	private final Production<T, P> epsilonProduction;
 	private final P epsilonParameter;
+	private final double probability;
 	
-	public EpsilonBinarySyntaxTree(final Production<T, P> epsilonProduction, final P epsilonParameter) {
+	public EpsilonBinarySyntaxTree(final Production<T, P> epsilonProduction, final P epsilonParameter, final double probability) {
 		assert epsilonProduction.isEpsilon();
 		
 		this.epsilonProduction = epsilonProduction;
 		this.epsilonParameter = epsilonParameter;
+		this.probability = probability;
 	}
 	
 	@Override
@@ -56,8 +58,8 @@ public class EpsilonBinarySyntaxTree<T, P extends Parameter> implements BinarySy
 			}
 			
 			@Override
-			public double getLocalProbability() {
-				return epsilonProduction.getProbability();
+			public double getProbability() {
+				return probability;
 			}
 		});
 	}

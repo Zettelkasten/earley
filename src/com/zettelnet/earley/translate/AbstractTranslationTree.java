@@ -47,7 +47,7 @@ public class AbstractTranslationTree<T, P extends Parameter, U, Q extends Parame
 	}
 
 	@Override
-	public double getLocalProbability() {
+	public double getProbability() {
 		return probability;
 	}
 }

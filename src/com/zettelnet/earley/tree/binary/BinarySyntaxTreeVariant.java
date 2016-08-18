@@ -45,5 +45,5 @@ public interface BinarySyntaxTreeVariant<T, P extends Parameter> {
 
 	BinarySyntaxTree<T, P> getChildNode();
 
-	double getLocalProbability();
+	double getProbability();
 }

@@ -71,8 +71,8 @@ public class TranslatedSyntaxTreeVariant<T, P extends Parameter, U, Q extends Pa
 	}
 	
 	@Override
-	public double getLocalProbability() {
-		return sourceVariant.getLocalProbability() * translation.getLocalProbability();
+	public double getProbability() {
+		return sourceVariant.getProbability() * translation.getProbability();
 	}
 
 	@Override

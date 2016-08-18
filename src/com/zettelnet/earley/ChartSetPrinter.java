@@ -29,7 +29,7 @@ public class ChartSetPrinter<T, P extends Parameter> {
 
 	private final Set<Chart<T, P>> aliveCharts;
 	private final Set<State<T, P>> aliveStates;
-	
+
 	private final static NumberFormat percentFormat;
 	static {
 		percentFormat = NumberFormat.getPercentInstance();

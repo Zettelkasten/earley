@@ -57,7 +57,7 @@ public class TerminalSyntaxTreeVariant<T, P extends Parameter> implements Syntax
 	}
 
 	@Override
-	public double getLocalProbability() {
+	public double getProbability() {
 		return probability;
 	}
 }

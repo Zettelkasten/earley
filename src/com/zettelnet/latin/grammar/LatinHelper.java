@@ -52,13 +52,13 @@ final class LatinHelper {
 		return new SimpleTranslationTree<>(variants);
 	}
 
-	static void makeOptional(SimpleGrammar<Token, FormParameter> grammar, NonTerminal<Token> optionalSymbol, Symbol<Token> symbol, ParameterExpression<Token, FormParameter> expression, NonTerminal<GermanToken> translatedOptional, Symbol<GermanToken> translatedSymbol, SimpleTranslationSet<Token, FormParameter, GermanToken, FormParameter> translations, ParameterTranslator<Token, FormParameter, GermanToken, FormParameter> parameterTranslator) {
+	static void makeOptional(SimpleGrammar<Token, FormParameter> grammar, NonTerminal<Token> optionalSymbol, Symbol<Token> symbol, ParameterExpression<Token, FormParameter> expression, NonTerminal<GermanToken> translatedOptional, Symbol<GermanToken> translatedSymbol, SimpleTranslationSet<Token, FormParameter, GermanToken, FormParameter> translations, ParameterTranslator<Token, FormParameter, GermanToken, FormParameter> parameterTranslator, double probability) {
 		Production<Token, FormParameter> prod;
 
-		prod = grammar.addProduction(optionalSymbol, 1);
+		prod = grammar.addProduction(optionalSymbol, 1 - probability);
 		translations.addTranslation(prod, grammar.getParameterManager(),
 				vars(new ConcreteTranslationTree<>(translatedOptional, parameterTranslator, 1)));
-		prod = grammar.addProduction(optionalSymbol, 1, new ParameterizedSymbol<>(symbol, expression));
+		prod = grammar.addProduction(optionalSymbol, probability, new ParameterizedSymbol<>(symbol, expression));
 		translations.addTranslation(prod, grammar.getParameterManager(),
 				vars(new ConcreteTranslationTree<>(translatedOptional, parameterTranslator, 1,
 						vars(new AbstractTranslationTree<>(new PositionReference<>(0), 1)))));

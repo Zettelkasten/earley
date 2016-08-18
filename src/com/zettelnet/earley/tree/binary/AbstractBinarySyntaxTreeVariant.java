@@ -48,8 +48,8 @@ public abstract class AbstractBinarySyntaxTreeVariant<T, P extends Parameter> im
 	}
 	
 	@Override
-	public double getLocalProbability() {
-		return getProduction().getProbability();
+	public double getProbability() {
+		return state.getProbability();
 	}
 
 	@Override
