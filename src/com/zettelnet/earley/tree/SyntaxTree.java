@@ -36,7 +36,7 @@ public interface SyntaxTree<T, P extends Parameter> {
 		return set;
 	}
 	
-	default Iterable<SyntaxTreeVariant<T, P>> getVariantsByPriority() {
+	default Iterable<SyntaxTreeVariant<T, P>> getVariantsByProbability() {
 		Collection<SyntaxTreeVariant<T, P>> collection = new PriorityQueue<>(SyntaxTrees.PROBABILITY_COMPARATOR);
 		collection.addAll(getVariantsSet());
 		return collection;

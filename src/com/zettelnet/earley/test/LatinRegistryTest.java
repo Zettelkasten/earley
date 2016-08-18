@@ -25,6 +25,7 @@ import com.zettelnet.earley.translate.TranslationSet;
 import com.zettelnet.earley.translate.Translator;
 import com.zettelnet.earley.tree.SyntaxTree;
 import com.zettelnet.earley.tree.SyntaxTrees;
+import com.zettelnet.earley.tree.TreeViews;
 import com.zettelnet.german.token.GermanDetermination;
 import com.zettelnet.german.token.GermanToken;
 import com.zettelnet.latin.grammar.LatinGrammar;
@@ -36,25 +37,31 @@ import com.zettelnet.latin.token.Token;
 public class LatinRegistryTest {
 
 	public static void main(String[] args) throws IOException {
+//		final PrintStream out = new PrintStream(new FileOutputStream("debug.txt"));
+		final PrintStream out = System.out;
+		
 		Grammar<Token, FormParameter> grammar = LatinGrammar.makeGrammar();
 		Tokenizer<Token> tokenizer = new WhitespaceTokenizer<>(LatinRegistry.INSTANCE);
 
 		String input = "servus cantat dominum ridere";
 
-		System.out.printf("(S) Processing \"%s\" %n", input);
+		out.printf("(S) Processing \"%s\" %n", input);
 
 		List<Token> tokens = tokenizer.tokenize(input);
 
-		System.out.println("(1) Tokenized:");
-		System.out.println(tokens);
+		out.println("(1) Tokenized:");
+		out.println(tokens);
 
 		new TokenSetPrinter<>(LatinTokenPrinter.INSTANCE, tokens).print(new PrintStream("tokens.html"));
 
 		GrammarParser<Token, FormParameter> parser = new EarleyParser<>(grammar, new DynamicInputPositionInitializer<>());
 		ParseResult<Token, FormParameter> result = parser.parse(tokens);
 
-		System.out.println("(2) Parsed:");
-		System.out.println(result.getSyntaxTree());
+		out.println("(2) Parsed:");
+		out.println(result.getSyntaxTree());
+
+		out.println("(X) Best parse match:");
+		out.println(SyntaxTrees.getTreeView(result.getSyntaxTree(), TreeViews.bestProbability()));
 
 		new ChartSetPrinter<>(result.getCharts(), tokens).print(new PrintStream("parse.html"));
 
@@ -80,14 +87,16 @@ public class LatinRegistryTest {
 
 		SyntaxTree<GermanToken, FormParameter> translated = germanTranslator.translate(result.getSyntaxTree());
 
-		System.out.println("(3) Translated:");
-		System.out.println(translated);
+		out.println("(3) Translated:");
+		out.println(translated);
 
-		System.out.println("(4) Traversed:");
-		System.out.println(SyntaxTrees.traverse(translated));
+		out.println("(4) Traversed:");
+		out.println(SyntaxTrees.traverse(translated));
 
 		new TranslationPrinter<>(result.getSyntaxTree(), germanTranslator).print(new PrintStream("translate.html"));
-		
-		JufoHelper.present(translated);
+
+		JufoHelper.present(result.getSyntaxTree());
+
+		out.close();
 	}
 }
