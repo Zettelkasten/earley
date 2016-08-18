@@ -278,7 +278,7 @@ public class ChartSetPrinter<T, P extends Parameter> {
 		}
 		
 		if (tableMode) {
-			out.printf("<td class='state-probability'>%s</td>", percentFormat.format(state.getProbability()));
+			out.printf("<td class='state-probability' title=%s>%s</td>", state.getProbability(), percentFormat.format(state.getProbability()));
 		} else {
 			out.printf(" (%s)", percentFormat.format(state.getProbability()));
 		}
