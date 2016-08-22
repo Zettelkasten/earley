@@ -3,7 +3,7 @@ package com.zettelnet.latin.token;
 import java.io.PrintStream;
 import java.util.Collection;
 
-import com.zettelnet.earley.token.TokenPrinter;
+import com.zettelnet.earley.print.TokenPrinter;
 
 public class LatinTokenPrinter implements TokenPrinter<Token> {
 

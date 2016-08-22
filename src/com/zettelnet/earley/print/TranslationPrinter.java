@@ -1,4 +1,4 @@
-package com.zettelnet.earley.translate;
+package com.zettelnet.earley.print;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -15,6 +15,11 @@ import com.zettelnet.earley.Production;
 import com.zettelnet.earley.param.Parameter;
 import com.zettelnet.earley.symbol.Symbol;
 import com.zettelnet.earley.symbol.Terminal;
+import com.zettelnet.earley.translate.Translation;
+import com.zettelnet.earley.translate.TranslationSet;
+import com.zettelnet.earley.translate.TranslationTree;
+import com.zettelnet.earley.translate.TranslationTreeVariant;
+import com.zettelnet.earley.translate.Translator;
 import com.zettelnet.earley.tree.SyntaxTree;
 import com.zettelnet.earley.tree.SyntaxTreeVariant;
 

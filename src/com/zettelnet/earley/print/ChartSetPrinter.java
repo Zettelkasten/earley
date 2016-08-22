@@ -1,4 +1,4 @@
-package com.zettelnet.earley;
+package com.zettelnet.earley.print;
 
 import java.io.PrintStream;
 import java.text.NumberFormat;
@@ -13,6 +13,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
 
+import com.zettelnet.earley.Chart;
+import com.zettelnet.earley.Production;
+import com.zettelnet.earley.State;
+import com.zettelnet.earley.StateCause;
 import com.zettelnet.earley.input.InputPosition;
 import com.zettelnet.earley.param.Parameter;
 import com.zettelnet.earley.param.ParameterExpression;

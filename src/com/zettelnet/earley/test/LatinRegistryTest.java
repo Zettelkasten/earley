@@ -8,19 +8,19 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.zettelnet.earley.ChartSetPrinter;
 import com.zettelnet.earley.EarleyParser;
 import com.zettelnet.earley.Grammar;
 import com.zettelnet.earley.GrammarParser;
 import com.zettelnet.earley.ParseResult;
 import com.zettelnet.earley.input.DynamicInputPositionInitializer;
+import com.zettelnet.earley.print.ChartSetPrinter;
+import com.zettelnet.earley.print.TokenSetPrinter;
+import com.zettelnet.earley.print.TranslationPrinter;
 import com.zettelnet.earley.symbol.Terminal;
 import com.zettelnet.earley.token.TokenFactory;
-import com.zettelnet.earley.token.TokenSetPrinter;
 import com.zettelnet.earley.token.Tokenizer;
 import com.zettelnet.earley.token.WhitespaceTokenizer;
 import com.zettelnet.earley.translate.SimpleTranslator;
-import com.zettelnet.earley.translate.TranslationPrinter;
 import com.zettelnet.earley.translate.TranslationSet;
 import com.zettelnet.earley.translate.Translator;
 import com.zettelnet.earley.tree.SyntaxTree;
@@ -61,7 +61,7 @@ public class LatinRegistryTest {
 		out.println(result.getSyntaxTree());
 
 		out.println("(X) Best parse match:");
-		out.println(SyntaxTrees.getTreeView(result.getSyntaxTree(), TreeViews.bestProbability()));
+		out.println(SyntaxTrees.getTreeView(result.getSyntaxTree(), TreeViews.bestProbability(), SyntaxTrees.DETAILED));
 
 		new ChartSetPrinter<>(result.getCharts(), tokens).print(new PrintStream("parse.html"));
 
@@ -89,6 +89,9 @@ public class LatinRegistryTest {
 
 		out.println("(3) Translated:");
 		out.println(translated);
+
+		out.println("(X) Best translation match:");
+		out.println(SyntaxTrees.getTreeView(translated, TreeViews.bestProbability(), SyntaxTrees.DETAILED_TREE));
 
 		out.println("(4) Traversed:");
 		out.println(SyntaxTrees.traverse(translated));

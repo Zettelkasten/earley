@@ -1,4 +1,4 @@
-package com.zettelnet.earley.token;
+package com.zettelnet.earley.print;
 
 import java.io.PrintStream;
 import java.util.List;

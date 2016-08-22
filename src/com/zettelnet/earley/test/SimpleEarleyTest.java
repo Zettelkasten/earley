@@ -5,12 +5,12 @@ import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.List;
 
-import com.zettelnet.earley.ChartSetPrinter;
 import com.zettelnet.earley.EarleyParser;
 import com.zettelnet.earley.ParseResult;
 import com.zettelnet.earley.SimpleGrammar;
 import com.zettelnet.earley.param.DefaultParameter;
 import com.zettelnet.earley.param.DefaultParameterManager;
+import com.zettelnet.earley.print.ChartSetPrinter;
 import com.zettelnet.earley.symbol.NonTerminal;
 import com.zettelnet.earley.symbol.PredicateTerminal;
 import com.zettelnet.earley.symbol.SimpleNonTerminal;
