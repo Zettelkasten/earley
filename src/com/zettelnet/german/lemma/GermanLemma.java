@@ -3,7 +3,9 @@ package com.zettelnet.german.lemma;
 import java.util.Collection;
 import java.util.Map;
 
+import com.zettelnet.earley.param.property.PropertySet;
 import com.zettelnet.german.form.GermanForm;
+import com.zettelnet.german.lemma.property.GermanLemmaProperty;
 
 public interface GermanLemma {
 
@@ -26,7 +28,7 @@ public interface GermanLemma {
 	 * 
 	 * Map<GermanDerivation, Collection<GermanLemma>> getDerivations();
 	 * 
-	 * PropertySet<GermanLemmaProperty> getProperties();
+	 * 
 	 * 
 	 * 
 	 * boolean isDerivation();
@@ -35,4 +37,6 @@ public interface GermanLemma {
 	 * 
 	 * GermanDerivation getDerivationKind();
 	 */
+
+	PropertySet<GermanLemmaProperty> getProperties();
 }
