@@ -6,16 +6,18 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.zettelnet.earley.param.property.ValuesPropertyType;
+
 public class MapGermanFormValueProvider<T> implements GermanFormValueProvider<T> {
 
 	private final Map<GermanForm, Collection<T>> data;
-	private final Collection<Class<? extends GermanFormProperty>> retainedProperties;
+	private final Collection<ValuesPropertyType<?>> retainedProperties;
 
-	protected MapGermanFormValueProvider(Collection<Class<? extends GermanFormProperty>> retainedProperties) {
+	protected MapGermanFormValueProvider(Collection<ValuesPropertyType<?>> retainedProperties) {
 		this(new HashMap<>(), retainedProperties);
 	}
 
-	public MapGermanFormValueProvider(final Map<GermanForm, Collection<T>> data, final Collection<Class<? extends GermanFormProperty>> retainedProperties) {
+	public MapGermanFormValueProvider(final Map<GermanForm, Collection<T>> data, final Collection<ValuesPropertyType<?>> retainedProperties) {
 		this.data = data;
 		this.retainedProperties = retainedProperties;
 	}
@@ -27,7 +29,7 @@ public class MapGermanFormValueProvider<T> implements GermanFormValueProvider<T>
 	public void put(T[] values, GermanFormProperty... formProperties) {
 		this.data.put(GermanForm.withValues(formProperties), Arrays.asList(values));
 	}
-	
+
 	@Override
 	public Collection<T> getValue(GermanForm form) {
 		Collection<T> variants = data.get(form.retainAll(retainedProperties));
@@ -37,7 +39,7 @@ public class MapGermanFormValueProvider<T> implements GermanFormValueProvider<T>
 			return Collections.emptyList();
 		}
 	}
-	
+
 	public Map<GermanForm, Collection<T>> getValues() {
 		return data;
 	}

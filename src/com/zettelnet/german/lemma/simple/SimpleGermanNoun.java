@@ -9,7 +9,7 @@ import com.zettelnet.german.lemma.simple.declension.DeclinableGermanLemma;
 
 public class SimpleGermanNoun extends AbstractDeclinableGermanLemma {
 
-	public SimpleGermanNoun(String nominativeSingular, String genitiveSingular, String nominativePlural, GermanFormProvider<DeclinableGermanLemma> formProvider, GermanGenus genus, GermanLemmaProperty[] properties) {
+	public SimpleGermanNoun(String nominativeSingular, String genitiveSingular, String nominativePlural, GermanFormProvider<DeclinableGermanLemma> formProvider, GermanGenus genus, GermanLemmaProperty... properties) {
 		super(nominativeSingular, genitiveSingular, nominativePlural, formProvider, genus, properties);
 	}
 
