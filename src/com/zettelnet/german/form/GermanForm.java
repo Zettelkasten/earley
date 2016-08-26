@@ -17,14 +17,14 @@ public interface GermanForm extends PropertySet<GermanFormProperty>, Comparable<
 
 	static List<Object> getAllProperties() {
 		List<Object> properties = new ArrayList<>();
-		properties.add(GermanCasus.class);
-		properties.add(GermanPerson.class);
-		properties.add(GermanNumerus.class);
-		properties.add(GermanGenus.class);
-		properties.add(GermanMood.class);
-		properties.add(GermanTense.class);
-		properties.add(GermanVoice.class);
-		properties.add(GermanComparison.class);
+		properties.add(GermanCasus.TYPE);
+		properties.add(GermanPerson.TYPE);
+		properties.add(GermanNumerus.TYPE);
+		properties.add(GermanGenus.TYPE);
+		properties.add(GermanMood.TYPE);
+		properties.add(GermanTense.TYPE);
+		properties.add(GermanVoice.TYPE);
+		properties.add(GermanComparison.TYPE);
 
 		return properties;
 	}
@@ -58,35 +58,35 @@ public interface GermanForm extends PropertySet<GermanFormProperty>, Comparable<
 	String toStringShort();
 
 	public default GermanCasus getCasus() {
-		return getProperty(GermanCasus.class);
+		return getProperty(GermanCasus.TYPE);
 	}
 
 	public default GermanNumerus getNumerus() {
-		return getProperty(GermanNumerus.class);
+		return getProperty(GermanNumerus.TYPE);
 	}
 
 	public default GermanGenus getGenus() {
-		return getProperty(GermanGenus.class);
+		return getProperty(GermanGenus.TYPE);
 	}
 
 	public default GermanPerson getPerson() {
-		return getProperty(GermanPerson.class);
+		return getProperty(GermanPerson.TYPE);
 	}
 
 	public default GermanMood getMood() {
-		return getProperty(GermanMood.class);
+		return getProperty(GermanMood.TYPE);
 	}
 
 	public default GermanTense getTense() {
-		return getProperty(GermanTense.class);
+		return getProperty(GermanTense.TYPE);
 	}
 
 	public default GermanVoice getVoice() {
-		return getProperty(GermanVoice.class);
+		return getProperty(GermanVoice.TYPE);
 	}
 
 	public default GermanComparison getComparison() {
-		return getProperty(GermanComparison.class);
+		return getProperty(GermanComparison.TYPE);
 	}
 
 	@Override
