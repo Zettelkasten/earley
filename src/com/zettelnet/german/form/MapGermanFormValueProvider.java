@@ -40,7 +40,13 @@ public class MapGermanFormValueProvider<T> implements GermanFormValueProvider<T>
 		}
 	}
 
+	@Override
 	public Map<GermanForm, Collection<T>> getValues() {
 		return data;
+	}
+	
+	@Override
+	public boolean hasValue(GermanForm key) {
+		return data.containsKey(key);
 	}
 }

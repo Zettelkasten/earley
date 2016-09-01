@@ -40,7 +40,13 @@ public class MapFormValueProvider<T> implements FormValueProvider<T> {
 		}
 	}
 	
+	@Override
 	public Map<Form, Collection<T>> getValues() {
 		return data;
+	}
+	
+	@Override
+	public boolean hasValue(Form key) {
+		return data.containsKey(key);
 	}
 }
