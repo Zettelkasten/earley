@@ -26,6 +26,8 @@ import com.zettelnet.earley.translate.Translator;
 import com.zettelnet.earley.tree.SyntaxTree;
 import com.zettelnet.earley.tree.SyntaxTrees;
 import com.zettelnet.earley.tree.TreeViews;
+import com.zettelnet.german.form.GermanForm;
+import com.zettelnet.german.lemma.simple.SimpleGermanArticle;
 import com.zettelnet.german.token.GermanDetermination;
 import com.zettelnet.german.token.GermanToken;
 import com.zettelnet.latin.grammar.LatinGrammar;
@@ -61,7 +63,7 @@ public class LatinRegistryTest {
 		out.println(result.getSyntaxTree());
 
 		out.println("(X) Best parse match:");
-		out.println(SyntaxTrees.getTreeView(result.getSyntaxTree(), TreeViews.bestProbability(), SyntaxTrees.DETAILED));
+		out.println(SyntaxTrees.getTreeView(result.getSyntaxTree(), TreeViews.bestProbability(), SyntaxTrees.INDENTED));
 
 		new ChartSetPrinter<>(result.getCharts(), tokens).print(new PrintStream("parse.html"));
 
@@ -72,6 +74,9 @@ public class LatinRegistryTest {
 				Set<Meaning> meanings = parameter.getProperty(Meaning.TYPE);
 
 				if (meanings.isEmpty()) {
+					if (terminal.toString().equals("Article")) {
+						return Arrays.asList(new GermanToken(SimpleGermanArticle.DEFINITE_ARTICLE.getForm(GermanForm.fromParameter(parameter)).iterator().next(), new GermanDetermination(null, parameter.toForm())));
+					}
 					return Arrays.asList(new GermanToken("DE_{" + terminal + ":" + parameter + "}", new GermanDetermination(null, parameter.toForm())));
 				} else {
 					Collection<GermanToken> tokens = new HashSet<>();
@@ -91,7 +96,7 @@ public class LatinRegistryTest {
 		out.println(translated);
 
 		out.println("(X) Best translation match:");
-		out.println(SyntaxTrees.getTreeView(translated, TreeViews.bestProbability(), SyntaxTrees.DETAILED_TREE));
+		out.println(SyntaxTrees.getTreeView(translated, TreeViews.bestProbability(), SyntaxTrees.INDENTED));
 
 		out.println("(4) Traversed:");
 		out.println(SyntaxTrees.traverse(translated));

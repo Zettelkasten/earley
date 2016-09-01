@@ -8,7 +8,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.zettelnet.earley.param.property.Property;
 import com.zettelnet.earley.param.property.PropertySet;
+import com.zettelnet.latin.param.FormParameter;
 
 public interface GermanForm extends PropertySet<GermanFormProperty>, Comparable<GermanForm> {
 
@@ -47,6 +49,18 @@ public interface GermanForm extends PropertySet<GermanFormProperty>, Comparable<
 
 	public static GermanForm verbForm(GermanPerson person, GermanNumerus numerus, GermanTense tense, GermanMood mood, GermanVoice voice) {
 		return withValues(person, numerus, tense, mood, voice);
+	}
+
+	// TODO: FormParameter should not be bound to any language
+	public static GermanForm fromParameter(FormParameter parameter) {
+		Collection<GermanFormProperty> properties = new HashSet<>();
+		for (Set<? extends Property> propertySet : parameter.getProperties().values()) {
+			Property first = propertySet.iterator().next();
+			if (first instanceof GermanFormProperty) {
+				properties.add((GermanFormProperty) first);
+			}
+		}
+		return GermanForm.withValues(properties);
 	}
 
 	@Override
