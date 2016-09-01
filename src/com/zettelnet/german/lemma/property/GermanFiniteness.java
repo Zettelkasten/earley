@@ -1,9 +1,8 @@
 package com.zettelnet.german.lemma.property;
 
 import com.zettelnet.earley.param.property.SimplePropertyType;
-import com.zettelnet.latin.lemma.property.LemmaProperty;
 
-public enum GermanFiniteness implements LemmaProperty {
+public enum GermanFiniteness implements GermanLemmaProperty {
 
 	Finite("Fin"), Infinitive("Inf"), Participle("Part");
 

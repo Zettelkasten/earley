@@ -1,9 +1,8 @@
 package com.zettelnet.german.lemma.property;
 
 import com.zettelnet.earley.param.property.SimplePropertyType;
-import com.zettelnet.latin.lemma.property.LemmaProperty;
 
-public enum GermanDefiniteness implements LemmaProperty {
+public enum GermanDefiniteness implements GermanLemmaProperty {
 
 	Definite("Def"), Indefinite("Indef");
 
