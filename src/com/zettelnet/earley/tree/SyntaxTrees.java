@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Scanner;
 import java.util.function.Function;
 
 import com.zettelnet.earley.param.Parameter;
@@ -30,6 +31,8 @@ public class SyntaxTrees {
 		private boolean useAdvancedBrackets = true;
 		private boolean allowSpaces = false;
 
+		private boolean indentedTree = false;
+
 		public FormatConfiguration() {
 		}
 
@@ -53,6 +56,11 @@ public class SyntaxTrees {
 			return this;
 		}
 
+		public FormatConfiguration indentedTree(boolean indentedTree) {
+			this.indentedTree = indentedTree;
+			return this;
+		}
+
 		public boolean isShowParameters() {
 			return showParameters;
 		}
@@ -68,10 +76,15 @@ public class SyntaxTrees {
 		public boolean isAllowSpaces() {
 			return allowSpaces;
 		}
+
+		public boolean isIndentedTree() {
+			return indentedTree;
+		}
 	}
 
 	public static final FormatConfiguration COMPACT = new FormatConfiguration().showParameters(false).showProbabilities(false).useAdvancedBrackets(true).allowSpaces(true);
 	public static final FormatConfiguration DETAILED = new FormatConfiguration().showParameters(true).showProbabilities(true).useAdvancedBrackets(true).allowSpaces(true);
+	public static final FormatConfiguration INDENTED = new FormatConfiguration().showParameters(true).showProbabilities(true).useAdvancedBrackets(true).allowSpaces(true).indentedTree(true);
 
 	public static final FormatConfiguration COMPACT_TREE = new FormatConfiguration().showParameters(false).showProbabilities(false).useAdvancedBrackets(false).allowSpaces(false);
 	public static final FormatConfiguration DETAILED_TREE = new FormatConfiguration().showParameters(true).showProbabilities(true).useAdvancedBrackets(false).allowSpaces(false);
@@ -162,11 +175,16 @@ public class SyntaxTrees {
 	public static <T, P extends Parameter> String getTreeView(SyntaxTree<T, P> tree, Function<SyntaxTree<T, P>, SyntaxTreeVariant<T, P>> variantFunction) {
 		return getTreeView(tree, variantFunction, COMPACT);
 	}
-
+	
 	public static <T, P extends Parameter> String getTreeView(SyntaxTree<T, P> tree, Function<SyntaxTree<T, P>, SyntaxTreeVariant<T, P>> variantFunction, FormatConfiguration formatOptions) {
+		return getTreeView(tree, variantFunction, formatOptions, 0);
+	}
+	
+	private static <T, P extends Parameter> String getTreeView(SyntaxTree<T, P> tree, Function<SyntaxTree<T, P>, SyntaxTreeVariant<T, P>> variantFunction, FormatConfiguration formatOptions, int indent) {
 		SyntaxTreeVariant<T, P> variant = variantFunction.apply(tree);
 
 		StringBuilder str = new StringBuilder();
+		indent(str, indent);
 		str.append("[");
 		str.append(symbolName(variant.getRootSymbol()));
 
@@ -186,8 +204,16 @@ public class SyntaxTrees {
 
 		if (!variant.isTerminal()) {
 			for (SyntaxTree<T, P> child : variant.getChildren()) {
-				str.append(" ");
-				str.append(getTreeView(child, variantFunction, formatOptions));
+				if (formatOptions.isIndentedTree()) {
+					str.append(System.lineSeparator());
+				} else {
+					str.append(" ");
+				}
+				str.append(getTreeView(child, variantFunction, formatOptions, indent + 2));
+			}
+			if (formatOptions.isIndentedTree()) {
+				str.append(System.lineSeparator());
+				indent(str, indent);
 			}
 		} else {
 			str.append(" ");
@@ -200,5 +226,13 @@ public class SyntaxTrees {
 
 	private static <T> String symbolName(Symbol<T> symbol) {
 		return symbol.toString().replace('[', '{').replace(']', '}');
+	}
+	
+	private static StringBuilder indent(StringBuilder str, int amount) {
+		while (amount > 0) {
+			str.append(' ');
+			amount--;
+		}
+		return str;
 	}
 }
