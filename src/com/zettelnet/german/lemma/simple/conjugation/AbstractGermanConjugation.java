@@ -42,7 +42,11 @@ public abstract class AbstractGermanConjugation implements GermanFormProvider<Co
 		case Indicative:
 			switch (form.getTense()) {
 			case Present:
-				return GermanConjugationStem.Present;
+				if (form.hasProperties(GermanNumerus.Singular) && (form.hasProperties(GermanPerson.Second) || form.hasProperties(GermanPerson.Third))) {
+					return GermanConjugationStem.SecondPresent;
+				} else {
+					return GermanConjugationStem.Present;
+				}
 			case Past:
 				return GermanConjugationStem.Past;
 			default:
@@ -58,7 +62,7 @@ public abstract class AbstractGermanConjugation implements GermanFormProvider<Co
 		case Subjunctive2:
 			switch (form.getTense()) {
 			case Past:
-				return GermanConjugationStem.Past;
+				return GermanConjugationStem.Subjunctive2;
 			default:
 				throw new AssertionError("Unhandled tense for mood " + form.getMood());
 			}

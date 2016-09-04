@@ -9,4 +9,5 @@ public final class GermanConjugation {
 	}
 
 	public static final CombinedGermanProvider<ConjugableGermanLemma> Weak = new SimpleCombinedGermanProvider<ConjugableGermanLemma>(new WeakGermanConjugation(), null);
+	public static final CombinedGermanProvider<ConjugableGermanLemma> Strong = new SimpleCombinedGermanProvider<ConjugableGermanLemma>(new StrongGermanConjugation(), null);
 }

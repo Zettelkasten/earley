@@ -40,6 +40,10 @@ public class SimpleGermanVerb implements ConjugableGermanLemma {
 				properties);
 	}
 
+	public SimpleGermanVerb(final String infinitive, final Map<GermanConjugationStem, Collection<String>> stems, final CombinedGermanProvider<ConjugableGermanLemma> provider, final GermanLemmaProperty... properties) {
+		this(Arrays.asList(infinitive), stems, provider, provider, properties);
+	}
+
 	public SimpleGermanVerb(final Collection<String> infinitive, final Map<GermanConjugationStem, Collection<String>> stems, final GermanFormProvider<ConjugableGermanLemma> formProvider, final GermanDerivationProvider<ConjugableGermanLemma> derivationProvider, final GermanLemmaProperty... properties) {
 		this.infinitive = infinitive;
 		this.stems = stems;
