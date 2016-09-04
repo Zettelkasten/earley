@@ -43,6 +43,9 @@ public class StrongGermanConjugation extends AbstractGermanConjugation {
 			put("en", GermanPerson.First, GermanNumerus.Plural, GermanTense.Past, GermanMood.Subjunctive2, GermanVoice.Active);
 			put(new String[] { "et", "t" }, GermanPerson.Second, GermanNumerus.Plural, GermanTense.Past, GermanMood.Subjunctive2, GermanVoice.Active);
 			put("en", GermanPerson.Third, GermanNumerus.Plural, GermanTense.Past, GermanMood.Subjunctive2, GermanVoice.Active);
+
+			put("", GermanPerson.Second, GermanNumerus.Singular, GermanTense.Present, GermanMood.Imperative, GermanVoice.Active);
+			put("t", GermanPerson.Second, GermanNumerus.Plural, GermanTense.Present, GermanMood.Imperative, GermanVoice.Active);
 		}
 	}
 

@@ -1,8 +1,15 @@
 package com.zettelnet.earley.test;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.zettelnet.german.form.GermanGenus;
+import com.zettelnet.german.lemma.GermanLemma;
+import com.zettelnet.german.lemma.simple.SimpleGermanNoun;
+import com.zettelnet.german.lemma.simple.declension.GermanDeclension;
 import com.zettelnet.latin.form.Genus;
 import com.zettelnet.latin.form.Mood;
 import com.zettelnet.latin.form.Numerus;
@@ -30,30 +37,31 @@ public final class LatinRegistry {
 	}
 	
 	public static DeterminationRegistry INSTANCE = new DeterminationRegistry();
-	public static Map<Lemma, String> TRANSLATIONS = new HashMap<>();
+	public static Map<Lemma, GermanLemma> TRANSLATIONS = new HashMap<>();
 
 	public static void register(Lemma lemma) {
 		INSTANCE.register(lemma);
 	}
 
-	public static void register(Lemma lemma, String translation) {
+	public static void register(Lemma lemma, GermanLemma translation) {
 		INSTANCE.register(lemma);
 		TRANSLATIONS.put(lemma, translation);
 	}
 	
-	public static String getTranslation(Lemma lemma) {
+	public static Collection<GermanLemma> getTranslation(Lemma lemma) {
 		if (TRANSLATIONS.containsKey(lemma)) {
-			return TRANSLATIONS.get(lemma);
+			return Arrays.asList(TRANSLATIONS.get(lemma));
 		} else if (lemma.isDerivation()) {
 			return getTranslation(lemma.getDerivedFrom());
 		} else {
-			return "%" + lemma.getNominalForm() + "%";
+			return Collections.emptySet();
 		}
 	}
 
 	// Ostia Altera T1
 	static {
-		register(new SimpleVerb("cant", "cant_av", "cantat", Conjugation.First, Valency.Single), "sing");
+		register(new SimpleVerb("cant", "cant_av", "cantat", Conjugation.First, Valency.Single),
+				new German"sing");
 		register(new SimpleVerb("cant", "cant_av", "cantat", Conjugation.First, Valency.Accusative), "sing");
 		register(new SimpleVerb("r_id", "r_is", "r_is", Conjugation.Second, Valency.Single), "laugh");
 		register(new SimpleConjunction("et"), "and");
@@ -95,7 +103,8 @@ public final class LatinRegistry {
 		Lemma sum = new SimpleVerb("sum", "fu", "fu", Conjugation.First, Valency.Copula);
 		INSTANCE.register("est", new Determination(sum, Person.First, Numerus.Singular, Tense.Present, Mood.Indicative, Voice.Active, Finiteness.Finite, Valency.Copula));
 
-		register(new SimpleNoun("dominus", "domin", Declension.Second, Genus.Masculine), "lord");
+		register(new SimpleNoun("dominus", "domin", Declension.Second, Genus.Masculine), 
+				new SimpleGermanNoun("Herr", "Herren", "Herren", GermanDeclension.Weak, GermanGenus.Masculine));
 		register(new SimpleNoun("vilicus", "vilic", Declension.Second, Genus.Masculine), "custodian");
 		register(new SimpleNoun("servus", "serv", Declension.Second, Genus.Masculine), "slave");
 		register(new SimpleAdverb("tum"), "then");

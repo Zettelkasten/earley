@@ -66,6 +66,12 @@ public abstract class AbstractGermanConjugation implements GermanFormProvider<Co
 			default:
 				throw new AssertionError("Unhandled tense for mood " + form.getMood());
 			}
+		case Imperative:
+			if (form.hasProperties(GermanNumerus.Singular)) {
+				return GermanConjugationStem.Imperative;
+			} else {
+				return GermanConjugationStem.Present;
+			}
 		default:
 			throw new AssertionError("Unhandled mood");
 		}
@@ -102,6 +108,7 @@ public abstract class AbstractGermanConjugation implements GermanFormProvider<Co
 		addForms(lemma, forms, GermanTense.Past, GermanMood.Indicative, GermanVoice.Active);
 		addForms(lemma, forms, GermanTense.Present, GermanMood.Subjunctive1, GermanVoice.Active);
 		addForms(lemma, forms, GermanTense.Past, GermanMood.Subjunctive2, GermanVoice.Active);
+		addImperativeForms(lemma, forms);
 
 		return forms;
 	}
@@ -114,6 +121,16 @@ public abstract class AbstractGermanConjugation implements GermanFormProvider<Co
 				if (!variants.isEmpty()) {
 					forms.put(form, variants);
 				}
+			}
+		}
+	}
+
+	private void addImperativeForms(final ConjugableGermanLemma lemma, final Map<GermanForm, Collection<String>> forms) {
+		for (GermanNumerus numerus : getNumerusSet(lemma)) {
+			GermanForm form = GermanForm.withValues(GermanPerson.Second, numerus, GermanTense.Present, GermanMood.Imperative, GermanVoice.Active);
+			Collection<String> variants = getForm(lemma, form);
+			if (!variants.isEmpty()) {
+				forms.put(form, variants);
 			}
 		}
 	}
