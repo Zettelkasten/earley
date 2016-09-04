@@ -39,12 +39,18 @@ public abstract class AbstractGermanDeclension implements GermanFormProvider<Dec
 	}
 
 	protected static int countDuplicateCharacters(final String stem, final String ending) {
-		int sameCharacterCount = 0;
-		while (stem.length() > sameCharacterCount && ending.length() > sameCharacterCount
-				&& stem.charAt(stem.length() - sameCharacterCount - 1) == ending.charAt(sameCharacterCount)) {
-			sameCharacterCount++;
+		for (int length = Math.min(stem.length(), ending.length()); length > 0; length--) {
+			boolean equalCharacters = true;
+			for (int i = 0; i < length && equalCharacters; i++) {
+				if (stem.charAt(stem.length() - length + i) != ending.charAt(i)) {
+					equalCharacters = false;
+				}
+			}
+			if (equalCharacters) {
+				return length;
+			}
 		}
-		return sameCharacterCount;
+		return 0;
 	}
 
 	@Override

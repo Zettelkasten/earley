@@ -29,12 +29,29 @@ public abstract class AbstractGermanConjugation implements GermanFormProvider<Co
 		for (String ending : endings) {
 			StringBuilder str = new StringBuilder();
 			str.append(stem);
-			if (ending != null) {
-				str.append(ending);
-			}
+
+			int equalCharacterCount = countDuplicateCharacters(stem, ending);
+
+			str.append(ending.substring(equalCharacterCount));
 			variants.add(str.toString());
 		}
+
 		return variants;
+	}
+
+	protected static int countDuplicateCharacters(final String stem, final String ending) {
+		for (int length = Math.min(stem.length(), ending.length()); length > 0; length--) {
+			boolean equalCharacters = true;
+			for (int i = 0; i < length && equalCharacters; i++) {
+				if (stem.charAt(stem.length() - length + i) != ending.charAt(i)) {
+					equalCharacters = false;
+				}
+			}
+			if (equalCharacters) {
+				return length;
+			}
+		}
+		return 0;
 	}
 
 	public GermanConjugationStem getStemType(GermanForm form) {
@@ -85,12 +102,7 @@ public abstract class AbstractGermanConjugation implements GermanFormProvider<Co
 		GermanConjugationStem stemType = getStemType(form);
 
 		for (String stem : conjugableLemma.getStem(stemType)) {
-			for (String endingMorph : endings.getValue(form)) {
-				StringBuilder str = new StringBuilder();
-				str.append(stem);
-				str.append(endingMorph);
-				variants.add(str.toString());
-			}
+			variants.addAll(concat(stem, endings.getValue(form)));
 		}
 		return variants;
 	}
