@@ -27,6 +27,7 @@ import com.zettelnet.earley.tree.SyntaxTree;
 import com.zettelnet.earley.tree.SyntaxTrees;
 import com.zettelnet.earley.tree.TreeViews;
 import com.zettelnet.german.form.GermanForm;
+import com.zettelnet.german.lemma.GermanLemma;
 import com.zettelnet.german.lemma.simple.SimpleGermanArticle;
 import com.zettelnet.german.token.GermanDetermination;
 import com.zettelnet.german.token.GermanToken;
@@ -39,9 +40,10 @@ import com.zettelnet.latin.token.Token;
 public class LatinRegistryTest {
 
 	public static void main(String[] args) throws IOException {
-//		final PrintStream out = new PrintStream(new FileOutputStream("debug.txt"));
+		// final PrintStream out = new PrintStream(new
+		// FileOutputStream("debug.txt"));
 		final PrintStream out = System.out;
-		
+
 		Grammar<Token, FormParameter> grammar = LatinGrammar.makeGrammar();
 		Tokenizer<Token> tokenizer = new WhitespaceTokenizer<>(LatinRegistry.INSTANCE);
 
@@ -62,18 +64,20 @@ public class LatinRegistryTest {
 		out.println("(2) Parsed:");
 		out.println(result.getSyntaxTree());
 
+		new ChartSetPrinter<>(result.getCharts(), tokens).print(new PrintStream("parse.html"));
+
 		out.println("(X) Best parse match:");
 		out.println(SyntaxTrees.getTreeView(result.getSyntaxTree(), TreeViews.bestProbability(), SyntaxTrees.INDENTED));
-
-		new ChartSetPrinter<>(result.getCharts(), tokens).print(new PrintStream("parse.html"));
+		out.println(SyntaxTrees.getTreeView(result.getSyntaxTree(), TreeViews.bestProbability(), SyntaxTrees.COMPACT_TREE));
 
 		TranslationSet<Token, FormParameter, GermanToken, FormParameter> germanTranslations = LatinGrammar.makeGermanTranslations();
 		TokenFactory<GermanToken, FormParameter> germanTokenFactory = new TokenFactory<GermanToken, FormParameter>() {
 			@Override
 			public Collection<GermanToken> makeToken(Terminal<GermanToken> terminal, FormParameter parameter) {
 				Set<Meaning> meanings = parameter.getProperty(Meaning.TYPE);
+				GermanForm form = GermanForm.fromParameter(parameter);
 
-				if (meanings.isEmpty()) {
+				if (meanings.isEmpty() || form == null) {
 					if (terminal.toString().equals("Article")) {
 						return Arrays.asList(new GermanToken(SimpleGermanArticle.DEFINITE_ARTICLE.getForm(GermanForm.fromParameter(parameter)).iterator().next(), new GermanDetermination(null, parameter.toForm())));
 					}
@@ -81,13 +85,22 @@ public class LatinRegistryTest {
 				} else {
 					Collection<GermanToken> tokens = new HashSet<>();
 					for (Meaning meaning : meanings) {
-						String content = LatinRegistry.getTranslation(meaning.getLemma());
-						tokens.add(new GermanToken(content, new GermanDetermination(null, parameter.toForm())));
+						try {
+							for (GermanLemma translation : LatinRegistry.getTranslation(meaning.getLemma())) {
+								for (String value : translation.getForm(form)) {
+									tokens.add(new GermanToken(value, new GermanDetermination(translation, parameter.toForm())));
+
+								}
+							}
+						} catch (Throwable e) {
+							tokens.add(new GermanToken("DE_WARNING_{" + terminal + ":" + parameter + "}", new GermanDetermination(null, parameter.toForm())));
+						}
 					}
 					return tokens;
 				}
 			}
 		};
+
 		Translator<Token, FormParameter, GermanToken, FormParameter> germanTranslator = new SimpleTranslator<>(grammar, germanTokenFactory, germanTranslations);
 
 		SyntaxTree<GermanToken, FormParameter> translated = germanTranslator.translate(result.getSyntaxTree());
@@ -97,6 +110,7 @@ public class LatinRegistryTest {
 
 		out.println("(X) Best translation match:");
 		out.println(SyntaxTrees.getTreeView(translated, TreeViews.bestProbability(), SyntaxTrees.INDENTED));
+		out.println(SyntaxTrees.getTreeView(translated, TreeViews.bestProbability(), SyntaxTrees.COMPACT_TREE));
 
 		out.println("(4) Traversed:");
 		out.println(SyntaxTrees.traverse(translated));

@@ -34,5 +34,8 @@ public class GermanDeclensionTest {
 			Collection<String> values = entry.getValue();
 			System.out.printf("[%s] %s %s%n", form, determiner, values);
 		}
+		
+		Collection<GermanLemma> lemmas = LatinRegistry.getTranslation(LatinRegistry.INSTANCE.getDeterminations("servus").iterator().next().getLemma());
+		System.out.println(lemmas.iterator().next().getForms());
 	}
 }

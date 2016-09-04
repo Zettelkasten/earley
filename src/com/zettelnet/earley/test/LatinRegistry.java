@@ -8,7 +8,11 @@ import java.util.Map;
 
 import com.zettelnet.german.form.GermanGenus;
 import com.zettelnet.german.lemma.GermanLemma;
+import com.zettelnet.german.lemma.property.GermanParticipleAuxiliary;
 import com.zettelnet.german.lemma.simple.SimpleGermanNoun;
+import com.zettelnet.german.lemma.simple.SimpleGermanVerb;
+import com.zettelnet.german.lemma.simple.conjugation.GermanConjugation;
+import com.zettelnet.german.lemma.simple.conjugation.GermanConjugationStem;
 import com.zettelnet.german.lemma.simple.declension.GermanDeclension;
 import com.zettelnet.latin.form.Genus;
 import com.zettelnet.latin.form.Mood;
@@ -18,13 +22,11 @@ import com.zettelnet.latin.form.Tense;
 import com.zettelnet.latin.form.Voice;
 import com.zettelnet.latin.lemma.Lemma;
 import com.zettelnet.latin.lemma.property.Finiteness;
-import com.zettelnet.latin.lemma.property.SubjunctionType;
 import com.zettelnet.latin.lemma.property.Valency;
 import com.zettelnet.latin.lemma.simple.SimpleAdjective;
 import com.zettelnet.latin.lemma.simple.SimpleAdverb;
 import com.zettelnet.latin.lemma.simple.SimpleConjunction;
 import com.zettelnet.latin.lemma.simple.SimpleNoun;
-import com.zettelnet.latin.lemma.simple.SimpleSubjunction;
 import com.zettelnet.latin.lemma.simple.SimpleVerb;
 import com.zettelnet.latin.lemma.simple.conjugation.Conjugation;
 import com.zettelnet.latin.lemma.simple.declension.Declension;
@@ -35,7 +37,7 @@ public final class LatinRegistry {
 
 	private LatinRegistry() {
 	}
-	
+
 	public static DeterminationRegistry INSTANCE = new DeterminationRegistry();
 	public static Map<Lemma, GermanLemma> TRANSLATIONS = new HashMap<>();
 
@@ -47,7 +49,7 @@ public final class LatinRegistry {
 		INSTANCE.register(lemma);
 		TRANSLATIONS.put(lemma, translation);
 	}
-	
+
 	public static Collection<GermanLemma> getTranslation(Lemma lemma) {
 		if (TRANSLATIONS.containsKey(lemma)) {
 			return Arrays.asList(TRANSLATIONS.get(lemma));
@@ -61,39 +63,59 @@ public final class LatinRegistry {
 	// Ostia Altera T1
 	static {
 		register(new SimpleVerb("cant", "cant_av", "cantat", Conjugation.First, Valency.Single),
-				new German"sing");
-		register(new SimpleVerb("cant", "cant_av", "cantat", Conjugation.First, Valency.Accusative), "sing");
-		register(new SimpleVerb("r_id", "r_is", "r_is", Conjugation.Second, Valency.Single), "laugh");
-		register(new SimpleConjunction("et"), "and");
-		register(new SimpleVerb("cl_am", "cl_am_av", "cl_am_at", Conjugation.First, Valency.Single), "cry");
-		register(new SimpleVerb("tac", "tacu", "tacit", Conjugation.Second, Valency.Single), "silence");
-		register(new SimpleAdverb("autem"), "however");
+				new SimpleGermanVerb("singen", GermanConjugationStem.makeCollectionMap("sing", "sang", "gesungen", "sing", "säng", "sing"), GermanConjugation.Strong, GermanParticipleAuxiliary.ToHave));
+		register(new SimpleVerb("cant", "cant_av", "cantat", Conjugation.First, Valency.Accusative),
+				new SimpleGermanVerb("singen", GermanConjugationStem.makeCollectionMap("sing", "sang", "gesungen", "sing", "säng", "sing"), GermanConjugation.Strong, GermanParticipleAuxiliary.ToHave));
+		register(new SimpleVerb("r_id", "r_is", "r_is", Conjugation.Second, Valency.Single),
+				new SimpleGermanVerb("lachen", "lach", "lacht", "gelacht", GermanConjugation.Weak, GermanParticipleAuxiliary.ToHave));
+		register(new SimpleConjunction("et"), null); // TODO
+		register(new SimpleVerb("cl_am", "cl_am_av", "cl_am_at", Conjugation.First, Valency.Single),
+				new SimpleGermanVerb("rufen", "ruf", "rief", "gerufen", GermanConjugation.Strong, GermanParticipleAuxiliary.ToHave));
+		register(new SimpleVerb("tac", "tacu", "tacit", Conjugation.Second, Valency.Single),
+				new SimpleGermanVerb("schweigen", "schweig", "schwieg", "geschwiegen", GermanConjugation.Strong, GermanParticipleAuxiliary.ToHave));
+		register(new SimpleAdverb("autem"), null); // TODO
 		// TODO no passive
-		register(new SimpleVerb("saev", "saevi", "saev_it", Conjugation.Fourth, Valency.Single), "fume");
-		register(new SimpleConjunction("atque"), "and");
-		register(new SimpleConjunction("ac"), "and");
-		register(new SimpleAdverb("n_on"), "not");
-		register(new SimpleAdverb("iam"), "already");
-		register(new SimpleVerb("i_urg", "i_urg_av", "i_urg_at", Conjugation.First, Valency.Single), "argue");
+		register(new SimpleVerb("saev", "saevi", "saev_it", Conjugation.Fourth, Valency.Single), null); // TODO:
+																										// wütend
+																										// sein
+		register(new SimpleConjunction("atque"), null); // TODO: und
+		register(new SimpleConjunction("ac"), null); // TODO: und
+		register(new SimpleAdverb("n_on"), null); // TODO: nicht
+		register(new SimpleAdverb("iam"), null); // TODO: schon
+		register(new SimpleVerb("i_urg", "i_urg_av", "i_urg_at", Conjugation.First, Valency.Single),
+				new SimpleGermanVerb("streiten", "streit", "stritt", "gestritten", GermanConjugation.Strong, GermanParticipleAuxiliary.ToHave));
 		// TODO impersonal in the passive
-		register(new SimpleVerb("ven", "v_en", "vent", Conjugation.Fourth, Valency.Single), "come");
+		register(new SimpleVerb("ven", "v_en", "vent", Conjugation.Fourth, Valency.Single),
+				new SimpleGermanVerb("kommen", GermanConjugationStem.makeCollectionMap("komm", "kam", "gekommen", "komm", "käm", "komm"), GermanConjugation.Strong, GermanParticipleAuxiliary.ToBe));
 		// TODO irregular short imperative
-		register(new SimpleVerb("d_ic", "d_ix", "dict", Conjugation.Third, Valency.Accusative), "say");
+		register(new SimpleVerb("d_ic", "d_ix", "dict", Conjugation.Third, Valency.Accusative),
+				new SimpleGermanVerb("sagen", "sag", "sagt", "gesagt", GermanConjugation.Weak, GermanParticipleAuxiliary.ToHave));
 		// TODO quis?
-		register(new SimpleConjunction("sed"), "but");
+		register(new SimpleConjunction("sed"), null); // TODO: aber, sondern
 		// TODO irregular short imperative
-		register(new SimpleVerb("maled_ic", "maled_ix", "maledict", Conjugation.Third, Valency.Single), "complain");
-		register(new SimpleVerb("maled_ic", "maled_ix", "maledict", Conjugation.Third, Valency.Accusative), "offend");
-		register(new SimpleAdverb("semper"), "always");
-		register(new SimpleAdverb("deinde"), "upon");
+		register(new SimpleVerb("maled_ic", "maled_ix", "maledict", Conjugation.Third, Valency.Single),
+				new SimpleGermanVerb("lästern", "läster", "lästert", "gelästert", GermanConjugation.Weak, GermanParticipleAuxiliary.ToHave));
+		register(new SimpleVerb("maled_ic", "maled_ix", "maledict", Conjugation.Third, Valency.Accusative),
+				new SimpleGermanVerb("beleidigen", "beleidig", "beleidigt", "beleidigt", GermanConjugation.Weak, GermanParticipleAuxiliary.ToHave)); // TODO:
+																																						// should
+																																						// be
+																																						// composition
+																																						// with
+																																						// prefix
+		register(new SimpleAdverb("semper"), null); // TODO: immer
+		register(new SimpleAdverb("deinde"), null); // TODO: darauf
 		// TODO decet
-		register(new SimpleConjunction("neque"), "and not");
-		register(new SimpleAdverb("tandem"), "finally");
-		register(new SimpleVerb("l_ud", "l_us", "l_us", Conjugation.Third, Valency.Accusative), "play");
-		register(new SimpleVerb("iuv", "i_uv", "i_ut", Conjugation.First, Valency.Single), "is fun");
-		
+		register(new SimpleConjunction("neque"), null); // TODO: und nicht
+		register(new SimpleAdverb("tandem"), null); // TODO: endlich
+		register(new SimpleVerb("l_ud", "l_us", "l_us", Conjugation.Third, Valency.Accusative),
+				new SimpleGermanVerb("spielen", "spiel", "spielt", "gespielt", GermanConjugation.Weak, GermanParticipleAuxiliary.ToHave));
+		register(new SimpleVerb("iuv", "i_uv", "i_ut", Conjugation.First, Valency.Single), null); // TODO:
+																									// Spaß
+																									// machen
+
 		// extra
-		register(new SimpleVerb("ulul", "ulul_av", "ulul_at", Conjugation.First, Valency.Single), "howl");
+		register(new SimpleVerb("ulul", "ulul_av", "ulul_at", Conjugation.First, Valency.Single),
+				new SimpleGermanVerb("heulen", "heul", "heult", "geheult", GermanConjugation.Weak, GermanParticipleAuxiliary.ToHave));
 	}
 
 	// Ostia Altera T2
@@ -103,83 +125,107 @@ public final class LatinRegistry {
 		Lemma sum = new SimpleVerb("sum", "fu", "fu", Conjugation.First, Valency.Copula);
 		INSTANCE.register("est", new Determination(sum, Person.First, Numerus.Singular, Tense.Present, Mood.Indicative, Voice.Active, Finiteness.Finite, Valency.Copula));
 
-		register(new SimpleNoun("dominus", "domin", Declension.Second, Genus.Masculine), 
+		register(new SimpleNoun("dominus", "domin", Declension.Second, Genus.Masculine),
 				new SimpleGermanNoun("Herr", "Herren", "Herren", GermanDeclension.Weak, GermanGenus.Masculine));
-		register(new SimpleNoun("vilicus", "vilic", Declension.Second, Genus.Masculine), "custodian");
-		register(new SimpleNoun("servus", "serv", Declension.Second, Genus.Masculine), "slave");
-		register(new SimpleAdverb("tum"), "then");
-		register(new SimpleNoun("caelum", "cael", Declension.Second, Genus.Neuter), "sky");
-		register(new SimpleAdjective("obsc_urus", "obsc_ura", "obsc_urum", "obsc_ur", Declension.FirstAndSecond), "dark");
+		register(new SimpleNoun("vilicus", "vilic", Declension.Second, Genus.Masculine),
+				new SimpleGermanNoun("Verwalter", "Verwalters", "Verwalter", GermanDeclension.Strong, GermanGenus.Masculine));
+		register(new SimpleNoun("servus", "serv", Declension.Second, Genus.Masculine),
+				new SimpleGermanNoun("Sklave", "Sklaven", "Sklaven", GermanDeclension.Weak, GermanGenus.Masculine));
+		register(new SimpleAdverb("tum"), null); // TODO: dann
+		register(new SimpleNoun("caelum", "cael", Declension.Second, Genus.Neuter),
+				new SimpleGermanNoun("Himmel", "Himmels", "Himmel", GermanDeclension.Strong, GermanGenus.Masculine));
+		register(new SimpleAdjective("obsc_urus", "obsc_ura", "obsc_urum", "obsc_ur", Declension.FirstAndSecond), null); // TODO:
+																															// dunkel
 		// TODO -que
-		register(new SimpleNoun("serva", "serv", Declension.First, Genus.Feminine), "slave");
+		register(new SimpleNoun("serva", "serv", Declension.First, Genus.Feminine),
+				new SimpleGermanNoun("Sklavin", "Sklavin", "Sklavinnen", GermanDeclension.Weak, GermanGenus.Feminine));
 		// TODO c_ur?
-		register(new SimpleVerb("lab_or", "lab_or_av", "lab_or_at", Conjugation.First, Valency.Single), "work");
-		register(new SimpleAdverb("subit_o"), "suddenly");
-		register(new SimpleVerb("interrog", "interrog_av", "interrog_at", Conjugation.First), "ask");
-		register(new SimpleNoun("plaustrum", "plaustr", Declension.Second, Genus.Neuter), "wagon");
-		register(new SimpleNoun("fr_umentum", "fr_ument", Declension.Second, Genus.Neuter), "wheat");
+		register(new SimpleVerb("lab_or", "lab_or_av", "lab_or_at", Conjugation.First, Valency.Single),
+				new SimpleGermanVerb("arbeiten", "arbeit", "arbeitet", "gearbeitet", GermanConjugation.Weak, GermanParticipleAuxiliary.ToHave));
+		register(new SimpleAdverb("subit_o"), null); // TODO: plötzlich
+		register(new SimpleVerb("interrog", "interrog_av", "interrog_at", Conjugation.First),
+				new SimpleGermanVerb("fragen", "frag", "fragt", "gefragt", GermanConjugation.Weak, GermanParticipleAuxiliary.ToHave));
+		register(new SimpleNoun("plaustrum", "plaustr", Declension.Second, Genus.Neuter),
+				new SimpleGermanNoun("Karren", "Karrens", "Karren", GermanDeclension.Weak, GermanGenus.Masculine));
+		register(new SimpleNoun("fr_umentum", "fr_ument", Declension.Second, Genus.Neuter),
+				new SimpleGermanNoun("Getreide", "Getreides", "Getreide", GermanDeclension.Weak, GermanGenus.Neuter)); // TODO:
+																														// no
+																														// plural
 		// TODO enim
-		register(new SimpleAdjective("m_aturus", "m_atura", "m_aturum", "m_atur", Declension.FirstAndSecond), "ripe");
-		register(new SimpleAdverb("quoque"), "also");
-		register(new SimpleNoun("domina", "domin", Declension.First, Genus.Feminine), "lady");
-		register(new SimpleNoun("puella", "puell", Declension.First, Genus.Feminine), "girl");
+		register(new SimpleAdjective("m_aturus", "m_atura", "m_aturum", "m_atur", Declension.FirstAndSecond), null); // TODO:
+																														// reif
+		register(new SimpleAdverb("quoque"), null); // TODO: auch
+		register(new SimpleNoun("domina", "domin", Declension.First, Genus.Feminine),
+				new SimpleGermanNoun("Herrin", "Herrin", "Herinnen", GermanDeclension.Weak, GermanGenus.Feminine));
+		register(new SimpleNoun("puella", "puell", Declension.First, Genus.Feminine),
+				new SimpleGermanNoun("Mädchen", "Mädchens", "Mädchen", GermanDeclension.Weak, GermanGenus.Neuter));
 		// TODO ecce!
-		register(new SimpleAdverb("etiam"), "and also");
-		register(new SimpleAdverb("imm_o"), "on the contrary");
-		register(new SimpleAdverb("v_er_o"), "truly");
-		register(new SimpleAdjective("c_unctus", "c_uncta", "c_unctum", "c_unct", Declension.FirstAndSecond), "whole");
+		register(new SimpleAdverb("etiam"), null); // TODO auch
+		register(new SimpleAdverb("imm_o"), null); // TODO im Gegenteil
+		register(new SimpleAdverb("v_er_o"), null); // TODO wirklich
+		register(new SimpleAdjective("c_unctus", "c_uncta", "c_unctum", "c_unct", Declension.FirstAndSecond), null); // TODO:
+																														// alle
 		// TODO adsum
-		register(new SimpleAdjective("onustus", "onusta", "onustum", "onust", Declension.FirstAndSecond), "loaded");
-		register(new SimpleAdjective("d_efessus", "d_efessa", "d_efessum", "d_efess", Declension.FirstAndSecond), "exhausted");
-		register(new SimpleAdverb("iterum"), "again");
-		register(new SimpleAdverb("nunc"), "now");
-		register(new SimpleAdjective("laetus", "laeta", "laetum", "laet", Declension.FirstAndSecond), "happy");
-		register(new SimpleAdjective("salvus", "salva", "salvum", "salv", Declension.FirstAndSecond), "safe");
-	}
-	
-	// Names
-	static {
-		// T1
-		register(new SimpleNoun("Domitilla", "Domitill", Declension.First, Genus.Feminine), "Domitilla");
-		register(new SimpleNoun("L_ucius", "L_uci", Declension.Second, Genus.Masculine), "Lucius");
-		register(new SimpleNoun("Tertia", "Terti", Declension.First, Genus.Feminine), "Tertia");
-		register(new SimpleNoun("Publius", "Publi", Declension.Second, Genus.Masculine), "Publius");
-		register(new SimpleNoun("Polybius", "Polybi", Declension.Second, Genus.Masculine), "Polybius");
-		// T2
-		register(new SimpleNoun("Pomp_onius", "Pomp_oni", Declension.Second, Genus.Masculine), "Pomponius");
-		register(new SimpleNoun("M_arcellus", "M_arcell", Declension.Second, Genus.Masculine), "Marcellus");
-		register(new SimpleNoun("Sel_enus", "Sel_en", Declension.Second, Genus.Masculine), "Selenus");
+		register(new SimpleAdjective("onustus", "onusta", "onustum", "onust", Declension.FirstAndSecond), null); // TODO:
+																													// beladen
+		register(new SimpleAdjective("d_efessus", "d_efessa", "d_efessum", "d_efess", Declension.FirstAndSecond), null); // TODO:
+																															// erschöpft
+		register(new SimpleAdverb("iterum"), null); // TODO: wiederholt
+		register(new SimpleAdverb("nunc"), null); // TODO: jetzt
+		register(new SimpleAdjective("laetus", "laeta", "laetum", "laet", Declension.FirstAndSecond), null); // TODO:
+																												// fröhlich
+		register(new SimpleAdjective("salvus", "salva", "salvum", "salv", Declension.FirstAndSecond), null); // TODO:
+																												// heil
 	}
 
-	// some nouns
+	// Names
 	static {
-		register(new SimpleNoun("carmen", "carmin", Declension.Third, Genus.Neuter), "song");
-		register(new SimpleVerb("d", "ded", "dat", Conjugation.First, Valency.AccusativeDative), "give");
-		register(new SimpleVerb("am", "amav", "amat", Conjugation.First, Valency.Accusative), "love");
+		// TODO: German translations
+		
+		// T1
+		register(new SimpleNoun("Domitilla", "Domitill", Declension.First, Genus.Feminine), null);
+		register(new SimpleNoun("L_ucius", "L_uci", Declension.Second, Genus.Masculine), null);
+		register(new SimpleNoun("Tertia", "Terti", Declension.First, Genus.Feminine), null);
+		register(new SimpleNoun("Publius", "Publi", Declension.Second, Genus.Masculine), null);
+		register(new SimpleNoun("Polybius", "Polybi", Declension.Second, Genus.Masculine), null);
+		// T2
+		register(new SimpleNoun("Pomp_onius", "Pomp_oni", Declension.Second, Genus.Masculine), null);
+		register(new SimpleNoun("M_arcellus", "M_arcell", Declension.Second, Genus.Masculine), null);
+		register(new SimpleNoun("Sel_enus", "Sel_en", Declension.Second, Genus.Masculine), null);
 	}
-	
+
+	// additionals
+	static {
+		register(new SimpleNoun("carmen", "carmin", Declension.Third, Genus.Neuter),
+				new SimpleGermanNoun("Lied", "Lieds", "Lieder", GermanDeclension.Strong, GermanGenus.Neuter));
+		register(new SimpleVerb("d", "ded", "dat", Conjugation.First, Valency.AccusativeDative),
+				new SimpleGermanVerb("geben", GermanConjugationStem.makeCollectionMap("geben", "geb", "gab", "gibst", "gäb", "gib"), GermanConjugation.Strong, GermanParticipleAuxiliary.ToBe));
+		register(new SimpleVerb("am", "amav", "amat", Conjugation.First, Valency.Accusative),
+				new SimpleGermanVerb("lieben", "lieb", "liebt", "geliebt", GermanConjugation.Weak, GermanParticipleAuxiliary.ToHave));
+	}
+
 	// subjunctions
 	static {
-		register(new SimpleSubjunction("an", SubjunctionType.Question), "ob");
-		register(new SimpleSubjunction("antequam", SubjunctionType.Indicative), "bevor");
-		register(new SimpleSubjunction("antequam", SubjunctionType.Subjunctive), "bevor");
-		register(new SimpleSubjunction("atque", SubjunctionType.Indicative), "wie");
-		register(new SimpleSubjunction("ac", SubjunctionType.Indicative), "wie");
-		register(new SimpleSubjunction("cum", SubjunctionType.Indicative), "als");
-		register(new SimpleSubjunction("cum", SubjunctionType.Subjunctive), "weil");
-		register(new SimpleSubjunction("cur", SubjunctionType.Question), "warum");
-		register(new SimpleSubjunction("donec", SubjunctionType.Indicative), "bis dann");
-		register(new SimpleSubjunction("dum", SubjunctionType.Indicative), "solange");
-		register(new SimpleSubjunction("dum", SubjunctionType.Subjunctive), "solange");
-		register(new SimpleSubjunction("etiamsi", SubjunctionType.Indicative), "obwohl");
-		register(new SimpleSubjunction("etiamsi", SubjunctionType.Subjunctive), "obwohl");
-		register(new SimpleSubjunction("etsi", SubjunctionType.Indicative), "obwohl");
-		register(new SimpleSubjunction("etsi", SubjunctionType.Subjunctive), "obwohl");
-		register(new SimpleSubjunction("ne", SubjunctionType.Subjunctive), "dass nicht");
-		register(new SimpleSubjunction("nisi", SubjunctionType.Indicative), "wenn nicht");
-		register(new SimpleSubjunction("nisi", SubjunctionType.Subjunctive), "wenn nicht");
+//		register(new SimpleSubjunction("an", SubjunctionType.Question), "ob");
+//		register(new SimpleSubjunction("antequam", SubjunctionType.Indicative), "bevor");
+//		register(new SimpleSubjunction("antequam", SubjunctionType.Subjunctive), "bevor");
+//		register(new SimpleSubjunction("atque", SubjunctionType.Indicative), "wie");
+//		register(new SimpleSubjunction("ac", SubjunctionType.Indicative), "wie");
+//		register(new SimpleSubjunction("cum", SubjunctionType.Indicative), "als");
+//		register(new SimpleSubjunction("cum", SubjunctionType.Subjunctive), "weil");
+//		register(new SimpleSubjunction("cur", SubjunctionType.Question), "warum");
+//		register(new SimpleSubjunction("donec", SubjunctionType.Indicative), "bis dann");
+//		register(new SimpleSubjunction("dum", SubjunctionType.Indicative), "solange");
+//		register(new SimpleSubjunction("dum", SubjunctionType.Subjunctive), "solange");
+//		register(new SimpleSubjunction("etiamsi", SubjunctionType.Indicative), "obwohl");
+//		register(new SimpleSubjunction("etiamsi", SubjunctionType.Subjunctive), "obwohl");
+//		register(new SimpleSubjunction("etsi", SubjunctionType.Indicative), "obwohl");
+//		register(new SimpleSubjunction("etsi", SubjunctionType.Subjunctive), "obwohl");
+//		register(new SimpleSubjunction("ne", SubjunctionType.Subjunctive), "dass nicht");
+//		register(new SimpleSubjunction("nisi", SubjunctionType.Indicative), "wenn nicht");
+//		register(new SimpleSubjunction("nisi", SubjunctionType.Subjunctive), "wenn nicht");
 	}
-	
+
 	static {
 		System.out.println("Initialized latin registry with " + INSTANCE.getSize() + " entries");
 	}

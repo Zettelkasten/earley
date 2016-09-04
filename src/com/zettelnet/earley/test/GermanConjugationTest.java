@@ -19,10 +19,10 @@ public class GermanConjugationTest {
 //				GermanConjugation.Strong, GermanParticipleAuxiliary.ToBe);
 //		GermanLemma verb = new SimpleGermanVerb("fallen", GermanConjugationStem.makeCollectionMap("fall", "fiel", "gefallen", "fäll", "fiel"),
 //				GermanConjugation.Strong, GermanParticipleAuxiliary.ToBe);
-//		GermanLemma verb = new SimpleGermanVerb("blasen", GermanConjugationStem.makeCollectionMap("blas", "blies", "geblasen", "bläst", "blies", "blas"),
-//				GermanConjugation.Strong, GermanParticipleAuxiliary.ToHave);
-		GermanLemma verb = new SimpleGermanVerb("fressen", GermanConjugationStem.makeCollectionMap("fress", "fraß", "gefressen", "friss", "fräß", "friss"),
+		GermanLemma verb = new SimpleGermanVerb("blasen", GermanConjugationStem.makeCollectionMap("blas", "blies", "geblasen", "bläst", "blies", "blas"),
 				GermanConjugation.Strong, GermanParticipleAuxiliary.ToHave);
+//		GermanLemma verb = new SimpleGermanVerb("fressen", GermanConjugationStem.makeCollectionMap("fress", "fraß", "gefressen", "friss", "fräß", "friss"),
+//				GermanConjugation.Strong, GermanParticipleAuxiliary.ToHave);
 
 		for (Map.Entry<GermanForm, Collection<String>> entry : new TreeMap<>(verb.getForms()).entrySet()) {
 			GermanForm form = entry.getKey();
