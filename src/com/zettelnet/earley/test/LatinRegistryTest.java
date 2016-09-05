@@ -47,7 +47,7 @@ public class LatinRegistryTest {
 		Grammar<Token, FormParameter> grammar = LatinGrammar.makeGrammar();
 		Tokenizer<Token> tokenizer = new WhitespaceTokenizer<>(LatinRegistry.INSTANCE);
 
-		String input = "servus cantat dominum ridere";
+		String input = "servus cantat non iterum";
 
 		out.printf("(S) Processing \"%s\" %n", input);
 
@@ -111,9 +111,10 @@ public class LatinRegistryTest {
 		out.println("(X) Best translation match:");
 		out.println(SyntaxTrees.getTreeView(translated, TreeViews.bestProbability(), SyntaxTrees.INDENTED));
 		out.println(SyntaxTrees.getTreeView(translated, TreeViews.bestProbability(), SyntaxTrees.COMPACT_TREE));
+		out.println(SyntaxTrees.getTreeView(translated, TreeViews.bestProbability(), SyntaxTrees.DETAILED_TREE));
 
 		out.println("(4) Traversed:");
-		out.println(SyntaxTrees.traverse(translated));
+		out.println(SyntaxTrees.traverse(translated, TreeViews.bestProbability()));
 
 		new TranslationPrinter<>(result.getSyntaxTree(), germanTranslator).print(new PrintStream("translate.html"));
 

@@ -158,14 +158,14 @@ public class SyntaxTrees {
 		}
 	}
 
-	public static <T, P extends Parameter> List<T> traverse(SyntaxTree<T, P> tree) {
-		SyntaxTreeVariant<T, P> variant = tree.getVariants().iterator().next();
+	public static <T, P extends Parameter> List<T> traverse(SyntaxTree<T, P> tree, Function<SyntaxTree<T, P>, SyntaxTreeVariant<T, P>> variantFunction) {
+		SyntaxTreeVariant<T, P> variant = variantFunction.apply(tree);
 		if (variant.isTerminal()) {
 			return Arrays.asList(variant.getToken());
 		} else {
 			List<T> childrenTokens = new ArrayList<>();
 			for (SyntaxTree<T, P> child : variant.getChildren()) {
-				childrenTokens.addAll(traverse(child));
+				childrenTokens.addAll(traverse(child, variantFunction));
 			}
 			return childrenTokens;
 		}
@@ -174,11 +174,11 @@ public class SyntaxTrees {
 	public static <T, P extends Parameter> String getTreeView(SyntaxTree<T, P> tree, Function<SyntaxTree<T, P>, SyntaxTreeVariant<T, P>> variantFunction) {
 		return getTreeView(tree, variantFunction, COMPACT);
 	}
-	
+
 	public static <T, P extends Parameter> String getTreeView(SyntaxTree<T, P> tree, Function<SyntaxTree<T, P>, SyntaxTreeVariant<T, P>> variantFunction, FormatConfiguration formatOptions) {
 		return getTreeView(tree, variantFunction, formatOptions, 0);
 	}
-	
+
 	private static <T, P extends Parameter> String getTreeView(SyntaxTree<T, P> tree, Function<SyntaxTree<T, P>, SyntaxTreeVariant<T, P>> variantFunction, FormatConfiguration formatOptions, int indent) {
 		SyntaxTreeVariant<T, P> variant = variantFunction.apply(tree);
 
@@ -226,7 +226,7 @@ public class SyntaxTrees {
 	private static <T> String symbolName(Symbol<T> symbol) {
 		return symbol.toString().replace('[', '{').replace(']', '}');
 	}
-	
+
 	private static StringBuilder indent(StringBuilder str, int amount) {
 		while (amount > 0) {
 			str.append(' ');

@@ -54,7 +54,6 @@ import com.zettelnet.latin.form.Numerus;
 import com.zettelnet.latin.form.Tense;
 import com.zettelnet.latin.form.Voice;
 import com.zettelnet.latin.lemma.property.Finiteness;
-import com.zettelnet.latin.lemma.property.Meaning;
 import com.zettelnet.latin.lemma.property.Valency;
 import com.zettelnet.latin.param.FormParameter;
 import com.zettelnet.latin.param.FormParameterManager;
