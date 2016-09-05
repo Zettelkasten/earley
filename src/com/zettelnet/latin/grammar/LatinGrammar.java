@@ -227,8 +227,7 @@ public final class LatinGrammar {
 		toGerman.addTranslation(prod, parameterManager,
 				vars(new ConcreteTranslationTree<>(GermanSymbol.AdverbalPhraseVar, germanize, 1,
 						vars(new AbstractTranslationTree<>(new PositionReference<>(0), 1)),
-						vars(new AbstractTranslationTree<>(new PositionReference<>(1), 1)),
-						vars(new AbstractTranslationTree<>(new PositionReference<>(2), 1)))));
+						vars(new AbstractTranslationTree<>(new PositionReference<>(1), 1)))));
 
 		// AdvP -> Adv
 		prod = grammar.addProduction(
