@@ -29,7 +29,7 @@ public class LatinTokenPrinter implements TokenPrinter<Token> {
 	}
 
 	public void printDetermination(final PrintStream out, final Determination determination) {
-		out.printf("<li class='token-determination'>");
+		out.printf("<li class='token-determination' title='%s'>", determination.getProperties());
 		out.printf("%s of %s (%s - %s)", determination.toForm(), determination.getLemma(), determination.getLemmaType(), determination.getLemma().getProperties());
 		out.print("</li>");
 	}
