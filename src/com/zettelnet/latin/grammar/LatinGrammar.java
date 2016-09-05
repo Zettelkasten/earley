@@ -54,6 +54,7 @@ import com.zettelnet.latin.form.Numerus;
 import com.zettelnet.latin.form.Tense;
 import com.zettelnet.latin.form.Voice;
 import com.zettelnet.latin.lemma.property.Finiteness;
+import com.zettelnet.latin.lemma.property.Meaning;
 import com.zettelnet.latin.lemma.property.Valency;
 import com.zettelnet.latin.param.FormParameter;
 import com.zettelnet.latin.param.FormParameterManager;
@@ -229,10 +230,10 @@ public final class LatinGrammar {
 						vars(new AbstractTranslationTree<>(new PositionReference<>(0), 1)),
 						vars(new AbstractTranslationTree<>(new PositionReference<>(1), 1)))));
 
-		// AdvP -> Adv
+		// AdvP -> adv
 		prod = grammar.addProduction(
 				AdverbalPhrase, 0.4,
-				Adverb);
+				new ParameterizedSymbol<>(Adverb, copy));
 		toGerman.addTranslation(prod, parameterManager,
 				vars(new ConcreteTranslationTree<>(GermanSymbol.AdverbalPhrase, germanize, 1,
 						vars(new AbstractTranslationTree<>(new PositionReference<>(0), 1)))));

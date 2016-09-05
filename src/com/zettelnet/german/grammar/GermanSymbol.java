@@ -66,7 +66,7 @@ public final class GermanSymbol {
 		registry.register(VerbPhrase, GermanCasus.TYPE, GermanPerson.TYPE, GermanNumerus.TYPE, GermanGenus.TYPE, GermanMood.TYPE, GermanTense.TYPE, GermanVoice.TYPE, GermanFiniteness.TYPE, Meaning.TYPE);
 		registry.register(VerbForm, GermanCasus.TYPE, GermanPerson.TYPE, GermanNumerus.TYPE, GermanGenus.TYPE, GermanMood.TYPE, GermanTense.TYPE, GermanVoice.TYPE, GermanFiniteness.TYPE, Meaning.TYPE);
 		registry.register(Arguments);
-		registry.register(AdverbalPhrase, GermanMood.TYPE);
+		registry.register(AdverbalPhrase, GermanMood.TYPE, Meaning.TYPE);
 		registry.register(AdverbalPhraseVar, GermanMood.TYPE);
 		registry.register(PronounOpt, GermanCasus.TYPE, GermanPerson.TYPE, GermanNumerus.TYPE, GermanGenus.TYPE, Meaning.TYPE);
 
