@@ -66,9 +66,20 @@ public class SimpleAdjective implements DeclinableLemma {
 	@Override
 	public Map<Form, Collection<String>> getForms() {
 		Map<Form, Collection<String>> forms = new HashMap<>();
-		for (Map.Entry<Genus, FormProvider<DeclinableLemma>> entry : formProviders.entrySet()) {
-			forms.putAll(entry.getValue().getForms(this));
+
+		for (Casus casus : Casus.values()) {
+			for (Numerus numerus : Numerus.values()) {
+				for (Genus genus : getGenus()) {
+					Form form = Form.withValues(casus, numerus, genus);
+					Collection<String> variants = getForm(form);
+
+					if (!variants.isEmpty()) {
+						forms.put(form, variants);
+					}
+				}
+			}
 		}
+
 		return forms;
 	}
 
