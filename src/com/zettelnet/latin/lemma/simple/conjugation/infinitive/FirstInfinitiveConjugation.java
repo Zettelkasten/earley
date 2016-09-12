@@ -16,7 +16,7 @@ public class FirstInfinitiveConjugation extends AbstractInfinitiveConjugation {
 
 			put("_are", Tense.Present, Voice.Active);
 			put("_ar_i", Tense.Present, Voice.Passive);
-			put("_avisse", Tense.Perfect, Voice.Active);
+			put("isse", Tense.Perfect, Voice.Active);
 		}
 	}
 
