@@ -249,10 +249,10 @@ public final class LatinGrammar {
 		prod = grammar.addProduction(
 				AdverbalPhrase, 0.2,
 				new ParameterizedSymbol<>(NounPhrase, specify(parameterManager, parameterizer, Casus.Ablative)));
-		// AdvP -> NP(Voc)
+		// AdvP -> NP(Voc & ng[pi])
 		prod = grammar.addProduction(
 				AdverbalPhrase, 0.1,
-				new ParameterizedSymbol<>(NounPhrase, specify(parameterManager, parameterizer, Casus.Vocative)));
+				new ParameterizedSymbol<>(NounPhrase, new IndividualFormParameterExpression<>(parameterManager, parameterizer).copy(Numerus.TYPE, Genus.TYPE).specify(Casus.Ablative)));
 		toGerman.addTranslation(prod, parameterManager,
 				vars(new ConcreteTranslationTree<>(GermanSymbol.AdverbalPhrase, germanize, 1,
 						vars(new AbstractTranslationTree<>(new PositionReference<>(0), 1)))));
