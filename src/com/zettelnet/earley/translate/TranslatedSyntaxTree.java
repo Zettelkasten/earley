@@ -29,7 +29,9 @@ public class TranslatedSyntaxTree<T, P extends Parameter, U, Q extends Parameter
 				variants.addAll(variantTree.getVariantsSet());
 			}
 		}
-		
+		if (variants.isEmpty()) {
+			throw new NoSuchSyntaxTreeException(String.format("Could not translate tree %s", sourceTree));
+		}
 		return variants;
 	}
 
