@@ -61,7 +61,7 @@ public final class LatinSymbol {
 		registry.register(NounPhrase, Casus.TYPE, Person.TYPE, Numerus.TYPE, Genus.TYPE, Meaning.TYPE);
 		registry.register(NounPhraseOpt, Casus.TYPE, Person.TYPE, Numerus.TYPE, Genus.TYPE, Meaning.TYPE);
 		registry.register(NounForm, Casus.TYPE, Person.TYPE, Numerus.TYPE, Genus.TYPE, Meaning.TYPE);
-		registry.register(AdjectivePhrase, Casus.TYPE, Numerus.TYPE, Genus.TYPE);
+		registry.register(AdjectivePhrase, Casus.TYPE, Numerus.TYPE, Genus.TYPE, Meaning.TYPE);
 		registry.register(AdjectivePhraseOpt, Casus.TYPE, Numerus.TYPE, Genus.TYPE);
 		registry.register(VerbPhrase, Casus.TYPE, Person.TYPE, Numerus.TYPE, Genus.TYPE, Mood.TYPE, Tense.TYPE, Voice.TYPE, Finiteness.TYPE, Valency.TYPE, Meaning.TYPE);
 		registry.register(VerbForm, Casus.TYPE, Person.TYPE, Numerus.TYPE, Genus.TYPE, Mood.TYPE, Tense.TYPE, Voice.TYPE, Finiteness.TYPE, Valency.TYPE, Meaning.TYPE);

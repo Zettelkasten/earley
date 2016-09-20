@@ -72,6 +72,17 @@ public class TranslationPrinter<T, P extends Parameter, U, Q extends Parameter> 
 				out.print("</tr>");
 			}
 		}
+		out.print("<tr><td>-</td><td>-</td></tr>");
+		for (Terminal<T> terminal : sourceGrammar.getTerminals()) {
+			for (Translation<T, P, U, Q> translation : translations.getTranslations(terminal)) {
+				out.print("<tr>");
+				out.printf("<td>%s</td>", terminal);
+				out.print("<td>");
+				printTranslation(out, translation);
+				out.print("</td>");
+				out.print("</tr>");
+			}
+		}
 		out.print("</table>");
 	}
 
@@ -151,7 +162,7 @@ public class TranslationPrinter<T, P extends Parameter, U, Q extends Parameter> 
 				Q translatedParameter = translationVariant.getParameterTranslator().translateParameter(sourceVariant.getParameter(), sourceSymbol, symbol);
 				Collection<U> tokens = translator.makeToken(symbol, parameter);
 				if (tokens.isEmpty()) {
-					out.print("[no token]");
+					out.print("<span class='error'>[no token]</span>");
 				} else {
 					Iterator<U> i = tokens.iterator();
 					while (i.hasNext()) {
@@ -192,7 +203,7 @@ public class TranslationPrinter<T, P extends Parameter, U, Q extends Parameter> 
 
 		Set<TranslationTree<T, P, U, Q>> translations = translator.getTranslationTrees(sourceVariant);
 		if (translations.isEmpty()) {
-			out.printf("[no translation found for %s]", sourceVariant.getProduction());
+			out.printf("<span class='error'>[no translation found for %s]</span>", sourceVariant.getProduction());
 		} else {
 			for (TranslationTree<T, P, U, Q> translation : translations) {
 				for (TranslationTreeVariant<T, P, U, Q> translationVariant : translation.getVariants()) {

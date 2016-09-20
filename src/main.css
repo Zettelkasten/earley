@@ -73,3 +73,6 @@
 .terminal-symbol {
 	font-weight: bold;
 }
+.error {
+	color: red;
+}

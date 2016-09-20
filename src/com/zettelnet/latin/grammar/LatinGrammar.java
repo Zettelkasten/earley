@@ -253,6 +253,9 @@ public final class LatinGrammar {
 		prod = grammar.addProduction(
 				AdverbalPhrase, 0.1,
 				new ParameterizedSymbol<>(NounPhrase, specify(parameterManager, parameterizer, Casus.Vocative)));
+		toGerman.addTranslation(prod, parameterManager,
+				vars(new ConcreteTranslationTree<>(GermanSymbol.AdverbalPhrase, germanize, 1,
+						vars(new AbstractTranslationTree<>(new PositionReference<>(0), 1)))));
 
 		// NP(pi : Fin) -> NF(pi) [AP(pi)] [NP(Gen)] [NP(pi)]
 		prod = grammar.addProduction(
