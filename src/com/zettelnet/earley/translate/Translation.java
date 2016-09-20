@@ -28,4 +28,9 @@ public class Translation<T, P extends Parameter, U, Q extends Parameter> {
 	public TranslationTree<T, P, U, Q> value() {
 		return tree;
 	}
+	
+	@Override
+	public String toString() {
+		return tree.toString();
+	}
 }

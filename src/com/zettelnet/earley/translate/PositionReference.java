@@ -17,4 +17,9 @@ public class PositionReference<T, P extends Parameter> implements AbstractRefere
 		assert parentTree.getChildren().size() > position : String.format("Parent tree %s has insufficient child count for position %s", parentTree, position);
 		return parentTree.getChildren().get(position);
 	}
+	
+	@Override
+	public String toString() {
+		return Integer.toString(position);
+	}
 }

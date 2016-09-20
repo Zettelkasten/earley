@@ -29,6 +29,7 @@ public class TranslatedSyntaxTree<T, P extends Parameter, U, Q extends Parameter
 				variants.addAll(variantTree.getVariantsSet());
 			}
 		}
+		
 		return variants;
 	}
 

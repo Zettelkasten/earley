@@ -14,10 +14,10 @@ import com.zettelnet.earley.tree.SyntaxTrees;
 // ALWAYS CONCRETE!
 public class TranslatedSyntaxTreeVariant<T, P extends Parameter, U, Q extends Parameter> implements SyntaxTreeVariant<U, Q> {
 
-	private final Translator<T, P, U, Q> translator;
+	public final Translator<T, P, U, Q> translator;
 	
-	private final SyntaxTreeVariant<T, P> sourceVariant;
-	private final TranslationTreeVariant<T, P, U, Q> translation;
+	public final SyntaxTreeVariant<T, P> sourceVariant;
+	public final TranslationTreeVariant<T, P, U, Q> translation;
 
 	private final Q parameter;
 

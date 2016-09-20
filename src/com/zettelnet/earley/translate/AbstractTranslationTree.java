@@ -50,4 +50,9 @@ public class AbstractTranslationTree<T, P extends Parameter, U, Q extends Parame
 	public double getProbability() {
 		return probability;
 	}
+	
+	@Override
+	public String toString() {
+		return "~" + reference;
+	}
 }

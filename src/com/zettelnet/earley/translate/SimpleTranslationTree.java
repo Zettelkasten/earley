@@ -24,4 +24,9 @@ public class SimpleTranslationTree<T, P extends Parameter, U, Q extends Paramete
 	public Set<TranslationTreeVariant<T, P, U, Q>> getVariantsSet() {
 		return variants;
 	}
+	
+	@Override
+	public String toString() {
+		return variants.toString();
+	}
 }

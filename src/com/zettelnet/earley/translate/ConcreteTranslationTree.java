@@ -13,11 +13,11 @@ public class ConcreteTranslationTree<T, P extends Parameter, U, Q extends Parame
 
 	private final Symbol<U> symbol;
 	private final boolean terminal;
-	
+
 	private final ParameterTranslator<T, P, U, Q> parameterTranslator;
-	
+
 	private final double probability;
-	
+
 	private final List<TranslationTree<T, P, U, Q>> children;
 
 	@SafeVarargs
@@ -26,19 +26,19 @@ public class ConcreteTranslationTree<T, P extends Parameter, U, Q extends Parame
 		this.terminal = false;
 		this.parameterTranslator = parameterTranslator;
 		this.probability = probability;
-		
+
 		this.children = Arrays.asList(children);
 	}
-	
+
 	public ConcreteTranslationTree(final Terminal<U> symbol, final ParameterTranslator<T, P, U, Q> parameterTranslator, final double probability) {
 		this.symbol = symbol;
 		this.terminal = true;
 		this.parameterTranslator = parameterTranslator;
 		this.probability = probability;
-		
+
 		this.children = Collections.emptyList();
 	}
-	
+
 	@Override
 	public Symbol<U> getRootSymbol() {
 		return symbol;
@@ -48,7 +48,7 @@ public class ConcreteTranslationTree<T, P extends Parameter, U, Q extends Parame
 	public boolean isTerminal() {
 		return terminal;
 	}
-	
+
 	@Override
 	public boolean isAbstract() {
 		return false;
@@ -68,9 +68,22 @@ public class ConcreteTranslationTree<T, P extends Parameter, U, Q extends Parame
 	public List<TranslationTree<T, P, U, Q>> getChildren() {
 		return children;
 	}
-	
+
 	@Override
 	public double getProbability() {
 		return probability;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder str = new StringBuilder();
+		str.append(symbol);
+		str.append(" {");
+		for (TranslationTree<T, P, U, Q> child : children) {
+			str.append(' ');
+			str.append(child);
+		}
+		str.append(" }");
+		return str.toString();
 	}
 }
