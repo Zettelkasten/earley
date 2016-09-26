@@ -10,4 +10,6 @@ public final class GermanDeclension {
 	public static final GermanFormProvider<DeclinableGermanLemma> Strong = new StrongGermanDeclension();
 	public static final GermanFormProvider<DeclinableGermanLemma> Weak = new WeakGermanDeclension();
 	public static final GermanFormProvider<DeclinableGermanLemma> Mixed = new MixedGermanDeclension();
+	
+	public static final GermanFormProvider<GermanAdjective> Adjective = new AdjectiveGermanDeclension();
 }

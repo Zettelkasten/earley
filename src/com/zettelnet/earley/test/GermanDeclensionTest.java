@@ -4,9 +4,11 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 
+import com.zettelnet.german.form.GermanDeterminerType;
 import com.zettelnet.german.form.GermanForm;
 import com.zettelnet.german.form.GermanGenus;
 import com.zettelnet.german.lemma.GermanLemma;
+import com.zettelnet.german.lemma.simple.SimpleGermanAdjective;
 import com.zettelnet.german.lemma.simple.SimpleGermanArticle;
 import com.zettelnet.german.lemma.simple.SimpleGermanNoun;
 import com.zettelnet.german.lemma.simple.declension.GermanDeclension;
@@ -26,13 +28,15 @@ public class GermanDeclensionTest {
 		GermanLemma noun = new SimpleGermanNoun("Ohr", "Ohres", "Ohren", GermanDeclension.Mixed, GermanGenus.Neuter);
 		
 		GermanLemma article = SimpleGermanArticle.DEFINITE_ARTICLE;
+		GermanLemma adjective = new SimpleGermanAdjective("hell", GermanDeclension.Adjective);
 		
 		for (Map.Entry<GermanForm, Collection<String>> entry : new TreeMap<>(noun.getForms()).entrySet()) {
 			GermanForm form = entry.getKey();
 			
 			String determiner = article.getForm(form).iterator().next();
+			String attribute = adjective.getForm(form.derive(GermanDeterminerType.DefiniteArticle)).iterator().next();
 			Collection<String> values = entry.getValue();
-			System.out.printf("[%s] %s %s%n", form, determiner, values);
+			System.out.printf("[%s] %s %s %s%n", form, determiner, attribute, values);
 		}
 		
 		Collection<GermanLemma> lemmas = LatinRegistry.getTranslation(LatinRegistry.INSTANCE.getDeterminations("servus").iterator().next().getLemma());

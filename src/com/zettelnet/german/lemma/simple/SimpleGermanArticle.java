@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.zettelnet.german.derivation.GermanDerivation;
 import com.zettelnet.german.form.GermanCasus;
+import com.zettelnet.german.form.GermanDeterminerType;
 import com.zettelnet.german.form.GermanForm;
 import com.zettelnet.german.form.GermanGenus;
 import com.zettelnet.german.form.GermanNumerus;
@@ -14,7 +15,6 @@ import com.zettelnet.german.form.MapGermanFormValueProvider;
 import com.zettelnet.german.lemma.GermanFormProvider;
 import com.zettelnet.german.lemma.GermanLemma;
 import com.zettelnet.german.lemma.GermanLemmaType;
-import com.zettelnet.german.lemma.property.GermanDefiniteness;
 import com.zettelnet.german.lemma.property.GermanLemmaProperty;
 
 public class SimpleGermanArticle extends AbstractProvidedGermanLemma {
@@ -73,8 +73,8 @@ public class SimpleGermanArticle extends AbstractProvidedGermanLemma {
 			put("ein", GermanCasus.Accusative, GermanNumerus.Singular, GermanGenus.Neuter);
 		}
 	}
-	public static final GermanLemma DEFINITE_ARTICLE = new SimpleGermanArticle(new ConcreteGermanFormProvider(new DefiniteValues()), GermanDefiniteness.Definite);
-	public static final GermanLemma INDEFINITE_ARTICLE = new SimpleGermanArticle(new ConcreteGermanFormProvider(new IndefiniteValues()), GermanDefiniteness.Indefinite);
+	public static final GermanLemma DEFINITE_ARTICLE = new SimpleGermanArticle(new ConcreteGermanFormProvider(new DefiniteValues()), GermanDeterminerType.DefiniteArticle);
+	public static final GermanLemma INDEFINITE_ARTICLE = new SimpleGermanArticle(new ConcreteGermanFormProvider(new IndefiniteValues()), GermanDeterminerType.IndefiniteArticle);
 
 	public SimpleGermanArticle(GermanFormProvider<GermanLemma> formProvider, GermanLemmaProperty... properties) {
 		super(formProvider, properties);
