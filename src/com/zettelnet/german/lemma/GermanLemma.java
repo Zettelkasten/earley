@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Map;
 
 import com.zettelnet.earley.param.property.PropertySet;
+import com.zettelnet.german.derivation.GermanDerivation;
 import com.zettelnet.german.form.GermanForm;
 import com.zettelnet.german.lemma.property.GermanLemmaProperty;
 
@@ -19,24 +20,17 @@ public interface GermanLemma {
 
 	GermanLemmaType getType();
 
-	/*
-	 * TODO
-	 * 
-	 * Collection<GermanLemma> getDerivation(GermanDerivation derivation);
-	 * 
-	 * boolean hasDerivation(GermanDerivation derivation);
-	 * 
-	 * Map<GermanDerivation, Collection<GermanLemma>> getDerivations();
-	 * 
-	 * 
-	 * 
-	 * 
-	 * boolean isDerivation();
-	 * 
-	 * GermanLemma getDerivedFrom();
-	 * 
-	 * GermanDerivation getDerivationKind();
-	 */
+	Collection<GermanLemma> getDerivation(GermanDerivation derivation);
+
+	boolean hasDerivation(GermanDerivation derivation);
+
+	Map<GermanDerivation, Collection<GermanLemma>> getDerivations();
+
+	boolean isDerivation();
+
+	GermanLemma getDerivedFrom();
+
+	GermanDerivation getDerivationKind();
 
 	PropertySet<GermanLemmaProperty> getProperties();
 }

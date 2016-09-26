@@ -2,11 +2,13 @@ package com.zettelnet.german.lemma.simple;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.zettelnet.earley.param.property.MapPropertySet;
 import com.zettelnet.earley.param.property.PropertySet;
+import com.zettelnet.german.derivation.GermanDerivation;
 import com.zettelnet.german.form.GermanForm;
 import com.zettelnet.german.lemma.GermanLemma;
 import com.zettelnet.german.lemma.GermanLemmaType;
@@ -44,20 +46,20 @@ public class SimpleGermanAdverb implements GermanLemma {
 		return map;
 	}
 
-//	@Override
-//	public Collection<GermanLemma> getDerivation(GermanDerivation derivation) {
-//		return Collections.emptyList();
-//	}
-//
-//	@Override
-//	public boolean hasDerivation(GermanDerivation derivation) {
-//		return false;
-//	}
-//
-//	@Override
-//	public Map<Derivation, Collection<GermanLemma>> getDerivations() {
-//		return Collections.emptyMap();
-//	}
+	@Override
+	public Collection<GermanLemma> getDerivation(GermanDerivation derivation) {
+		return Collections.emptyList();
+	}
+
+	@Override
+	public boolean hasDerivation(GermanDerivation derivation) {
+		return false;
+	}
+
+	@Override
+	public Map<GermanDerivation, Collection<GermanLemma>> getDerivations() {
+		return Collections.emptyMap();
+	}
 
 	@Override
 	public PropertySet<GermanLemmaProperty> getProperties() {
@@ -69,20 +71,20 @@ public class SimpleGermanAdverb implements GermanLemma {
 		return GermanLemmaType.Adverb;
 	}
 
-//	@Override
-//	public boolean isDerivation() {
-//		return false;
-//	}
-//
-//	@Override
-//	public Lemma getDerivedFrom() {
-//		return null;
-//	}
-//	
-//	@Override
-//	public GermanDerivation getDerivationKind() {
-//		return null;
-//	}
+	@Override
+	public boolean isDerivation() {
+		return false;
+	}
+
+	@Override
+	public GermanLemma getDerivedFrom() {
+		return null;
+	}
+
+	@Override
+	public GermanDerivation getDerivationKind() {
+		return null;
+	}
 
 	@Override
 	public String toString() {

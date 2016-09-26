@@ -14,7 +14,7 @@ public abstract class AbstractProvidedGermanLemma implements GermanLemma {
 
 	private final GermanFormProvider<GermanLemma> formProvider;
 	private final PropertySet<GermanLemmaProperty> properties;
-	
+
 	public AbstractProvidedGermanLemma(final GermanFormProvider<GermanLemma> formProvider, final GermanLemmaProperty... properties) {
 		this.formProvider = formProvider;
 		this.properties = MapPropertySet.withValues(properties);
@@ -38,5 +38,10 @@ public abstract class AbstractProvidedGermanLemma implements GermanLemma {
 	@Override
 	public PropertySet<GermanLemmaProperty> getProperties() {
 		return properties;
+	}
+
+	@Override
+	public String toString() {
+		return getNominalForm();
 	}
 }

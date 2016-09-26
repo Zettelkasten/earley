@@ -1,13 +1,16 @@
 package com.zettelnet.german.lemma.simple.declension;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 
 import com.zettelnet.earley.param.property.MapPropertySet;
 import com.zettelnet.earley.param.property.PropertySet;
+import com.zettelnet.german.derivation.GermanDerivation;
 import com.zettelnet.german.form.GermanForm;
 import com.zettelnet.german.form.GermanGenus;
 import com.zettelnet.german.lemma.GermanFormProvider;
+import com.zettelnet.german.lemma.GermanLemma;
 import com.zettelnet.german.lemma.property.GermanLemmaProperty;
 
 public abstract class AbstractDeclinableGermanLemma implements DeclinableGermanLemma {
@@ -69,21 +72,20 @@ public abstract class AbstractDeclinableGermanLemma implements DeclinableGermanL
 		return formProvider.getForms(this);
 	}
 
-	// @Override
-	// public Collection<GermanLemma> getDerivation(GermanDerivation derivation)
-	// {
-	// return Collections.emptyList();
-	// }
-	//
-	// @Override
-	// public boolean hasDerivation(GermanDerivation derivation) {
-	// return false;
-	// }
-	//
-	// @Override
-	// public Map<GermanDerivation, Collection<GermanLemma>> getDerivations() {
-	// return Collections.emptyMap();
-	// }
+	@Override
+	public Collection<GermanLemma> getDerivation(GermanDerivation derivation) {
+		return Collections.emptyList();
+	}
+
+	@Override
+	public boolean hasDerivation(GermanDerivation derivation) {
+		return false;
+	}
+
+	@Override
+	public Map<GermanDerivation, Collection<GermanLemma>> getDerivations() {
+		return Collections.emptyMap();
+	}
 
 	@Override
 	public PropertySet<GermanLemmaProperty> getProperties() {

@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.zettelnet.earley.param.property.MapPropertySet;
 import com.zettelnet.earley.param.property.PropertySet;
+import com.zettelnet.german.derivation.GermanDerivation;
 import com.zettelnet.german.derivation.GermanDerivationProvider;
 import com.zettelnet.german.form.GermanForm;
 import com.zettelnet.german.form.GermanMood;
@@ -17,6 +18,7 @@ import com.zettelnet.german.form.GermanTense;
 import com.zettelnet.german.form.GermanVoice;
 import com.zettelnet.german.lemma.CombinedGermanProvider;
 import com.zettelnet.german.lemma.GermanFormProvider;
+import com.zettelnet.german.lemma.GermanLemma;
 import com.zettelnet.german.lemma.GermanLemmaType;
 import com.zettelnet.german.lemma.property.GermanFiniteness;
 import com.zettelnet.german.lemma.property.GermanLemmaProperty;
@@ -87,12 +89,47 @@ public class SimpleGermanVerb implements ConjugableGermanLemma {
 	}
 
 	@Override
-	public GermanLemmaType getType() {
-		return GermanLemmaType.Verb;
+	public PropertySet<GermanLemmaProperty> getProperties() {
+		return properties;
 	}
 
 	@Override
-	public PropertySet<GermanLemmaProperty> getProperties() {
-		return properties;
+	public Collection<GermanLemma> getDerivation(GermanDerivation derivation) {
+		return derivationProvider.getDerivation(this, derivation);
+	}
+
+	@Override
+	public boolean hasDerivation(GermanDerivation derivation) {
+		return derivationProvider.hasDerivation(this, derivation);
+	}
+
+	@Override
+	public Map<GermanDerivation, Collection<GermanLemma>> getDerivations() {
+		return derivationProvider.getDerivations(this);
+	}
+
+	@Override
+	public boolean isDerivation() {
+		return false;
+	}
+
+	@Override
+	public GermanLemma getDerivedFrom() {
+		return null;
+	}
+
+	@Override
+	public GermanDerivation getDerivationKind() {
+		return null;
+	}
+
+	@Override
+	public GermanLemmaType getType() {
+		return GermanLemmaType.Verb;
+	}
+	
+	@Override
+	public String toString() {
+		return getNominalForm();
 	}
 }
