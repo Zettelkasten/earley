@@ -9,6 +9,7 @@ import java.util.Map;
 import com.zettelnet.german.form.GermanGenus;
 import com.zettelnet.german.lemma.GermanLemma;
 import com.zettelnet.german.lemma.property.GermanParticipleAuxiliary;
+import com.zettelnet.german.lemma.simple.SimpleGermanAdjective;
 import com.zettelnet.german.lemma.simple.SimpleGermanAdverb;
 import com.zettelnet.german.lemma.simple.SimpleGermanNoun;
 import com.zettelnet.german.lemma.simple.SimpleGermanVerb;
@@ -141,8 +142,9 @@ public final class LatinRegistry {
 		register(new SimpleAdverb("tum"), null); // TODO: dann
 		register(new SimpleNoun("caelum", "cael", Declension.Second, Genus.Neuter),
 				new SimpleGermanNoun("Himmel", "Himmels", "Himmel", GermanDeclension.Strong, GermanGenus.Masculine));
-		register(new SimpleAdjective("obsc_urus", "obsc_ura", "obsc_urum", "obsc_ur", Declension.FirstAndSecond), null); // TODO:
-																															// dunkel
+		register(new SimpleAdjective("obsc_urus", "obsc_ura", "obsc_urum", "obsc_ur", Declension.FirstAndSecond),
+				new SimpleGermanAdjective("dunkel", GermanDeclension.Adjective));
+		
 		// TODO -que
 		register(new SimpleNoun("serva", "serv", Declension.First, Genus.Feminine),
 				new SimpleGermanNoun("Sklavin", "Sklavin", "Sklavinnen", GermanDeclension.Weak, GermanGenus.Feminine));
@@ -159,8 +161,8 @@ public final class LatinRegistry {
 																														// no
 																														// plural
 		// TODO enim
-		register(new SimpleAdjective("m_aturus", "m_atura", "m_aturum", "m_atur", Declension.FirstAndSecond), null); // TODO:
-																														// reif
+		register(new SimpleAdjective("m_aturus", "m_atura", "m_aturum", "m_atur", Declension.FirstAndSecond),
+				new SimpleGermanAdjective("reif", GermanDeclension.Adjective));
 		register(new SimpleAdverb("quoque"),
 				new SimpleGermanAdverb("auch"));
 		register(new SimpleNoun("domina", "domin", Declension.First, Genus.Feminine),
@@ -173,21 +175,21 @@ public final class LatinRegistry {
 		register(new SimpleAdverb("imm_o"), null); // TODO im Gegenteil
 		register(new SimpleAdverb("v_er_o"),
 				new SimpleGermanAdverb("wirklich"));
-		register(new SimpleAdjective("c_unctus", "c_uncta", "c_unctum", "c_unct", Declension.FirstAndSecond), null); // TODO:
-																														// alle
+		register(new SimpleAdjective("c_unctus", "c_uncta", "c_unctum", "c_unct", Declension.FirstAndSecond),
+				new SimpleGermanAdjective("alle", GermanDeclension.Adjective));
 		// TODO adsum
-		register(new SimpleAdjective("onustus", "onusta", "onustum", "onust", Declension.FirstAndSecond), null); // TODO:
-																													// beladen
-		register(new SimpleAdjective("d_efessus", "d_efessa", "d_efessum", "d_efess", Declension.FirstAndSecond), null); // TODO:
-																															// erschöpft
+		register(new SimpleAdjective("onustus", "onusta", "onustum", "onust", Declension.FirstAndSecond), 
+				new SimpleGermanAdjective("beladen", GermanDeclension.Adjective));
+		register(new SimpleAdjective("d_efessus", "d_efessa", "d_efessum", "d_efess", Declension.FirstAndSecond),
+				new SimpleGermanAdjective("erschöpft", GermanDeclension.Adjective));
 		register(new SimpleAdverb("iterum"),
 				new SimpleGermanAdverb("wiederholt"));
 		register(new SimpleAdverb("nunc"),
 				new SimpleGermanAdverb("jetzt"));
-		register(new SimpleAdjective("laetus", "laeta", "laetum", "laet", Declension.FirstAndSecond), null); // TODO:
-																												// fröhlich
-		register(new SimpleAdjective("salvus", "salva", "salvum", "salv", Declension.FirstAndSecond), null); // TODO:
-																												// heil
+		register(new SimpleAdjective("laetus", "laeta", "laetum", "laet", Declension.FirstAndSecond),
+				new SimpleGermanAdjective("fröhlich", GermanDeclension.Adjective));
+		register(new SimpleAdjective("salvus", "salva", "salvum", "salv", Declension.FirstAndSecond),
+				new SimpleGermanAdjective("heil", GermanDeclension.Adjective));
 	}
 
 	// Names
@@ -254,6 +256,33 @@ public final class LatinRegistry {
 		// "wenn nicht");
 		// register(new SimpleSubjunction("nisi", SubjunctionType.Subjunctive),
 		// "wenn nicht");
+	}
+
+	static {
+		// extra text
+		register(new SimpleVerb("sc_i", "sc_iv", "sc_itum", Conjugation.Fourth, Valency.Accusative),
+				new SimpleGermanVerb("wissen", "wei�", "wusst", "gewusst", GermanConjugation.Strong, GermanParticipleAuxiliary.ToHave));
+
+		register(new SimpleNoun("Marcus", "Marc", Declension.Second, Genus.Masculine),
+				new SimpleGermanNoun("Markus", "Markus", null, GermanDeclension.Weak, GermanGenus.Masculine));
+
+		register(new SimpleVerb("sper", "sper_av", "sperat", Conjugation.First, Valency.Accusative),
+				new SimpleGermanVerb("hoffen", "hoff", "hofft", "gehofft", GermanConjugation.Weak, GermanParticipleAuxiliary.ToHave));
+		
+		register(new SimpleNoun("medicus", "medic", Declension.Second, Genus.Masculine),
+				new SimpleGermanNoun("Arzt", "Arzts", "�rzte", GermanDeclension.Strong, GermanGenus.Masculine));
+
+		register(new SimpleNoun("amica", "amic", Declension.First, Genus.Feminine),
+				new SimpleGermanNoun("Freundin", "Freundin", "Freundinnen", GermanDeclension.Weak, GermanGenus.Feminine));
+		
+		// TODO translation
+		register(new SimpleAdjective("aegrus", "aegra", "aegrum", "aegr", Declension.FirstAndSecond),
+				new SimpleGermanAdjective("krank", GermanDeclension.Adjective));
+		register(new SimpleAdjective("pulcher", "pulchra", "pulchrum", "pulchr", Declension.FirstAndSecond),
+				new SimpleGermanAdjective("schön", GermanDeclension.Adjective));
+		
+		register(new SimpleVerb("serv", "serv_av", "serv_at", Conjugation.First, Valency.Single),
+				new SimpleGermanVerb("retten", "rett", "rettet", "gerettet", GermanConjugation.Weak, GermanParticipleAuxiliary.ToHave));
 	}
 
 	static {
