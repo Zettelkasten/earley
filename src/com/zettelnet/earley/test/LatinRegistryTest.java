@@ -26,6 +26,7 @@ import com.zettelnet.earley.translate.Translator;
 import com.zettelnet.earley.tree.SyntaxTree;
 import com.zettelnet.earley.tree.SyntaxTrees;
 import com.zettelnet.earley.tree.TreeViews;
+import com.zettelnet.german.form.GermanDeterminerType;
 import com.zettelnet.german.form.GermanForm;
 import com.zettelnet.german.lemma.GermanLemma;
 import com.zettelnet.german.lemma.simple.SimpleGermanArticle;
@@ -47,7 +48,7 @@ public class LatinRegistryTest {
 		Grammar<Token, FormParameter> grammar = LatinGrammar.makeGrammar();
 		Tokenizer<Token> tokenizer = new WhitespaceTokenizer<>(LatinRegistry.INSTANCE);
 
-		String input = "servus cantat non iterum";
+		String input = "servus cantat carmen pulchrum";
 
 		out.printf("(S) Processing \"%s\" %n", input);
 
@@ -69,6 +70,7 @@ public class LatinRegistryTest {
 		out.println("(X) Best parse match:");
 		out.println(SyntaxTrees.getTreeView(result.getSyntaxTree(), TreeViews.bestProbability(), SyntaxTrees.INDENTED));
 		out.println(SyntaxTrees.getTreeView(result.getSyntaxTree(), TreeViews.bestProbability(), SyntaxTrees.COMPACT_TREE));
+		out.println(SyntaxTrees.toString(result.getSyntaxTree(), SyntaxTrees.COMPACT_TREE));
 
 		TranslationSet<Token, FormParameter, GermanToken, FormParameter> germanTranslations = LatinGrammar.makeGermanTranslations();
 		TokenFactory<GermanToken, FormParameter> germanTokenFactory = new TokenFactory<GermanToken, FormParameter>() {
@@ -79,21 +81,31 @@ public class LatinRegistryTest {
 
 				if (meanings.isEmpty() || form == null) {
 					if (terminal.toString().equals("Article")) {
-						return Arrays.asList(new GermanToken(SimpleGermanArticle.DEFINITE_ARTICLE.getForm(GermanForm.fromParameter(parameter)).iterator().next(), new GermanDetermination(null, parameter.toForm())));
+						try {
+							return Arrays.asList(new GermanToken(SimpleGermanArticle.DEFINITE_ARTICLE.getForm(GermanForm.fromParameter(parameter)).iterator().next(), new GermanDetermination(null, parameter.toForm())));
+						} catch (Throwable e) {
+							return Arrays.asList(new GermanToken("DE_WARNING_{" + terminal + ":" + parameter + "}", new GermanDetermination(null, parameter.toForm())));
+						}
 					}
 					return Arrays.asList(new GermanToken("DE_{" + terminal + ":" + parameter + "}", new GermanDetermination(null, parameter.toForm())));
 				} else {
 					Collection<GermanToken> tokens = new HashSet<>();
 					for (Meaning meaning : meanings) {
+						if (!form.hasProperty(GermanDeterminerType.TYPE)) {
+							form = form.derive(GermanDeterminerType.DefiniteArticle);
+						}
+						
 						try {
 							for (GermanLemma translation : LatinRegistry.getTranslation(meaning.getLemma())) {
+								if (translation.getForm(form).isEmpty()) {
+									return Arrays.asList(new GermanToken("DE_WARNING_{" + terminal + ":" + parameter + "}", new GermanDetermination(null, form)));
+								}
 								for (String value : translation.getForm(form)) {
-									tokens.add(new GermanToken(value, new GermanDetermination(translation, parameter.toForm())));
-
+									tokens.add(new GermanToken(value, new GermanDetermination(translation, form)));
 								}
 							}
 						} catch (Throwable e) {
-							tokens.add(new GermanToken("DE_WARNING_{" + terminal + ":" + parameter + "}", new GermanDetermination(null, parameter.toForm())));
+							tokens.add(new GermanToken("DE_WARNING_{" + terminal + ":" + parameter + "}", new GermanDetermination(null, form)));
 						}
 					}
 					return tokens;
@@ -105,6 +117,8 @@ public class LatinRegistryTest {
 
 		SyntaxTree<GermanToken, FormParameter> translated = germanTranslator.translate(result.getSyntaxTree());
 
+		new TranslationPrinter<>(result.getSyntaxTree(), germanTranslator).print(new PrintStream("translate.html"));
+
 		out.println("(3) Translated:");
 		out.println(translated);
 
@@ -115,8 +129,6 @@ public class LatinRegistryTest {
 
 		out.println("(4) Traversed:");
 		out.println(SyntaxTrees.traverse(translated, TreeViews.bestProbability()));
-
-		new TranslationPrinter<>(result.getSyntaxTree(), germanTranslator).print(new PrintStream("translate.html"));
 
 		JufoHelper.present(result.getSyntaxTree());
 
