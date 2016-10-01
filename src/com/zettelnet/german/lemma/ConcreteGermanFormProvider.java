@@ -1,12 +1,10 @@
-package com.zettelnet.german.lemma.simple;
+package com.zettelnet.german.lemma;
 
 import java.util.Collection;
 import java.util.Map;
 
 import com.zettelnet.german.form.GermanForm;
 import com.zettelnet.german.form.GermanFormValueProvider;
-import com.zettelnet.german.lemma.GermanFormProvider;
-import com.zettelnet.german.lemma.GermanLemma;
 
 public class ConcreteGermanFormProvider implements GermanFormProvider<GermanLemma> {
 

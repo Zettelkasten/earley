@@ -12,6 +12,7 @@ import com.zettelnet.german.form.GermanForm;
 import com.zettelnet.german.form.GermanGenus;
 import com.zettelnet.german.form.GermanNumerus;
 import com.zettelnet.german.form.MapGermanFormValueProvider;
+import com.zettelnet.german.lemma.ConcreteGermanFormProvider;
 import com.zettelnet.german.lemma.GermanFormProvider;
 import com.zettelnet.german.lemma.GermanLemma;
 import com.zettelnet.german.lemma.GermanLemmaType;
