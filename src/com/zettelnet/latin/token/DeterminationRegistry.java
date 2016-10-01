@@ -24,7 +24,7 @@ public class DeterminationRegistry implements TokenScanner<Token> {
 	}
 
 	public static String strip(String content) {
-		return content.replaceAll("_", "").toLowerCase();
+		return content.replaceAll("[_\\.]", "").toLowerCase();
 	}
 
 	public void register(Lemma lemma) {
