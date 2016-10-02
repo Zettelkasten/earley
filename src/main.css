@@ -48,6 +48,17 @@
 	text-align: right;
 }
 
+/* Parameter Expressions */
+
+.parameter-expressions {
+	margin-left: auto;
+	margin-right: auto;
+}
+.parameter-expressions td {
+	padding-left: 2px;
+	padding-right: 2px;
+}
+
 /* Translating */
 
 .tree-translation {

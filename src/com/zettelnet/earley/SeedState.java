@@ -50,6 +50,11 @@ public class SeedState<T, P extends Parameter> implements State<T, P> {
 	public List<StateCause<T, P>> getCause() {
 		return Collections.emptyList();
 	}
+	
+	@Override
+	public List<ParameterCause<T, P>> getParameterCause() {
+		return Collections.emptyList();
+	}
 
 	@Override
 	public void addCause(StateCause<T, P> newCause) {

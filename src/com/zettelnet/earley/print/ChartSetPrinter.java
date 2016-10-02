@@ -2,6 +2,7 @@ package com.zettelnet.earley.print;
 
 import java.io.PrintStream;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Deque;
 import java.util.HashMap;
@@ -14,6 +15,7 @@ import java.util.Set;
 import java.util.SortedMap;
 
 import com.zettelnet.earley.Chart;
+import com.zettelnet.earley.ParameterCause;
 import com.zettelnet.earley.Production;
 import com.zettelnet.earley.State;
 import com.zettelnet.earley.StateCause;
@@ -27,12 +29,16 @@ public class ChartSetPrinter<T, P extends Parameter> {
 	private final SortedMap<InputPosition<T>, Chart<T, P>> charts;
 	private final List<T> tokens;
 
+	private final List<ParameterCause<T, P>> parameterCauses;
+
 	private final Map<Chart<T, P>, Map<State<T, P>, Integer>> stateIds;
+	private final Map<ParameterCause<T, P>, Integer> parameterCauseIds;
 
 	private boolean tableMode;
 
 	private final Set<Chart<T, P>> aliveCharts;
 	private final Set<State<T, P>> aliveStates;
+	private final List<ParameterCause<T, P>> aliveParameterCauses;
 
 	private final static NumberFormat percentFormat;
 	static {
@@ -49,21 +55,27 @@ public class ChartSetPrinter<T, P extends Parameter> {
 		this.tokens = tokens;
 		this.tableMode = align;
 
-		stateIds = new HashMap<>();
+		this.stateIds = new HashMap<>();
+		this.parameterCauses = new ArrayList<>();
 		for (Chart<T, P> chart : charts.values()) {
 			Map<State<T, P>, Integer> ids = new HashMap<>();
 			int id = 0;
 			for (State<T, P> state : chart) {
 				ids.put(state, id);
 				id++;
+
+				parameterCauses.addAll(state.getParameterCause());
 			}
 			stateIds.put(chart, ids);
 		}
 
 		this.aliveCharts = new HashSet<>();
 		this.aliveStates = new HashSet<>();
+		this.aliveParameterCauses = new ArrayList<>();
+		this.parameterCauseIds = new HashMap<>();
 		calculateAliveStates();
 		calculateAliveCharts();
+		calculateAliveParameterCauses();
 	}
 
 	private void calculateAliveStates() {
@@ -118,8 +130,24 @@ public class ChartSetPrinter<T, P extends Parameter> {
 		}
 	}
 
-	private Integer getStateId(State<T, P> state) {
-		return stateIds.get(state.getChart()).get(state);
+	private void calculateAliveParameterCauses() {
+		for (int i = 0; i < parameterCauses.size(); i++) {
+			ParameterCause<T, P> cause = parameterCauses.get(i);
+			if (aliveStates.contains(cause.getFromState())) {
+				aliveParameterCauses.add(cause);
+			}
+			parameterCauseIds.put(cause, i);
+		}
+	}
+
+	private int getStateId(State<T, P> state) {
+		Integer i = stateIds.get(state.getChart()).get(state);
+		return i != null ? i : -1;
+	}
+
+	private int getParameterCauseId(ParameterCause<T, P> parameterCause) {
+		Integer i = parameterCauseIds.get(parameterCause);
+		return i != null ? i : -1;
 	}
 
 	public void print(PrintStream out) {
@@ -154,6 +182,18 @@ public class ChartSetPrinter<T, P extends Parameter> {
 				printChart(out, chart);
 			}
 		}
+
+		out.print("<div class='container'>");
+		out.print("<h3>Parameter Expressions</h3>");
+		out.print("<table class='parameter-expressions'>");
+
+		for (ParameterCause<T, P> parameterCause : parameterCauses) {
+			printParameterCause(out, parameterCause);
+		}
+		out.print("</table>");
+		out.print("</div>");
+
+		out.print("<hr />");
 
 		out.print("<div class='container footer'>");
 		out.printf("<span class='generated'>Automatically generated on %s</span>", new Date());
@@ -280,7 +320,7 @@ public class ChartSetPrinter<T, P extends Parameter> {
 		if (tableMode) {
 			out.print("</td>");
 		}
-		
+
 		if (tableMode) {
 			out.printf("<td class='state-probability' title=%s>%s</td>", state.getProbability(), percentFormat.format(state.getProbability()));
 		} else {
@@ -330,9 +370,8 @@ public class ChartSetPrinter<T, P extends Parameter> {
 	}
 
 	public void printStateReference(PrintStream out, State<T, P> state, State<T, P> observer) {
-		out.printf("<span class='state-ref' data-target='state-%s-%s'>", state.getChart().getInputPosition(),
-				getStateId(state));
-		if (observer != null && !state.getChart().equals(observer.getChart())) {
+		out.printf("<span class='state-ref' data-target='state-%s-%s'>", state.getChart().getInputPosition(), getStateId(state));
+		if (observer == null || !state.getChart().equals(observer.getChart())) {
 			out.printf("S(%s)", state.getChart().getInputPosition());
 		}
 		out.printf("(%s)", getStateId(state) + 1);
@@ -369,5 +408,18 @@ public class ChartSetPrinter<T, P extends Parameter> {
 			out.print("unknown");
 		}
 		out.print(")</span>");
+	}
+
+	public void printParameterCause(PrintStream out, ParameterCause<T, P> parameterCause) {
+		out.print("<tr>");
+		out.printf("<td>(%s)</td>", getParameterCauseId(parameterCause) + 1);
+		out.printf("<td>%s</td>", parameterCause.getClass().getSimpleName());
+		out.print("<td>");
+		printStateReference(out, parameterCause.getFromState(), null);
+		out.print("</td>");
+		out.printf("<td><code>%s</code>(%s)</td>", parameterCause.getSymbol(), parameterCause.getFrom());
+		out.printf("<td>%s</td>", parameterCause.getParameterExpression());
+		out.printf("<td><code>%s</code>(%s)</td>", parameterCause.getSymbol(), parameterCause.getTo());
+		out.print("</tr>");
 	}
 }

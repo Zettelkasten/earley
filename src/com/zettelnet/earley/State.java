@@ -18,6 +18,8 @@ public interface State<T, P extends Parameter> {
 	InputPosition<T> getOriginPosition();
 
 	List<StateCause<T, P>> getCause();
+	
+	List<ParameterCause<T, P>> getParameterCause();
 
 	void addCause(StateCause<T, P> newCause);
 

@@ -63,6 +63,15 @@ public class SimpleState<T, P extends Parameter> implements State<T, P> {
 	public List<StateCause<T, P>> getCause() {
 		return cause;
 	}
+	
+	@Override
+	public List<ParameterCause<T, P>> getParameterCause() {
+		List<ParameterCause<T, P>> parameterCause = new ArrayList<>(cause.size());
+		for (StateCause<T, P> stateCause : cause) {
+			parameterCause.add(ParameterCause.fromStateCause(this, stateCause));
+		}
+		return parameterCause;
+	}
 
 	@Override
 	public void addCause(StateCause<T, P> newCause) {
