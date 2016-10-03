@@ -97,7 +97,7 @@ public class IndividualFormParameterExpression<T> implements ParameterExpression
 	}
 
 	private Collection<FormParameter> call(FormParameter parameter, FormParameter childParameter, NonTerminal<T> parameterSymbol, BiFunction<Object, IndividualPropertyExpression<?>, Set<? extends Property>> toCall) {
-		Map<Object, Set<? extends Property>> newData = new HashMap<>(childParameter.getProperties());
+		Map<Object, Set<? extends Property>> newData = new HashMap<>();
 		for (Map.Entry<Object, IndividualPropertyExpression<?>> entry : handlers.entrySet()) {
 			Object propertyType = entry.getKey();
 			IndividualPropertyExpression<?> expression = entry.getValue();

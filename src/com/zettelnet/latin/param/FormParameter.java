@@ -291,7 +291,11 @@ public final class FormParameter implements Parameter {
 	}
 
 	public <T extends Property> Set<T> getProperty(Object propertyType) {
-		return unsafeCast(data.getOrDefault(propertyType, Collections.emptySet()));
+		if (data.containsKey(propertyType)) {
+			return unsafeCast(data.get(propertyType));
+		} else {
+			return null;
+		}
 	}
 
 	public Map<Object, Set<? extends Property>> getProperties() {
