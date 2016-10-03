@@ -106,6 +106,15 @@ public class SimpleState<T, P extends Parameter> implements State<T, P> {
 	}
 
 	@Override
+	public ParameterExpression<T, P> lastParameterExpression() {
+		if (currentPosition > production.size()) {
+			return null;
+		} else {
+			return production.getParameterExpression(currentPosition - 1);
+		}
+	}
+
+	@Override
 	public P getParameter() {
 		return parameter;
 	}

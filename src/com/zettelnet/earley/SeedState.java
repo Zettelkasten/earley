@@ -77,6 +77,11 @@ public class SeedState<T, P extends Parameter> implements State<T, P> {
 	}
 
 	@Override
+	public ParameterExpression<T, P> lastParameterExpression() {
+		return null;
+	}
+
+	@Override
 	public P getParameter() {
 		return parameter;
 	}

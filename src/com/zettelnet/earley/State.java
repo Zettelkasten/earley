@@ -29,6 +29,8 @@ public interface State<T, P extends Parameter> {
 
 	ParameterExpression<T, P> nextParameterExpression();
 
+	ParameterExpression<T, P> lastParameterExpression();
+
 	P getParameter();
 	
 	double getProbability();
