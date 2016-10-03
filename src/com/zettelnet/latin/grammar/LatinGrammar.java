@@ -320,9 +320,9 @@ public final class LatinGrammar {
 		// NP(pi : Pl) -> NP(casus[pi]) conj NP(casus[pi])
 		prod = grammar.addProduction(
 				NounPhrase, key(Numerus.Plural), 0.1,
-				new ParameterizedSymbol<>(NounPhrase, copy(parameterManager, parameterizer, Casus.TYPE)),
+				new ParameterizedSymbol<>(NounPhrase, copy(parameterManager, Casus.TYPE)),
 				new ParameterizedSymbol<>(Conjunction, any),
-				new ParameterizedSymbol<>(NounPhrase, copy(parameterManager, parameterizer, Casus.TYPE)));
+				new ParameterizedSymbol<>(NounPhrase, copy(parameterManager, Casus.TYPE)));
 		toGerman.addTranslation(prod, parameterManager,
 				vars(new ConcreteTranslationTree<>(GermanSymbol.NounPhrase, germanize, 1,
 						vars(new AbstractTranslationTree<>(new PositionReference<>(0), 1)),
@@ -352,9 +352,9 @@ public final class LatinGrammar {
 		// VP(pi) -> VP(pi) conj VP(pi)
 		prod = grammar.addProduction(
 				VerbPhrase, 0.1,
-				new ParameterizedSymbol<>(VerbPhrase, copy(parameterManager, parameterizer, Casus.TYPE, Numerus.TYPE, Genus.TYPE, Finiteness.TYPE)),
+				new ParameterizedSymbol<>(VerbPhrase, copy(parameterManager, Casus.TYPE, Numerus.TYPE, Genus.TYPE, Finiteness.TYPE)),
 				new ParameterizedSymbol<>(Conjunction, any),
-				new ParameterizedSymbol<>(VerbPhrase, copy(parameterManager, parameterizer, Casus.TYPE, Numerus.TYPE, Genus.TYPE, Finiteness.TYPE)));
+				new ParameterizedSymbol<>(VerbPhrase, copy(parameterManager, Casus.TYPE, Numerus.TYPE, Genus.TYPE, Finiteness.TYPE)));
 		toGerman.addTranslation(prod, parameterManager,
 				vars(new ConcreteTranslationTree<>(GermanSymbol.VerbPhrase, germanize, 1,
 						vars(new AbstractTranslationTree<>(new PositionReference<>(0), 1)),
