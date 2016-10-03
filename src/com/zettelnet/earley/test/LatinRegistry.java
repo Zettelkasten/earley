@@ -204,15 +204,23 @@ public final class LatinRegistry {
 		// TODO: German translations
 
 		// T1
-		register(new SimpleNoun("Domitilla", "Domitill", Declension.First, Genus.Feminine), null);
-		register(new SimpleNoun("L_ucius", "L_uci", Declension.Second, Genus.Masculine), null);
-		register(new SimpleNoun("Tertia", "Terti", Declension.First, Genus.Feminine), null);
-		register(new SimpleNoun("Publius", "Publi", Declension.Second, Genus.Masculine), null);
-		register(new SimpleNoun("Polybius", "Polybi", Declension.Second, Genus.Masculine), null);
+		register(new SimpleNoun("Domitilla", "Domitill", Declension.First, Genus.Feminine),
+				new SimpleGermanNoun("Domitilla", "Domitilla", null, GermanDeclension.Strong, GermanGenus.Feminine));
+		register(new SimpleNoun("L_ucius", "L_uci", Declension.Second, Genus.Masculine),
+				new SimpleGermanNoun("Lucius", "Lucius", null, GermanDeclension.Strong, GermanGenus.Masculine));
+		register(new SimpleNoun("Tertia", "Terti", Declension.First, Genus.Feminine),
+				new SimpleGermanNoun("Tertia", "Tertia", null, GermanDeclension.Strong, GermanGenus.Feminine));
+		register(new SimpleNoun("Publius", "Publi", Declension.Second, Genus.Masculine),
+				new SimpleGermanNoun("Publius", "Publius", null, GermanDeclension.Strong, GermanGenus.Masculine));
+		register(new SimpleNoun("Polybius", "Polybi", Declension.Second, Genus.Masculine),
+				new SimpleGermanNoun("Polybius", "Polybius", null, GermanDeclension.Strong, GermanGenus.Masculine));
 		// T2
-		register(new SimpleNoun("Pomp_onius", "Pomp_oni", Declension.Second, Genus.Masculine), null);
-		register(new SimpleNoun("M_arcellus", "M_arcell", Declension.Second, Genus.Masculine), null);
-		register(new SimpleNoun("Sel_enus", "Sel_en", Declension.Second, Genus.Masculine), null);
+		register(new SimpleNoun("Pomp_onius", "Pomp_oni", Declension.Second, Genus.Masculine),
+				new SimpleGermanNoun("Pomponius", "Pomponius", null, GermanDeclension.Strong, GermanGenus.Masculine));
+		register(new SimpleNoun("M_arcellus", "M_arcell", Declension.Second, Genus.Masculine),
+				new SimpleGermanNoun("Marcellus", "Marcellus", null, GermanDeclension.Strong, GermanGenus.Masculine));
+		register(new SimpleNoun("Sel_enus", "Sel_en", Declension.Second, Genus.Masculine),
+				new SimpleGermanNoun("Selenus", "Selenus", null, GermanDeclension.Strong, GermanGenus.Masculine));
 	}
 
 	// additionals
