@@ -31,13 +31,9 @@ public abstract class ParameterCause<T, P extends Parameter> {
 		return to.getParameter();
 	}
 
-	public Symbol<T> getSymbol() {
-		return from.next();
-	}
+	public abstract Symbol<T> getSymbol();
 
-	public ParameterExpression<T, P> getParameterExpression() {
-		return from.nextParameterExpression();
-	}
+	public abstract ParameterExpression<T, P> getParameterExpression();
 
 	public static <T, P extends Parameter> ParameterCause<T, P> fromStateCause(State<T, P> state, StateCause<T, P> stateCause) {
 		if (stateCause instanceof StateCause.Predict) {
@@ -61,7 +57,12 @@ public abstract class ParameterCause<T, P extends Parameter> {
 
 		@Override
 		public NonTerminal<T> getSymbol() {
-			return (NonTerminal<T>) super.getSymbol();
+			return (NonTerminal<T>) getFromState().next();
+		}
+
+		@Override
+		public ParameterExpression<T, P> getParameterExpression() {
+			return getFromState().nextParameterExpression();
 		}
 	}
 
@@ -73,7 +74,12 @@ public abstract class ParameterCause<T, P extends Parameter> {
 
 		@Override
 		public Terminal<T> getSymbol() {
-			return (Terminal<T>) super.getSymbol();
+			return (Terminal<T>) getFromState().next();
+		}
+
+		@Override
+		public ParameterExpression<T, P> getParameterExpression() {
+			return getFromState().nextParameterExpression();
 		}
 	}
 
@@ -85,7 +91,12 @@ public abstract class ParameterCause<T, P extends Parameter> {
 
 		@Override
 		public NonTerminal<T> getSymbol() {
-			return (NonTerminal<T>) super.getSymbol();
+			return (NonTerminal<T>) getToState().last();
+		}
+
+		@Override
+		public ParameterExpression<T, P> getParameterExpression() {
+			return getToState().lastParameterExpression();
 		}
 	}
 
@@ -93,6 +104,16 @@ public abstract class ParameterCause<T, P extends Parameter> {
 
 		public Epsilon(final State<T, P> from, final State<T, P> to) {
 			super(from, to);
+		}
+
+		@Override
+		public NonTerminal<T> getSymbol() {
+			return (NonTerminal<T>) getFromState().next();
+		}
+
+		@Override
+		public ParameterExpression<T, P> getParameterExpression() {
+			return getFromState().nextParameterExpression();
 		}
 	}
 }
