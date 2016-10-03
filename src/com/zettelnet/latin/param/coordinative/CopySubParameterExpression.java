@@ -31,11 +31,6 @@ public class CopySubParameterExpression implements SubParameterExpression {
 	}
 
 	@Override
-	public Map<Object, Set<? extends Property>> scan(FormParameter parameter, FormParameter childParameter) {
-		return handle(parameter, childParameter);
-	}
-
-	@Override
 	public Map<Object, Set<? extends Property>> complete(FormParameter parameter, FormParameter childParameter) {
 		return handle(parameter, childParameter);
 	}

@@ -10,7 +10,5 @@ public interface SubParameterExpression {
 
 	Map<Object, Set<? extends Property>> predict(FormParameter parameter, FormParameter childParameter);
 
-	Map<Object, Set<? extends Property>> scan(FormParameter parameter, FormParameter childParameter);
-
 	Map<Object, Set<? extends Property>> complete(FormParameter parameter, FormParameter childParameter);
 }

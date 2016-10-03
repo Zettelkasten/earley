@@ -47,7 +47,7 @@ public class CoordinativeFormParameterExpression<T> implements ParameterExpressi
 	}
 
 	@SuppressWarnings("unchecked")
-	private Collection<FormParameter> call(FormParameter parameter, FormParameter childParameter, NonTerminal<T> parameterSymbol, Function<SubParameterExpression, Map<Object, Set<? extends Property>>> toCall) {
+	private Collection<FormParameter> call(FormParameter parameter, NonTerminal<T> parameterSymbol, Function<SubParameterExpression, Map<Object, Set<? extends Property>>> toCall) {
 		Map<Object, Set<? extends Property>> data = new HashMap<>();
 
 		for (SubParameterExpression subExpression : handlers) {
@@ -66,14 +66,14 @@ public class CoordinativeFormParameterExpression<T> implements ParameterExpressi
 
 	@Override
 	public Collection<FormParameter> predict(FormParameter parameter, FormParameter childParameter, NonTerminal<T> childSymbol) {
-		return call(parameter, childParameter, childSymbol, (SubParameterExpression subExpression) -> {
+		return call(childParameter, childSymbol, (SubParameterExpression subExpression) -> {
 			return subExpression.predict(parameter, childParameter);
 		});
 	}
 
 	@Override
 	public Collection<FormParameter> complete(FormParameter parameter, NonTerminal<T> parentSymbol, FormParameter childParameter) {
-		return call(parameter, childParameter, parentSymbol, (SubParameterExpression subExpression) -> {
+		return call(parameter, parentSymbol, (SubParameterExpression subExpression) -> {
 			return subExpression.predict(parameter, childParameter);
 		});
 	}

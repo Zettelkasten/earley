@@ -1,5 +1,6 @@
 package com.zettelnet.latin.param.coordinative;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -15,7 +16,9 @@ public class SubjunctionMoodPropertyExpression implements SubParameterExpression
 	private Map<Object, Set<? extends Property>> handle(FormParameter parameter, FormParameter childParameter) {
 		Set<Property> moods = new HashSet<>();
 
-		assert parameter.getProperty(SubjunctionType.TYPE) != null : "Expression requires property type SubjunctionType";
+		if (parameter.getProperty(SubjunctionType.TYPE) == null) {
+			return Collections.emptyMap();
+		}
 
 		for (Property property : parameter.getProperty(SubjunctionType.TYPE)) {
 			SubjunctionType moodProperty = (SubjunctionType) property;
@@ -29,11 +32,6 @@ public class SubjunctionMoodPropertyExpression implements SubParameterExpression
 
 	@Override
 	public Map<Object, Set<? extends Property>> predict(FormParameter parameter, FormParameter childParameter) {
-		return handle(parameter, childParameter);
-	}
-
-	@Override
-	public Map<Object, Set<? extends Property>> scan(FormParameter parameter, FormParameter childParameter) {
 		return handle(parameter, childParameter);
 	}
 
