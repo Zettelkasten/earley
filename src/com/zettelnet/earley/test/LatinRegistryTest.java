@@ -48,7 +48,7 @@ public class LatinRegistryTest {
 		Grammar<Token, FormParameter> grammar = LatinGrammar.makeGrammar();
 		Tokenizer<Token> tokenizer = new WhitespaceTokenizer<>(LatinRegistry.INSTANCE);
 
-		String input = "servus et dominus rident";
+		String input = "Tertia et Publius et Domitilla et Pomponius et Polybius saeviunt";
 
 		out.printf("(S) Processing \"%s\" %n", input);
 
@@ -61,11 +61,11 @@ public class LatinRegistryTest {
 
 		GrammarParser<Token, FormParameter> parser = new EarleyParser<>(grammar, new DynamicInputPositionInitializer<>());
 		ParseResult<Token, FormParameter> result = parser.parse(tokens);
+		
+		new ChartSetPrinter<>(result.getCharts(), tokens).print(new PrintStream("parse.html"));
 
 		out.println("(2) Parsed:");
 		out.println(result.getSyntaxTree());
-
-		new ChartSetPrinter<>(result.getCharts(), tokens).print(new PrintStream("parse.html"));
 
 		out.println("(X) Best parse match:");
 		out.println(SyntaxTrees.getTreeView(result.getSyntaxTree(), TreeViews.bestProbability(), SyntaxTrees.INDENTED));
