@@ -411,15 +411,48 @@ public class ChartSetPrinter<T, P extends Parameter> {
 	}
 
 	public void printParameterCause(PrintStream out, ParameterCause<T, P> parameterCause) {
-		out.print("<tr>");
-		out.printf("<td>(%s)</td>", getParameterCauseId(parameterCause) + 1);
-		out.printf("<td>%s</td>", parameterCause.getClass().getSimpleName());
+		String parameterCauseClass = "parameter-cause parameter-cause-" + (aliveParameterCauses.contains(parameterCause) ? "alive" : "dead");
+
+		out.printf("<tr class='%s' id='param-%s'>", parameterCauseClass, getParameterCauseId(parameterCause));
+		out.printf("<td class='parameter-cause-id'>(%s)</td>", getParameterCauseId(parameterCause) + 1);
+		out.printf("<td class='parameter-cause-type'>%s</td>", parameterCause.getClass().getSimpleName());
 		out.print("<td>");
 		printStateReference(out, parameterCause.getFromState(), null);
 		out.print("</td>");
-		out.printf("<td><code>%s</code>(%s)</td>", parameterCause.getSymbol(), parameterCause.getFrom());
-		out.printf("<td>%s</td>", parameterCause.getParameterExpression());
-		out.printf("<td><code>%s</code>(%s)</td>", parameterCause.getSymbol(), parameterCause.getTo());
+		if (parameterCause instanceof ParameterCause.Predict) {
+			ParameterCause.Predict<T, P> predict = (ParameterCause.Predict<T, P>) parameterCause;
+			if (parameterCause.getFromState().getProduction() != null) {
+				out.printf("<td title='%s'><code>%s</code>(&pi; : %s) &rarr; '<code>%s</code>(<strong>%s</strong>)'</td>", predict.getFromState(), parameterCause.getFromState().getProduction().key(), parameterCause.getFrom(), predict.getSymbol(), parameterCause.getParameterExpression());
+			} else {
+				out.printf("<td>concrete &pi; : %s in expression <strong>%s</strong></td>", parameterCause.getFrom(), parameterCause.getParameterExpression());
+			}
+			out.print("<td>with</td>");
+			out.printf("<td title='%s'><code>%s</code>(&pi; : %s) &rarr; [..]</td>", predict.getProduction(), predict.getProduction().key(), predict.getProduction().keyParameter());
+		} else if (parameterCause instanceof ParameterCause.Scan) {
+			ParameterCause.Scan<T, P> scan = (ParameterCause.Scan<T, P>) parameterCause;
+			out.printf("<td title='%s'><code>%s</code>(&pi; : %s) &rarr; '<code>%s</code>(<strong>%s</strong>)'</td>", scan.getFromState(), parameterCause.getFromState().getProduction().key(), parameterCause.getFrom(), scan.getSymbol(), parameterCause.getParameterExpression());
+			out.print("<td>with</td>");
+			out.printf("<td>%s, <code>%s</code>(%s)</td>", scan.getToken(), scan.getSymbol(), scan.getTokenParameter());
+		} else if (parameterCause instanceof ParameterCause.Complete) {
+			ParameterCause.Complete<T, P> complete = (ParameterCause.Complete<T, P>) parameterCause;
+			out.printf("<td title='%s'><code>%s</code>(&pi; : %s) &rarr; [..]</td>", complete.getFromState().getProduction(), complete.getFromState().getProduction().key(), complete.getFrom());
+			out.print("<td>with</td>");
+			out.printf("<td title='%s'><code>%s</code>(&pi; : %s) &rarr; '<code>%s</code>(<strong>%s</strong>)'</td>", complete.getToState(), parameterCause.getToState().getProduction().key(), complete.getPreParameter(), complete.getSymbol(), parameterCause.getParameterExpression());
+		} else if (parameterCause instanceof ParameterCause.Epsilon) {
+			ParameterCause.Epsilon<T, P> epsilon = (ParameterCause.Epsilon<T, P>) parameterCause;
+			if (parameterCause.getFromState().getProduction() != null) {
+				out.printf("<td title='%s'><code>%s</code>(&pi; : %s) &rarr; '<code>%s</code>(<strong>%s</strong>)'</td>", epsilon.getFromState(), parameterCause.getFromState().getProduction().key(), parameterCause.getFrom(), epsilon.getSymbol(), parameterCause.getParameterExpression());
+			} else {
+				out.printf("<td>concrete &pi; : %s in expression <strong>%s</strong></td>", parameterCause.getFrom(), parameterCause.getParameterExpression());
+			}
+			out.print("<td>with</td>");
+			out.printf("<td title='%s'><code>%s</code>(&pi; : %s) &rarr; &epsilon;</td>", epsilon.getProduction(), epsilon.getProduction().key(), epsilon.getProduction().keyParameter());
+		}
+		out.printf("<td>to</td>");
+		out.print("<td>");
+		printStateReference(out, parameterCause.getToState(), null);
+		out.print("</td>");
+		out.printf("<td><code>%s</code>(%s)</td>", parameterCause.getToState().getProduction().key(), parameterCause.getTo());
 		out.print("</tr>");
 	}
 }

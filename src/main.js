@@ -10,9 +10,12 @@ $(function() {
 		var target = $('#' + me.data('target'));
 		target.removeClass('highlight');
 	});
+	$('.state-ref').dblclick(function() {
+		var me = $(this);
+		window.location.hash = '#' + me.data('target');
+	});
 	$('#include-dead-states').change(function() {
 		var show = $(this).prop('checked');
-
 
 		if (show) {
 			$('.chart-dead').show();
@@ -23,6 +26,11 @@ $(function() {
 			$('.state-dead').show();
 		} else {
 			$('.state-dead').hide();
+		}
+		if (show) {
+			$('.parameter-cause-dead').show();
+		} else {
+			$('.parameter-cause-dead').hide();
 		}
 	});
 });

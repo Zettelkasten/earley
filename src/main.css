@@ -55,8 +55,16 @@
 	margin-right: auto;
 }
 .parameter-expressions td {
-	padding-left: 2px;
-	padding-right: 2px;
+	padding: 2px 4px;
+}
+.parameter-cause {
+	white-space: nowrap;
+}
+.parameter-cause-id, .parameter-cause-type {
+	text-align: right;
+}
+.parameter-cause .state-ref {
+	color: gray;
 }
 
 /* Translating */

@@ -39,9 +39,10 @@ public abstract class ParameterCause<T, P extends Parameter> {
 		if (stateCause instanceof StateCause.Predict) {
 			return new Predict<>(((StateCause.Predict<T, P>) stateCause).getParentState(), state);
 		} else if (stateCause instanceof StateCause.Scan) {
-			return new Scan<>(((StateCause.Scan<T, P>) stateCause).getPreState(), state);
+			StateCause.Scan<T, P> scan = (StateCause.Scan<T, P>) stateCause;
+			return new Scan<>(((StateCause.Scan<T, P>) stateCause).getPreState(), state, scan.getToken(), scan.getTokenParameter());
 		} else if (stateCause instanceof StateCause.Complete) {
-			return new Complete<>(((StateCause.Complete<T, P>) stateCause).getChildState(), state);
+			return new Complete<>(((StateCause.Complete<T, P>) stateCause).getChildState(), state, stateCause.getPreState().getParameter());
 		} else if (stateCause instanceof StateCause.Epsilon) {
 			return new Epsilon<>(((StateCause.Epsilon<T, P>) stateCause).getPreState(), state);
 		} else {
@@ -64,12 +65,21 @@ public abstract class ParameterCause<T, P extends Parameter> {
 		public ParameterExpression<T, P> getParameterExpression() {
 			return getFromState().nextParameterExpression();
 		}
+		
+		public Production<T, P> getProduction() {
+			return getToState().getProduction();
+		}
 	}
 
 	public static class Scan<T, P extends Parameter> extends ParameterCause<T, P> {
 
-		public Scan(final State<T, P> from, final State<T, P> to) {
+		private final T token;
+		private final P tokenParameter;
+		
+		public Scan(final State<T, P> from, final State<T, P> to, final T token, final P tokenParameter) {
 			super(from, to);
+			this.token = token;
+			this.tokenParameter = tokenParameter;
 		}
 
 		@Override
@@ -81,12 +91,23 @@ public abstract class ParameterCause<T, P extends Parameter> {
 		public ParameterExpression<T, P> getParameterExpression() {
 			return getFromState().nextParameterExpression();
 		}
+		
+		public T getToken() {
+			return token;
+		}
+		
+		public P getTokenParameter() {
+			return tokenParameter;
+		}
 	}
 
 	public static class Complete<T, P extends Parameter> extends ParameterCause<T, P> {
 
-		public Complete(final State<T, P> from, final State<T, P> to) {
+		private final P preParameter;
+		
+		public Complete(final State<T, P> from, final State<T, P> to, final P preParameter) {
 			super(from, to);
+			this.preParameter = preParameter;
 		}
 
 		@Override
@@ -97,6 +118,10 @@ public abstract class ParameterCause<T, P extends Parameter> {
 		@Override
 		public ParameterExpression<T, P> getParameterExpression() {
 			return getToState().lastParameterExpression();
+		}
+		
+		public P getPreParameter() {
+			return preParameter;
 		}
 	}
 
@@ -114,6 +139,10 @@ public abstract class ParameterCause<T, P extends Parameter> {
 		@Override
 		public ParameterExpression<T, P> getParameterExpression() {
 			return getFromState().nextParameterExpression();
+		}
+
+		public Production<T, P> getProduction() {
+			return getToState().getProduction();
 		}
 	}
 }
