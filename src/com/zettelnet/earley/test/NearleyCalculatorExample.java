@@ -11,6 +11,7 @@ import com.zettelnet.earley.ParseResult;
 import com.zettelnet.earley.SimpleGrammar;
 import com.zettelnet.earley.param.DefaultParameter;
 import com.zettelnet.earley.param.DefaultParameterManager;
+import com.zettelnet.earley.param.DefaultTokenParameterizer;
 import com.zettelnet.earley.print.ChartSetPrinter;
 import com.zettelnet.earley.symbol.MatchTerminal;
 import com.zettelnet.earley.symbol.NonTerminal;
@@ -48,7 +49,7 @@ public class NearleyCalculatorExample {
 			return Character.isDigit(c);
 		});
 
-		SimpleGrammar<Character, DefaultParameter> grammar = new SimpleGrammar<>(main, new DefaultParameterManager<>());
+		SimpleGrammar<Character, DefaultParameter> grammar = new SimpleGrammar<>(main, new DefaultParameterManager<>(), new DefaultTokenParameterizer<>());
 
 		grammar.addProduction(main, 1,
 				whitespace, addition, whitespace);

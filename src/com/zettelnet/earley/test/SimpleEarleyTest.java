@@ -10,6 +10,7 @@ import com.zettelnet.earley.ParseResult;
 import com.zettelnet.earley.SimpleGrammar;
 import com.zettelnet.earley.param.DefaultParameter;
 import com.zettelnet.earley.param.DefaultParameterManager;
+import com.zettelnet.earley.param.DefaultTokenParameterizer;
 import com.zettelnet.earley.print.ChartSetPrinter;
 import com.zettelnet.earley.symbol.NonTerminal;
 import com.zettelnet.earley.symbol.PredicateTerminal;
@@ -34,7 +35,7 @@ public class SimpleEarleyTest {
 		NonTerminal<String> term = new SimpleNonTerminal<>("T");
 		NonTerminal<String> sum = new SimpleNonTerminal<>("S");
 
-		SimpleGrammar<String, DefaultParameter> grammar = new SimpleGrammar<>(term, new DefaultParameterManager<>());
+		SimpleGrammar<String, DefaultParameter> grammar = new SimpleGrammar<>(term, new DefaultParameterManager<>(), new DefaultTokenParameterizer<>());
 
 		grammar.addProduction(term, 1, sum);
 		grammar.addProduction(sum, 1, term, operator, term);

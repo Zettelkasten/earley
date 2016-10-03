@@ -11,6 +11,7 @@ import com.zettelnet.earley.param.Parameter;
 import com.zettelnet.earley.param.ParameterExpression;
 import com.zettelnet.earley.param.ParameterFactory;
 import com.zettelnet.earley.param.ParameterManager;
+import com.zettelnet.earley.param.TokenParameterizer;
 import com.zettelnet.earley.symbol.NonTerminal;
 import com.zettelnet.earley.symbol.Symbol;
 import com.zettelnet.earley.symbol.Terminal;
@@ -26,20 +27,22 @@ public class SimpleGrammar<T, P extends Parameter> implements Grammar<T, P> {
 	private ParameterFactory<T, P> startSymbolParameter;
 
 	private final ParameterManager<T, P> parameterManager;
-
-	public SimpleGrammar(final NonTerminal<T> startSymbol, final ParameterManager<T, P> parameterManager) {
-		this(startSymbol, parameterManager, parameterManager);
+	private final TokenParameterizer<T, P> tokenParameterizer;
+	
+	public SimpleGrammar(final NonTerminal<T> startSymbol, final ParameterManager<T, P> parameterManager, final TokenParameterizer<T, P> parameterizer) {
+		this(startSymbol, parameterManager, parameterManager, parameterizer);
 	}
 
-	public SimpleGrammar(final NonTerminal<T> startSymbol, final ParameterFactory<T, P> startSymbolParameter, final ParameterManager<T, P> parameterManager) {
-		this(startSymbol, startSymbolParameter, parameterManager, new HashSet<>());
+	public SimpleGrammar(final NonTerminal<T> startSymbol, final ParameterFactory<T, P> startSymbolParameter, final ParameterManager<T, P> parameterManager, final TokenParameterizer<T, P> parameterizer) {
+		this(startSymbol, startSymbolParameter, parameterManager, parameterizer, new HashSet<>());
 	}
 
-	public SimpleGrammar(final NonTerminal<T> startSymbol, final ParameterFactory<T, P> startSymbolParameter, final ParameterManager<T, P> parameterManager, final Set<Production<T, P>> productions) {
+	public SimpleGrammar(final NonTerminal<T> startSymbol, final ParameterFactory<T, P> startSymbolParameter, final ParameterManager<T, P> parameterManager, final TokenParameterizer<T, P> parameterizer, final Set<Production<T, P>> productions) {
 		this.startSymbol = startSymbol;
 		this.startSymbolParameter = startSymbolParameter;
 
 		this.parameterManager = parameterManager;
+		this.tokenParameterizer = parameterizer;
 
 		this.productions = new HashSet<>();
 		this.nonTerminals = new HashMap<>();
@@ -143,9 +146,14 @@ public class SimpleGrammar<T, P extends Parameter> implements Grammar<T, P> {
 	public ParameterManager<T, P> getParameterManager() {
 		return parameterManager;
 	}
+	
+	@Override
+	public TokenParameterizer<T, P> getParameterizer() {
+		return tokenParameterizer;
+	}
 
 	@Override
 	public ParameterExpression<T, P> getStartSymbolParameterExpression() {
-		return new CopyParameterExpression<T, P>(this, null);
+		return new CopyParameterExpression<>(this);
 	}
 }

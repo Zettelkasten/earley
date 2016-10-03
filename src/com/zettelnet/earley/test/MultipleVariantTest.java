@@ -10,6 +10,7 @@ import com.zettelnet.earley.EarleyParser;
 import com.zettelnet.earley.SimpleGrammar;
 import com.zettelnet.earley.param.DefaultParameter;
 import com.zettelnet.earley.param.DefaultParameterManager;
+import com.zettelnet.earley.param.DefaultTokenParameterizer;
 import com.zettelnet.earley.print.ChartSetPrinter;
 import com.zettelnet.earley.symbol.NonTerminal;
 import com.zettelnet.earley.symbol.PredicateTerminal;
@@ -42,7 +43,7 @@ public class MultipleVariantTest {
 
 		// 2. Initialize Grammar
 
-		SimpleGrammar<String, DefaultParameter> grammar = new SimpleGrammar<>(start, new DefaultParameterManager<>());
+		SimpleGrammar<String, DefaultParameter> grammar = new SimpleGrammar<>(start, new DefaultParameterManager<>(), new DefaultTokenParameterizer<>());
 
 		// 3. Add Productions
 

@@ -5,7 +5,6 @@ import java.util.Collection;
 import com.zettelnet.earley.Production;
 import com.zettelnet.earley.State;
 import com.zettelnet.earley.symbol.NonTerminal;
-import com.zettelnet.earley.symbol.Terminal;
 
 /**
  * Represents a set of functions that handles how {@link Parameter}s behave when
@@ -44,8 +43,6 @@ public interface ParameterExpression<T, P extends Parameter> {
 	 * @return A set of possible parameters <code>&pi;<sub>*</sub></code>
 	 */
 	Collection<P> predict(P parentParameter, P childParameter, NonTerminal<T> childSymbol);
-
-	Collection<P> scan(P parentParameter, NonTerminal<T> parentSymbol, T token, Terminal<T> terminal);
 
 	Collection<P> complete(P parentParameter, NonTerminal<T> parentSymbol, P childParameter);
 }

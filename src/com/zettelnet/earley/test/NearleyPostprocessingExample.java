@@ -14,6 +14,7 @@ import com.zettelnet.earley.Production;
 import com.zettelnet.earley.SimpleGrammar;
 import com.zettelnet.earley.param.DefaultParameter;
 import com.zettelnet.earley.param.DefaultParameterManager;
+import com.zettelnet.earley.param.DefaultTokenParameterizer;
 import com.zettelnet.earley.print.ChartSetPrinter;
 import com.zettelnet.earley.process.ProcessableProduction;
 import com.zettelnet.earley.process.ProcessingManager;
@@ -54,7 +55,7 @@ public class NearleyPostprocessingExample {
 			return Character.isDigit(c);
 		});
 
-		SimpleGrammar<Character, DefaultParameter> grammar = new SimpleGrammar<>(main, new DefaultParameterManager<>());
+		SimpleGrammar<Character, DefaultParameter> grammar = new SimpleGrammar<>(main, new DefaultParameterManager<>(), new DefaultTokenParameterizer<>());
 
 		Collection<ProcessableProduction<Character, DefaultParameter, Double>> productions = new HashSet<>();
 

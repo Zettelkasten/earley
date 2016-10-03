@@ -12,6 +12,7 @@ import com.zettelnet.earley.SimpleGrammar;
 import com.zettelnet.earley.input.LinearInputPositionInitializer;
 import com.zettelnet.earley.param.DefaultParameter;
 import com.zettelnet.earley.param.DefaultParameterManager;
+import com.zettelnet.earley.param.DefaultTokenParameterizer;
 import com.zettelnet.earley.param.ParameterManager;
 import com.zettelnet.earley.print.ChartSetPrinter;
 import com.zettelnet.earley.symbol.AnyTokenTerminal;
@@ -28,7 +29,7 @@ public class RecursiveExample {
 
 		ParameterManager<String, DefaultParameter> parameterManager = new DefaultParameterManager<>();
 
-		SimpleGrammar<String, DefaultParameter> grammar = new SimpleGrammar<>(delta, parameterManager);
+		SimpleGrammar<String, DefaultParameter> grammar = new SimpleGrammar<>(delta, parameterManager, new DefaultTokenParameterizer<>());
 
 		grammar.addProduction(
 				delta, 1);

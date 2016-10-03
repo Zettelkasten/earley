@@ -104,7 +104,7 @@ public final class EarleyParseResult<T, P extends Parameter> implements ParseRes
 		Set<Production<T, P>> productions = grammar.getProductions(nonTerminal);
 		for (Production<T, P> production : productions) {
 			double probability = state.getProbability() * production.getProbability();
-			
+
 			// get new parameter; for seed (state = null) this is the start
 			// parameter
 			Collection<P> newParameters = parameterExpression.predict(sourceParameter, production.keyParameter(), nonTerminal);
@@ -130,7 +130,7 @@ public final class EarleyParseResult<T, P extends Parameter> implements ParseRes
 
 		// TODO Add Token probability
 		double probability = state.getProbability();
-		
+
 		for (Map.Entry<InputPosition<T>, T> entry : chartPosition.getAvailableTokens().entrySet()) {
 			Chart<T, P> nextChart = charts.get(entry.getKey());
 			T toResolve = entry.getValue();
@@ -139,11 +139,13 @@ public final class EarleyParseResult<T, P extends Parameter> implements ParseRes
 				ParameterExpression<T, P> parameterExpression = state.nextParameterExpression();
 				P parameter = state.getParameter();
 
-				for (P newParameter : parameterExpression.scan(parameter, parentSymbol, toResolve, terminal)) {
-					StateCause<T, P> origin = new StateCause.Scan<>(state, toResolve, newParameter);
+				for (P tokenParameter : grammar.getParameterizer().getTokenParameters(toResolve, terminal)) {
+					for (P newParameter : parameterExpression.complete(parameter, parentSymbol, tokenParameter)) {
+						StateCause<T, P> origin = new StateCause.Scan<>(state, toResolve, tokenParameter);
 
-					State<T, P> newState = new SimpleState<>(nextChart, state.getProduction(), state.getCurrentPosition() + 1, state.getOriginPosition(), newParameter, probability);
-					nextChart.add(newState, origin);
+						State<T, P> newState = new SimpleState<>(nextChart, state.getProduction(), state.getCurrentPosition() + 1, state.getOriginPosition(), newParameter, probability);
+						nextChart.add(newState, origin);
+					}
 				}
 			}
 		}

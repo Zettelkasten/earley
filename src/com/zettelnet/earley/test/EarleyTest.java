@@ -12,6 +12,7 @@ import com.zettelnet.earley.SimpleGrammar;
 import com.zettelnet.earley.input.LinearInputPositionInitializer;
 import com.zettelnet.earley.param.DefaultParameter;
 import com.zettelnet.earley.param.DefaultParameterManager;
+import com.zettelnet.earley.param.DefaultTokenParameterizer;
 import com.zettelnet.earley.symbol.NonTerminal;
 import com.zettelnet.earley.symbol.PredicateTerminal;
 import com.zettelnet.earley.symbol.SimpleNonTerminal;
@@ -59,7 +60,7 @@ public class EarleyTest {
 		NonTerminal<String> start = new SimpleNonTerminal<>("S");
 		NonTerminal<String> term = new SimpleNonTerminal<>("T");
 
-		SimpleGrammar<String, DefaultParameter> grammar = new SimpleGrammar<>(start, new DefaultParameterManager<>());
+		SimpleGrammar<String, DefaultParameter> grammar = new SimpleGrammar<>(start, new DefaultParameterManager<>(), new DefaultTokenParameterizer<>());
 
 		grammar.addProduction(new Production<>(grammar, start, 1, term));
 		grammar.addProduction(new Production<>(grammar, start, 1, term, equals, term));

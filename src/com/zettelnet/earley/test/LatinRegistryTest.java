@@ -48,7 +48,7 @@ public class LatinRegistryTest {
 		Grammar<Token, FormParameter> grammar = LatinGrammar.makeGrammar();
 		Tokenizer<Token> tokenizer = new WhitespaceTokenizer<>(LatinRegistry.INSTANCE);
 
-		String input = "servus cantat carmen pulchrum";
+		String input = "servus et dominus rident";
 
 		out.printf("(S) Processing \"%s\" %n", input);
 
@@ -79,7 +79,7 @@ public class LatinRegistryTest {
 				Set<Meaning> meanings = parameter.getProperty(Meaning.TYPE);
 				GermanForm form = GermanForm.fromParameter(parameter);
 
-				if (meanings.isEmpty() || form == null) {
+				if (meanings == null || meanings.isEmpty() || form == null) {
 					if (terminal.toString().equals("Article")) {
 						try {
 							return Arrays.asList(new GermanToken(SimpleGermanArticle.DEFINITE_ARTICLE.getForm(GermanForm.fromParameter(parameter)).iterator().next(), new GermanDetermination(null, parameter.toForm())));

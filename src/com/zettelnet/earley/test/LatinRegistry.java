@@ -74,7 +74,8 @@ public final class LatinRegistry {
 				new SimpleGermanVerb("singen", GermanConjugationStem.makeCollectionMap("sing", "sang", "gesungen", "sing", "säng", "sing"), GermanConjugation.Strong, GermanParticipleAuxiliary.ToHave));
 		register(new SimpleVerb("r_id", "r_is", "r_is", Conjugation.Second, Valency.Single),
 				new SimpleGermanVerb("lachen", "lach", "lacht", "gelacht", GermanConjugation.Weak, GermanParticipleAuxiliary.ToHave));
-		register(new SimpleConjunction("et"), null); // TODO
+		register(new SimpleConjunction("et"),
+				new SimpleGermanConjunction("und"));
 		register(new SimpleVerb("cl_am", "cl_am_av", "cl_am_at", Conjugation.First, Valency.Single),
 				new SimpleGermanVerb("rufen", "ruf", "rief", "gerufen", GermanConjugation.Strong, GermanParticipleAuxiliary.ToHave));
 		register(new SimpleVerb("tac", "tacu", "tacit", Conjugation.Second, Valency.Single),
@@ -88,7 +89,7 @@ public final class LatinRegistry {
 		register(new SimpleConjunction("atque"),
 				new SimpleGermanConjunction("und"));
 		register(new SimpleConjunction("ac"),
-				new SimpleGermanConjunction("und")); 
+				new SimpleGermanConjunction("und"));
 		register(new SimpleAdverb("n_on"),
 				new SimpleGermanAdverb("nicht"));
 		register(new SimpleAdverb("iam"),
@@ -233,36 +234,44 @@ public final class LatinRegistry {
 	static {
 		register(new SimpleSubjunction("an", SubjunctionType.Question),
 				new SimpleGermanSubjunction("ob"));
-		 register(new SimpleSubjunction("antequam", SubjunctionType.Indicative),
-					new SimpleGermanSubjunction("bevor"));
-		 register(new SimpleSubjunction("antequam", SubjunctionType.Subjunctive),
-					new SimpleGermanSubjunction("bevor"));
-		 register(new SimpleSubjunction("atque", SubjunctionType.Indicative),
-					new SimpleGermanSubjunction("wie"));
-		 register(new SimpleSubjunction("ac", SubjunctionType.Indicative),
-					new SimpleGermanSubjunction("wie"));
+		register(new SimpleSubjunction("antequam", SubjunctionType.Indicative),
+				new SimpleGermanSubjunction("bevor"));
+		register(new SimpleSubjunction("antequam", SubjunctionType.Subjunctive),
+				new SimpleGermanSubjunction("bevor"));
+		register(new SimpleSubjunction("atque", SubjunctionType.Indicative),
+				new SimpleGermanSubjunction("wie"));
+		register(new SimpleSubjunction("ac", SubjunctionType.Indicative),
+				new SimpleGermanSubjunction("wie"));
 		register(new SimpleSubjunction("cum", SubjunctionType.Indicative),
 				new SimpleGermanSubjunction("als"));
-		 register(new SimpleSubjunction("cum", SubjunctionType.Subjunctive),
-					new SimpleGermanSubjunction("weil"));
-		 register(new SimpleSubjunction("cur", SubjunctionType.Question),
-					new SimpleGermanSubjunction("warum"));
-		 register(new SimpleSubjunction("donec", SubjunctionType.Indicative), null); // TODO: "bis dann"
-		 register(new SimpleSubjunction("dum", SubjunctionType.Indicative),
-					new SimpleGermanSubjunction("solange"));
-		 register(new SimpleSubjunction("dum", SubjunctionType.Subjunctive),
-					new SimpleGermanSubjunction("solange"));
-		 register(new SimpleSubjunction("etiamsi", SubjunctionType.Indicative),
-					new SimpleGermanSubjunction("obwohl"));
-		 register(new SimpleSubjunction("etiamsi", SubjunctionType.Subjunctive),
-					new SimpleGermanSubjunction("obwohl"));
-		 register(new SimpleSubjunction("etsi", SubjunctionType.Indicative),
-					new SimpleGermanSubjunction("obwohl"));
-		 register(new SimpleSubjunction("etsi", SubjunctionType.Subjunctive),
-					new SimpleGermanSubjunction("obwohl"));
-		 register(new SimpleSubjunction("ne", SubjunctionType.Subjunctive), null); // TODO: "dass nicht"
-		 register(new SimpleSubjunction("nisi", SubjunctionType.Indicative), null); // TODO: "wenn nicht"
-		 register(new SimpleSubjunction("nisi", SubjunctionType.Subjunctive), null); // TODO: "wenn nicht"
+		register(new SimpleSubjunction("cum", SubjunctionType.Subjunctive),
+				new SimpleGermanSubjunction("weil"));
+		register(new SimpleSubjunction("cur", SubjunctionType.Question),
+				new SimpleGermanSubjunction("warum"));
+		register(new SimpleSubjunction("donec", SubjunctionType.Indicative), null); // TODO:
+																					// "bis
+																					// dann"
+		register(new SimpleSubjunction("dum", SubjunctionType.Indicative),
+				new SimpleGermanSubjunction("solange"));
+		register(new SimpleSubjunction("dum", SubjunctionType.Subjunctive),
+				new SimpleGermanSubjunction("solange"));
+		register(new SimpleSubjunction("etiamsi", SubjunctionType.Indicative),
+				new SimpleGermanSubjunction("obwohl"));
+		register(new SimpleSubjunction("etiamsi", SubjunctionType.Subjunctive),
+				new SimpleGermanSubjunction("obwohl"));
+		register(new SimpleSubjunction("etsi", SubjunctionType.Indicative),
+				new SimpleGermanSubjunction("obwohl"));
+		register(new SimpleSubjunction("etsi", SubjunctionType.Subjunctive),
+				new SimpleGermanSubjunction("obwohl"));
+		register(new SimpleSubjunction("ne", SubjunctionType.Subjunctive), null); // TODO:
+																					// "dass
+																					// nicht"
+		register(new SimpleSubjunction("nisi", SubjunctionType.Indicative), null); // TODO:
+																					// "wenn
+																					// nicht"
+		register(new SimpleSubjunction("nisi", SubjunctionType.Subjunctive), null); // TODO:
+																					// "wenn
+																					// nicht"
 	}
 
 	static {

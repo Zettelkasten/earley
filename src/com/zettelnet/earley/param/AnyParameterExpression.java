@@ -5,7 +5,6 @@ import java.util.Collection;
 
 import com.zettelnet.earley.Grammar;
 import com.zettelnet.earley.symbol.NonTerminal;
-import com.zettelnet.earley.symbol.Terminal;
 
 /**
  * Represents a {@link ParameterExpression} that does not modify parameters.
@@ -38,11 +37,6 @@ public class AnyParameterExpression<T, P extends Parameter> implements Parameter
 	@Override
 	public Collection<P> predict(P parentParameter, P childParameter, NonTerminal<T> childSymbol) {
 		return Arrays.asList(manager.copyParameter(childParameter, childSymbol));
-	}
-
-	@Override
-	public Collection<P> scan(P parentParameter, NonTerminal<T> parentSymbol, T token, Terminal<T> terminal) {
-		return Arrays.asList(manager.copyParameter(parentParameter, parentSymbol));
 	}
 
 	@Override

@@ -78,10 +78,10 @@ public final class LatinGrammar {
 		FormParameterManager<Token> parameterManager = new FormParameterManager<>(LatinSymbol.DEFAULT_PROPERTY_TYPES);
 		TokenParameterizer<Token, FormParameter> parameterizer = new FormParameterizer();
 
-		grammar = new SimpleGrammar<>(Sentence, parameterManager);
+		grammar = new SimpleGrammar<>(Sentence, parameterManager, parameterizer);
 		grammar.setStartSymbolParameter(key(Casus.Nominative, Finiteness.Finite));
 
-		ParameterExpression<Token, FormParameter> copy = new CopyParameterExpression<>(grammar, parameterizer);
+		ParameterExpression<Token, FormParameter> copy = new CopyParameterExpression<>(grammar);
 		ParameterExpression<Token, FormParameter> any = new AnyParameterExpression<>(parameterManager);
 
 		toGerman = new SimpleTranslationSet<>();
@@ -168,21 +168,21 @@ public final class LatinGrammar {
 		// Args(pi : GenVal) -> NP(Gen)
 		prod = grammar.addProduction(
 				Arguments, key(Valency.Genitive), 1,
-				new ParameterizedSymbol<>(NounPhrase, specify(parameterManager, parameterizer, Casus.Genitive)));
+				new ParameterizedSymbol<>(NounPhrase, specify(parameterManager, Casus.Genitive)));
 		toGerman.addTranslation(prod, parameterManager,
 				vars(new ConcreteTranslationTree<>(GermanSymbol.Arguments, germanize, 1,
 						vars(new AbstractTranslationTree<>(new PositionReference<>(0), 1)))));
 		// Args(pi : DatVal) -> NP(Dat)
 		prod = grammar.addProduction(
 				Arguments, key(Valency.Dative), 1,
-				new ParameterizedSymbol<>(NounPhrase, specify(parameterManager, parameterizer, Casus.Dative)));
+				new ParameterizedSymbol<>(NounPhrase, specify(parameterManager, Casus.Dative)));
 		toGerman.addTranslation(prod, parameterManager,
 				vars(new ConcreteTranslationTree<>(GermanSymbol.Arguments, germanize, 1,
 						vars(new AbstractTranslationTree<>(new PositionReference<>(0), 1)))));
 		// Args(pi : AkkVal Akt) -> NP(Akk)
 		prod = grammar.addProduction(
 				Arguments, key(Valency.Accusative, Voice.Active), 1,
-				new ParameterizedSymbol<>(NounPhrase, specify(parameterManager, parameterizer, Casus.Accusative)));
+				new ParameterizedSymbol<>(NounPhrase, specify(parameterManager, Casus.Accusative)));
 		toGerman.addTranslation(prod, parameterManager,
 				vars(new ConcreteTranslationTree<>(GermanSymbol.Arguments, germanize, 1,
 						vars(new AbstractTranslationTree<>(new PositionReference<>(0), 1)))));
@@ -194,8 +194,8 @@ public final class LatinGrammar {
 		// Args(pi : AkkDatVal Akt) -> NP(Akk) NP(Dat)
 		prod = grammar.addProduction(
 				Arguments, key(Valency.AccusativeDative, Voice.Active), 1,
-				new ParameterizedSymbol<>(NounPhrase, specify(parameterManager, parameterizer, Casus.Accusative)),
-				new ParameterizedSymbol<>(NounPhrase, specify(parameterManager, parameterizer, Casus.Dative)));
+				new ParameterizedSymbol<>(NounPhrase, specify(parameterManager, Casus.Accusative)),
+				new ParameterizedSymbol<>(NounPhrase, specify(parameterManager, Casus.Dative)));
 		toGerman.addTranslation(prod, parameterManager,
 				vars(new ConcreteTranslationTree<>(GermanSymbol.Arguments, germanize, 1,
 						vars(new AbstractTranslationTree<>(new PositionReference<>(0), 1)),
@@ -203,14 +203,14 @@ public final class LatinGrammar {
 		// Args(pi : AkkDatVal Pass) -> NP(Dat)
 		prod = grammar.addProduction(
 				Arguments, key(Valency.AccusativeDative, Voice.Passive), 1,
-				new ParameterizedSymbol<>(NounPhrase, specify(parameterManager, parameterizer, Casus.Dative)));
+				new ParameterizedSymbol<>(NounPhrase, specify(parameterManager, Casus.Dative)));
 		toGerman.addTranslation(prod, parameterManager,
 				vars(new ConcreteTranslationTree<>(GermanSymbol.Arguments, germanize, 1,
 						vars(new AbstractTranslationTree<>(new PositionReference<>(0), 1)))));
 		// Args(pi : InfVal) -> VP(Inf Ind)
 		prod = grammar.addProduction(
 				Arguments, key(Valency.Infinitive), 1,
-				new ParameterizedSymbol<>(VerbPhrase, specify(parameterManager, parameterizer, Finiteness.Infinitive, Mood.Indicative)));
+				new ParameterizedSymbol<>(VerbPhrase, specify(parameterManager, Finiteness.Infinitive, Mood.Indicative)));
 		toGerman.addTranslation(prod, parameterManager,
 				vars(new ConcreteTranslationTree<>(GermanSymbol.Arguments, germanize, 1,
 						vars(new AbstractTranslationTree<>(new PositionReference<>(0), 1)))));
@@ -240,7 +240,7 @@ public final class LatinGrammar {
 		prod = grammar.addProduction(
 				AdverbalPhrase, 0.3,
 				new ParameterizedSymbol<>(Subjunction, copy),
-				new ParameterizedSymbol<>(Sentence, new CoordinativeFormParameterExpression<>(parameterManager, parameterizer).with(new SubjunctionMoodPropertyExpression())));
+				new ParameterizedSymbol<>(Sentence, new CoordinativeFormParameterExpression<>(parameterManager).with(new SubjunctionMoodPropertyExpression())));
 		toGerman.addTranslation(prod, parameterManager,
 				vars(new ConcreteTranslationTree<>(GermanSymbol.AdverbalPhrase, germanize, 1,
 						vars(new AbstractTranslationTree<>(new PositionReference<>(0), 1)),
@@ -248,11 +248,11 @@ public final class LatinGrammar {
 		// AdvP -> NP(Abl)
 		prod = grammar.addProduction(
 				AdverbalPhrase, 0.2,
-				new ParameterizedSymbol<>(NounPhrase, specify(parameterManager, parameterizer, Casus.Ablative)));
+				new ParameterizedSymbol<>(NounPhrase, specify(parameterManager, Casus.Ablative)));
 		// AdvP -> NP(Voc & ng[pi])
 		prod = grammar.addProduction(
 				AdverbalPhrase, 0.1,
-				new ParameterizedSymbol<>(NounPhrase, new IndividualFormParameterExpression<>(parameterManager, parameterizer).copy(Numerus.TYPE, Genus.TYPE).specify(Casus.Ablative)));
+				new ParameterizedSymbol<>(NounPhrase, new IndividualFormParameterExpression<>(parameterManager).copy(Numerus.TYPE, Genus.TYPE).specify(Casus.Ablative)));
 		toGerman.addTranslation(prod, parameterManager,
 				vars(new ConcreteTranslationTree<>(GermanSymbol.AdverbalPhrase, germanize, 1,
 						vars(new AbstractTranslationTree<>(new PositionReference<>(0), 1)))));
@@ -262,7 +262,7 @@ public final class LatinGrammar {
 				NounPhrase, 0.8,
 				new ParameterizedSymbol<>(NounForm, copy),
 				new ParameterizedSymbol<>(AdjectivePhraseOpt, copy),
-				new ParameterizedSymbol<>(NounPhraseOpt, specify(parameterManager, parameterizer, Casus.Genitive)),
+				new ParameterizedSymbol<>(NounPhraseOpt, specify(parameterManager, Casus.Genitive)),
 				new ParameterizedSymbol<>(NounPhraseOpt, copy));
 		toGerman.addTranslation(prod, parameterManager,
 				vars(new ConcreteTranslationTree<>(GermanSymbol.NounPhrase, germanize, 1,
@@ -282,7 +282,7 @@ public final class LatinGrammar {
 		// NP(pi : Nom / Akk) -> S(pi : Inf Pr�s/Perf/Fut Akk)
 		prod = grammar.addProduction(
 				NounPhrase, key(Casus.Nominative, Casus.Accusative), 0.1,
-				new ParameterizedSymbol<>(Sentence, specify(parameterManager, parameterizer, Casus.Accusative, Tense.Present, Tense.Perfect, Tense.Future, Finiteness.Infinitive)));
+				new ParameterizedSymbol<>(Sentence, specify(parameterManager, Casus.Accusative, Tense.Present, Tense.Perfect, Tense.Future, Finiteness.Infinitive)));
 		// TODO
 		toGerman.addTranslation(prod, parameterManager,
 				vars(new ConcreteTranslationTree<>(GermanSymbol.NounPhrase, germanize, 1,
@@ -310,7 +310,7 @@ public final class LatinGrammar {
 		// AP(pi) -> VP(Participle)
 		prod = grammar.addProduction(
 				AdjectivePhrase, 0.3,
-				new ParameterizedSymbol<>(VerbPhrase, new IndividualFormParameterExpression<>(parameterManager, parameterizer).specify(Finiteness.Participle).copy(Casus.TYPE, Numerus.TYPE, Genus.TYPE)));
+				new ParameterizedSymbol<>(VerbPhrase, new IndividualFormParameterExpression<>(parameterManager).specify(Finiteness.Participle).copy(Casus.TYPE, Numerus.TYPE, Genus.TYPE)));
 		toGerman.addTranslation(prod, parameterManager,
 				vars(new ConcreteTranslationTree<>(GermanSymbol.AdjectivePhrase, germanize, 1,
 						vars(new AbstractTranslationTree<>(new PositionReference<>(0), 1)))));

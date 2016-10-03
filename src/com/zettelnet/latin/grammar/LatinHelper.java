@@ -8,7 +8,6 @@ import com.zettelnet.earley.param.ParameterFactory;
 import com.zettelnet.earley.param.ParameterManager;
 import com.zettelnet.earley.param.SingletonParameterFactory;
 import com.zettelnet.earley.param.SpecificParameterExpression;
-import com.zettelnet.earley.param.TokenParameterizer;
 import com.zettelnet.earley.param.property.Property;
 import com.zettelnet.earley.symbol.NonTerminal;
 import com.zettelnet.earley.symbol.Symbol;
@@ -31,16 +30,16 @@ final class LatinHelper {
 	}
 
 	@SafeVarargs
-	static ParameterExpression<Token, FormParameter> copy(ParameterManager<Token, FormParameter> parameterManager, TokenParameterizer<Token, FormParameter> parameterizer, Object... propertyTypes) {
-		IndividualFormParameterExpression<Token> expression = new IndividualFormParameterExpression<>(parameterManager, parameterizer);
+	static ParameterExpression<Token, FormParameter> copy(ParameterManager<Token, FormParameter> parameterManager, Object... propertyTypes) {
+		IndividualFormParameterExpression<Token> expression = new IndividualFormParameterExpression<>(parameterManager);
 		for (Object propertyType : propertyTypes) {
 			expression.copy(propertyType);
 		}
 		return expression;
 	}
 
-	static ParameterExpression<Token, FormParameter> specify(ParameterManager<Token, FormParameter> parameterManager, TokenParameterizer<Token, FormParameter> parameterizer, Property... formProperties) {
-		return new SpecificParameterExpression<>(parameterManager, parameterizer, new FormParameter(formProperties));
+	static ParameterExpression<Token, FormParameter> specify(ParameterManager<Token, FormParameter> parameterManager, Property... formProperties) {
+		return new SpecificParameterExpression<>(parameterManager, new FormParameter(formProperties));
 	}
 
 	static ParameterFactory<Token, FormParameter> key(Property... formProperties) {

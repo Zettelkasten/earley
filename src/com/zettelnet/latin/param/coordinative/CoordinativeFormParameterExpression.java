@@ -1,9 +1,7 @@
 package com.zettelnet.latin.param.coordinative;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -12,10 +10,8 @@ import java.util.function.Function;
 
 import com.zettelnet.earley.param.ParameterExpression;
 import com.zettelnet.earley.param.ParameterManager;
-import com.zettelnet.earley.param.TokenParameterizer;
 import com.zettelnet.earley.param.property.Property;
 import com.zettelnet.earley.symbol.NonTerminal;
-import com.zettelnet.earley.symbol.Terminal;
 import com.zettelnet.latin.param.FormParameter;
 
 /**
@@ -27,13 +23,11 @@ public class CoordinativeFormParameterExpression<T> implements ParameterExpressi
 	private static final SubParameterExpression COPY_ALL = new CopySubParameterExpression();
 
 	private final ParameterManager<T, FormParameter> parameterManager;
-	private final TokenParameterizer<T, FormParameter> parameterizer;
 
 	private final Set<SubParameterExpression> handlers;
 
-	public CoordinativeFormParameterExpression(final ParameterManager<T, FormParameter> parameterManager, final TokenParameterizer<T, FormParameter> parameterizer) {
+	public CoordinativeFormParameterExpression(final ParameterManager<T, FormParameter> parameterManager) {
 		this.parameterManager = parameterManager;
-		this.parameterizer = parameterizer;
 		this.handlers = new HashSet<>();
 	}
 
@@ -75,23 +69,6 @@ public class CoordinativeFormParameterExpression<T> implements ParameterExpressi
 		return call(parameter, childParameter, childSymbol, (SubParameterExpression subExpression) -> {
 			return subExpression.predict(parameter, childParameter);
 		});
-	}
-
-	@Override
-	public Collection<FormParameter> scan(FormParameter parameter, NonTerminal<T> parentSymbol, T token, Terminal<T> terminal) {
-		Collection<FormParameter> results = new ArrayList<>();
-		for (FormParameter tokenParameter : parameterizer.getTokenParameters(token, terminal)) {
-			Collection<FormParameter> parameterResult = call(parameter, tokenParameter, parentSymbol, (SubParameterExpression subExpression) -> {
-				return subExpression.predict(parameter, tokenParameter);
-			});
-
-			if (parameterResult.isEmpty()) {
-				return Collections.emptyList();
-			} else {
-				results.addAll(parameterResult);
-			}
-		}
-		return results;
 	}
 
 	@Override

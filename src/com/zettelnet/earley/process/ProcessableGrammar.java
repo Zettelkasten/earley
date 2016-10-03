@@ -13,6 +13,7 @@ import com.zettelnet.earley.param.Parameter;
 import com.zettelnet.earley.param.ParameterExpression;
 import com.zettelnet.earley.param.ParameterFactory;
 import com.zettelnet.earley.param.ParameterManager;
+import com.zettelnet.earley.param.TokenParameterizer;
 import com.zettelnet.earley.symbol.NonTerminal;
 import com.zettelnet.earley.symbol.Symbol;
 import com.zettelnet.earley.symbol.Terminal;
@@ -30,20 +31,22 @@ public class ProcessableGrammar<T, P extends Parameter, R> implements Grammar<T,
 	private ParameterFactory<T, P> startSymbolParameter;
 
 	private final ParameterManager<T, P> parameterManager;
+	private final TokenParameterizer<T, P> parameterizer;
 
-	public ProcessableGrammar(final NonTerminal<T> startSymbol, final ParameterManager<T, P> parameterManager) {
-		this(startSymbol, parameterManager, parameterManager);
+	public ProcessableGrammar(final NonTerminal<T> startSymbol, final ParameterManager<T, P> parameterManager, final TokenParameterizer<T, P> parameterizer) {
+		this(startSymbol, parameterManager, parameterManager, parameterizer);
 	}
 
-	public ProcessableGrammar(final NonTerminal<T> startSymbol, final ParameterFactory<T, P> startSymbolParameter, final ParameterManager<T, P> parameterManager) {
-		this(startSymbol, startSymbolParameter, parameterManager, new HashSet<>());
+	public ProcessableGrammar(final NonTerminal<T> startSymbol, final ParameterFactory<T, P> startSymbolParameter, final ParameterManager<T, P> parameterManager, final TokenParameterizer<T, P> parameterizer) {
+		this(startSymbol, startSymbolParameter, parameterManager, parameterizer, new HashSet<>());
 	}
 
-	public ProcessableGrammar(final NonTerminal<T> startSymbol, final ParameterFactory<T, P> startSymbolParameter, final ParameterManager<T, P> parameterManager, final Set<ProcessableProduction<T, P, R>> productions) {
+	public ProcessableGrammar(final NonTerminal<T> startSymbol, final ParameterFactory<T, P> startSymbolParameter, final ParameterManager<T, P> parameterManager, final TokenParameterizer<T, P> parameterizer, final Set<ProcessableProduction<T, P, R>> productions) {
 		this.startSymbol = startSymbol;
 		this.startSymbolParameter = startSymbolParameter;
 
 		this.parameterManager = parameterManager;
+		this.parameterizer = parameterizer;
 
 		this.productions = new HashMap<>();
 		this.nonTerminals = new HashMap<>();
@@ -127,8 +130,13 @@ public class ProcessableGrammar<T, P extends Parameter, R> implements Grammar<T,
 	}
 
 	@Override
+	public TokenParameterizer<T, P> getParameterizer() {
+		return parameterizer;
+	}
+	
+	@Override
 	public ParameterExpression<T, P> getStartSymbolParameterExpression() {
-		return new CopyParameterExpression<T, P>(this, null);
+		return new CopyParameterExpression<T, P>(this);
 	}
 
 	@Override

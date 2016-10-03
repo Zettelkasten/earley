@@ -1,6 +1,5 @@
 package com.zettelnet.latin.param.individual;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -12,10 +11,8 @@ import java.util.function.BiFunction;
 
 import com.zettelnet.earley.param.ParameterExpression;
 import com.zettelnet.earley.param.ParameterManager;
-import com.zettelnet.earley.param.TokenParameterizer;
 import com.zettelnet.earley.param.property.Property;
 import com.zettelnet.earley.symbol.NonTerminal;
-import com.zettelnet.earley.symbol.Terminal;
 import com.zettelnet.latin.param.FormParameter;
 
 /**
@@ -44,13 +41,11 @@ public class IndividualFormParameterExpression<T> implements ParameterExpression
 	private static final IndividualPropertyExpression<?> COPY = new CopyIndividualPropertyExpression<>();
 
 	private final ParameterManager<T, FormParameter> parameterManager;
-	private final TokenParameterizer<T, FormParameter> parameterizer;
 
 	private final Map<Object, IndividualPropertyExpression<?>> handlers;
 
-	public IndividualFormParameterExpression(final ParameterManager<T, FormParameter> parameterManager, final TokenParameterizer<T, FormParameter> parameterizer) {
+	public IndividualFormParameterExpression(final ParameterManager<T, FormParameter> parameterManager) {
 		this.parameterManager = parameterManager;
-		this.parameterizer = parameterizer;
 		this.handlers = new HashMap<>();
 	}
 
@@ -118,23 +113,6 @@ public class IndividualFormParameterExpression<T> implements ParameterExpression
 		return call(parameter, childParameter, childSymbol, (Object propertyType, IndividualPropertyExpression<?> expression) -> {
 			return expression.predict(parameter.getProperty(propertyType), childParameter.getProperty(propertyType));
 		});
-	}
-
-	@Override
-	public Collection<FormParameter> scan(FormParameter parameter, NonTerminal<T> parentSymbol, T token, Terminal<T> terminal) {
-		Collection<FormParameter> results = new ArrayList<>();
-		for (FormParameter tokenParameter : parameterizer.getTokenParameters(token, terminal)) {
-			Collection<FormParameter> parameterResult = call(parameter, tokenParameter, parentSymbol, (Object propertyType, IndividualPropertyExpression<?> expression) -> {
-				return expression.scan(parameter.getProperty(propertyType), tokenParameter.getProperty(propertyType));
-			});
-
-			if (parameterResult.isEmpty()) {
-				return Collections.emptyList();
-			} else {
-				results.addAll(parameterResult);
-			}
-		}
-		return results;
 	}
 
 	@Override
