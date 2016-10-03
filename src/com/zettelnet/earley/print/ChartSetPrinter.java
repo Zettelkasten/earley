@@ -393,7 +393,7 @@ public class ChartSetPrinter<T, P extends Parameter> {
 			out.print("scan ");
 			printStateReference(out, scan.getPreState(), observer);
 			out.print(" with ");
-			out.print(scan.getToken());
+			out.printf("<span class='scanned-token' title='%s'>%s</span>", scan.getTokenParameter(), scan.getToken());
 		} else if (origin instanceof StateCause.Complete) {
 			StateCause.Complete<T, P> complete = (StateCause.Complete<T, P>) origin;
 			out.print("complete ");
