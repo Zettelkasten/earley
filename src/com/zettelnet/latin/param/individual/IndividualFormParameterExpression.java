@@ -91,8 +91,8 @@ public class IndividualFormParameterExpression<T> implements ParameterExpression
 		return this;
 	}
 
-	private Collection<FormParameter> call(FormParameter parameter, FormParameter childParameter, NonTerminal<T> parameterSymbol, BiFunction<Object, IndividualPropertyExpression<?>, Set<? extends Property>> toCall) {
-		Map<Object, Set<? extends Property>> newData = new HashMap<>();
+	private Collection<FormParameter> call(FormParameter sourceParameter, NonTerminal<T> parameterSymbol, BiFunction<Object, IndividualPropertyExpression<?>, Set<? extends Property>> toCall) {
+		Map<Object, Set<? extends Property>> newData = new HashMap<>(sourceParameter.getProperties());
 		for (Map.Entry<Object, IndividualPropertyExpression<?>> entry : handlers.entrySet()) {
 			Object propertyType = entry.getKey();
 			IndividualPropertyExpression<?> expression = entry.getValue();
@@ -110,14 +110,14 @@ public class IndividualFormParameterExpression<T> implements ParameterExpression
 
 	@Override
 	public Collection<FormParameter> predict(FormParameter parameter, FormParameter childParameter, NonTerminal<T> childSymbol) {
-		return call(parameter, childParameter, childSymbol, (Object propertyType, IndividualPropertyExpression<?> expression) -> {
+		return call(childParameter, childSymbol, (Object propertyType, IndividualPropertyExpression<?> expression) -> {
 			return expression.predict(parameter.getProperty(propertyType), childParameter.getProperty(propertyType));
 		});
 	}
 
 	@Override
 	public Collection<FormParameter> complete(FormParameter parameter, NonTerminal<T> parentSymbol, FormParameter childParameter) {
-		return call(parameter, childParameter, parentSymbol, (Object propertyType, IndividualPropertyExpression<?> expression) -> {
+		return call(parameter, parentSymbol, (Object propertyType, IndividualPropertyExpression<?> expression) -> {
 			return expression.complete(parameter.getProperty(propertyType), childParameter.getProperty(propertyType));
 		});
 	}
