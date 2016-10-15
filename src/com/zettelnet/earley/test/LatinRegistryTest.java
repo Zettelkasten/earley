@@ -37,6 +37,7 @@ import com.zettelnet.latin.lemma.property.Meaning;
 import com.zettelnet.latin.param.FormParameter;
 import com.zettelnet.latin.token.LatinTokenPrinter;
 import com.zettelnet.latin.token.Token;
+import com.zettelnet.latin.token.morpheus.MorpheusTokenScanner;
 
 public class LatinRegistryTest {
 
@@ -46,9 +47,9 @@ public class LatinRegistryTest {
 		final PrintStream out = System.out;
 
 		Grammar<Token, FormParameter> grammar = LatinGrammar.makeGrammar();
-		Tokenizer<Token> tokenizer = new WhitespaceTokenizer<>(LatinRegistry.INSTANCE);
+		Tokenizer<Token> tokenizer = new WhitespaceTokenizer<>(new MorpheusTokenScanner());
 
-		String input = "Tertia et Publius et Domitilla et Pomponius et Polybius saeviunt";
+		String input = "servus dominae magnae cantat carmen";
 
 		out.printf("(S) Processing \"%s\" %n", input);
 
