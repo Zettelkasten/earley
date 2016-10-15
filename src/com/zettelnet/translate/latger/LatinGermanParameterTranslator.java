@@ -2,7 +2,7 @@ package com.zettelnet.translate.latger;
 
 import com.zettelnet.earley.translate.ParameterTranslator;
 import com.zettelnet.german.form.GermanCasus;
-import com.zettelnet.german.form.GermanComparison;
+import com.zettelnet.german.form.GermanDegree;
 import com.zettelnet.german.form.GermanGenus;
 import com.zettelnet.german.form.GermanMood;
 import com.zettelnet.german.form.GermanNumerus;
@@ -11,7 +11,7 @@ import com.zettelnet.german.form.GermanTense;
 import com.zettelnet.german.form.GermanVoice;
 import com.zettelnet.german.lemma.property.GermanFiniteness;
 import com.zettelnet.latin.form.Casus;
-import com.zettelnet.latin.form.Comparison;
+import com.zettelnet.latin.form.Degree;
 import com.zettelnet.latin.form.Genus;
 import com.zettelnet.latin.form.Mood;
 import com.zettelnet.latin.form.Numerus;
@@ -61,9 +61,9 @@ public final class LatinGermanParameterTranslator {
 		translator.registerMapping(Voice.Active, GermanVoice.Active);
 		translator.registerMapping(Voice.Passive, GermanVoice.Passive);
 
-		translator.registerMapping(Comparison.Positive, GermanComparison.Positive);
-		translator.registerMapping(Comparison.Comparative, GermanComparison.Comparative);
-		translator.registerMapping(Comparison.Superlative, GermanComparison.Superlative);
+		translator.registerMapping(Degree.Positive, GermanDegree.Positive);
+		translator.registerMapping(Degree.Comparative, GermanDegree.Comparative);
+		translator.registerMapping(Degree.Superlative, GermanDegree.Superlative);
 
 		translator.registerMapping(Finiteness.Finite, GermanFiniteness.Finite);
 		translator.registerMapping(Finiteness.Infinitive, GermanFiniteness.Infinitive);

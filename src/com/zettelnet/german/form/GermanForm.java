@@ -26,7 +26,7 @@ public interface GermanForm extends PropertySet<GermanFormProperty>, Comparable<
 		properties.add(GermanMood.TYPE);
 		properties.add(GermanTense.TYPE);
 		properties.add(GermanVoice.TYPE);
-		properties.add(GermanComparison.TYPE);
+		properties.add(GermanDegree.TYPE);
 
 		return properties;
 	}
@@ -99,8 +99,8 @@ public interface GermanForm extends PropertySet<GermanFormProperty>, Comparable<
 		return getProperty(GermanVoice.TYPE);
 	}
 
-	public default GermanComparison getComparison() {
-		return getProperty(GermanComparison.TYPE);
+	public default GermanDegree getDegree() {
+		return getProperty(GermanDegree.TYPE);
 	}
 
 	@Override

@@ -11,7 +11,7 @@ import com.zettelnet.earley.param.property.MapPropertySet;
 import com.zettelnet.earley.param.property.PropertySet;
 import com.zettelnet.latin.derivation.Derivation;
 import com.zettelnet.latin.form.Casus;
-import com.zettelnet.latin.form.Comparison;
+import com.zettelnet.latin.form.Degree;
 import com.zettelnet.latin.form.Form;
 import com.zettelnet.latin.form.Genus;
 import com.zettelnet.latin.form.Numerus;
@@ -45,7 +45,7 @@ public class SimpleAdjective implements DeclinableLemma {
 
 	@Override
 	public String getNominalForm() {
-		return getForm(Form.withValues(Casus.Nominative, Numerus.Singular, Genus.Masculine, Comparison.Positive)).iterator().next();
+		return getForm(Form.withValues(Casus.Nominative, Numerus.Singular, Genus.Masculine, Degree.Positive)).iterator().next();
 	}
 
 	@Override

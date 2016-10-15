@@ -1,16 +1,16 @@
-package com.zettelnet.latin.form;
+package com.zettelnet.german.form;
 
 import com.zettelnet.earley.param.property.ValuesPropertyType;
 
-public enum Comparison implements FormProperty {
+public enum GermanDegree implements GermanFormProperty {
 
 	Positive("Pos"), Comparative("Comp"), Superlative("Super");
 
-	public static final ValuesPropertyType<Comparison> TYPE = new ValuesPropertyType<>("comp", values());
-	
+	public static final ValuesPropertyType<GermanDegree> TYPE = new ValuesPropertyType<>("degree", values());
+
 	private final String shortName;
 
-	private Comparison(String shortName) {
+	private GermanDegree(String shortName) {
 		this.shortName = shortName;
 	}
 
@@ -23,9 +23,9 @@ public enum Comparison implements FormProperty {
 	public String toString() {
 		return shortName();
 	}
-	
+
 	@Override
-	public ValuesPropertyType<Comparison> getType() {
+	public ValuesPropertyType<GermanDegree> getType() {
 		return TYPE;
 	}
 }

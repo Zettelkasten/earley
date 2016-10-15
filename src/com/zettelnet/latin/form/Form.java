@@ -25,7 +25,7 @@ public interface Form extends PropertySet<FormProperty>, Comparable<Form> {
 		properties.add(Mood.TYPE);
 		properties.add(Tense.TYPE);
 		properties.add(Voice.TYPE);
-		properties.add(Comparison.TYPE);
+		properties.add(Degree.TYPE);
 
 		return properties;
 	}
@@ -86,8 +86,8 @@ public interface Form extends PropertySet<FormProperty>, Comparable<Form> {
 		return getProperty(Voice.TYPE);
 	}
 
-	public default Comparison getComparison() {
-		return getProperty(Comparison.TYPE);
+	public default Degree getDegree() {
+		return getProperty(Degree.TYPE);
 	}
 
 	@Override
