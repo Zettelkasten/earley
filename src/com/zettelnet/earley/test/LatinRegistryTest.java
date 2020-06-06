@@ -37,19 +37,16 @@ import com.zettelnet.latin.lemma.property.Meaning;
 import com.zettelnet.latin.param.FormParameter;
 import com.zettelnet.latin.token.LatinTokenPrinter;
 import com.zettelnet.latin.token.Token;
-import com.zettelnet.latin.token.morpheus.MorpheusTokenScanner;
 
 public class LatinRegistryTest {
 
 	public static void main(String[] args) throws IOException {
-		// final PrintStream out = new PrintStream(new
-		// FileOutputStream("debug.txt"));
 		final PrintStream out = System.out;
 
 		Grammar<Token, FormParameter> grammar = LatinGrammar.makeGrammar();
-		Tokenizer<Token> tokenizer = new WhitespaceTokenizer<>(new MorpheusTokenScanner());
+		Tokenizer<Token> tokenizer = new WhitespaceTokenizer<>(LatinRegistry.INSTANCE);
 
-		String input = "servus dominae magnae cantat carmen";
+		String input = "servus dat frumentum dominae";
 
 		out.printf("(S) Processing \"%s\" %n", input);
 
