@@ -27,6 +27,76 @@ Running the program writes several debug outputs:
 
 The German sentence with the highest probability of being the correct translation is printed to stdout, as well as a Latin and German syntax trees.
 
+Parse trees can be generated using (mshang.ce syntax tree generator)[http://mshang.ca/syntree/]
+
+## Example
+
+```
+(S) Processing "servus dat frumentum dominae" 
+(1) Tokenized:
+[servus, dat, frumentum, dominae]
+(2) Parsed:
+{ [S { [NP { [NF { [Noun=servus]}]} { [{AP}]} { [{NP}]} { [{NP}]}]} { [VP { [VF { [Verb=dat]}]} { [Args { [NP { [NF { [Noun=frumentum]}]} { [{AP}]} { [{NP}]} { [{NP}]}]} { [NP { [NF { [Noun=dominae]}]} { [{AP}]} { [{NP}]} { [{NP}]}]}]} { [AdvP*]}]}]}
+(X) Best parse match:
+```
+![Parse Tree Example](parse_tree_example.png)
+```
+(3) Translated:
+{ [S { [NP { [Article=der]} { [{AP}]} { [NF { [Noun=Sklave]}]} { [{NP}]} { [{NP}]}]} { [VP { [VF { [Verb=gibst]}]} { [AdvP*]} { [Args { [NP { [Article=das]} { [{AP}]} { [NF { [Noun=DE_WARNING_{Noun:n Acc Sg fr_umentum}]}]} { [{NP}]} { [{NP}]}]} { [NP { [Article=der]} { [{AP}]} { [NF { [Noun=Herrin]}]} { [{NP}]} { [{NP}]}]}]}]}]}
+(X) Best translation match:
+[S/Nom 3 Pre Sg m Fin/28.7%
+  [NP/m Nom Sg servus/56%
+    [Article/m Nom Sg/56% der]
+    [{AP}/m Nom Sg/44.8%
+    ]
+    [NF/m Nom Sg servus/56%
+      [Noun/m Nom Sg servus/100% Sklave]
+    ]
+    [{NP}/m Nom Sg servus/28.7%
+    ]
+    [{NP}/Gen/35.8%
+    ]
+  ]
+  [VP/Nom 3 Pre Sg m Act Ind Fin d_o/23.2%
+    [VF/Nom 3 Pre Sg m Act Ind Fin d_o/23.2%
+      [Verb/3 Pre Sg Act Ind d_o/100% gibst]
+    ]
+    [AdvP*/?/3.1%
+    ]
+    [Args/?/9.5%
+      [NP/n Acc Sg fr_umentum/18.6%
+        [Article/n Acc Sg/18.6% das]
+        [{AP}/n Acc Sg/14.9%
+        ]
+        [NF/n Acc Sg fr_umentum/18.6%
+          [Noun/n Acc Sg fr_umentum/100% DE_WARNING_{Noun:n Acc Sg fr_umentum}]
+        ]
+        [{NP}/n Acc Sg fr_umentum/9.5%
+        ]
+        [{NP}/Gen/11.9%
+        ]
+      ]
+      [NP/f Dat Sg domina/7.6%
+        [Article/f Dat Sg/7.6% der]
+        [{AP}/f Dat Sg/6.1%
+        ]
+        [NF/f Dat Sg domina/7.6%
+          [Noun/f Dat Sg domina/100% Herrin]
+        ]
+        [{NP}/f Dat Sg domina/3.9%
+        ]
+        [{NP}/Gen/4.9%
+        ]
+      ]
+    ]
+  ]
+]
+[S   [NP     [Article der]     [{AP}]     [NF       [Noun Sklave]]     [{NP}]     [{NP}]]   [VP     [VF       [Verb gibst]]     [AdvP*]     [Args       [NP         [Article das]         [{AP}]         [NF           [Noun DE_WARNING_{Noun:n Acc Sg fr_umentum}]]         [{NP}]         [{NP}]]       [NP         [Article der]         [{AP}]         [NF           [Noun Herrin]]         [{NP}]         [{NP}]]]]]
+[S/Nom_3_Pre_Sg_m_Fin/28.7%   [NP/m_Nom_Sg_servus/56%     [Article/m_Nom_Sg/56% der]     [{AP}/m_Nom_Sg/44.8%]     [NF/m_Nom_Sg_servus/56%       [Noun/m_Nom_Sg_servus/100% Sklave]]     [{NP}/m_Nom_Sg_servus/28.7%]     [{NP}/Gen/35.8%]]   [VP/Nom_3_Pre_Sg_m_Act_Ind_Fin_d_o/23.2%     [VF/Nom_3_Pre_Sg_m_Act_Ind_Fin_d_o/23.2%       [Verb/3_Pre_Sg_Act_Ind_d_o/100% gibst]]     [AdvP*/?/3.1%]     [Args/?/9.5%       [NP/n_Acc_Sg_fr_umentum/18.6%         [Article/n_Acc_Sg/18.6% das]         [{AP}/n_Acc_Sg/14.9%]         [NF/n_Acc_Sg_fr_umentum/18.6%           [Noun/n_Acc_Sg_fr_umentum/100% DE_WARNING_{Noun:n Acc Sg fr_umentum}]]         [{NP}/n_Acc_Sg_fr_umentum/9.5%]         [{NP}/Gen/11.9%]]       [NP/f_Dat_Sg_domina/7.6%         [Article/f_Dat_Sg/7.6% der]         [{AP}/f_Dat_Sg/6.1%]         [NF/f_Dat_Sg_domina/7.6%           [Noun/f_Dat_Sg_domina/100% Herrin]]         [{NP}/f_Dat_Sg_domina/3.9%]         [{NP}/Gen/4.9%]]]]]
+(4) Traversed:
+[der, Sklave, gibst, das, DE_WARNING_{Noun:n Acc Sg fr_umentum}, der, Herrin]
+```
+
 ## Current Latin vocabulary and grammar
 
 Currently, the implemented vocabulary is rather small (have a look at `src/com/zettelnet/earley/test/LatinRegistry.java`), but this should provide a proof of concept.
